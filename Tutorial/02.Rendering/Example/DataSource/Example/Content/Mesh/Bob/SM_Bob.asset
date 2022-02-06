@@ -1,0 +1,27 @@
+{
+	"Format":
+	{
+		"Type": "Asset",
+		"Version": "1"
+	},
+	"Asset":
+	{
+		"Metadata":
+		{
+			"Copyright": "Copyright © 2009 KatsBits - Ken Beyer (kat) - http://www.katsbits.com"
+		},
+		"Compiler":
+		{
+			"ClassName": "RendererToolkit::MeshAssetCompiler",
+			"InputFile": "./SM_Bob.md5mesh",
+			"MaterialNameToAssetId":
+			{
+				"guard1_body.png": "./guard1_body.asset",
+				"guard1_face.png": "./guard1_face.asset",
+				"guard1_helmet.png": "./guard1_helmet.asset",
+				"iron_grill.png": "./iron_grill.asset",
+				"round_grill.png": "./round_grill.asset"
+			}
+		}
+	}
+}

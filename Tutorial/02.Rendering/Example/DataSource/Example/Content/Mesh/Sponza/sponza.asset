@@ -1,0 +1,49 @@
+{
+	"Format":
+	{
+		"Type": "Asset",
+		"Version": "1"
+	},
+	"Asset":
+	{
+		"Metadata":
+		{
+			"Copyright": "Sponza model downloaded from http://www.crytek.com/cryengine/cryengine3/downloads"
+		},
+		"Compiler":
+		{
+			"ClassName": "RendererToolkit::MeshAssetCompiler",
+			"InputFile": "./sponza.obj",
+			"MaterialNameToAssetId":
+			{
+				"arch": "./arch.asset",
+				"Material__298": "./background.asset",
+				"bricks": "./bricks.asset",
+				"ceiling": "./ceiling.asset",
+				"chain": "./chain.asset",
+				"column_a": "./column_a.asset",
+				"column_b": "./column_b.asset",
+				"column_c": "./column_c.asset",
+				"details": "./details.asset",
+				"fabric_a": "./fabric_a.asset",
+				"fabric_c": "./fabric_c.asset",
+				"fabric_d": "./fabric_d.asset",
+				"fabric_e": "./fabric_e.asset",
+				"fabric_f": "./fabric_f.asset",
+				"fabric_g": "./fabric_g.asset",
+				"flagpole": "./flagpole.asset",
+				"floor": "./M_CobblestoneFloor.asset",
+				"16___Default": "./gi_flag.asset",
+				"leaf": "./leaf.asset",
+				"Material__25": "./lion.asset",
+				"roof": "./roof.asset",
+				"vase": "./vase.asset",
+				"vase_hanging": "./vase_hanging.asset",
+				"Material__57": "./vase_plant.asset",
+				"vase_round": "./vase_round.asset",
+				"Material__47": "./white.asset",
+				"DefaultMaterial": "./white.asset"
+			}
+		}
+	}
+}

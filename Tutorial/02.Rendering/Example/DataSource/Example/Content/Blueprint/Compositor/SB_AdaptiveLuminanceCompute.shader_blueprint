@@ -1,0 +1,52 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+INPUT_END
+
+// Uniform buffers
+struct PassDataStruct
+{
+	float AdaptationRate;	// Tau
+	float PastSecondsSinceLastFrame;
+};
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	PassDataStruct PassData;
+UNIFORM_BUFFER_END
+
+// Textures
+TEXTURE_2D(1, 0, CurrentLuminanceMap, 0)
+TEXTURE_2D(1, 1, PreviousLuminanceMap, 1)
+RW_TEXTURE_2D(1, 2, OutputTexture2D, 2, r32f, writeonly)
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN_COMPUTE(1, 1, 1)
+	// We're using a fixed 1024x1024 current luminance input map, hence we have to pick mipmap 10 (0 = 1024, 1 = 512, 2 = 256, 3 = 128, 4 = 64, 5 = 32, 6 = 16, 7 = 8, 8 = 4, 9 = 2, 10 = 1)
+	float currentAverageLuminance = exp(TEXTURE_FETCH_2D(CurrentLuminanceMap, int3(0, 0, 10)).r);
+
+	// During the first execution there's no valid previous adaptive luminance available, so use the just calculated luminance as previous luminance
+	@property(FirstExecution)
+		float adaptiveLuminance = currentAverageLuminance;
+	@else
+		float previousAverageLuminance = TEXTURE_FETCH_2D(PreviousLuminanceMap, int3(0, 0, 0)).r;
+
+		// Adapt the luminance using Pattanaik's technique
+		float adaptiveLuminance = previousAverageLuminance + (currentAverageLuminance - previousAverageLuminance) * (1.0f - exp(-PassData.PastSecondsSinceLastFrame * PassData.AdaptationRate));
+	@end
+
+	// Done
+	IMAGE_STORE(OutputTexture2D, int2(0, 0), float4(adaptiveLuminance, 1.0f, 1.0f, 1.0f));
+MAIN_END_NO_OUTPUT

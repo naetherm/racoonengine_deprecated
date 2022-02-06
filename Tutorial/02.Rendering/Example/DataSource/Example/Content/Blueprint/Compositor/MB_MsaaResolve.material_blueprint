@@ -1,0 +1,141 @@
+{
+	"Format":
+	{
+		"Type": "MaterialBlueprintAsset",
+		"Version": "2"
+	},
+	"MaterialBlueprintAsset":
+	{
+		"Properties":
+		{
+			"NumberOfMultisamples":
+			{
+				"Usage": "SHADER_COMBINATION",
+				"ValueType": "GLOBAL_MATERIAL_PROPERTY_ID",
+				"Value": "@GlobalNumberOfMultisamples",
+				"Description": "Number of multisamples. Valid values are 0, 2, 4, 8. Use 0 to disable multisample.",
+				"VisualImportance": "MANDATORY",
+				"MaximumIntegerValue": "8",
+				"ValidIntegerValues": [ 0, 2, 4, 8 ]
+			},
+			"ColorMap":
+			{
+				"Usage": "TEXTURE_REFERENCE",
+				"ValueType": "TEXTURE_ASSET_ID",
+				"Value": "RacoonEngine/Texture/DynamicByCode/WhiteMap2D",
+				"Description": "2D color map"
+			},
+			"DepthMap":
+			{
+				"Usage": "TEXTURE_REFERENCE",
+				"ValueType": "TEXTURE_ASSET_ID",
+				"Value": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+				"Description": "2D depth map"
+			},
+			"SpecularMap":
+			{
+				"Usage": "TEXTURE_REFERENCE",
+				"ValueType": "TEXTURE_ASSET_ID",
+				"Value": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+				"Description": "2D specular map"
+			},
+			"NormalMap":
+			{
+				"Usage": "TEXTURE_REFERENCE",
+				"ValueType": "TEXTURE_ASSET_ID",
+				"Value": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+				"Description": "2D screen space normal map"
+			},
+			"VelocityMap":
+			{
+				"Usage": "TEXTURE_REFERENCE",
+				"ValueType": "TEXTURE_ASSET_ID",
+				"Value": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+				"Description": "2D screen space velocity map"
+			}
+		},
+		"GraphicsPipelineState":
+		{
+			"VertexAttributes": "./VA_Compositor.asset",
+			"ShaderBlueprints":
+			{
+				"VertexShaderBlueprint": "./SB_PositionVertex.asset",
+				"FragmentShaderBlueprint": "./SB_MsaaResolveFragment.asset"
+			},
+			"RasterizerState":
+			{
+				"CullMode": "NONE"
+			},
+			"DepthStencilState":
+			{
+				"DepthFunc": "ALWAYS"
+			}
+		},
+		"ResourceGroups":
+		{
+			"0":
+			{
+				"0":
+				{
+					"ResourceType": "TEXTURE_2D",
+					"BaseShaderRegisterName": "ColorMap",
+					"BaseShaderRegister": "0",
+					"ShaderVisibility": "FRAGMENT",
+					"Usage": "MATERIAL_REFERENCE",
+					"ValueType": "TEXTURE_ASSET_ID",
+					"Value": "@ColorMap",
+					"FallbackTexture": "RacoonEngine/Texture/DynamicByCode/WhiteMap2D",
+					"MipmapsUsed": "FALSE"
+				},
+				"1":
+				{
+					"ResourceType": "TEXTURE_2D",
+					"BaseShaderRegisterName": "DepthMap",
+					"BaseShaderRegister": "1",
+					"ShaderVisibility": "FRAGMENT",
+					"Usage": "MATERIAL_REFERENCE",
+					"ValueType": "TEXTURE_ASSET_ID",
+					"Value": "@DepthMap",
+					"FallbackTexture": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+					"MipmapsUsed": "FALSE"
+				},
+				"2":
+				{
+					"ResourceType": "TEXTURE_2D",
+					"BaseShaderRegisterName": "SpecularMap",
+					"BaseShaderRegister": "2",
+					"ShaderVisibility": "FRAGMENT",
+					"Usage": "MATERIAL_REFERENCE",
+					"ValueType": "TEXTURE_ASSET_ID",
+					"Value": "@SpecularMap",
+					"FallbackTexture": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+					"MipmapsUsed": "FALSE"
+				},
+				"3":
+				{
+					"ResourceType": "TEXTURE_2D",
+					"BaseShaderRegisterName": "NormalMap",
+					"BaseShaderRegister": "3",
+					"ShaderVisibility": "FRAGMENT",
+					"Usage": "MATERIAL_REFERENCE",
+					"ValueType": "TEXTURE_ASSET_ID",
+					"Value": "@NormalMap",
+					"FallbackTexture": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+					"MipmapsUsed": "FALSE"
+				},
+				"4":
+				{
+					"ResourceType": "TEXTURE_2D",
+					"BaseShaderRegisterName": "VelocityMap",
+					"BaseShaderRegister": "4",
+					"ShaderVisibility": "FRAGMENT",
+					"Usage": "MATERIAL_REFERENCE",
+					"ValueType": "TEXTURE_ASSET_ID",
+					"Value": "@VelocityMap",
+					"FallbackTexture": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+					"MipmapsUsed": "FALSE"
+				}
+			}
+		}
+	}
+}

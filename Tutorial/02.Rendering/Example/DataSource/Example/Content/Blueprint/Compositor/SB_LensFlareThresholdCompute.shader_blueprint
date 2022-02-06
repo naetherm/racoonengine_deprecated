@@ -1,0 +1,48 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+	DECLARE_GLOBAL_INVOCATION_ID
+INPUT_END
+
+// Uniform buffers
+struct PassDataStruct
+{
+	float3 ColorScale;
+	float3 ColorBias;
+};
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	PassDataStruct PassData;
+UNIFORM_BUFFER_END
+
+// Textures
+TEXTURE_2D(1, 0, ColorMap, 0)
+RW_TEXTURE_2D(1, 1, OutputTexture2D, 1, r11f_g11f_b10f, writeonly)
+
+// Samplers
+SAMPLER_STATE(2, 0, SamplerLinear, 0)
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN_COMPUTE(32, 32, 1)
+	// Compute dispatch is using groups of a multiple of the local size, in here we don't need to ensure we don't access out of global compute size since our color map must be a multiple of the local size
+	// -> Basing on "Pseudo Lens Flare" from John Chapman - http://john-chapman-graphics.blogspot.de/2013/02/pseudo-lens-flare.html
+	// -> 256 = fixed global compute size
+	float2 texCoord = (CAST_TO(GLOBAL_INVOCATION_ID.xy, float2) + float2(0.5f, 0.5f)) / float2(256.0f, 256.0f);
+	float3 color = max(float3(0.0f, 0.0f, 0.0f), SAMPLE_2D_LOD(ColorMap, SamplerLinear, float4(texCoord, 0.0f, 0.0f)).rgb + PassData.ColorBias) * PassData.ColorScale;
+
+	// Done
+	IMAGE_STORE(OutputTexture2D, CAST_TO(GLOBAL_INVOCATION_ID.xy, int2), float4(color, 1.0f));
+MAIN_END_NO_OUTPUT

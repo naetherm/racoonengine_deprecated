@@ -1,0 +1,140 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2019 - 2022 RacoonStudios
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+// software and associated documentation files (the "Software"), to deal in the Software
+// without restriction, including without limitation the rights to use, copy, modify, merge,
+// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+// to whom the Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+// PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "RERHINull/RHIRootSignature.h"
+#include "RERHINull/RHIDynamicRHI.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace RERHINull {
+
+/**
+*  @brief
+*    Constructor
+*
+*  @param[in] nullRhi
+*    Owner null RHI instance
+*  @param[in] rootSignature
+*    Root signature to use
+*/
+RootSignature::RootSignature(RHIDynamicRHI& nullRhi, const RERHI::RootSignature& rootSignature RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+RHIRootSignature(nullRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
+mRootSignature(rootSignature)
+{
+  const RERHI::RHIContext& context = nullRhi.getContext();
+
+  { // Copy the parameter data
+    const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
+    if (numberOfParameters > 0)
+    {
+      mRootSignature.parameters = RHI_MALLOC_TYPED(context, RERHI::RootParameter, numberOfParameters);
+      RERHI::RootParameter* destinationRootParameters = const_cast<RERHI::RootParameter*>(mRootSignature.parameters);
+      memcpy(destinationRootParameters, rootSignature.parameters, sizeof(RERHI::RootParameter) * numberOfParameters);
+
+      // Copy the descriptor table data
+      for (uint32_t i = 0; i < numberOfParameters; ++i)
+      {
+        RERHI::RootParameter& destinationRootParameter = destinationRootParameters[i];
+        const RERHI::RootParameter& sourceRootParameter = rootSignature.parameters[i];
+        if (RERHI::RootParameterType::DESCRIPTOR_TABLE == destinationRootParameter.parameterType)
+        {
+          const uint32_t numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
+          destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(context, RERHI::DescriptorRange, numberOfDescriptorRanges));
+          memcpy(reinterpret_cast<RERHI::DescriptorRange*>(destinationRootParameter.descriptorTable.descriptorRanges), reinterpret_cast<const RERHI::DescriptorRange*>(sourceRootParameter.descriptorTable.descriptorRanges), sizeof(RERHI::DescriptorRange) * numberOfDescriptorRanges);
+        }
+      }
+    }
+  }
+
+  { // Copy the static sampler data
+    const uint32_t numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
+    if (numberOfStaticSamplers > 0)
+    {
+      mRootSignature.staticSamplers = RHI_MALLOC_TYPED(context, RERHI::StaticSampler, numberOfStaticSamplers);
+      memcpy(const_cast<RERHI::StaticSampler*>(mRootSignature.staticSamplers), rootSignature.staticSamplers, sizeof(RERHI::StaticSampler) * numberOfStaticSamplers);
+    }
+  }
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+RootSignature::~RootSignature()
+{
+  const RERHI::RHIContext& context = getRhi().getContext();
+  if (nullptr != mRootSignature.parameters)
+  {
+    for (uint32_t i = 0; i < mRootSignature.numberOfParameters; ++i)
+    {
+      const RERHI::RootParameter& rootParameter = mRootSignature.parameters[i];
+      if (RERHI::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
+      {
+        RHI_FREE(context, reinterpret_cast<RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges));
+      }
+    }
+    RHI_FREE(context, const_cast<RERHI::RootParameter*>(mRootSignature.parameters));
+  }
+  RHI_FREE(context, const_cast<RERHI::StaticSampler*>(mRootSignature.staticSamplers));
+}
+
+/**
+*  @brief
+*    Return the root signature data
+*
+*  @return
+*    The root signature data
+*/
+const RERHI::RootSignature& RootSignature::getRootSignature() const
+{
+  return mRootSignature;
+}
+
+
+RERHI::RHIResourceGroup* RootSignature::createResourceGroup(uint32_t rootParameterIndex, uint32_t numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+{
+  RERHI::RHIDynamicRHI& rhi = getRhi();
+
+  // Sanity checks
+  RHI_ASSERT(rootParameterIndex < mRootSignature.numberOfParameters, "The null root parameter index is out-of-bounds")
+  RHI_ASSERT(numberOfResources > 0, "The number of null resources must not be zero")
+  RHI_ASSERT(nullptr != resources, "The null resource pointers must be valid")
+
+  // Create resource group
+  return RHI_NEW(rhi.getContext(), ResourceGroup)(rhi, rootParameterIndex, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+}
+
+
+void RootSignature::selfDestruct()
+{
+  RHI_DELETE(getRhi().getContext(), RootSignature, this);
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // RERHINull

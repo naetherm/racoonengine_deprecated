@@ -1,0 +1,20 @@
+{
+	"Format":
+	{
+		"Type": "Asset",
+		"Version": "1"
+	},
+	"Asset":
+	{
+		"Metadata":
+		{
+			"Copyright": "Imrod model and Imrod textures by Dmitry Parkin: http://www.dmitryparkin.com"
+		},
+		"Compiler":
+		{
+			"ClassName": "RendererToolkit::TextureAssetCompiler",
+			"TextureSemantic": "EMISSIVE_MAP",
+			"InputFile": "./T_Imrod_e.png"
+		}
+	}
+}

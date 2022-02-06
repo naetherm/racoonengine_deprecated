@@ -1,0 +1,42 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+	DECLARE_GLOBAL_INVOCATION_ID
+INPUT_END
+
+// Uniform buffers
+struct PassDataStruct
+{
+	float3 WorldPosition;
+	float3 WorldSize;
+};
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	PassDataStruct PassData;
+UNIFORM_BUFFER_END
+
+// Textures
+TEXTURE_2D(1, 0, HeightMap, 0)
+TEXTURE_2D(1, 1, _argb_nxa, 1)
+TEXTURE_2D(1, 2, _aor_rg_mb_nya, 2)
+
+// Samplers
+SAMPLER_STATE(2, 0, SamplerLinearClamp, 0)
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN_COMPUTE(3, 1, 1)
+	// TODO(co)
+MAIN_END_NO_OUTPUT

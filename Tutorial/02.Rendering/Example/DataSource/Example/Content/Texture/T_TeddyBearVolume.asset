@@ -1,0 +1,25 @@
+{
+	"Format":
+	{
+		"Type": "Asset",
+		"Version": "1"
+	},
+	"Asset":
+	{
+		"Metadata":
+		{
+			"Copyright": "Dataset from http://openqvis.sourceforge.net/"
+		},
+		"Compiler":
+		{
+			"ClassName": "RendererToolkit::TextureAssetCompiler",
+			"TextureSemantic": "VOLUME",
+			"InputFile": "./T_TeddyBearVolume.raw",
+			"RawVolume":
+			{
+				"Resolution": "128 128 62",
+				"Format": "UCHAR"
+			}
+		}
+	}
+}

@@ -1,0 +1,537 @@
+{
+  "Format": {
+    "Type": "SceneAsset",
+    "Version": "1"
+  },
+  "SceneAsset": {
+    "Nodes": [
+      {
+        "Properties": {
+          "Position": "-3.12873816 0.6473912 2.20889306 METER",
+          "Rotation": "-0.0201802868 0.909596086 0.0444870926 0.412612021 QUATERNION"
+        },
+        "Items": {
+          "CameraSceneItem": {
+          }
+        }
+      },
+      {
+        "Items": {
+          "SunlightSceneItem": {
+            "EastDirection": "45.0 DEGREE",
+            "TimeOfDay": "14.42 O_CLOCK"
+          }
+        }
+      },
+      {
+        "Items": {
+          "SkySceneItem": {
+            "Material": "${PROJECT_NAME}/Blueprint/Sky/M_Sky.asset",
+            "SetMaterialProperties": {
+              "UseProceduralSky": "TRUE"
+            }
+          },
+          "TerrainSceneItem": {
+            "Material": "${PROJECT_NAME}/Blueprint/Terrain/M_Terrain.asset",
+            "SetMaterialProperties": {
+              "HeightMap": "${PROJECT_NAME}/Terrain/T_Gonzales_h.asset",
+              "_argb": "${PROJECT_NAME}/Terrain/T_Gonzales_argb.asset",
+              "_aor_rg_mb": "${PROJECT_NAME}/Terrain/T_Gonzales_aor_rg_mb.asset",
+              "LayerArray_argb_nxa": "${PROJECT_NAME}/Terrain/T_GonzalesLayerArray_argb_nxa.asset",
+              "LayerArray_hr_rg_mb_nya": "${PROJECT_NAME}/Terrain/T_GonzalesLayerArray_hr_rg_mb_nya.asset",
+              "SplashMap": "${PROJECT_NAME}/Terrain/T_GonzalesSplashMap.asset",
+              "WorldPosition": "1000.0 -43.1 400.0",
+              "WorldSize": "4096.0 200.0 4096.0"
+            }
+          },
+          "GrassSceneItem": {
+            "Material": "${PROJECT_NAME}/Blueprint/Grass/M_Grass.asset",
+            "SetMaterialProperties": {
+              "_argb_alpha": "${PROJECT_NAME}/Texture/T_Grass_argb_alpha.asset"
+            }
+          },
+          "DebugDrawSceneItem": {
+            "PointListDepthDisabled": {
+              "Material": "${PROJECT_NAME}/Blueprint/DebugDraw/M_DebugDrawPointListDepthDisabled.asset"
+            },
+            "PointListDepthEnabled": {
+              "Material": "${PROJECT_NAME}/Blueprint/DebugDraw/M_DebugDrawPointListDepthEnabled.asset"
+            },
+            "LineListDepthDisabled": {
+              "Material": "${PROJECT_NAME}/Blueprint/DebugDraw/M_DebugDrawLineListDepthDisabled.asset"
+            },
+            "LineListDepthEnabled": {
+              "Material": "${PROJECT_NAME}/Blueprint/DebugDraw/M_DebugDrawLineListDepthEnabled.asset"
+            },
+            "GlyphList": {
+              "Material": "${PROJECT_NAME}/Blueprint/DebugDraw/M_DebugDrawGlyphList.asset",
+              "SetMaterialProperties": {
+                "GlyphMap": "RacoonEngine/Texture/DynamicByCode/DebugDrawGlyphMap2D"
+              }
+            }
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Rotation": "0.0 45.0 0.0 DEGREE",
+          "Scale": "0.07 0.07 0.07 FACTOR"
+        },
+        "Items": {
+          "MeshSceneItem": {
+            "Mesh": "${PROJECT_NAME}/Mesh/Imrod/SM_Imrod.asset"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Rotation": "0.0 45.0 0.0 DEGREE",
+          "Scale": "1.00 1.00 1.00 FACTOR"
+        },
+        "Items": {
+          "MeshSceneItem": {
+            "Mesh": "${PROJECT_NAME}/Mesh/TestObject/testObj.asset"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-3.0 0.05 0.0 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "POINT",
+            "Color": "0 255 0 RGB 6600.0 KELVIN",
+            "Radius": "12.5 METER"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-15.0 17.0 -5.0 METER",
+          "Scale": "0.5 0.5 0.5 FACTOR"
+        },
+        "Items": {
+          "MeshSceneItem": {
+            "Mesh": "${PROJECT_NAME}/Mesh/MetalRoughSpheres/SM_MetalRoughSpheres.asset"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-2.0 1.5 0.0 METER",
+          "Scale": "0.01 0.01 0.01 FACTOR"
+        },
+        "Items": {
+          "MeshSceneItem": {
+            "Mesh": "${PROJECT_NAME}/Mesh/Cerberus/SM_Cerberus.asset"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-4.0 0.0 1.0 METER",
+          "Scale": "0.07 0.07 0.07 FACTOR"
+        },
+        "Items": {
+          "MeshSceneItem": {
+            "Mesh": "${PROJECT_NAME}/Mesh/Imrod/SM_Imrod.asset",
+            "SubMeshMaterials": [
+              "${PROJECT_NAME}/Mesh/Sponza/bricks.asset",
+              "${PROJECT_NAME}/Mesh/Imrod/M_TransparentImrod.asset"
+            ]
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "2.0 0.0 -5.0 METER",
+          "Scale": "0.07 0.07 0.07 FACTOR"
+        },
+        "Items": {
+          "MeshSceneItem": {
+            "Mesh": "${PROJECT_NAME}/Mesh/Imrod/SM_Imrod.asset"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "7 13.3 3 METER",
+          "Rotation": "0.0 45.0 0.0 DEGREE",
+          "Scale": "0.07 0.07 0.07 FACTOR"
+        },
+        "Items": {
+          "MeshSceneItem": {
+            "Mesh": "${PROJECT_NAME}/Mesh/Imrod/SM_Imrod.asset"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "0.0 0.1 -1.5 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "InnerAngle": "45.0 DEGREE",
+            "OuterAngle": "50.0 DEGREE"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-4.3 3.8 6.0 METER",
+          "Rotation": "90.0 0.0 0.0 DEGREE"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "IesLightProfileIndex": "0"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "6.8 3.8 6.0 METER",
+          "Rotation": "90.0 0.0 0.0 DEGREE"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "IesLightProfileIndex": "1"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-4.3 3.8 -5.5 METER",
+          "Rotation": "90.0 0.0 0.0 DEGREE"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "IesLightProfileIndex": "2"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "6.8 3.8 -5.5 METER",
+          "Rotation": "90.0 0.0 0.0 DEGREE"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "IesLightProfileIndex": "8"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "11.2 1.39 4.5 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "POINT",
+            "Color": "FFFFFF HEX",
+            "Radius": "2.5 METER"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-12.0 1.39 4.5 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "POINT",
+            "Color": "0000FF HEX",
+            "Radius": "2.5 METER"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-12.0 1.39 -4.0 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "POINT",
+            "Color": "FF0000 HEX",
+            "Radius": "2.5 METER"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "11.2 1.39 -4.0 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "POINT",
+            "Color": "00FF00 HEX",
+            "Radius": "2.5 METER"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Scale": "1.0 1.0 1.0 PERCENTAGE"
+        },
+        "Items": {
+          "MeshSceneItem": {
+            "Mesh": "${PROJECT_NAME}/Mesh/Sponza/sponza.asset"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "12.7 0.1 3.0 METER",
+          "Rotation": "0.0 180.0 0.0 DEGREE"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "IesLightProfileIndex": "9"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "12.7 0.1 -3.0 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "IesLightProfileIndex": "10"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "12.7 3.8 -4.0 METER",
+          "Rotation": "90.0 0.0 0.0 DEGREE"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "IesLightProfileIndex": "12"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-14.0 3.8 -4.0 METER",
+          "Rotation": "90.0 0.0 0.0 DEGREE"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "IesLightProfileIndex": "15"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "12.7 3.8 4.7 METER",
+          "Rotation": "90.0 0.0 0.0 DEGREE"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "IesLightProfileIndex": "19"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-14.0 3.8 4.7 METER",
+          "Rotation": "90.0 0.0 0.0 DEGREE"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "IesLightProfileIndex": "21"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-14.0 0.1 3.0 METER",
+          "Rotation": "0.0 180.0 0.0 DEGREE"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "IesLightProfileIndex": "22"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-14.0 0.1 -3.0 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "SPOT",
+            "Color": "10.0 INTENSITY 6600.0 KELVIN",
+            "Radius": "5.0 METER",
+            "IesLightProfileIndex": "23"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-2.56804585 1.92319942 1.58084095 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "POINT",
+            "Color": "1.0 0.0 0.0 RGB_FLOAT 2.0 INTENSITY",
+            "Radius": "2.0 METER"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "1.20822608 2.13819814 3.82538891 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "POINT",
+            "Color": "0 255 0 RGB 6600.0 KELVIN",
+            "Radius": "1.0 METER"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-1.91534328 2.73809576 -5.37067556 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "POINT",
+            "Color": "6600.0 KELVIN",
+            "Radius": "3.0 METER"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "0.448334336 2.81350160 -5.06476307 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "POINT",
+            "Color": "0.0 1.5 1.5 RGB_FLOAT",
+            "Radius": "2.5 METER"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "8.0 0.0 1.5 METER",
+          "Scale": "0.03 0.03 0.03 FACTOR"
+        },
+        "Items": {
+          "SkeletonMeshSceneItem": {
+            "Mesh": "${PROJECT_NAME}/Mesh/Bob/SM_Bob.asset",
+            "SkeletonAnimation": "${PROJECT_NAME}/Mesh/Bob/SA_Bob.asset"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "-3.0 1.0 2.0 METER"
+        },
+        "Items": {
+          "LightSceneItem": {
+            "LightType": "POINT",
+            "Color": "120.0 1 1 HSV",
+            "Radius": "2.0 METER"
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "0.0 0.0 0.0 METER"
+        },
+        "Items": {
+          "ParticlesSceneItem": {
+            "Material": "${PROJECT_NAME}/Blueprint/Particles/M_Particles.asset",
+            "SetMaterialProperties": {
+              "_argb_alpha": "${PROJECT_NAME}/Texture/T_Particles_argb_alpha.asset"
+            }
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "3.0 0.45 2.3 METER",
+          "Rotation": "90.0 0.0 0.0 DEGREE"
+        },
+        "Items": {
+          "VolumeSceneItem": {
+            "Material": "${PROJECT_NAME}/Blueprint/Volume/M_Volume.asset",
+            "SetMaterialProperties": {
+              "VolumeMap": "${PROJECT_NAME}/Texture/T_TeddyBearVolume.asset"
+            }
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "2.1 0.45 2.1 METER",
+          "Rotation": "90.0 -35.0 0.0 DEGREE"
+        },
+        "Items": {
+          "VolumeSceneItem": {
+            "Material": "${PROJECT_NAME}/Blueprint/Volume/M_Volume.asset",
+            "SetMaterialProperties": {
+              "VolumeMap": "${PROJECT_NAME}/Texture/T_TeddyBearVolume.asset"
+            }
+          }
+        }
+      },
+      {
+        "Properties": {
+          "Position": "6.0 0.95 -4.7 METER",
+          "Rotation": "90.0 -180.0 0.0 DEGREE",
+          "Scale": "2.0 2.0 2.0 FACTOR"
+        },
+        "Items": {
+          "VolumeSceneItem": {
+            "Material": "${PROJECT_NAME}/Blueprint/Volume/M_Volume.asset",
+            "SetMaterialProperties": {
+              "VolumeMap": "${PROJECT_NAME}/Texture/T_TeddyBearVolume.asset"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

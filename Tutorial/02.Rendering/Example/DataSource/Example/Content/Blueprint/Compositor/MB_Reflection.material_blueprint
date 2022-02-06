@@ -1,0 +1,244 @@
+{
+	"Format":
+	{
+		"Type": "MaterialBlueprintAsset",
+		"Version": "2"
+	},
+	"MaterialBlueprintAsset":
+	{
+		"Properties":
+		{
+			"UseScreenSpaceReflectionMap":
+			{
+				"Usage": "SHADER_COMBINATION",
+				"ValueType": "BOOLEAN",
+				"Value": "TRUE",
+				"Description": "'true' if the screen space reflection map should be used, else 'false'",
+				"VisualImportance": "100"
+			},
+			"DepthMap":
+			{
+				"Usage": "TEXTURE_REFERENCE",
+				"ValueType": "TEXTURE_ASSET_ID",
+				"Value": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+				"Description": "2D depth map"
+			},
+			"SpecularMap":
+			{
+				"Usage": "TEXTURE_REFERENCE",
+				"ValueType": "TEXTURE_ASSET_ID",
+				"Value": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+				"Description": "2D specular map"
+			},
+			"NormalMap":
+			{
+				"Usage": "TEXTURE_REFERENCE",
+				"ValueType": "TEXTURE_ASSET_ID",
+				"Value": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+				"Description": "2D normal map: rgb = view space normal"
+			},
+			"ReflectionCubeMap":
+			{
+				"Usage": "TEXTURE_REFERENCE",
+				"ValueType": "TEXTURE_ASSET_ID",
+				"Value": "RacoonEngine/Texture/DynamicByCode/BlackMapCube",
+				"Description": "Reflection cube map"
+			},
+			"ScreenSpaceReflectionMap":
+			{
+				"Usage": "TEXTURE_REFERENCE",
+				"ValueType": "TEXTURE_ASSET_ID",
+				"Value": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+				"Description": "2D screen space reflection ray tracing map, only used if 'UseScreenSpaceReflectionMap' is 'true'"
+			},
+			"PreviousColorMap":
+			{
+				"Usage": "TEXTURE_REFERENCE",
+				"ValueType": "TEXTURE_ASSET_ID",
+				"Value": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+				"Description": "Previous 2D color map, only used if 'UseScreenSpaceReflectionMap' is 'true'"
+			},
+			"VelocityMap":
+			{
+				"Usage": "TEXTURE_REFERENCE",
+				"ValueType": "TEXTURE_ASSET_ID",
+				"Value": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+				"Description": "2D velocity map"
+			}
+		},
+		"GraphicsPipelineState":
+		{
+			"VertexAttributes": "./VA_Compositor.asset",
+			"ShaderBlueprints":
+			{
+				"VertexShaderBlueprint": "./SB_PositionTextureCoordinateVertexRay.asset",
+				"FragmentShaderBlueprint": "./SB_ReflectionFragment.asset"
+			},
+			"RasterizerState":
+			{
+				"CullMode": "NONE"
+			},
+			"DepthStencilState":
+			{
+				"DepthEnable": "FALSE",
+				"DepthWriteMask": "ZERO"
+			}
+		},
+		"ResourceGroups":
+		{
+			"0":
+			{
+				"0":
+				{
+					"ResourceType": "UNIFORM_BUFFER",
+					"BaseShaderRegisterName": "PassUniformBuffer",
+					"BaseShaderRegister": "0",
+					"ShaderVisibility": "ALL_GRAPHICS",
+					"BufferUsage": "PASS",
+					"NumberOfElements": "1",
+					"ElementProperties":
+					{
+						"ViewSpaceFrustumCorners":
+						{
+							"Usage": "PASS_REFERENCE",
+							"ValueType": "FLOAT_4_4",
+							"Value": "@VIEW_SPACE_FRUSTUM_CORNERS"
+						},
+						"ViewSpaceToWorldSpaceQuaternion":
+						{
+							"Usage": "PASS_REFERENCE",
+							"ValueType": "FLOAT_4",
+							"Value": "@VIEW_SPACE_TO_WORLD_SPACE_QUATERNION"
+						},
+						"ViewportSize":
+						{
+							"Usage": "PASS_REFERENCE",
+							"ValueType": "FLOAT_2",
+							"Value": "@VIEWPORT_SIZE"
+						},
+						"ProjectionParameters":
+						{
+							"Usage": "PASS_REFERENCE",
+							"ValueType": "FLOAT_2",
+							"Value": "@PROJECTION_PARAMETERS"
+						}
+					}
+				}
+			},
+			"1":
+			{
+				"0":
+				{
+					"ResourceType": "TEXTURE_2D",
+					"BaseShaderRegisterName": "DepthMap",
+					"BaseShaderRegister": "0",
+					"ShaderVisibility": "FRAGMENT",
+					"Usage": "MATERIAL_REFERENCE",
+					"ValueType": "TEXTURE_ASSET_ID",
+					"Value": "@DepthMap",
+					"FallbackTexture": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+					"SamplerStateBaseShaderRegisterName": "SamplerPointClamp"
+				},
+				"1":
+				{
+					"ResourceType": "TEXTURE_2D",
+					"BaseShaderRegisterName": "SpecularMap",
+					"BaseShaderRegister": "1",
+					"ShaderVisibility": "FRAGMENT",
+					"Usage": "MATERIAL_REFERENCE",
+					"ValueType": "TEXTURE_ASSET_ID",
+					"Value": "@SpecularMap",
+					"FallbackTexture": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+					"MipmapsUsed": "FALSE",
+					"SamplerStateBaseShaderRegisterName": "SamplerPointClamp"
+				},
+				"2":
+				{
+					"ResourceType": "TEXTURE_2D",
+					"BaseShaderRegisterName": "NormalMap",
+					"BaseShaderRegister": "2",
+					"ShaderVisibility": "FRAGMENT",
+					"Usage": "MATERIAL_REFERENCE",
+					"ValueType": "TEXTURE_ASSET_ID",
+					"Value": "@NormalMap",
+					"FallbackTexture": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+					"MipmapsUsed": "FALSE",
+					"SamplerStateBaseShaderRegisterName": "SamplerPointClamp"
+				},
+				"3":
+				{
+					"ResourceType": "TEXTURE_CUBE",
+					"BaseShaderRegisterName": "ReflectionCubeMap",
+					"BaseShaderRegister": "3",
+					"ShaderVisibility": "FRAGMENT",
+					"Usage": "MATERIAL_REFERENCE",
+					"ValueType": "TEXTURE_ASSET_ID",
+					"Value": "@ReflectionCubeMap",
+					"FallbackTexture": "RacoonEngine/Texture/DynamicByCode/WhiteMapCube",
+					"RgbHardwareGammaCorrection": "TRUE",
+					"SamplerStateBaseShaderRegisterName": "SamplerLinear"
+				},
+				"4":
+				{
+					"ResourceType": "TEXTURE_2D",
+					"BaseShaderRegisterName": "ScreenSpaceReflectionMap",
+					"BaseShaderRegister": "4",
+					"ShaderVisibility": "FRAGMENT",
+					"Usage": "MATERIAL_REFERENCE",
+					"ValueType": "TEXTURE_ASSET_ID",
+					"Value": "@ScreenSpaceReflectionMap",
+					"FallbackTexture": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+					"MipmapsUsed": "FALSE",
+					"SamplerStateBaseShaderRegisterName": "SamplerLinear"
+				},
+				"5":
+				{
+					"ResourceType": "TEXTURE_2D",
+					"BaseShaderRegisterName": "PreviousColorMap",
+					"BaseShaderRegister": "5",
+					"ShaderVisibility": "FRAGMENT",
+					"Usage": "MATERIAL_REFERENCE",
+					"ValueType": "TEXTURE_ASSET_ID",
+					"Value": "@PreviousColorMap",
+					"FallbackTexture": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+					"MipmapsUsed": "FALSE",
+					"SamplerStateBaseShaderRegisterName": "SamplerPointClamp"
+				},
+				"6":
+				{
+					"ResourceType": "TEXTURE_2D",
+					"BaseShaderRegisterName": "VelocityMap",
+					"BaseShaderRegister": "6",
+					"ShaderVisibility": "FRAGMENT",
+					"Usage": "MATERIAL_REFERENCE",
+					"ValueType": "TEXTURE_ASSET_ID",
+					"Value": "@VelocityMap",
+					"FallbackTexture": "RacoonEngine/Texture/DynamicByCode/BlackMap2D",
+					"MipmapsUsed": "FALSE",
+					"SamplerStateBaseShaderRegisterName": "SamplerPointClamp"
+				}
+			},
+			"2":
+			{
+				"0":
+				{
+					"ResourceType": "SAMPLER_STATE",
+					"BaseShaderRegisterName": "SamplerPointClamp",
+					"BaseShaderRegister": "0",
+					"ShaderVisibility": "FRAGMENT",
+					"Filter": "MIN_MAG_MIP_POINT",
+					"MaxAnisotropy": "1"
+				},
+				"1":
+				{
+					"ResourceType": "SAMPLER_STATE",
+					"BaseShaderRegisterName": "SamplerLinear",
+					"BaseShaderRegister": "1",
+					"ShaderVisibility": "FRAGMENT",
+					"Filter": "MIN_MAG_MIP_LINEAR",
+					"MaxAnisotropy": "1"
+				}
+			}
+		}
+	}
+}

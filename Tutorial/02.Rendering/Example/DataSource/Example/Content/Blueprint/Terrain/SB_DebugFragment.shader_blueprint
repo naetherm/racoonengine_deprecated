@@ -1,0 +1,54 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+@includepiece(./SP_Terrain.asset)
+	@insertpiece(DefineTerrainPassDataStruct)
+
+ 
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+	INPUT_TEXTURE_COORDINATE(1, float2, TexCoord, 					 0)	// Texture coordinate
+	INPUT_TEXTURE_COORDINATE(2, float3, PreviousClipSpacePositionVS, 1)	// Previous clip space position
+	INPUT_TEXTURE_COORDINATE(3, float3, WorldSpacePosition, 		 2)	// World space position
+INPUT_END
+OUTPUT_BEGIN
+	OUTPUT_COLOR(0)	// rgb = albedo color, a = alpha
+OUTPUT_END
+
+// Uniform buffers
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	TerrainPassDataStruct PassData;
+UNIFORM_BUFFER_END
+
+// Textures
+TEXTURE_2D(2, 1, _argb, 2)
+
+// Samplers
+SAMPLER_STATE(3, 1, SamplerLinearClamp, 1)
+
+
+//[-------------------------------------------------------]
+//[ Functions                                             ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Color.asset)
+	@insertpiece(DefineLinearSpaceToGammaSpace3)
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN
+	// Read channel packed texture data
+	// -> "_argb" = RGB channel = Albedo map ("_a"-postfix)
+	float3 color = LinearSpaceToGammaSpace3(SAMPLE_2D(_argb, SamplerLinearClamp, MAIN_INPUT(TexCoord)).rgb);
+
+	// Done
+	MAIN_OUTPUT_COLOR(0) = float4(color, 1.0f);
+MAIN_END

@@ -1,0 +1,17 @@
+{
+	"Format":
+	{
+		"Type": "CompositorWorkspaceAsset",
+		"Version": "1"
+	},
+	"CompositorWorkspaceAsset":
+	{
+		"Description": "VR rendering compositor workspace",
+		"Nodes":
+		{
+			"${PROJECT_NAME}/CompositorNode/CN_Vr.asset":
+			{
+			}
+		}
+	}
+}

@@ -1,0 +1,53 @@
+[CodeGenManagerSettings]
+# List of supported extensions
+supportedFileExtensions = [".h", ".hpp"]
+
+# Files contained in the directories of this list will be parsed
+toProcessDirectories = [
+${RTTI_PROCESS_DIRECTORIES}
+]
+
+# Files to parse which are not included in any directory of toParseDirectories
+toProcessFiles = []
+
+# Files contained in the directories of this list will be ignored
+ignoredDirectories = [
+${RTTI_IGNORED_DIRECTORIES}
+]
+
+# Files not to parse which are not included in any directory of ignoredDirectories
+ignoredFiles = []
+
+
+[CodeGenUnitSettings]
+# Generated files will be located here
+outputDirectory = ${RTTI_OUTPUT_DIRECTORY}
+
+generatedHeaderFileNamePattern = "##FILENAME##.rtti_header.h"
+generatedSourceFileNamePattern = "##FILENAME##.rtti_source.h"
+classFooterMacroPattern = "##CLASSFULLNAME##_GENERATED"
+headerFileFooterMacroPattern = "File_##FILENAME##_GENERATED"
+
+
+[ParsingSettings]
+# Abort parsing on first encountered error
+shouldAbortParsingOnFirstError = true
+
+# Should all entities be parsed whether they are annotated or not
+shouldParseAllNamespaces = false
+shouldParseAllClasses = false
+shouldParseAllStructs = false
+shouldParseAllVariables = false
+shouldParseAllFields = false
+shouldParseAllFunctions = false
+shouldParseAllMethods = false
+shouldParseAllEnums = false
+shouldParseAllEnumValues = false
+
+# Include directories of the project
+projectIncludeDirectories = [
+${RTTI_INCLUDED_DIRECTORIES}
+]
+
+# Must be one of "msvc", "clang++", "g++"
+compilerExeName = "clang++"

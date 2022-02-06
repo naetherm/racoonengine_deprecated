@@ -1,0 +1,517 @@
+{
+	"Format":
+	{
+		"Type": "CompositorNodeAsset",
+		"Version": "1"
+	},
+	"CompositorNodeAsset":
+	{
+		"Description": "VR rendering compositor node",
+		"InputChannels":
+		{
+			"0": "InputRenderTarget",
+			"1": "OutputRenderTarget"
+		},
+		"RenderTargetTextures":
+		{
+			"Example/Texture/Dynamic/HdrMultisampleColorRenderTarget":
+			{
+				"TextureFormat": "R16G16B16A16F",
+				"Flags": "SHADER_RESOURCE | RENDER_TARGET | ALLOW_MULTISAMPLE | ALLOW_RESOLUTION_SCALE"
+			},
+			"Example/Texture/Dynamic/MultisampleDepthStencilRenderTarget":
+			{
+				"TextureFormat": "D32_FLOAT",
+				"Flags": "SHADER_RESOURCE | RENDER_TARGET | ALLOW_MULTISAMPLE | ALLOW_RESOLUTION_SCALE"
+			},
+			"Example/Texture/Dynamic/DepthStencilRenderTarget":
+			{
+				"TextureFormat": "D32_FLOAT"
+			},
+			"Example/Texture/Dynamic/HierarchicalDepthStencilRenderTarget":
+			{
+				"Description": "Hierarchical depth buffer (aka Hi-Z map or HZB), useful for GPU occlusion culling, screen space reflections as well as using the second depth buffer mipmap for e.g. a half-sized volumetric light/fog bilateral upsampling",
+				"TextureFormat": "D32_FLOAT",
+				"Flags": "SHADER_RESOURCE | RENDER_TARGET | GENERATE_MIPMAPS | ALLOW_RESOLUTION_SCALE"
+			},
+			"Example/Texture/Dynamic/MultisampleSpecularRenderTarget":
+			{
+				"Description": "rgb = specular color, a = roughness",
+				"TextureFormat": "R8G8B8A8",
+				"Flags": "SHADER_RESOURCE | RENDER_TARGET | ALLOW_MULTISAMPLE | ALLOW_RESOLUTION_SCALE"
+			},
+			"Example/Texture/Dynamic/SpecularRenderTarget":
+			{
+				"Description": "rgb = specular color, a = roughness",
+				"TextureFormat": "R8G8B8A8",
+				"Flags": "SHADER_RESOURCE | RENDER_TARGET | ALLOW_RESOLUTION_SCALE"
+			},
+			"Example/Texture/Dynamic/MultisampleNormalRenderTarget":
+			{
+				"Description": "rgb = view space normal",
+				"TextureFormat": "R32G32B32A32F",
+				"Flags": "SHADER_RESOURCE | RENDER_TARGET | ALLOW_MULTISAMPLE | ALLOW_RESOLUTION_SCALE"
+			},
+			"Example/Texture/Dynamic/NormalRenderTarget":
+			{
+				"Description": "rgb = view space normal",
+				"TextureFormat": "R32G32B32A32F",
+				"Flags": "SHADER_RESOURCE | RENDER_TARGET | ALLOW_RESOLUTION_SCALE"
+			},
+			"Example/Texture/Dynamic/MultisampleVelocityRenderTarget":
+			{
+				"TextureFormat": "R16G16_FLOAT",
+				"Flags": "SHADER_RESOURCE | RENDER_TARGET | ALLOW_MULTISAMPLE | ALLOW_RESOLUTION_SCALE"
+			},
+			"Example/Texture/Dynamic/VelocityRenderTarget":
+			{
+				"TextureFormat": "R16G16_FLOAT",
+				"Flags": "SHADER_RESOURCE | RENDER_TARGET | ALLOW_RESOLUTION_SCALE"
+			},
+			"Example/Texture/Dynamic/ReflectionRenderTarget":
+			{
+				"TextureFormat": "R11G11B10F"
+			},
+			"Example/Texture/Dynamic/HdrColorRenderTarget0":
+			{
+				"TextureFormat": "R11G11B10F",
+				"Flags": "SHADER_RESOURCE | UNORDERED_ACCESS | RENDER_TARGET | ALLOW_RESOLUTION_SCALE"
+			},
+			"Example/Texture/Dynamic/HdrColorRenderTarget1":
+			{
+				"TextureFormat": "R11G11B10F",
+				"Flags": "SHADER_RESOURCE | UNORDERED_ACCESS | RENDER_TARGET | ALLOW_RESOLUTION_SCALE"
+			},
+			"Example/Texture/Dynamic/PreviousHdrColorRenderTarget":
+			{
+				"TextureFormat": "R11G11B10F",
+				"Flags": "SHADER_RESOURCE | ALLOW_RESOLUTION_SCALE"
+			},
+			"Example/Texture/Dynamic/LuminanceRenderTarget":
+			{
+				"Width": "1024",
+				"Height": "1024",
+				"TextureFormat": "R32_FLOAT",
+				"Flags": "SHADER_RESOURCE | UNORDERED_ACCESS | GENERATE_MIPMAPS"
+			},
+			"Example/Texture/Dynamic/PreviousLuminanceRenderTarget":
+			{
+				"Width": "1",
+				"Height": "1",
+				"TextureFormat": "R32_FLOAT",
+				"Flags": "SHADER_RESOURCE"
+			},
+			"Example/Texture/Dynamic/AdaptiveLuminanceRenderTarget":
+			{
+				"Width": "1",
+				"Height": "1",
+				"TextureFormat": "R32_FLOAT",
+				"Flags": "SHADER_RESOURCE | UNORDERED_ACCESS"
+			},
+			"Example/Texture/Dynamic/BloomColorRenderTarget":
+			{
+				"TextureFormat": "R11G11B10F",
+				"Width": "256",
+				"Height": "256",
+				"Flags": "SHADER_RESOURCE | UNORDERED_ACCESS"
+			},
+			"Example/Texture/Dynamic/BloomDownscale2ColorRenderTarget":
+			{
+				"TextureFormat": "R11G11B10F",
+				"Width": "128",
+				"Height": "128",
+				"Flags": "SHADER_RESOURCE | UNORDERED_ACCESS"
+			},
+			"Example/Texture/Dynamic/BloomDownscale4ColorRenderTarget":
+			{
+				"TextureFormat": "R11G11B10F",
+				"Width": "64",
+				"Height": "64",
+				"Flags": "SHADER_RESOURCE | UNORDERED_ACCESS"
+			},
+			"Example/Texture/Dynamic/BloomDownscale8ColorRenderTarget":
+			{
+				"TextureFormat": "R11G11B10F",
+				"Width": "32",
+				"Height": "32",
+				"Flags": "SHADER_RESOURCE | UNORDERED_ACCESS"
+			},
+			"Example/Texture/Dynamic/BloomDownscale8GaussianBlurTemporaryRenderTarget":
+			{
+				"TextureFormat": "R11G11B10F",
+				"Width": "32",
+				"Height": "32",
+				"Flags": "SHADER_RESOURCE | UNORDERED_ACCESS"
+			},
+			"Example/Texture/Dynamic/LdrColorRenderTarget0":
+			{
+				"TextureFormat": "R8G8B8A8",
+				"Flags": "SHADER_RESOURCE | UNORDERED_ACCESS | ALLOW_RESOLUTION_SCALE"
+			}
+		},
+		"Framebuffers":
+		{
+			"HdrMultisampleFramebuffer":
+			{
+				"ColorTextures": [ "Example/Texture/Dynamic/HdrMultisampleColorRenderTarget", "Example/Texture/Dynamic/MultisampleSpecularRenderTarget", "Example/Texture/Dynamic/MultisampleNormalRenderTarget", "Example/Texture/Dynamic/MultisampleVelocityRenderTarget" ],
+				"DepthStencilTexture": "Example/Texture/Dynamic/MultisampleDepthStencilRenderTarget"
+			},
+			"MsaaResolveFramebuffer":
+			{
+				"ColorTextures": [ "Example/Texture/Dynamic/HdrColorRenderTarget0", "Example/Texture/Dynamic/SpecularRenderTarget", "Example/Texture/Dynamic/NormalRenderTarget", "Example/Texture/Dynamic/VelocityRenderTarget" ],
+				"DepthStencilTexture": "Example/Texture/Dynamic/DepthStencilRenderTarget"
+			},
+			"ReflectionFramebuffer":
+			{
+				"ColorTextures": [ "Example/Texture/Dynamic/ReflectionRenderTarget" ]
+			},
+			"HdrFramebuffer1":
+			{
+				"ColorTextures": [ "Example/Texture/Dynamic/HdrColorRenderTarget1" ]
+			},
+			"TransparentFramebuffer":
+			{
+				"ColorTextures": [ "Example/Texture/Dynamic/HdrColorRenderTarget1" ],
+				"DepthStencilTexture": "Example/Texture/Dynamic/HierarchicalDepthStencilRenderTarget"
+			}
+		},
+		"Targets":
+		{
+			"":
+			{
+				"ShadowMap":
+				{
+					"MinimumRenderQueueIndex": "0",
+					"MaximumRenderQueueIndex": "253",
+					"MaterialTechnique": "DepthOnly",
+					"Texture": "Example/Texture/Dynamic/ShadowMapRenderTarget",
+					"DepthToExponentialVarianceMaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_DepthToExponentialVariance.asset",
+					"BlurMaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_ShadowBlur.asset"
+				}
+			},
+			"HdrMultisampleFramebuffer":
+			{
+				"Description": "Forward rendering, also renders out view space normals into an additional render target",
+				"Clear":
+				{
+					"Flags": "COLOR | DEPTH",
+					"Color": "0.5 0.5 0.5 0.0"
+				},
+				"VrHiddenAreaMesh":
+				{
+					"Flags": "DEPTH"
+				},
+				"Scene":
+				{
+					"Name": "Solid objects",
+					"MinimumRenderQueueIndex": "0",
+					"MaximumRenderQueueIndex": "252",
+					"MaterialTechnique": "Forward"
+				},
+				"Scene":
+				{
+					"Name": "Terrain",
+					"MinimumRenderQueueIndex": "252",
+					"MaximumRenderQueueIndex": "252",
+					"MaterialTechnique": "Forward"
+				},
+				"Scene":
+				{
+					"Name": "Sky",
+					"Description": "Maximum depth is 0 instead of 1 due to the usage of Reversed-Z (see e.g. https://developer.nvidia.com/content/depth-precision-visualized and https://nlguillemot.wordpress.com/2016/12/07/reversed-z-in-opengl/)",
+					"MaximumDepth": "0.0",
+					"MinimumRenderQueueIndex": "253",
+					"MaximumRenderQueueIndex": "253",
+					"MaterialTechnique": "Forward"
+				}
+			},
+			"MsaaResolveFramebuffer":
+			{
+				"Compute":
+				{
+					"Name": "MSAA resolve",
+					"Description": "The MSAA resolve is using a graphics material blueprint instead of compute material blueprint since we're dealing with a depth buffer format which doesn't work that well with unordered access",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_MsaaResolve.asset",
+					"SetMaterialProperties":
+					{
+						"ColorMap": "Example/Texture/Dynamic/HdrMultisampleColorRenderTarget",
+						"DepthMap": "Example/Texture/Dynamic/MultisampleDepthStencilRenderTarget",
+						"SpecularMap": "Example/Texture/Dynamic/MultisampleSpecularRenderTarget",
+						"NormalMap": "Example/Texture/Dynamic/MultisampleNormalRenderTarget",
+						"VelocityMap": "Example/Texture/Dynamic/MultisampleVelocityRenderTarget"
+					}
+				}
+			},
+			"":
+			{
+				"Copy":
+				{
+					"Name": "HZB depth map copy",
+					"Description": "Sadly even with read-only it's impossible to read from a depth map while it's bound as depth buffer, so we need a copy",
+					"DestinationTexture": "Example/Texture/Dynamic/HierarchicalDepthStencilRenderTarget",
+					"SourceTexture": "Example/Texture/Dynamic/DepthStencilRenderTarget"
+				},
+				"GenerateMipmaps":
+				{
+					"Name": "Generate HZB mipmap chain",
+					"Description": "Generate the mipmap chain of the hierarchical depth buffer. Is using a graphics material blueprint instead of compute material blueprint since we're dealing with a depth buffer format which doesn't work that well with unordered access.",
+					"Texture": "Example/Texture/Dynamic/HierarchicalDepthStencilRenderTarget",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_DepthGenerateMipmap.asset",
+					"TextureMaterialBlueprintProperty": "DepthMap"
+				}
+			},
+			"ReflectionFramebuffer":
+			{
+				"Clear":
+				{
+					"NumberOfExecutions": "1",
+					"Flags": "COLOR"
+				},
+				"Compute":
+				{
+					"Name": "Generate reflection",
+					"SkipFirstExecution": "TRUE",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_Reflection.asset",
+					"SetMaterialProperties":
+					{
+						"UseScreenSpaceReflectionMap": "FALSE",
+						"DepthMap": "Example/Texture/Dynamic/HierarchicalDepthStencilRenderTarget",
+						"SpecularMap": "Example/Texture/Dynamic/SpecularRenderTarget",
+						"NormalMap": "Example/Texture/Dynamic/NormalRenderTarget",
+						"ReflectionCubeMap": "${PROJECT_NAME}/Texture/T_Maskonaive3_rcube.asset"
+					}
+				}
+			},
+			"HdrFramebuffer1":
+			{
+				"Compute":
+				{
+					"Name": "Composite forward data",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_Forward.asset",
+					"SetMaterialProperties":
+					{
+						"ColorMap": "Example/Texture/Dynamic/HdrColorRenderTarget0",
+						"DepthMap": "Example/Texture/Dynamic/HierarchicalDepthStencilRenderTarget",
+						"ReflectionMap": "Example/Texture/Dynamic/ReflectionRenderTarget",
+						"SpecularMap": "Example/Texture/Dynamic/SpecularRenderTarget"
+					}
+				}
+			},
+			"TransparentFramebuffer":
+			{
+				"Scene":
+				{
+					"Name": "Transparent objects",
+					"MinimumRenderQueueIndex": "254",
+					"MaximumRenderQueueIndex": "254",
+					"TransparentPass": "TRUE",
+					"MaterialTechnique": "Transparent"
+				},
+				"Scene":
+				{
+					"Name": "Debug objects",
+					"MinimumRenderQueueIndex": "255",
+					"MaximumRenderQueueIndex": "255",
+					"MaterialTechnique": "Debug"
+				}
+			},
+			"":
+			{
+				"Compute":
+				{
+					"Name": "Temporal anti aliasing",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_TemporalAntiAliasing.asset",
+					"SetMaterialProperties":
+					{
+						"ColorMap": "Example/Texture/Dynamic/HdrColorRenderTarget1",
+						"DepthMap": "Example/Texture/Dynamic/HierarchicalDepthStencilRenderTarget",
+						"VelocityMap": "Example/Texture/Dynamic/VelocityRenderTarget",
+						"PreviousColorMap": "Example/Texture/Dynamic/PreviousHdrColorRenderTarget",
+						"OutputTexture2D": "Example/Texture/Dynamic/HdrColorRenderTarget0"
+					}
+				},
+				"Copy":
+				{
+					"Name": "Backup color",
+					"DestinationTexture": "Example/Texture/Dynamic/PreviousHdrColorRenderTarget",
+					"SourceTexture": "Example/Texture/Dynamic/HdrColorRenderTarget0"
+				},
+				"Compute":
+				{
+					"Name": "Calculate luminance",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_CalculateLuminance.asset",
+					"SetMaterialProperties":
+					{
+						"ColorMap": "Example/Texture/Dynamic/HdrColorRenderTarget0",
+						"OutputTexture2D": "Example/Texture/Dynamic/LuminanceRenderTarget"
+					}
+				},
+				"GenerateMipmaps":
+				{
+					"Name": "Generate luminance mipmap chain",
+					"Texture": "Example/Texture/Dynamic/LuminanceRenderTarget"
+				},
+				"Copy":
+				{
+					"Name": "Backup previous luminance",
+					"Description": "Backup the adaptive luminance from the previous frame. Skip the first execution since there's no valid previous adaptive luminance available in this situation. The current compositor target isn't used for this.",
+					"SkipFirstExecution": "TRUE",
+					"DestinationTexture": "Example/Texture/Dynamic/PreviousLuminanceRenderTarget",
+					"SourceTexture": "Example/Texture/Dynamic/AdaptiveLuminanceRenderTarget"
+				},
+				"Compute":
+				{
+					"Name": "Adaptive luminance",
+					"Description": "Slowly adjusts the scene luminance based on the previous scene luminance. Skip the first execution since there's no valid previous adaptive luminance available in this situation.",
+					"SkipFirstExecution": "TRUE",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_AdaptiveLuminance.asset",
+					"SetMaterialProperties":
+					{
+						"CurrentLuminanceMap": "Example/Texture/Dynamic/LuminanceRenderTarget",
+						"PreviousLuminanceMap": "Example/Texture/Dynamic/PreviousLuminanceRenderTarget",
+						"OutputTexture2D": "Example/Texture/Dynamic/AdaptiveLuminanceRenderTarget"
+					}
+				},
+				"Compute":
+				{
+					"Name": "Adaptive luminance",
+					"Description": "During the first execution there's no valid previous adaptive luminance available, so use the just calculated luminance as previous luminance.",
+					"NumberOfExecutions": "1",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_AdaptiveLuminance.asset",
+					"SetMaterialProperties":
+					{
+						"CurrentLuminanceMap": "Example/Texture/Dynamic/LuminanceRenderTarget",
+						"FirstExecution": "TRUE",
+						"OutputTexture2D": "Example/Texture/Dynamic/AdaptiveLuminanceRenderTarget"
+					}
+				},
+				"Compute":
+				{
+					"Name": "Bloom threshold",
+					"Description": "Bloom pass: Use a lower exposure to produce a value suitable for a bloom pass",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_HdrToLdrBloomThreshold.asset",
+					"SetMaterialProperties":
+					{
+						"ColorMap": "Example/Texture/Dynamic/HdrColorRenderTarget0",
+						"LuminanceMap": "Example/Texture/Dynamic/AdaptiveLuminanceRenderTarget",
+						"OutputTexture2D": "Example/Texture/Dynamic/BloomColorRenderTarget"
+					}
+				},
+				"Compute":
+				{
+					"Name": "Bloom downscale",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_Scale.asset",
+					"SetMaterialProperties":
+					{
+						"ColorMap": "Example/Texture/Dynamic/BloomColorRenderTarget",
+						"OutputTexture2D": "Example/Texture/Dynamic/BloomDownscale2ColorRenderTarget"
+					}
+				},
+				"Compute":
+				{
+					"Name": "Bloom downscale",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_Scale.asset",
+					"SetMaterialProperties":
+					{
+						"ColorMap": "Example/Texture/Dynamic/BloomDownscale2ColorRenderTarget",
+						"OutputTexture2D": "Example/Texture/Dynamic/BloomDownscale4ColorRenderTarget"
+					}
+				},
+				"Compute":
+				{
+					"Name": "Bloom Downscale",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_Scale.asset",
+					"SetMaterialProperties":
+					{
+						"ColorMap": "Example/Texture/Dynamic/BloomDownscale4ColorRenderTarget",
+						"OutputTexture2D": "Example/Texture/Dynamic/BloomDownscale8ColorRenderTarget"
+					}
+				}
+			},
+			"@foreach(4, i)":
+			{
+				"":
+				{
+					"Compute":
+					{
+						"Name": "Bloom vertical blur",
+						"Description": "Bloom pass: Vertical Gaussian blur",
+						"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_GaussianBlur.asset",
+						"SetMaterialProperties":
+						{
+							"VerticalBlur": "TRUE", 
+							"ColorMap": "Example/Texture/Dynamic/BloomDownscale8ColorRenderTarget",
+							"OutputTexture2D": "Example/Texture/Dynamic/BloomDownscale8GaussianBlurTemporaryRenderTarget"
+						}
+					},
+					"Compute":
+					{
+						"Name": "Bloom horizontal blur",
+						"Description": "Bloom pass: Horizontal Gaussian blur",
+						"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_GaussianBlur.asset",
+						"SetMaterialProperties":
+						{
+							"VerticalBlur": "FALSE", 
+							"ColorMap": "Example/Texture/Dynamic/BloomDownscale8GaussianBlurTemporaryRenderTarget",
+							"OutputTexture2D": "Example/Texture/Dynamic/BloomDownscale8ColorRenderTarget"
+						}
+					}
+				}
+			},
+			"":
+			{
+				"Compute":
+				{
+					"Name": "Bloom upscale",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_Scale.asset",
+					"SetMaterialProperties":
+					{
+						"ColorMap": "Example/Texture/Dynamic/BloomDownscale8ColorRenderTarget",
+						"OutputTexture2D": "Example/Texture/Dynamic/BloomDownscale4ColorRenderTarget"
+					}
+				},
+				"Compute":
+				{
+					"Name": "Bloom upscale",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_Scale.asset",
+					"SetMaterialProperties":
+					{
+						"ColorMap": "Example/Texture/Dynamic/BloomDownscale4ColorRenderTarget",
+						"OutputTexture2D": "Example/Texture/Dynamic/BloomDownscale2ColorRenderTarget"
+					}
+				},
+				"Compute":
+				{
+					"Name": "HDR to LDR",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_HdrToLdr.asset",
+					"SetMaterialProperties":
+					{
+						"ColorMap": "Example/Texture/Dynamic/HdrColorRenderTarget0",
+						"LuminanceMap": "Example/Texture/Dynamic/AdaptiveLuminanceRenderTarget",
+						"BloomMap": "Example/Texture/Dynamic/BloomDownscale2ColorRenderTarget",
+						"UseLensFlareMap": "FALSE",
+						"OutputTexture2D": "Example/Texture/Dynamic/LdrColorRenderTarget0"
+					}
+				}
+			},
+			"OutputRenderTarget":
+			{
+				"Compute":
+				{
+					"Name": "Final",
+					"Description": "Is using a graphics material blueprint instead of compute material blueprint in order to support rendering the final output directly into an operation system window",
+					"MaterialBlueprint": "${PROJECT_NAME}/Blueprint/Compositor/MB_Final.asset",
+					"SetMaterialProperties":
+					{
+						"ColorMap": "Example/Texture/Dynamic/LdrColorRenderTarget0"
+					}
+				}
+			}
+		},
+		"OutputChannels":
+		{
+			"0": "OutputRenderTarget",
+			"1": "InputRenderTarget"
+		}
+	}
+}

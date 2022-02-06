@@ -1,0 +1,77 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+// Basing on https://mynameismjp.wordpress.com/2013/09/10/shadow-maps/ - https://github.com/TheRealMJP/Shadows
+
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+	DECLARE_FRAGMENT_POSITION
+INPUT_END
+OUTPUT_BEGIN
+	OUTPUT_COLOR(0)
+OUTPUT_END
+
+// Uniform buffers
+struct PassDataStruct
+{
+	int   ShadowMapSize;
+	float ShadowFilterSize;
+	int   ShadowSampleRadius;
+};
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	PassDataStruct PassData;
+UNIFORM_BUFFER_END
+
+// Textures
+@property(VerticalBlur)
+	TEXTURE_2D(1, 0, ColorMap, 0)
+@else
+	TEXTURE_2D_ARRAY(1, 0, ColorMap, 0)
+@end
+
+
+//[-------------------------------------------------------]
+//[ Functions                                             ]
+//[-------------------------------------------------------]
+float4 BlurSample(float2 screenPosition, float offset, float mapSize)
+{
+	@property(VerticalBlur)
+		float2 samplePosition = screenPosition;
+		samplePosition.y = clamp(screenPosition.y + offset, 0.0f, mapSize);
+		return TEXTURE_FETCH_2D(ColorMap, int3(samplePosition, 0)); 
+	@else
+		float2 samplePosition = screenPosition;
+		samplePosition.x = clamp(screenPosition.x + offset, 0.0f, mapSize);
+		const int INTERMEDIATE_CASCADE_INDEX = 3;
+		return TEXTURE_FETCH_ARRAY(ColorMap, int4(samplePosition, INTERMEDIATE_CASCADE_INDEX, 0)); 
+	@end
+}
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN
+	float radius = PassData.ShadowFilterSize * 0.5f;
+	float4 sum = float4(0.0f, 0.0f, 0.0f, 0.0f);
+
+	LOOP for (int i = -PassData.ShadowSampleRadius; i <= PassData.ShadowSampleRadius; ++i)
+	{
+		float4 sampleValue = BlurSample(FRAGMENT_POSITION.xy, float(i), float(PassData.ShadowMapSize));
+		sampleValue *= SATURATE((radius + 0.5f) - float(abs(i)));
+		sum += sampleValue;
+	}
+
+	// Done
+	MAIN_OUTPUT_COLOR(0) = sum / PassData.ShadowFilterSize;
+MAIN_END
