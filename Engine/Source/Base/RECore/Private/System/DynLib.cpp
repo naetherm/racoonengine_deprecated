@@ -25,6 +25,8 @@
 #include "RECore/System/DynLib.h"
 #if defined(LINUX)
 #include "RECore/Linux/LinuxDynLib.h"
+#elif defined(WIN32)
+#include "RECore/Windows/WindowsDynLib.h"
 #endif
 
 
@@ -41,6 +43,8 @@ DynLib::DynLib()
 : m_pImpl(nullptr) {
 #if defined(LINUX)
   this->m_pImpl = new LinuxDynLib();
+#elif defined(WIN32)
+  this->m_pImpl = new WindowsDynLib();
 #endif
 }
 

@@ -38,7 +38,8 @@ namespace RECore {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-WindowsDynLib::WindowsDynLib() {
+WindowsDynLib::WindowsDynLib()
+: m_hModule(nullptr){
 
 }
 
@@ -47,25 +48,42 @@ WindowsDynLib::~WindowsDynLib() {
 }
 
 bool WindowsDynLib::isLoaded() const {
-  return false;
+  return (m_hModule != nullptr);
 }
 
 bool WindowsDynLib::load(const String &cUrl) {
-  return false;
+  if (m_hModule) {
+    return false;
+  }
+
+  m_sPath = cUrl;
+  // Load library
+  m_hModule = ::LoadLibraryExA(cUrl.cstr(), nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
+
+  return (m_hModule != nullptr);
 }
 
 String WindowsDynLib::getAbsPath() const {
-  // Error!
-  return "";
+  // TODO(naethern): Not correct, use something like GetModuleFileNameW
+  return m_sPath;
 }
 
 bool WindowsDynLib::unload() {
   // Error, could not unload the library
+  if (m_hModule) {
+    if (::FreeLibrary(m_hModule)) {
+      m_hModule = nullptr;
+
+      return true;
+    }
+  }
+
+  // Error, either not loaded at all or error during unloading
   return false;
 }
 
 void *WindowsDynLib::getSymbol(const String &sSymbol) const {
-  return nullptr;
+  return m_hModule ? ::GetProcAddress(m_hModule, sSymbol.cstr()) : nullptr;
 }
 
 

@@ -116,6 +116,9 @@ protected:
   [[nodiscard]] void *getSymbol(const String &sSymbol) const override;
 
 private:
+  /** System handle for the dynamic library */
+  HMODULE m_hModule;
+  String m_sPath;
 };
 
 
