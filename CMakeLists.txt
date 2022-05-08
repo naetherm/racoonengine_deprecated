@@ -56,7 +56,7 @@ set(PL_DOC_DIR      "${CMAKE_INSTALL_PREFIX}/docs")
 set(PL_ROOT_DIR     "${CMAKE_CURRENT_SOURCE_DIR}")
 
 find_library(STD_CPP_FS stdc++fs)
-find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
+#find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 #find_package(LibClang)
 find_package(LLVM REQUIRED CONFIG)
 include(cmake/Config.cmake)
