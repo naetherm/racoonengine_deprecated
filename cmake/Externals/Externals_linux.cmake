@@ -118,7 +118,7 @@ pl_associate_package(
 pl_associate_package(
   PACKAGE_NAME imgui_gizmo-1.8.3-rev1-linux
   TARGETS imgui_gizmo
-  PACKAGE_HASH 01b9c1bb2c254e4fa6bdc905d0349985aad105910cb1dffcabd1c0c1220630ab
+  PACKAGE_HASH 6d85010645e00ec3b3aed2b1faa575db8063d2847ba4a5eab12f5dfa267ef24c
 )
 pl_associate_package(
   PACKAGE_NAME acl-2.0.1-rev1-linux
