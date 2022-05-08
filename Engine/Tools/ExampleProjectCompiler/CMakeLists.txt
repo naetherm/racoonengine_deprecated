@@ -26,39 +26,37 @@ pl_add_target(
 	NAME ExampleProjectCompiler EXECUTABLE
 	NAMESPACE RE
 	FILES_CMAKE
-	${CMAKE_CURRENT_SOURCE_DIR}/ExampleProjectCompiler_files.cmake
+		${CMAKE_CURRENT_SOURCE_DIR}/ExampleProjectCompiler_files.cmake
 	PLATFORM_INCLUDE_FILES
-	${CMAKE_CURRENT_SOURCE_DIR}/ExampleProjectCompiler_${PAL_PLATFORM_NAME_LOWERCASE}.cmake
+		${CMAKE_CURRENT_SOURCE_DIR}/ExampleProjectCompiler_${PAL_PLATFORM_NAME_LOWERCASE}.cmake
 	INCLUDE_DIRECTORIES
-	PUBLIC
-	${PL_CONFIG_FILE_LOCATION}
-	${CMAKE_CURRENT_SOURCE_DIR}/Public
-	${CMAKE_CURRENT_SOURCE_DIR}/Private
+		PUBLIC
+			${PL_CONFIG_FILE_LOCATION}
+			${CMAKE_CURRENT_SOURCE_DIR}/Public
+			${CMAKE_CURRENT_SOURCE_DIR}/Private
 	BUILD_DEPENDENCIES
-	PUBLIC
-	RECore
-	RERHI
-	RERenderer
-	RERendererToolkit
-	#EXTERNAL_DEPENDENCIES
-	#PUBLIC
+		PUBLIC
+			RECore
+			RERHI
+			RERenderer
+			RERendererToolkit
 	RUNTIME_DEPENDENCIES
-	PUBLIC
-	External::zlib
-	External::rapidjson
-	External::mojoshader
-	External::crunch
-	External::ies
-	External::assimp
-	External::meshoptimizer
-	External::mikktspace
-	External::physfs
+		PUBLIC
+			External::zlib
+			External::rapidjson
+			External::mojoshader
+			External::crunch
+			External::ies
+			External::assimp
+			External::meshoptimizer
+			External::mikktspace
+			External::physfs
 	COMPILE_DEFINITIONS
-	PUBLIC
-	${${PAL_PLATFORM_NAME_UPPERCASE}_COMPILE_DEFS}
-	${PAL_PLATFORM_NAME_UPPERCASE}
+		PUBLIC
+			${${PAL_PLATFORM_NAME_UPPERCASE}_COMPILE_DEFS}
+			${PAL_PLATFORM_NAME_UPPERCASE}
 	#EXAMPLES_MIMALLOC
-	RHI_OPENGL
+			RHI_OPENGL
 	TARGET_PROPERTIES
-	-fPIC
+		-fPIC
 )

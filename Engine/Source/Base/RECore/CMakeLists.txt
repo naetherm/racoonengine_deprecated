@@ -26,38 +26,36 @@ pl_add_target(
   NAME RECore SHARED
   NAMESPACE RE
   FILES_CMAKE
-  ${CMAKE_CURRENT_SOURCE_DIR}/RECore_files.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/RECore_${PAL_PLATFORM_NAME_LOWERCASE}_files.cmake
+    ${CMAKE_CURRENT_SOURCE_DIR}/RECore_files.cmake
+    ${CMAKE_CURRENT_SOURCE_DIR}/RECore_${PAL_PLATFORM_NAME_LOWERCASE}_files.cmake
   PLATFORM_INCLUDE_FILES
-  ${CMAKE_CURRENT_SOURCE_DIR}/RECore_${PAL_PLATFORM_NAME_LOWERCASE}.cmake
+    ${CMAKE_CURRENT_SOURCE_DIR}/RECore_${PAL_PLATFORM_NAME_LOWERCASE}.cmake
   INCLUDE_DIRECTORIES
-  PUBLIC
-  ${PL_CONFIG_FILE_LOCATION}
-  ${CMAKE_CURRENT_SOURCE_DIR}/Public
-  ${CMAKE_CURRENT_SOURCE_DIR}/Private
+    PUBLIC
+      ${PL_CONFIG_FILE_LOCATION}
+      ${CMAKE_CURRENT_SOURCE_DIR}/Public
+      ${CMAKE_CURRENT_SOURCE_DIR}/Private
   BUILD_DEPENDENCIES
-  #  PUBLIC
-  #EXTERNAL_DEPENDENCIES
-  PUBLIC
-  External::glm
-  External::physfs
-  External::lz4
-  External::pcre
-  External::zlib
-  External::mimalloc
+    PUBLIC
+      External::glm
+      External::physfs
+      External::lz4
+      External::pcre
+      External::zlib
+      External::mimalloc
   RUNTIME_DEPENDENCIES
-  PUBLIC
-  External::glm
-  External::physfs
-  External::lz4
-  External::pcre
-  External::zlib
-  External::mimalloc
+    PUBLIC
+      External::glm
+      External::physfs
+      External::lz4
+      External::pcre
+      External::zlib
+      External::mimalloc
   COMPILE_DEFINITIONS
-  PUBLIC
-  RECORE_EXPORTS
-  ${${PAL_PLATFORM_NAME_UPPERCASE}_COMPILE_DEFS}
-  ${PAL_PLATFORM_NAME_UPPERCASE}
+    PUBLIC
+      RECORE_EXPORTS
+      ${${PAL_PLATFORM_NAME_UPPERCASE}_COMPILE_DEFS}
+      ${PAL_PLATFORM_NAME_UPPERCASE}
   TARGET_PROPERTIES
-  -fPIC
+    -fPIC
 )
