@@ -35,11 +35,11 @@ pl_associate_package(
   TARGETS lz4
   PACKAGE_HASH 902ee3879b4506d3544017a95441a1163537ab8c8886bc755891b93340f778d8
 )
-pl_associate_package(
-  PACKAGE_NAME googletest-1.8.1-rev1-linux
-  TARGETS googletest
-  PACKAGE_HASH bccf2b2b956dd4726373c89ecdc44d2507db5587185b11e0cc7e05273b65975d
-)
+#pl_associate_package(
+#  PACKAGE_NAME googletest-1.8.1-rev1-linux
+#  TARGETS googletest
+#  PACKAGE_HASH bccf2b2b956dd4726373c89ecdc44d2507db5587185b11e0cc7e05273b65975d
+#)
 pl_associate_package(
   PACKAGE_NAME physfs-3.0.2-rev1-linux
   TARGETS physfs
@@ -70,11 +70,11 @@ pl_associate_package(
   TARGETS zlib
   PACKAGE_HASH de286a2a2a9dffea15eccf3bc429077c223bf66bcfe0b07b9d94d2e1f16cede7
 )
-pl_associate_package(
-  PACKAGE_NAME catch2-2.13.7-rev1-linux
-  TARGETS catch2
-  PACKAGE_HASH 02caeca67f7ce0bcb2ca616e4c9617a6b76f74630cd4d907a970a65073113e73
-)
+#pl_associate_package(
+#  PACKAGE_NAME catch2-2.13.7-rev1-linux
+#  TARGETS catch2
+#  PACKAGE_HASH 02caeca67f7ce0bcb2ca616e4c9617a6b76f74630cd4d907a970a65073113e73
+#)
 pl_associate_package(
   PACKAGE_NAME mojoshader-master-rev1-linux
   TARGETS mojoshader
