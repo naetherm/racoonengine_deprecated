@@ -25,6 +25,8 @@
 #include "RECore/Platform/Platform.h"
 #if defined(LINUX)
 #include "RECore/Linux/LinuxPlatform.h"
+#elif defined(WIN32)
+#include "RECore/Windows/WindowsPlatform.h"
 #endif
 
 
@@ -46,11 +48,13 @@ Platform::Platform()
 : mpImpl(nullptr) {
 #if defined(LINUX)
   this->mpImpl = new LinuxPlatform();
+#elif defined(WIN32)
+  this->mpImpl = new WindowsPlatform();
 #endif
 }
 
 Platform::~Platform() {
-
+  delete this->mpImpl;
 }
 
 

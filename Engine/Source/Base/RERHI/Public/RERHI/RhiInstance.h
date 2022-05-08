@@ -231,8 +231,7 @@ namespace RERHI
 					if (nullptr != mRhiSharedLibrary)
 					{
 						// Get the "CreateRhiInstance()" function pointer
-						char* functionName = "createRhiInstance";
-            printf("LADOGIN SHARED OBJECT\n");
+						const char* functionName = "createRhiInstance";
 						//snprintf(functionName, countof(functionName), "create%sRhiInstance", rhiName);
 						void* symbol = ::dlsym(mRhiSharedLibrary, functionName);
 						if (nullptr != symbol)

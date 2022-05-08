@@ -25,7 +25,5 @@ set(PL_BUILD_DEPENDENCIES
   dl
   atomic
   ncurses
-  GL
-  GLU
   ${LINUX_X11_LIBS}
   )
