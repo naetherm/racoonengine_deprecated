@@ -48,8 +48,11 @@ pl_add_target(
   RUNTIME_DEPENDENCIES
   PUBLIC
   External::glm
+  External::physfs
+  External::lz4
   External::pcre
   External::zlib
+  External::mimalloc
   COMPILE_DEFINITIONS
   PUBLIC
   RECORE_EXPORTS
