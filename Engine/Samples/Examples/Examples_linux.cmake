@@ -21,7 +21,6 @@
 
 set(PL_BUILD_DEPENDENCIES
   #  PUBLIC
-  pthread
   dl
   atomic
   ncurses
@@ -30,4 +29,6 @@ set(PL_BUILD_DEPENDENCIES
   GL
   stdc++fs
   openvr_api
+  pthread
+  ${CMAKE_THREAD_LIBS_INIT}
   )
