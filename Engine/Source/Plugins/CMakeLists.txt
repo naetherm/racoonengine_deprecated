@@ -30,7 +30,7 @@ pl_add_subdirectory(RERHIOpenGL)
 #pl_add_subdirectory(RERHID3D10)
 #pl_add_subdirectory(RERHID3D11)
 #pl_add_subdirectory(RERHID3D12)
-pl_add_subdirectory(RERHIVulkan)
+#pl_add_subdirectory(RERHIVulkan)
 
 pl_add_subdirectory(REScriptBindings)
 pl_add_subdirectory(REScriptLua)

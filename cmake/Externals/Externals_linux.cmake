@@ -23,7 +23,7 @@ set(DBUS_LIBRARIES "dbus-1")
 pl_associate_package(
   PACKAGE_NAME lua-5.4.4-rev1-linux
   TARGETS lua
-  PACKAGE_HASH 0ebd91ffee9baa8af92f4a166dcd400b7b7850935d75777e065f6247ded0de87
+  PACKAGE_HASH af830016bea964fa60324e9407d426345dd9b2ef3ab0ad2567c46d512cd0134b
 )
 #pl_associate_package(
 #  PACKAGE_NAME toml11-3.7.0-rev1-linux
