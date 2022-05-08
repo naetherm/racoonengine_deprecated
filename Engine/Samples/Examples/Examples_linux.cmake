@@ -26,8 +26,8 @@ set(PL_BUILD_DEPENDENCIES
   atomic
   ncurses
   ${LINUX_X11_LIBS}
+  ${DBUS_LIBRARIES}
   GL
-  dbus-1
   stdc++fs
   openvr_api
   )

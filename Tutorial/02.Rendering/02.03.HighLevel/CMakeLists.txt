@@ -34,8 +34,7 @@ pl_add_target(
   ${PL_CONFIG_FILE_LOCATION}
   ${CMAKE_CURRENT_SOURCE_DIR}/Public
   ${CMAKE_CURRENT_SOURCE_DIR}/Private
-  /usr/include/dbus-1.0
-  /usr/lib/dbus-1.0/include
+  ${DBUS_INCLUDE_DIRS}
   BUILD_DEPENDENCIES
   PUBLIC
   RECore
