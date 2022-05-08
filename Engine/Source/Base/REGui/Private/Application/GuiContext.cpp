@@ -22,7 +22,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/Application/GuiApplication.h"
+#include "REGui/Application/GuiContext.h"
 
 
 //[-------------------------------------------------------]
@@ -31,34 +31,22 @@
 namespace REGui {
 
 
-//[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-re_class_metadata(GuiApplication, "RECore", RECore::CoreApplication, "Application class")
-  // Constructors
-  re_constructor_0_metadata(DefaultConstructor,	"Default constructor",	"")
-re_class_metadata_end(GuiApplication)
-
-
-GuiApplication::GuiApplication() {
+GuiContext::GuiContext() {
 
 }
 
-GuiApplication::~GuiApplication() {
+GuiContext::~GuiContext() {
 
 }
 
-bool GuiApplication::onStart() {
-  return CoreApplication::onStart();
+void GuiContext::setRhiName(const RECore::String &rhiName) {
+  mRhiName = rhiName;
 }
 
-void GuiApplication::onStop() {
-  CoreApplication::onStop();
+const RECore::String &GuiContext::getRhiName() const {
+  return mRhiName;
 }
 
-void GuiApplication::main() {
-  CoreApplication::main();
-}
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

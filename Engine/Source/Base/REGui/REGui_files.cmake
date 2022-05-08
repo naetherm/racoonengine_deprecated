@@ -5,10 +5,13 @@ set(FILES
 
   # Application
   Private/Application/GuiApplication.cpp
+  Private/Application/GuiContext.cpp
 
   # Gui
   Private/Gui/Gui.cpp
   Private/Gui/GuiImpl.cpp
+  Private/Gui/NativeWindow.cpp
+  Private/Gui/NativeWindowImpl.cpp
 
   # Theme
   Private/Theme/Theme.cpp

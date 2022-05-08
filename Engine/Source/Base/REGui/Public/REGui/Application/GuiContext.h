@@ -20,9 +20,16 @@
 
 
 //[-------------------------------------------------------]
+//[ Header guard                                          ]
+//[-------------------------------------------------------]
+#pragma once
+
+
+//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/Application/GuiApplication.h"
+#include "REGui/REGui.h"
+#include <RECore/String/String.h>
 
 
 //[-------------------------------------------------------]
@@ -32,33 +39,54 @@ namespace REGui {
 
 
 //[-------------------------------------------------------]
-//[ RTTI interface                                        ]
+//[ Classes                                               ]
 //[-------------------------------------------------------]
-re_class_metadata(GuiApplication, "RECore", RECore::CoreApplication, "Application class")
-  // Constructors
-  re_constructor_0_metadata(DefaultConstructor,	"Default constructor",	"")
-re_class_metadata_end(GuiApplication)
+/**
+ * @class
+ * GuiContext
+ *
+ * @brief
+ * Gui context implementation.
+ */
+class GuiContext {
+public:
+
+  /**
+   * @brief
+   * Default constructor
+   */
+  REGUI_API GuiContext();
+
+  /**
+   * @brief
+   * Destructor
+   */
+  REGUI_API virtual ~GuiContext();
 
 
-GuiApplication::GuiApplication() {
+  /**
+   * @brief
+   * Sets the rhi name.
+   *
+   * @param[in] rhiName
+   * The rhi name.
+   */
+  void setRhiName(const RECore::String& rhiName);
 
-}
+  /**
+   * @brief
+   * Returns the rhi name.
+   *
+   * @return
+   * The rhi name.
+   */
+  [[nodiscard]] const RECore::String& getRhiName() const;
 
-GuiApplication::~GuiApplication() {
+protected:
 
-}
+  RECore::String mRhiName;
+};
 
-bool GuiApplication::onStart() {
-  return CoreApplication::onStart();
-}
-
-void GuiApplication::onStop() {
-  CoreApplication::onStop();
-}
-
-void GuiApplication::main() {
-  CoreApplication::main();
-}
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

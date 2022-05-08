@@ -19,28 +19,14 @@
 #////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-##################################################
-## Project
-##################################################
-pl_add_target(
-  NAME 00.01.HelloWorld EXECUTABLE
-  NAMESPACE RE
-  FILES_CMAKE
-    ${CMAKE_CURRENT_SOURCE_DIR}/HelloWorld_files.cmake
-  PLATFORM_INCLUDE_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/HelloWorld_${PAL_PLATFORM_NAME_LOWERCASE}.cmake
-  INCLUDE_DIRECTORIES
-    PUBLIC
-      ${PL_CONFIG_FILE_LOCATION}
-      ${CMAKE_CURRENT_SOURCE_DIR}/Public
-      ${CMAKE_CURRENT_SOURCE_DIR}/Private
-  BUILD_DEPENDENCIES
-    PUBLIC
-      RECore
-  COMPILE_DEFINITIONS
-    PUBLIC
-      ${${PAL_PLATFORM_NAME_UPPERCASE}_COMPILE_DEFS}
-      ${PAL_PLATFORM_NAME_UPPERCASE}
-  TARGET_PROPERTIES
-    -fPIC
-)
+set(PL_BUILD_DEPENDENCIES
+  #  PUBLIC
+  pthread
+  dl
+  atomic
+  ncurses
+  ${LINUX_X11_LIBS}
+  ${DBUS_LIBRARIES}
+  stdc++fs
+  openvr_api
+  )

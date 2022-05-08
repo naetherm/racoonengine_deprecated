@@ -20,45 +20,23 @@
 
 
 //[-------------------------------------------------------]
+//[ Header guard                                          ]
+//[-------------------------------------------------------]
+#pragma once
+
+
+//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/Application/GuiApplication.h"
+#include "REGui/REGui.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui {
+namespace REGui
+{
 
-
-//[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-re_class_metadata(GuiApplication, "RECore", RECore::CoreApplication, "Application class")
-  // Constructors
-  re_constructor_0_metadata(DefaultConstructor,	"Default constructor",	"")
-re_class_metadata_end(GuiApplication)
-
-
-GuiApplication::GuiApplication() {
-
-}
-
-GuiApplication::~GuiApplication() {
-
-}
-
-bool GuiApplication::onStart() {
-  return CoreApplication::onStart();
-}
-
-void GuiApplication::onStop() {
-  CoreApplication::onStop();
-}
-
-void GuiApplication::main() {
-  CoreApplication::main();
-}
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

@@ -30,12 +30,102 @@
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
 #include <RECore/Application/CoreApplication.h>
+#include <RECore/Reflect/Event/EventHandler.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+ * @class
+ * GuiApplication
+ *
+ * @brief
+ * Gui application class
+ *
+ * @remarks
+ * An application class for a typical GUI application. This application runs a main loop
+ * that does the necessary message processing and provides methods to manage the windows
+ * associated with this application.
+ */
+class GuiApplication : public RECore::CoreApplication {
+
+
+  //[-------------------------------------------------------]
+  //[ RTTI interface                                        ]
+  //[-------------------------------------------------------]
+  re_class_def(REGUI_API)
+  re_class_def_end
+
+public:
+
+  /**
+   * @brief
+   * Default constructor.
+   */
+  REGUI_API GuiApplication();
+
+  /**
+   * @brief
+   * Destructor
+   */
+  REGUI_API virtual ~GuiApplication() override;
+
+
+  //[-------------------------------------------------------]
+  //[ Protected virtual PLCore::AbstractLifecycle functions ]
+  //[-------------------------------------------------------]
+protected:
+  /**
+  *  @brief
+  *    Initialization function that is called prior to onInit()
+  *
+  *  @return
+  *    'true' if all went fine, else 'false' which will stop the application
+  *
+  *  @remarks
+  *    The default implementation does the following tasks:
+  *    - Everything that CoreApplication::onStart() does
+  *    - Call OnCreateMainWindow()
+  *    - Return and go on with onInit()
+  */
+  [[nodiscard]] REGUI_API bool onStart() override;
+
+  /**
+  *  @brief
+  *    De-initialization function that is called after onDeInit()
+  *
+  *  @remarks
+  *    The default implementation does the following tasks:
+  *    - Everything that CoreApplication::onStop() does
+  *    - De-initialize system GUI
+  */
+  REGUI_API void onStop() override;
+
+
+  //[-------------------------------------------------------]
+  //[ Protected virtual RECore::CoreApplication functions   ]
+  //[-------------------------------------------------------]
+protected:
+  /**
+  *  @brief
+  *    Main function
+  *
+  *  @remarks
+  *    The default implementation does the following tasks:
+  *    - Run GUI main loop (processing GUI messages)
+  *    - Exit loop when either the GUI or the application has been stopped
+  */
+  REGUI_API void main() override;
+  
+protected:
+};
 
 
 //[-------------------------------------------------------]
