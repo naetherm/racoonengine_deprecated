@@ -28,6 +28,7 @@ set(PL_BUILD_DEPENDENCIES
   ${DBUS_LIBRARIES}
   GL
   stdc++fs
+  libstdc++
   pthread
   ${CMAKE_THREAD_LIBS_INIT}
   )

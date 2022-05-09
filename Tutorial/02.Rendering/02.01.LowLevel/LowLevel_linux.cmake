@@ -28,4 +28,5 @@ set(PL_BUILD_DEPENDENCIES
   ${LINUX_X11_LIBS}
   ${DBUS_LIBRARIES}
   stdc++fs
+  stdc++
   )

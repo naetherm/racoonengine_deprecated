@@ -8,4 +8,5 @@ set(PL_BUILD_DEPENDENCIES
   atomic
   ncurses
   ${LINUX_X11_LIBS}
+  stdc++
   )
