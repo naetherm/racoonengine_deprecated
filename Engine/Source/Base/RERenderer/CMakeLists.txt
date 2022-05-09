@@ -49,6 +49,7 @@ pl_add_target(
       External::mimalloc
       External::zlib
       External::lz4
+      External::openvr
   RUNTIME_DEPENDENCIES
     PUBLIC
       RECore
@@ -64,6 +65,7 @@ pl_add_target(
       External::zlib
       External::lz4
       External::mikktspace
+      External::openvr
   COMPILE_DEFINITIONS
     PUBLIC
       RERENDERER_EXPORTS
