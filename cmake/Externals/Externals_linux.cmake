@@ -133,5 +133,5 @@ pl_associate_package(
 pl_associate_package(
   PACKAGE_NAME openvr-1.16.9-rev1-linux
   TARGETS openvr
-  PACKAGE_HASH 7c330d2d3fd31baaf6fa711e933d51856a0f81d377b6788864c9a44a246da1e0
+  PACKAGE_HASH 30a5cb416976945ee3aafd22ac7e6cb0498958919ef97e279164ac9e54cb1305
 )
