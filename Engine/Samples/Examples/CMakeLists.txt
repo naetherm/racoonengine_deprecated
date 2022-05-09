@@ -40,12 +40,11 @@ pl_add_target(
 	PUBLIC
 	RECore
 	RERHI
-	#RERHIOpenGLStatic
-	#RERHIVulkanStatic
 	RERenderer
 	RERendererToolkit
 	REInput
 	External::physfs
+	External::openvr
 	#EXTERNAL_DEPENDENCIES
 	#PUBLIC
 	RUNTIME_DEPENDENCIES
@@ -58,6 +57,7 @@ pl_add_target(
 	External::assimp
 	External::meshoptimizer
 	External::mikktspace
+	External::openvr
 	COMPILE_DEFINITIONS
 	PUBLIC
 	${${PAL_PLATFORM_NAME_UPPERCASE}_COMPILE_DEFS}

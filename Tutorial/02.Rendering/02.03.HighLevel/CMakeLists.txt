@@ -43,6 +43,7 @@ pl_add_target(
   RERendererToolkit
   REInput
   External::physfs
+  External::openvr
   RUNTIME_DEPENDENCIES
   PUBLIC
   External::zlib
@@ -53,6 +54,7 @@ pl_add_target(
   External::assimp
   External::meshoptimizer
   External::mikktspace
+  External::openvr
   COMPILE_DEFINITIONS
   PUBLIC
   ${${PAL_PLATFORM_NAME_UPPERCASE}_COMPILE_DEFS}

@@ -28,7 +28,6 @@ set(PL_BUILD_DEPENDENCIES
   ${DBUS_LIBRARIES}
   GL
   stdc++fs
-  openvr_api
   pthread
   ${CMAKE_THREAD_LIBS_INIT}
   )

@@ -130,3 +130,8 @@ pl_associate_package(
   TARGETS mimalloc
   PACKAGE_HASH d54b3f84f886690a0ffcc7013a971e75994b065e317a94041c66403b90e696a1
 )
+pl_associate_package(
+  PACKAGE_NAME openvr-1.16.9-rev1-linux
+  TARGETS openvr
+  PACKAGE_HASH 7c330d2d3fd31baaf6fa711e933d51856a0f81d377b6788864c9a44a246da1e0
+)
