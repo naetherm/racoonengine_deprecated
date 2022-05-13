@@ -53,10 +53,10 @@ class FuncConstructor : public Func<Object*, T0, T1, T2, T3, T4, T5, T6, T7, T8,
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) override {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
 		}
 
@@ -78,10 +78,10 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) override {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
 		}
 
@@ -103,10 +103,10 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) override {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
 		}
 
@@ -128,10 +128,10 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) override {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
 		}
 
@@ -153,10 +153,10 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> :
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) override {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
 		}
 
@@ -178,10 +178,10 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : publ
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) override {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 		}
 
@@ -203,10 +203,10 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Fu
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) override {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
 		}
 
@@ -228,10 +228,10 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<O
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) override {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8);
 		}
 
@@ -253,10 +253,10 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<Objec
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) override {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7);
 		}
 
@@ -278,10 +278,10 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6> : public Func<Object*, 
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) override {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6);
 		}
 
@@ -303,10 +303,10 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5> : public Func<Object*, T0, 
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) override {
 			return new CLASS(t0, t1, t2, t3, t4, t5);
 		}
 
@@ -328,10 +328,10 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4> : public Func<Object*, T0, T1, 
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4) override {
 			return new CLASS(t0, t1, t2, t3, t4);
 		}
 
@@ -353,10 +353,10 @@ class FuncConstructor<CLASS, T0, T1, T2, T3> : public Func<Object*, T0, T1, T2, 
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2, T3 t3) override {
 			return new CLASS(t0, t1, t2, t3);
 		}
 
@@ -378,10 +378,10 @@ class FuncConstructor<CLASS, T0, T1, T2> : public Func<Object*, T0, T1, T2> {
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1, T2 t2) {
+		Object *operator ()(T0 t0, T1 t1, T2 t2) override {
 			return new CLASS(t0, t1, t2);
 		}
 
@@ -403,10 +403,10 @@ class FuncConstructor<CLASS, T0, T1> : public Func<Object*, T0, T1> {
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0, T1 t1) {
+		Object *operator ()(T0 t0, T1 t1) override {
 			return new CLASS(t0, t1);
 		}
 
@@ -428,10 +428,10 @@ class FuncConstructor<CLASS, T0> : public Func<Object*, T0> {
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()(T0 t0) {
+		Object *operator ()(T0 t0) override {
 			return new CLASS(t0);
 		}
 
@@ -453,10 +453,10 @@ class FuncConstructor<CLASS> : public Func<Object*> {
 		FuncConstructor() {
 		}
 
-		virtual ~FuncConstructor() {
+		~FuncConstructor() override {
 		}
 
-		Object *operator ()() {
+		Object *operator ()() override {
 			return new CLASS();
 		}
 
