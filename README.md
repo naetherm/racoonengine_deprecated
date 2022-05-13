@@ -22,9 +22,29 @@ The screenshot taken for the editor view is also considered highly prototypicall
 
 ![Screen](Documentation/screen01.png "Screen01")
 
+## Features
+
+Some features available within this project are:
+
+- Low-level rendering (RHI) implementations, designed with AZDO ("Almost Zero Driver Overhead") in mind
+- RHIs: OpenGL, Vulkan (currently worked on), OpenGLES3, Direct3D9, Direct3D10, Direct3D11, Direct3D12 (all D3D* interfaces currently worked on)
+- Designed to be cross-platform (currently only Linux with some basic structures for Windows systems)
+- All shader types are supported, including mesh shaders (not tested as I use AMD)
+- Asynchronous resource streaming
+- Resource hot reloading support
+- Resource compilation to target platform
+- Abstract shader language: Write once, use across all RHIs
+- Forward and Deferred Rendering (through data-driven compositor system)
+- Data-driven material system, designed from the ground up
+
 ## Getting Started
 
-Follow the instructions below to compile and run the engine from source.
+Follow the instructions below to compile and run the engine (or to be more precise the examples) from source.
 
 ### Linux
 
+This will compile all examples and libraries first and then compile the resources required for the `02.03.HighLevel` example in shipping quality (this can take a while).
+
+```
+./Setup.sh
+```
