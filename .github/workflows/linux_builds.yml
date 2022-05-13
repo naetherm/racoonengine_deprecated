@@ -9,6 +9,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  COMPILER: clang
 
 jobs:
   build:
@@ -22,12 +23,12 @@ jobs:
 
     - name: Install Requirements
       # Install all required packages
-      run: sudo apt update && sudo apt install -y dbus libdbus-1-dev libxcursor-dev libxcursor1 libxrandr-dev libxrandr2 libxxf86vm-dev libxxf86vm1 libopenvr-api1 libopenvr-dev libgl-dev libglx-dev
+      run: sudo apt update && sudo apt install -y clang-12 llvm-12 dbus libdbus-1-dev libxcursor-dev libxcursor1 libxrandr-dev libxrandr2 libxxf86vm-dev libxxf86vm1 libopenvr-api1 libopenvr-dev libgl-dev libglx-dev --install-suggests
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DPL_EXTERNAL_LIBRARIES=/tmp/racoonengine/
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_C_COMPILER=${{COMPILER}} -DCMAKE_CXX_COMPILER=${{COMPILER}}++ -DPL_EXTERNAL_LIBRARIES=/tmp/racoonengine/
 
     - name: Build
       # Build your program with the given configuration
