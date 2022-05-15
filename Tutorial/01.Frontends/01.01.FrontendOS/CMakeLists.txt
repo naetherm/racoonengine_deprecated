@@ -22,7 +22,7 @@
 ##################################################
 ## Project
 ##################################################
-pl_add_target(
+re_add_target(
   NAME 01.01.FrontendOS EXECUTABLE
   NAMESPACE RE
   FILES_CMAKE

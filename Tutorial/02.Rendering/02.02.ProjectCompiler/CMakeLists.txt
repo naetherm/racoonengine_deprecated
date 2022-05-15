@@ -22,7 +22,7 @@
 ##################################################
 ## Project
 ##################################################
-pl_add_target(
+re_add_target(
 	NAME 02.02.ProjectCompiler EXECUTABLE
 	NAMESPACE RE
 	FILES_CMAKE

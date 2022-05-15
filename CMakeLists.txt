@@ -49,11 +49,11 @@ include(cmake/Modules/GetGitRevisionDescription.cmake)
 ## Prerequisites
 ##################################################
 
-set(PL_BIN_DIR      "${CMAKE_INSTALL_PREFIX}/bin/${PL_TARGET_ARCHBITSIZE}")
-set(PL_LIB_DIR      "${CMAKE_INSTALL_PREFIX}/lib/${PL_TARGET_ARCHBITSIZE}")
-set(PL_INCLUDE_DIR  "${CMAKE_INSTALL_PREFIX}/include")
-set(PL_DOC_DIR      "${CMAKE_INSTALL_PREFIX}/docs")
-set(PL_ROOT_DIR     "${CMAKE_CURRENT_SOURCE_DIR}")
+set(RE_BIN_DIR      "${CMAKE_INSTALL_PREFIX}/bin/${RE_TARGET_ARCHBITSIZE}")
+set(RE_LIB_DIR      "${CMAKE_INSTALL_PREFIX}/lib/${RE_TARGET_ARCHBITSIZE}")
+set(RE_INCLUDE_DIR  "${CMAKE_INSTALL_PREFIX}/include")
+set(RE_DOC_DIR      "${CMAKE_INSTALL_PREFIX}/docs")
+set(RE_ROOT_DIR     "${CMAKE_CURRENT_SOURCE_DIR}")
 
 find_library(STD_CPP_FS stdc++fs)
 include(cmake/Config.cmake)
@@ -63,16 +63,16 @@ include(cmake/Target.cmake)
 find_package(DBus REQUIRED)
 
 
-pl_split()
-pl_message("RacoonEngine Build")
-pl_newline()
-pl_message("Version:\t${PL_PROJECT_NAME} ${PL_PROJECT_VERSION_MAJOR}.${PL_PROJECT_VERSION_MINOR}.${PL_PROJECT_VERSION_PATCH}-${PL_PROJECT_VERSION_SUFFIX} (${PL_PROJECT_VERSION_RELEASE})")
-pl_message("Platform:\t${PL_SUPPORTED_PLATFORMS} ${PL_TARGET_ARCHBITSIZE}")
-pl_message("Compiler:\t${CMAKE_CXX_COMPILER_ID}")
-pl_newline()
-pl_print_configuration()
-pl_newline()
-pl_split()
+re_split()
+re_message("RacoonEngine Build")
+re_newline()
+re_message("Version:\t${RE_PROJECT_NAME} ${RE_PROJECT_VERSION_MAJOR}.${RE_PROJECT_VERSION_MINOR}.${RE_PROJECT_VERSION_PATCH}-${RE_PROJECT_VERSION_SUFFIX} (${RE_PROJECT_VERSION_RELEASE})")
+re_message("Platform:\t${RE_SUPPORTED_PLATFORMS} ${RE_TARGET_ARCHBITSIZE}")
+re_message("Compiler:\t${CMAKE_CXX_COMPILER_ID}")
+re_newline()
+re_print_configuration()
+re_newline()
+re_split()
 
 ##################################################
 ## Target

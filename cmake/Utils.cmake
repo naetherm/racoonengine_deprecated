@@ -20,44 +20,44 @@
 
 
 ##################################################
-## MACRO: pl_message
+## MACRO: re_message
 ##
 ## Output a build message
 ##################################################
-macro(pl_message msg)
+macro(re_message msg)
   message(STATUS "* " ${msg})
 endmacro()
 
 ################################################################################
-# MACRO: pl_debug_message
+# MACRO: re_debug_message
 ################################################################################
-macro(pl_debug_message msg)
-  if (PL_DEBUG_BUILD_SYSTEM)
+macro(re_debug_message msg)
+  if (RE_DEBUG_BUILD_SYSTEM)
     message(STATUS ${msg})
   endif ()
 endmacro()
 
 ################################################################################
-# MACRO pl_debug_variable
+# MACRO re_debug_variable
 ################################################################################
-macro(pl_debug_variable var)
-  pl_debug_message("${var} : ${${var}}")
+macro(re_debug_variable var)
+  re_debug_message("${var} : ${${var}}")
 endmacro()
 
 ##################################################
-## MACRO: pl_newline
+## MACRO: re_newline
 ##
 ## Output a build message newline
 ##################################################
-macro(pl_newline)
+macro(re_newline)
   message(STATUS "*")
 endmacro()
 
 ##################################################
-## MACRO: pl_split
+## MACRO: re_split
 ##
 ## Output a build message split
 ##################################################
-macro(pl_split)
+macro(re_split)
   message(STATUS "********************************************************************************")
 endmacro()

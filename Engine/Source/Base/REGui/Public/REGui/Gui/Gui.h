@@ -29,13 +29,129 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
+#include <RECore/String/String.h>
+#include <vector>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui
-{
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class GuiImpl;
+class Screen;
+class GuiContext;
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+ * @class
+ * Gui
+ *
+ * @brief
+ * Platform independent Gui implementation.
+ */
+class Gui {
+
+  friend class GuiApplication;
+
+public:
+
+  static Gui& instance();
+
+public:
+
+  /**
+   * @brief
+   * Constructor.
+   */
+  REGUI_API Gui();
+
+  /**
+   * @brief
+   * Destructor.
+   */
+  REGUI_API ~Gui();
+
+
+  /**
+   * @brief
+   * Get platform dependent gui implementation.
+   *
+   * @return
+   * Platform dependent gui implementation.
+   */
+  [[nodiscard]] GuiImpl* getImpl() const;
+
+  [[nodiscard]] bool isActive() const;
+
+
+  //[-------------------------------------------------------]
+  //[ Message processing                                    ]
+  //[-------------------------------------------------------]
+  void processMessages();
+
+
+  //[-------------------------------------------------------]
+  //[ Screens                                               ]
+  //[-------------------------------------------------------]
+  /**
+   * @brief
+   * Gets vector of all screens/monitors.
+   *
+   * @return
+   * Vector of screens.
+   */
+  REGUI_API const std::vector<Screen*>& getScreens() const;
+
+  /**
+   * @brief
+   * Gets pointer to screen by its name.
+   *
+   * @param[in] name
+   * Name of the screen.
+   *
+   * @return
+   * Pointer to screen, this can be a nullptr.
+   */
+  REGUI_API Screen* getScreen(const RECore::String& name) const;
+
+  /**
+   * @brief
+   * Gets pointer to the default screen.
+   *
+   * @return
+   * Pointer to the default screen.
+   */
+  REGUI_API Screen* getDefaultScreen() const;
+
+protected:
+
+  /**
+   * @brief
+   * Responsible for initializing the gui.
+   *
+   * @param[in] guiContext
+   * Pointer to the gui context.
+   */
+  void initialize(GuiContext* guiContext);
+
+protected:
+  /** Platform dependent gui implementation */
+  GuiImpl* mpImpl;
+  /** Pointer to the gui context, always valid! */
+  GuiContext* mGuiContext;
+  /** List of available screens/monitors */
+  std::vector<Screen*> mScreens;
+  /** Pointer to the default screen, always valid! */
+  Screen* mDefaultScreen;
+};
 
 
 //[-------------------------------------------------------]

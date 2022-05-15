@@ -76,7 +76,7 @@ typename BasicString<T, TAllocator>::SizeType BasicString<T, TAllocator>::Layout
 
 template<typename T, typename TAllocator>
 typename BasicString<T, TAllocator>::SizeType BasicString<T, TAllocator>::Layout::GetSSOSize() const noexcept {
-#ifdef PL_SYSTEM_BIG_ENDIAN
+#ifdef RE_SYSTEM_BIG_ENDIAN
   return ((SSOLayout::SSO_CAPACITY - this->sso.mRemainingSizeField.mnRemainingSize) >> 2);
 #else
   return (SSOLayout::SSO_CAPACITY - this->sso.mRemainingSizeField.mnRemainingSize);
@@ -90,7 +90,7 @@ typename BasicString<T, TAllocator>::SizeType BasicString<T, TAllocator>::Layout
 
 template<typename T, typename TAllocator>
 void BasicString<T, TAllocator>::Layout::SetSSOSize(BasicString<T, TAllocator>::SizeType nSize) {
-#ifdef PL_SYSTEM_BIG_ENDIAN
+#ifdef RE_SYSTEM_BIG_ENDIAN
   sso.mRemainingSizeField.mnRemainingSize = (char)((SSOLayout::SSO_CAPACITY - nSize) << 2);
 #else
   sso.mRemainingSizeField.mnRemainingSize = (char)(SSOLayout::SSO_CAPACITY - nSize);
@@ -209,7 +209,7 @@ void BasicString<T, TAllocator>::Layout::SetHeapBeginPtr(ValueType *pBegin) noex
 
 template<typename T, typename TAllocator>
 void BasicString<T, TAllocator>::Layout::SetHeapCapacity(SizeType cap) noexcept {
-#ifdef PL_SYSTEM_BIG_ENDIAN
+#ifdef RE_SYSTEM_BIG_ENDIAN
   heap.mnCapacity = (cap << 1) | kHeapMask;
 #else
   heap.mnCapacity = (cap | kHeapMask);
@@ -218,7 +218,7 @@ void BasicString<T, TAllocator>::Layout::SetHeapCapacity(SizeType cap) noexcept 
 
 template<typename T, typename TAllocator>
 typename BasicString<T, TAllocator>::SizeType BasicString<T, TAllocator>::Layout::GetHeapCapacity() const noexcept {
-#ifdef PL_SYSTEM_BIG_ENDIAN
+#ifdef RE_SYSTEM_BIG_ENDIAN
   return (heap.mnCapacity >> 1);
 #else
   return (heap.mnCapacity & ~kHeapMask);

@@ -23,6 +23,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Application/GuiApplication.h"
+#include "REGui/Gui/Gui.h"
+#include "REGui/Gui/NativeWindow.h"
 
 
 //[-------------------------------------------------------]
@@ -40,16 +42,41 @@ re_class_metadata(GuiApplication, "RECore", RECore::CoreApplication, "Applicatio
 re_class_metadata_end(GuiApplication)
 
 
-GuiApplication::GuiApplication() {
-
+GuiApplication::GuiApplication()
+: mGuiContext(nullptr)
+, mNativeWindow(nullptr)
+, EventHandlerOnDestroy(&GuiApplication::onDestroyMainWindow, this) {
+  // TODO(naetherm): This is temporarily
+  m_cCommandLine.addParameter("RHI", "-r", "--rhi", "RHI Interface", "");
 }
 
 GuiApplication::~GuiApplication() {
 
 }
 
+NativeWindow *GuiApplication::getMainWindow() const {
+  return mNativeWindow;
+}
+
+void GuiApplication::setMainWindow(NativeWindow *nativeWindow) {
+  mNativeWindow = nativeWindow;
+}
+
 bool GuiApplication::onStart() {
-  return CoreApplication::onStart();
+  if (CoreApplication::onStart()) {
+    // Before we start create the gui context first
+    createGuiContext();
+    // Create main window
+    onCreateMainWindow();
+    if (!m_bRunning) {
+      return false;
+    }
+
+    // Done
+    return true;
+  }
+
+  return false;
 }
 
 void GuiApplication::onStop() {
@@ -57,7 +84,24 @@ void GuiApplication::onStop() {
 }
 
 void GuiApplication::main() {
-  CoreApplication::main();
+  // Run main loop
+  Gui& gui = Gui::instance();
+  // Process gui message loop
+  if (gui.isActive() && m_bRunning) {
+    gui.processMessages();
+  }
+}
+
+void GuiApplication::createGuiContext() {
+
+}
+
+void GuiApplication::onDestroyMainWindow() {
+
+}
+
+void GuiApplication::onCreateMainWindow() {
+
 }
 
 //[-------------------------------------------------------]

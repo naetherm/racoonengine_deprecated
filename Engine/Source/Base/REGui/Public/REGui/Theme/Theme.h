@@ -29,13 +29,40 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
+#include <RECore/String/String.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui
-{
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+class Theme {
+public:
+
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] themeName
+   * The name of the theme.
+   */
+  REGUI_API Theme(const RECore::String& themeName);
+
+  /**
+   * @brief
+   * Destructor
+   */
+  REGUI_API virtual ~Theme();
+
+protected:
+
+  RECore::String mThemeName;
+};
 
 
 //[-------------------------------------------------------]

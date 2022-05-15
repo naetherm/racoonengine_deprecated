@@ -21,6 +21,6 @@
 ################################################################################
 # Current package
 ################################################################################
-pl_add_subdirectory(RERendererToolkit)
-pl_add_subdirectory(REEd)
+re_add_subdirectory(RERendererToolkit)
+re_add_subdirectory(REEd)
 

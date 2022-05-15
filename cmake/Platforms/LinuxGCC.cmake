@@ -18,8 +18,8 @@
 #// DEALINGS IN THE SOFTWARE.
 #////////////////////////////////////////////////////////////////////////////////////////////////////
 
-list(REMOVE_ITEM PL_UNSUPPORTED_PLATFORMS Linux Unix)
-set(PL_SUPPORTED_PLATFORMS Linux Unix)
+list(REMOVE_ITEM RE_UNSUPPORTED_PLATFORMS Linux Unix)
+set(RE_SUPPORTED_PLATFORMS Linux Unix)
 
 if (CMAKE_GENERATOR MATCHES "Makefiles")
   message(STATUS "Check for GCC compiler version")

@@ -22,14 +22,14 @@
 ##################################################
 ## Project
 ##################################################
-pl_add_target(
+re_add_target(
   NAME REAudio SHARED
   NAMESPACE RE
   FILES_CMAKE
   ${CMAKE_CURRENT_SOURCE_DIR}/REAudio_files.cmake
   INCLUDE_DIRECTORIES
   PUBLIC
-  ${PL_CONFIG_FILE_LOCATION}
+  ${RE_CONFIG_FILE_LOCATION}
   ${CMAKE_CURRENT_SOURCE_DIR}/Public
   ${CMAKE_CURRENT_SOURCE_DIR}/Private
   /usr/include/dbus-1.0

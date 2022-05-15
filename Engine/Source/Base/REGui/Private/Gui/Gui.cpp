@@ -23,13 +23,76 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Gui/Gui.h"
+#include "REGui/Gui/Screen.h"
+#if defined(LINUX)
+#include "REGui/Backend/Linux/GuiLinux.h"
+#elif defined(WIN32)
+#endif
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui
-{
+namespace REGui {
+
+
+Gui &Gui::instance() {
+  static Gui SInstance;
+  return SInstance;
+}
+
+
+Gui::Gui()
+: mpImpl(nullptr)
+, mGuiContext(nullptr)
+, mDefaultScreen(nullptr) {
+#if defined(LINUX)
+  mpImpl = new GuiLinux(this);
+#endif
+}
+
+Gui::~Gui() {
+  { // Clear screens
+    for (auto iter = mScreens.begin(); iter != mScreens.end(); ++iter) {
+      delete *iter;
+    }
+    mScreens.clear();
+  }
+  // Clear all screens
+  delete mpImpl;
+}
+
+GuiImpl *Gui::getImpl() const {
+  return mpImpl;
+}
+
+bool Gui::isActive() const {
+  return false;
+}
+
+
+void Gui::processMessages() {
+
+}
+
+
+const std::vector<Screen*> &Gui::getScreens() const {
+  return mScreens;
+}
+
+Screen *Gui::getScreen(const RECore::String &name) const {
+  for (auto iter = mScreens.begin(); iter != mScreens.end(); ++iter) {
+    if ((*iter)->getName() == name) {
+      return *iter;
+    }
+  }
+
+  return nullptr;
+}
+
+Screen *Gui::getDefaultScreen() const {
+  return mDefaultScreen;
+}
 
 
 //[-------------------------------------------------------]

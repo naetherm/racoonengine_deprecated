@@ -10,8 +10,10 @@ set(FILES
   # Gui
   Private/Gui/Gui.cpp
   Private/Gui/GuiImpl.cpp
+  Private/Gui/GuiMessage.cpp
   Private/Gui/NativeWindow.cpp
   Private/Gui/NativeWindowImpl.cpp
+  Private/Gui/Screen.cpp
 
   # Theme
   Private/Theme/Theme.cpp

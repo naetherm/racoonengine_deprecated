@@ -29,13 +29,74 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
+#include <RERHI/Rhi.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui
-{
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Gui;
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+ * @class
+ * NativeWindow
+ *
+ * @brief
+ * Platform independent native window implementation.
+ */
+class NativeWindow {
+public:
+
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] gui
+   * Pointer to platform independent gui implementation.
+   */
+  NativeWindow(Gui* gui);
+
+  /**
+   * @brief
+   * Destructor.
+   */
+  ~NativeWindow();
+
+
+  /**
+   * @brief
+   * Gets pointer to gui implementations.
+   *
+   * @return
+   * Pointer to gui implementation.
+   */
+  [[nodiscard]] Gui* getGui() const;
+
+  /**
+   * @brief
+   * Gets pointer to the internally used swapchain implementation.
+   *
+   * @return
+   * Pointer to swapchain implementation.
+   */
+  [[nodiscard]] RERHI::RHISwapChainPtr getSwapChain() const;
+
+protected:
+  /** Pointer to gui implementation, always valid! */
+  Gui* mGui;
+  /** Pointer to swapchain implementation, always valid! */
+  RERHI::RHISwapChainPtr mSwapChain;
+};
 
 
 //[-------------------------------------------------------]

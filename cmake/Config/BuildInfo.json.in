@@ -1,14 +1,14 @@
 {
-	"name": 			"${PL_PROJECT_NAME}",
+	"name": 			"${RE_PROJECT_NAME}",
 	
-	"version_major":	${PL_PROJECT_VERSION_MAJOR},
-	"version_minor": 	${PL_PROJECT_VERSION_MINOR},
-	"version_patch": 	${PL_PROJECT_VERSION_PATCH},
-	"version_rev": 		"${PL_PROJECT_VERSION_REV}",
-	"version_name": 	"${PL_PROJECT_VERSION_RELEASE}",
+	"version_major":	${RE_PROJECT_VERSION_MAJOR},
+	"version_minor": 	${RE_PROJECT_VERSION_MINOR},
+	"version_patch": 	${RE_PROJECT_VERSION_PATCH},
+	"version_rev": 		"${RE_PROJECT_VERSION_REV}",
+	"version_name": 	"${RE_PROJECT_VERSION_RELEASE}",
 	
-	"git_sha": 		"${PL_PROJECT_GIT_SHA}",
-	"git_branch":		"${PL_PROJECT_GIT_BRANCH}",
+	"git_sha": 		"${RE_PROJECT_GIT_SHA}",
+	"git_branch":		"${RE_PROJECT_GIT_BRANCH}",
 	
-	"timestamp": 		"${PL_BUILD_TIME}"
+	"timestamp": 		"${RE_BUILD_TIME}"
 }

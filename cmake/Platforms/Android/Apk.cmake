@@ -95,7 +95,7 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
     # Get a list of libraries to load in (e.g. "PLCore;PLMath" etc.)
     set(ANDROID_SHARED_LIBRARIES_TO_LOAD "")
     foreach (value ${shared_libraries})
-      # "value" is e.g. "/home/cofenberg/pl_ndk/Bin-Linux-ndk/Runtime/armeabi/libPLCore.so"
+      # "value" is e.g. "/home/cofenberg/re_ndk/Bin-Linux-ndk/Runtime/armeabi/libPLCore.so"
       get_filename_component(shared_library_filename ${value} NAME_WE)
 
       # "shared_library_filename" is e.g. "libPLCore", but we need "PLCore"

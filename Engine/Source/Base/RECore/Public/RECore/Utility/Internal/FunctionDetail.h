@@ -98,7 +98,7 @@ public:
     MGROPS_DESTRUCT_FUNCTOR = 0,
     MGROPS_COPY_FUNCTOR = 1,
     MGROPS_MOVE_FUNCTOR = 2,
-#if PL_RTTI_ENABLED
+#if RE_RTTI_ENABLED
     MGROPS_GET_TYPE_INFO = 3,
     MGROPS_GET_FUNC_PTR = 4,
 #endif
@@ -225,7 +225,7 @@ public:
     public:
     using Base = FunctionManagerBase<Functor>;
 
-#if PL_RTTI_ENABLED
+#if RE_RTTI_ENABLED
     static void* GetTypeInfo() noexcept {
       return reinterpret_cast<void*>(const_cast<std::type_info*>(&typeid(Functor)));
     }
@@ -246,7 +246,7 @@ public:
         break;
       }
     }
-#endif // PL_RTTI_ENABLED
+#endif // RE_RTTI_ENABLED
 
     static R Invoker(const FunctorStorageType& functor, Args... args) {
       return RECore::Invoke(*Base::GetFunctorPtr(functor), Forward<Args>(args)...);
@@ -386,7 +386,7 @@ public:
     RECore::Swap(mInvokeFuncPtr, cSource.mInvokeFuncPtr);
   }
 
-#if PL_RTTI_ENABLED
+#if RE_RTTI_ENABLED
 
   const std::type_info& TargetType() const noexcept;
 

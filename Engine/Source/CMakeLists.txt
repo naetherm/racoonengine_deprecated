@@ -21,6 +21,6 @@
 ################################################################################
 # Current package
 ################################################################################
-pl_add_subdirectory(Base)
-pl_add_subdirectory(Plugins)
-pl_add_subdirectory(Editor)
+re_add_subdirectory(Base)
+re_add_subdirectory(Plugins)
+re_add_subdirectory(Editor)

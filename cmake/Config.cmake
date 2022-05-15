@@ -21,37 +21,37 @@
 ################################################################################
 # Project Configuration
 ################################################################################
-set(PL_PROJECT_NAME "RacoonEngine")
-set(PL_PROJECT_VERSION_MAJOR 0)
-set(PL_PROJECT_VERSION_MINOR 1)
-set(PL_PROJECT_VERSION_PATCH 0)
-set(PL_PROJECT_VERSION_RELEASE "Dione")
-set(PL_PROJECT_VERSION_SUFFIX "Alpha")
+set(RE_PROJECT_NAME "RacoonEngine")
+set(RE_PROJECT_VERSION_MAJOR 0)
+set(RE_PROJECT_VERSION_MINOR 1)
+set(RE_PROJECT_VERSION_PATCH 0)
+set(RE_PROJECT_VERSION_RELEASE "Dione")
+set(RE_PROJECT_VERSION_SUFFIX "Alpha")
 
 # New stuff, document me!
-get_git_head_revision(PL_PROJECT_GIT_BRANCH PL_PROJECT_GIT_SHA)
-string(SUBSTRING "${PL_PROJECT_GIT_SHA}" 0 7 PL_PROJECT_VERSION_REV) # 7 characters from the SHA is git's default abbreviated commit desc
-string(TIMESTAMP PL_BUILD_TIME "%Y-%m-%d %H:%M UTC" UTC)
+get_git_head_revision(RE_PROJECT_GIT_BRANCH RE_PROJECT_GIT_SHA)
+string(SUBSTRING "${RE_PROJECT_GIT_SHA}" 0 7 RE_PROJECT_VERSION_REV) # 7 characters from the SHA is git's default abbreviated commit desc
+string(TIMESTAMP RE_BUILD_TIME "%Y-%m-%d %H:%M UTC" UTC)
 configure_file("cmake/Config/BuildInfo.json.in" "${CMAKE_BINARY_DIR}/BuildInfo.json")
 
 configure_file("cmake/Config/RacoonEngine.h.in" "${CMAKE_BINARY_DIR}/Engine/RacoonEngine.h")
-set(PL_CONFIG_FILE_LOCATION "${CMAKE_BINARY_DIR}/Engine" CACHE INTERNAL "Location of RacoonEngine.h file")
+set(RE_CONFIG_FILE_LOCATION "${CMAKE_BINARY_DIR}/Engine" CACHE INTERNAL "Location of RacoonEngine.h file")
 
-set(PL_USE_SYSTEM_LIBS OFF CACHE BOOL "Should we use system libraries?")
+set(RE_USE_SYSTEM_LIBS OFF CACHE BOOL "Should we use system libraries?")
 
 ################################################################################
 # CMake Configuration
 ################################################################################
 set(CMAKE_CXX_STANDARD 17)
 
-set(PL_EXTERNAL_LIBRARIES "$ENV{HOME}/.racoonengine/Externals" CACHE INTERNAL "Location of external resources")
+set(RE_EXTERNAL_LIBRARIES "$ENV{HOME}/.racoonengine/Externals" CACHE INTERNAL "Location of external resources")
 
 ################################################################################
 # Macros
 ################################################################################
-macro (pl_print_configuration)
-  pl_message("** CONFIGURATION **")
-  pl_message("** General settings **")
+macro (re_print_configuration)
+  re_message("** CONFIGURATION **")
+  re_message("** General settings **")
 endmacro()
 
 ################################################################################

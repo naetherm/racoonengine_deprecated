@@ -98,7 +98,7 @@ public:
 
   void Swap(Function& cSource) noexcept;
 
-#if PL_RTTI_ENABLED
+#if RE_RTTI_ENABLED
 
   const std::type_info& TargetType() const noexcept;
 

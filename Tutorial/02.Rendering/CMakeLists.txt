@@ -21,6 +21,6 @@
 ################################################################################
 # Current package
 ################################################################################
-pl_add_subdirectory(02.01.LowLevel)
-pl_add_subdirectory(02.02.ProjectCompiler)
-pl_add_subdirectory(02.03.HighLevel)
+re_add_subdirectory(02.01.LowLevel)
+re_add_subdirectory(02.02.ProjectCompiler)
+re_add_subdirectory(02.03.HighLevel)

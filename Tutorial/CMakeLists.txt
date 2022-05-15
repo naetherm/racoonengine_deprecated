@@ -21,6 +21,6 @@
 ################################################################################
 # Current package
 ################################################################################
-pl_add_subdirectory(00.Essentials)
-pl_add_subdirectory(01.Frontends)
-pl_add_subdirectory(02.Rendering)
+re_add_subdirectory(00.Essentials)
+re_add_subdirectory(01.Frontends)
+re_add_subdirectory(02.Rendering)

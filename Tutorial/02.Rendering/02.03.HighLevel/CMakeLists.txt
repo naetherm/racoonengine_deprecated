@@ -22,7 +22,7 @@
 ##################################################
 ## Project
 ##################################################
-pl_add_target(
+re_add_target(
   NAME 02.03.HighLevel EXECUTABLE
   NAMESPACE RE
   FILES_CMAKE

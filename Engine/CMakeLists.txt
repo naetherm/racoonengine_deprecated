@@ -21,6 +21,6 @@
 ################################################################################
 # Current package
 ################################################################################
-pl_add_subdirectory(Source)
-pl_add_subdirectory(Samples)
-#pl_add_subdirectory(Tools)
+re_add_subdirectory(Source)
+re_add_subdirectory(Samples)
+#re_add_subdirectory(Tools)

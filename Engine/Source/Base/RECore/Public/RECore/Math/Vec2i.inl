@@ -25,6 +25,35 @@
 namespace RECore {
 
 
+Vec2i &Vec2i::operator=(const Vec2i &rhs) {
+  x = rhs.x;
+  y = rhs.y;
+  return *this;
+}
+
+bool Vec2i::operator==(const Vec2i &rhs) const {
+  return ((x == rhs.x) && (y == rhs.y));
+}
+
+bool Vec2i::operator!=(const Vec2i &rhs) const {
+  return !operator==(rhs);
+}
+
+int Vec2i::getX() const {
+  return x;
+}
+
+int Vec2i::getY() const {
+  return y;
+}
+
+void Vec2i::setX(int x) {
+  this->x = x;
+}
+
+void Vec2i::setY(int y) {
+  this->y = y;
+}
 
 
 //[-------------------------------------------------------]

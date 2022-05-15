@@ -29,13 +29,132 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
+#include "REGui/Gui/NativeWindowImpl.h"
+#include <RECore/Linux/X11Includes.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui
-{
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+ * @class
+ * NativeWindowLinux
+ *
+ * @brief
+ * Linux native window implementation.
+ */
+class NativeWindowLinux : public NativeWindowImpl {
+public:
+
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] nativeWindow
+   * Pointer to native window.
+   */
+  REGUI_API NativeWindowLinux(NativeWindow* nativeWindow);
+
+  /**
+   * @brief
+   * Destructor
+   */
+  REGUI_API ~NativeWindowLinux() override;
+
+public:
+
+
+  /**
+   * @brief
+   * Create native window implementation.
+   *
+   * @param[in] nativeWindowHandle
+   * The native window handle of the system.
+   */
+  void createWindow(RECore::handle nativeWindowHandle) override;
+
+  /**
+   * @brief
+   * Check if the window has been destroyed.
+   *
+   * @return
+   * True if the windows is destroyed, false otherwise.
+   */
+  bool isDestroyed() const override;
+
+  /**
+   * @brief
+   * Destroy the window.
+   */
+  void destroy() override;
+
+  /**
+   * @brief
+   * Returns the native window handle.
+   *
+   * @return
+   * Native window handle.
+   */
+  RECore::handle getNativeWindowHandle() const override;
+
+  /**
+   * @brief
+   * Sets the position of the window.
+   *
+   * @param[in] position
+   * Position of the window.
+   */
+  void setPosition(const RECore::Vec2i& position) override;
+
+  /**
+   * @brief
+   * Returns the position of the window.
+   *
+   * @return
+   * Position of the window.
+   */
+  RECore::Vec2i getPosition() const override;
+
+  /**
+   * @brief
+   * Sets the size of the window.
+   *
+   * @param[in] size
+   * The size
+   */
+  void setSize(const RECore::Vec2i& size) override;
+
+  /**
+   * @brief
+   * Get the size of the window.
+   *
+   * @return
+   * Size of window.
+   */
+  RECore::Vec2i getSize() const override;
+
+  /**
+   * @brief
+   * Redraw the window.
+   */
+  void redraw() override;
+
+private:
+
+  ::Display* mDisplay;
+  ::Window mNativeWindowHandle;
+  int mScreen;
+  RECore::Vec2i mPosition;
+  RECore::Vec2i mSize;
+
+  bool mDestroyed;
+};
 
 
 //[-------------------------------------------------------]

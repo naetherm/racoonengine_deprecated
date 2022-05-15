@@ -34,38 +34,38 @@ else ()
 endif ()
 
 # Target architecture
-if (PL_TARGET_ARCH)
-  set(PL_TARGET_ARCH ${PL_TARGET_ARCH} CACHE STRING "Target architecture")
+if (RE_TARGET_ARCH)
+  set(RE_TARGET_ARCH ${RE_TARGET_ARCH} CACHE STRING "Target architecture")
 else ()
-  set(PL_TARGET_ARCH "x86" CACHE STRING "Target architecture")
+  set(RE_TARGET_ARCH "x86" CACHE STRING "Target architecture")
 endif ()
 
 # Sets the default bit size, depending on host system
-if (X86_64 AND PL_TARGET_ARCH MATCHES "x86")
+if (X86_64 AND RE_TARGET_ARCH MATCHES "x86")
   # Target bitsize
-  set(PL_TARGET_BITSIZE "64" CACHE STRING "Target bitsize")
+  set(RE_TARGET_BITSIZE "64" CACHE STRING "Target bitsize")
 
   # Target architecture and bitsize
-  set(PL_TARGET_ARCHBITSIZE "x64" CACHE STRING "Target architecture and bitsize")
+  set(RE_TARGET_ARCHBITSIZE "x64" CACHE STRING "Target architecture and bitsize")
 else ()
   # Target bitsize
-  set(PL_TARGET_BITSIZE "32" CACHE STRING "Target bitsize")
+  set(RE_TARGET_BITSIZE "32" CACHE STRING "Target bitsize")
 
   # Target architecture and bitsize
-  set(PL_TARGET_ARCHBITSIZE ${PL_TARGET_ARCH} CACHE STRING "Target architecture and bitsize")
+  set(RE_TARGET_ARCHBITSIZE ${RE_TARGET_ARCH} CACHE STRING "Target architecture and bitsize")
 endif ()
 
 ################################################################################
 # Platform specific includes
 ################################################################################
 
-set(PL_UNSUPPORTED_PLATFORMS Linux Unix Windows Android MacOSX IPhone)
-set(PL_SUPPORTED_PLATFORMS "")
+set(RE_UNSUPPORTED_PLATFORMS Linux Unix Windows Android MacOSX IPhone)
+set(RE_SUPPORTED_PLATFORMS "")
 
-set(PL_PLATFORM_COMPILE_FLAGS "")
-set(PL_PLATFORM_COMPILE_DEFS "")
-set(PL_PLATFORM_LINKER_FLAGS "")
-set(PL_PLATFORM_LINKER_DEFS "")
+set(RE_PLATFORM_COMPILE_FLAGS "")
+set(RE_PLATFORM_COMPILE_DEFS "")
+set(RE_PLATFORM_LINKER_FLAGS "")
+set(RE_PLATFORM_LINKER_DEFS "")
 
 if (UNIX)
   set(LINUX TRUE)
@@ -75,10 +75,10 @@ if (WIN32)
   include(cmake/Platforms/WinMSVC.cmake)
 
 
-  set(PL_PLATFORM_COMPILE_FLAGS ${WINDOWS_COMPILE_FLAGS})
-  set(PL_PLATFORM_COMPILE_DEFS ${WINDOWS_COMPILE_DEFS})
-  set(PL_PLATFORM_LINKER_FLAGS ${WINDOWS_LINKER_FLAGS})
-  set(PL_PLATFORM_LINKER_DEFS ${WINDOWS_LINKER_DEFS})
+  set(RE_PLATFORM_COMPILE_FLAGS ${WINDOWS_COMPILE_FLAGS})
+  set(RE_PLATFORM_COMPILE_DEFS ${WINDOWS_COMPILE_DEFS})
+  set(RE_PLATFORM_LINKER_FLAGS ${WINDOWS_LINKER_FLAGS})
+  set(RE_PLATFORM_LINKER_DEFS ${WINDOWS_LINKER_DEFS})
 elseif (LINUX)
 
   # Include finds for all window managers
@@ -111,8 +111,8 @@ elseif (LINUX)
     message(FATAL_ERROR "Unsupported compiler was specified. Only GNU, Clang and NDK are supported")
   endif ()
 
-  set(PL_PLATFORM_COMPILE_FLAGS ${LINUX_COMPILE_FLAGS})
-  set(PL_PLATFORM_COMPILE_DEFS ${LINUX_COMPILE_DEFS})
-  set(PL_PLATFORM_LINKER_FLAGS ${LINUX_LINKER_FLAGS})
-  set(PL_PLATFORM_LINKER_DEFS ${LINUX_LINKER_DEFS})
+  set(RE_PLATFORM_COMPILE_FLAGS ${LINUX_COMPILE_FLAGS})
+  set(RE_PLATFORM_COMPILE_DEFS ${LINUX_COMPILE_DEFS})
+  set(RE_PLATFORM_LINKER_FLAGS ${LINUX_LINKER_FLAGS})
+  set(RE_PLATFORM_LINKER_DEFS ${LINUX_LINKER_DEFS})
 endif ()

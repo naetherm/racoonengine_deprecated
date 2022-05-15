@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
+#include "REGui/Application/GuiContext.h"
 #include <RECore/Application/CoreApplication.h>
 #include <RECore/Reflect/Event/EventHandler.h>
 
@@ -37,6 +38,12 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class NativeWindow;
 
 
 //[-------------------------------------------------------]
@@ -77,6 +84,24 @@ public:
    */
   REGUI_API virtual ~GuiApplication() override;
 
+
+  /**
+   * @brief
+   * Gets pointer to the main window.
+   *
+   * @return
+   * Main window, can be a nullptr.
+   */
+  REGUI_API NativeWindow* getMainWindow() const;
+
+  /**
+   * @brief
+   * Sets the main window.
+   *
+   * @param[in] nativeWindow
+   * Pointer to the main window to set.
+   */
+  REGUI_API void setMainWindow(NativeWindow* nativeWindow);
 
   //[-------------------------------------------------------]
   //[ Protected virtual PLCore::AbstractLifecycle functions ]
@@ -123,8 +148,36 @@ protected:
   *    - Exit loop when either the GUI or the application has been stopped
   */
   REGUI_API void main() override;
+
+private:
+
+  /**
+   * @brief
+   * Creates the gui context.
+   */
+  void createGuiContext();
+
+  /**
+   * @brief
+   * Called when the main window was destroyed.
+   */
+  void onDestroyMainWindow();
+
+protected:
+
+  /**
+   * @brief
+   * Called when application should open it's main window.
+   */
+  REGUI_API virtual void onCreateMainWindow();
   
 protected:
+  /** Pointer to the gui context */
+  GuiContext* mGuiContext;
+  /** Pointer to the main window */
+  NativeWindow* mNativeWindow;
+  /** Event handler */
+  RECore::EventHandler<> EventHandlerOnDestroy;
 };
 
 

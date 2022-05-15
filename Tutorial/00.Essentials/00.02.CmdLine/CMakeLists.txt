@@ -22,7 +22,7 @@
 ##################################################
 ## Project
 ##################################################
-pl_add_target(
+re_add_target(
   NAME 00.02.CmdLine EXECUTABLE
   NAMESPACE RE
   FILES_CMAKE

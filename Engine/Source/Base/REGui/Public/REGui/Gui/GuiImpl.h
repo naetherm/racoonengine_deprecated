@@ -29,13 +29,49 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
+#include "REGui/Gui/GuiMessage.h"
+#include <RECore/Math/Vec2i.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui
-{
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Gui;
+class Screen;
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+class GuiImpl {
+public:
+
+  REGUI_API GuiImpl(Gui* gui);
+
+  REGUI_API virtual ~GuiImpl();
+
+public:
+
+  virtual bool hasPendingMessages() = 0;
+
+  virtual void processMessage() = 0;
+
+  virtual void postMessage(const GuiMessage& guiMessage) = 0;
+
+  virtual void enumerateScreens(std::vector<Screen*>& screens) = 0;
+
+  virtual RECore::Vec2i getScreenSize() const = 0;
+
+protected:
+
+  Gui* mGui;
+};
 
 
 //[-------------------------------------------------------]

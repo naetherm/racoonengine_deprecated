@@ -21,6 +21,6 @@
 ################################################################################
 # Current package
 ################################################################################
-pl_add_subdirectory(00.01.HelloWorld)
-pl_add_subdirectory(00.02.CmdLine)
-pl_add_subdirectory(00.03.Signals)
+re_add_subdirectory(00.01.HelloWorld)
+re_add_subdirectory(00.02.CmdLine)
+re_add_subdirectory(00.03.Signals)

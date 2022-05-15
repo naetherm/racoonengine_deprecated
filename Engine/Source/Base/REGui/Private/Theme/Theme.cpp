@@ -28,8 +28,16 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui
-{
+namespace REGui {
+
+Theme::Theme(const RECore::String &themeName)
+: mThemeName(themeName) {
+
+}
+
+Theme::~Theme() {
+
+}
 
 
 //[-------------------------------------------------------]

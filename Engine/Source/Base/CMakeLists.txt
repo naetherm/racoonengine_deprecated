@@ -21,9 +21,9 @@
 ################################################################################
 # Current package
 ################################################################################
-pl_add_subdirectory(RECore)
-pl_add_subdirectory(RERHI)
-pl_add_subdirectory(REInput)
-pl_add_subdirectory(RERenderer)
-pl_add_subdirectory(REGui)
-pl_add_subdirectory(REAudio)
+re_add_subdirectory(RECore)
+re_add_subdirectory(RERHI)
+re_add_subdirectory(REInput)
+re_add_subdirectory(RERenderer)
+re_add_subdirectory(REGui)
+re_add_subdirectory(REAudio)

@@ -37,12 +37,12 @@ namespace RECore {
 //[-------------------------------------------------------]
 Version Runtime::getVersion() {
   return Version(
-    PL_NAME,
-    PL_VERSION_RELEASE,
-    PL_VERSION_MAJOR,
-    PL_VERSION_MINOR,
-    PL_VERSION_PATCH,
-    PL_SUFFIX);
+    RE_NAME,
+    RE_VERSION_RELEASE,
+    RE_VERSION_MAJOR,
+    RE_VERSION_MINOR,
+    RE_VERSION_PATCH,
+    RE_SUFFIX);
 }
 
 

@@ -21,16 +21,16 @@
 ################################################################################
 # Current package
 ################################################################################
-pl_add_subdirectory(REFrontendQt)
+re_add_subdirectory(REFrontendQt)
 
-pl_add_subdirectory(RERHINull)
-pl_add_subdirectory(RERHIOpenGL)
-#pl_add_subdirectory(RERHIOpenGLES3)
-#pl_add_subdirectory(RERHID3D9)
-#pl_add_subdirectory(RERHID3D10)
-#pl_add_subdirectory(RERHID3D11)
-#pl_add_subdirectory(RERHID3D12)
-#pl_add_subdirectory(RERHIVulkan)
+re_add_subdirectory(RERHINull)
+re_add_subdirectory(RERHIOpenGL)
+#re_add_subdirectory(RERHIOpenGLES3)
+#re_add_subdirectory(RERHID3D9)
+#re_add_subdirectory(RERHID3D10)
+#re_add_subdirectory(RERHID3D11)
+#re_add_subdirectory(RERHID3D12)
+#re_add_subdirectory(RERHIVulkan)
 
-pl_add_subdirectory(REScriptBindings)
-pl_add_subdirectory(REScriptLua)
+re_add_subdirectory(REScriptBindings)
+re_add_subdirectory(REScriptLua)

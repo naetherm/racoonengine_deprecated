@@ -1,7 +1,7 @@
 
 
 
-set(PL_BUILD_DEPENDENCIES
+set(RE_BUILD_DEPENDENCIES
   #  PUBLIC
   pthread
   dl

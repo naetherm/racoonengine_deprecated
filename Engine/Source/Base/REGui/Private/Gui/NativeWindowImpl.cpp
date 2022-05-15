@@ -28,8 +28,12 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui
-{
+namespace REGui {
+
+
+NativeWindow* NativeWindowImpl::getNativeWindow() const {
+  return mNativeWindow;
+}
 
 
 //[-------------------------------------------------------]

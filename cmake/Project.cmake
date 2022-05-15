@@ -31,21 +31,21 @@ include(CMakeDependentOption)
 include(FindPkgConfig)
 include(GNUInstallDirs)
 
-macro(pl_add_subdirectory dir)
+macro(re_add_subdirectory dir)
   add_subdirectory(${dir})
 
-  set(PL_MANUAL_SUBDIRS ${PL_MANUAL_SUBDIRS} ${dir})
+  set(RE_MANUAL_SUBDIRS ${RE_MANUAL_SUBDIRS} ${dir})
 endmacro()
 
-macro(pl_set_current_package name)
-  set(PL_CURRENT_PACKAGE ${name})
-  set(PL_CURRENT_PACKAGE_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+macro(re_set_current_package name)
+  set(RE_CURRENT_PACKAGE ${name})
+  set(RE_CURRENT_PACKAGE_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 endmacro()
 
 ################################################################################
-# MACRO: pl_add_all_subdirectories
+# MACRO: re_add_all_subdirectories
 ################################################################################
-macro(pl_add_all_subdirectories)
+macro(re_add_all_subdirectories)
   # First, collect all subdirectories containing a CMakeLists.txt
   set(directory_list "")
   file(GLOB_RECURSE new_list CMakeLists.txt)
@@ -77,9 +77,9 @@ macro(pl_add_all_subdirectories)
 endmacro()
 
 ################################################################################
-# MACRO: pl_collection_source_files
+# MACRO: re_collection_source_files
 ################################################################################
-macro(pl_collection_source_files)
+macro(re_collection_source_files)
 
   # Collection all files
   file(
@@ -96,7 +96,7 @@ macro(pl_collection_source_files)
     # In feature specific folders
     set(file_in ON)
 
-    foreach (platform ${PL_UNSUPPORTED_PLATFORMS})
+    foreach (platform ${RE_UNSUPPORTED_PLATFORMS})
       if (file MATCHES "/\\${platform}")
         list(REMOVE_ITEM all_files ${file})
         set(file_in OFF)
@@ -109,7 +109,7 @@ macro(pl_collection_source_files)
 
       # Remove supported platform filters out of the file name before processing features
       set(file_name ${file})
-      foreach (platform ${PL_SUPPORTED_PLATFORMS})
+      foreach (platform ${RE_SUPPORTED_PLATFORMS})
         string(REGEX REPLACE "/\\${platform}/" "" file_name ${file_name})
       endforeach ()
 
@@ -119,7 +119,7 @@ macro(pl_collection_source_files)
         # Let's browse through all the features the user wants to enable and look
         # if this file belong to one of them
         set(keep_file OFF)
-        foreach (feature ${PL_CURRENT_LIST_OF_FEATURES})
+        foreach (feature ${RE_CURRENT_LIST_OF_FEATURES})
 
           if (file_name MATCHES "/\\+${feature}/")
             set(keep_file ON)
@@ -136,14 +136,14 @@ macro(pl_collection_source_files)
   endforeach ()
 
   # Add all remaining files to the list
-  set(PL_CURRENT_SOURCES ${all_files})
+  set(RE_CURRENT_SOURCES ${all_files})
 endmacro()
 
 ################################################################################
-# MACRO: pl_group_sources
+# MACRO: re_group_sources
 ################################################################################
-macro(pl_group_sources)
-  foreach (file ${PL_CURRENT_SOURCES})
+macro(re_group_sources)
+  foreach (file ${RE_CURRENT_SOURCES})
     # Get the file path
     get_filename_component(path ${file} PATH)
 
@@ -165,269 +165,269 @@ macro(pl_group_sources)
 endmacro()
 
 ################################################################################
-# MACRO: pl_add_feature
+# MACRO: re_add_feature
 #
 # Adds a feature to the current target
 ################################################################################
-macro(pl_add_feature directory dependency flag)
+macro(re_add_feature directory dependency flag)
   # Add feature to list of features
-  set(PL_CURRENT_LIST_OF_FEATURES ${PL_CURRENT_LIST_OF_FEATURES} "${directory}")
+  set(RE_CURRENT_LIST_OF_FEATURES ${RE_CURRENT_LIST_OF_FEATURES} "${directory}")
 
   # Add dependency
-  pl_add_dependency(${dependency})
+  re_add_dependency(${dependency})
 
   # Add flag
-  pl_add_compile_flags(-D${flag})
+  re_add_compile_flags(-D${flag})
 endmacro()
 
 ################################################################################
-# MACRO: pl_add_include_paths
+# MACRO: re_add_include_paths
 #
 # Adds additional include paths to the current project.
 ################################################################################
-macro(pl_add_include_paths)
+macro(re_add_include_paths)
   foreach (path ${ARGN})
-    # pl_debug_message("For ${PL_CURRENT_PROJECT_NAME}; add include path: ${path}")
-    set(PL_CURRENT_INCLUDES ${PL_CURRENT_INCLUDES} ${path})
+    # re_debug_message("For ${RE_CURRENT_PROJECT_NAME}; add include path: ${path}")
+    set(RE_CURRENT_INCLUDES ${RE_CURRENT_INCLUDES} ${path})
   endforeach ()
 endmacro()
-macro(pl_add_library_paths)
+macro(re_add_library_paths)
   foreach (path ${ARGN})
-    # pl_debug_message("For ${PL_CURRENT_PROJECT_NAME}; add library path: ${path}")
-    set(PL_CURRENT_LINK_DIRS ${PL_CURRENT_LINK_DIRS} ${path})
+    # re_debug_message("For ${RE_CURRENT_PROJECT_NAME}; add library path: ${path}")
+    set(RE_CURRENT_LINK_DIRS ${RE_CURRENT_LINK_DIRS} ${path})
   endforeach ()
 endmacro()
 
 ################################################################################
-# MACRO: pl_add_libs
+# MACRO: re_add_libs
 ################################################################################
-macro(pl_add_libs)
+macro(re_add_libs)
   foreach (lib ${ARGN})
-    set(PL_CURRENT_EXT_LIBS ${PL_CURRENT_EXT_LIBS} ${lib})
+    set(RE_CURRENT_EXT_LIBS ${RE_CURRENT_EXT_LIBS} ${lib})
   endforeach ()
 endmacro()
 
 ################################################################################
-# MACRO: pl_add_compile_defs
+# MACRO: re_add_compile_defs
 ################################################################################
-macro(pl_add_compile_defs)
+macro(re_add_compile_defs)
   foreach (var ${ARGN})
-    set(PL_CURRENT_COMPILE_DEFS ${PL_CURRENT_COMPILE_DEFS} ${var})
+    set(RE_CURRENT_COMPILE_DEFS ${RE_CURRENT_COMPILE_DEFS} ${var})
   endforeach ()
 endmacro()
 
 ################################################################################
-# MACRO: pl_add_compile_flags
+# MACRO: re_add_compile_flags
 ################################################################################
-macro(pl_add_compile_flags)
+macro(re_add_compile_flags)
   foreach (var ${ARGN})
-    set(PL_CURRENT_COMPILE_FLAGS "${PL_CURRENT_COMPILE_FLAGS} ${var} ")
+    set(RE_CURRENT_COMPILE_FLAGS "${RE_CURRENT_COMPILE_FLAGS} ${var} ")
   endforeach ()
 endmacro()
 
 ################################################################################
-# MACRO: pl_add_linker_flags
+# MACRO: re_add_linker_flags
 ################################################################################
-macro(pl_add_linker_flags)
+macro(re_add_linker_flags)
   foreach (var ${ARGN})
-    set(PL_CURRENT_LINKER_FLAGS "${PL_CURRENT_LINKER_FLAGS} ${var} ")
+    set(RE_CURRENT_LINKER_FLAGS "${RE_CURRENT_LINKER_FLAGS} ${var} ")
   endforeach ()
 endmacro()
 
 
 ################################################################################
-# MACRO: pl_remove_compile_defs
+# MACRO: re_remove_compile_defs
 ################################################################################
-macro(pl_remove_compile_defs)
+macro(re_remove_compile_defs)
   foreach (var ${ARGN})
-    list(REMOVE_ITEM PL_CURRENT_COMPILE_DEFS ${var})
+    list(REMOVE_ITEM RE_CURRENT_COMPILE_DEFS ${var})
   endforeach ()
 endmacro()
 
 ################################################################################
-# MACRO: pl_add_dependencies
+# MACRO: re_add_dependencies
 ################################################################################
-macro(pl_add_dependencies)
+macro(re_add_dependencies)
   foreach (dependency ${ARGN})
-    set(PL_CURRENT_DEPENDENCIES ${PL_CURRENT_DEPENDENCIES} ${dependency})
+    set(RE_CURRENT_DEPENDENCIES ${RE_CURRENT_DEPENDENCIES} ${dependency})
   endforeach ()
 endmacro()
 
 ################################################################################
-# MACRO: pl_add_dependency
+# MACRO: re_add_dependency
 ################################################################################
-macro(pl_add_dependency module)
+macro(re_add_dependency module)
   # Add include paths to the module
-  pl_add_include_paths(${${module}_INCLUDE_DIRS})
-  pl_add_include_paths(${${module}_EXT_INCLUDE_DIRS})
-  pl_add_include_paths(${PL_CURRENT_EXT_INCLUDE_DIRS})
+  re_add_include_paths(${${module}_INCLUDE_DIRS})
+  re_add_include_paths(${${module}_EXT_INCLUDE_DIRS})
+  re_add_include_paths(${RE_CURRENT_EXT_INCLUDE_DIRS})
 
   # Add link libraries
 
-  pl_add_libs(${${module}_LIBRARIES})# ${${module}_EXT_LIBS})
+  re_add_libs(${${module}_LIBRARIES})# ${${module}_EXT_LIBS})
 
   # Add the dependency
-  pl_add_dependencies(${module})
+  re_add_dependencies(${module})
 endmacro()
 
-macro(pl_add_sources)
+macro(re_add_sources)
   foreach (source ${ARGN})
-    set(PL_CURRENT_SOURCES ${PL_CURRENT_SOURCES} ${source})
+    set(RE_CURRENT_SOURCES ${RE_CURRENT_SOURCES} ${source})
   endforeach ()
 endmacro()
 
 ################################################################################
-# MACRO: pl_project
+# MACRO: re_project
 #
 # Defines a new project.
 ################################################################################
-macro(pl_external_project name)
+macro(re_external_project name)
 
   # Define the project variables
-  set(PL_CURRENT_PROJECT_NAME ${name})
-  set(PL_CURRENT_OUTPUT_NAME "${PL_CURRENT_PACKAGE}.${name}")
+  set(RE_CURRENT_PROJECT_NAME ${name})
+  set(RE_CURRENT_OUTPUT_NAME "${RE_CURRENT_PACKAGE}.${name}")
 
   # The IDE path
-  string(REPLACE "${PL_CURRENT_PACKAGE_ROOT}" "" PL_CURRENT_IDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
-  set(PL_CURRENT_IDE_PATH ${PL_CURRENT_PACKAGE}${PL_CURRENT_IDE_PATH})
-  get_filename_component(PL_CURRENT_IDE_PATH ${PL_CURRENT_IDE_PATH} DIRECTORY)
+  string(REPLACE "${RE_CURRENT_PACKAGE_ROOT}" "" RE_CURRENT_IDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
+  set(RE_CURRENT_IDE_PATH ${RE_CURRENT_PACKAGE}${RE_CURRENT_IDE_PATH})
+  get_filename_component(RE_CURRENT_IDE_PATH ${RE_CURRENT_IDE_PATH} DIRECTORY)
 
   # create the project
-  project(${PL_CURRENT_PROJECT_NAME} C CXX ${PL_RC_COMPILER})
+  project(${RE_CURRENT_PROJECT_NAME} C CXX ${RE_RC_COMPILER})
 
   # initialize project lists
-  set(PL_CURRENT_SOURCES "")
-  set(PL_CURRENT_INCLUDES "")
-  set(PL_CURRENT_EXT_LIBS "")
-  set(PL_CURRENT_LINK_DIRS "")
-  set(PL_CURRENT_COMPILE_DEFS "")
-  set(PL_CURRENT_COMPILE_FLAGS "")
-  set(PL_CURRENT_LINKER_FLAGS "")
-  set(PL_CURRENT_DEPENDENCIES "")
-  set(PL_CURRENT_EXT_INCLUDE_DIRS "")
+  set(RE_CURRENT_SOURCES "")
+  set(RE_CURRENT_INCLUDES "")
+  set(RE_CURRENT_EXT_LIBS "")
+  set(RE_CURRENT_LINK_DIRS "")
+  set(RE_CURRENT_COMPILE_DEFS "")
+  set(RE_CURRENT_COMPILE_FLAGS "")
+  set(RE_CURRENT_LINKER_FLAGS "")
+  set(RE_CURRENT_DEPENDENCIES "")
+  set(RE_CURRENT_EXT_INCLUDE_DIRS "")
 
-  set(PL_CURRENT_DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR}/Download)
-  set(PL_CURRENT_SRC_DIR ${CMAKE_CURRENT_BINARY_DIR}/Source)
-  set(PL_CURRENT_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/Build)
-  set(PL_CURRENT_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/Install)
-  set(PL_CURRENT_TMP_DIR ${CMAKE_CURRENT_BINARY_DIR}/Temp)
-  set(PL_CURRENT_STAMP_DIR ${CMAKE_CURRENT_BINARY_DIR}/Stamp)
+  set(RE_CURRENT_DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR}/Download)
+  set(RE_CURRENT_SRC_DIR ${CMAKE_CURRENT_BINARY_DIR}/Source)
+  set(RE_CURRENT_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/Build)
+  set(RE_CURRENT_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/Install)
+  set(RE_CURRENT_TMP_DIR ${CMAKE_CURRENT_BINARY_DIR}/Temp)
+  set(RE_CURRENT_STAMP_DIR ${CMAKE_CURRENT_BINARY_DIR}/Stamp)
 
   # Set the default includes paths
-  pl_add_include_paths(
+  re_add_include_paths(
     ${CMAKE_CURRENT_SOURCE_DIR}/Public
     ${CMAKE_CURRENT_SOURCE_DIR}/Private
-    ${PL_CONFIG_FILE_LOCATION}
+    ${RE_CONFIG_FILE_LOCATION}
   )
 
   # Set default platform compile definitions
-  #    pl_group_sources()
+  #    re_group_sources()
   if (WIN32)
-    pl_add_compile_defs(${WIN32_COMPILE_DEFS})
+    re_add_compile_defs(${WIN32_COMPILE_DEFS})
   elseif (LINUX)
-    pl_add_compile_defs(${LINUX_COMPILE_DEFS})
+    re_add_compile_defs(${LINUX_COMPILE_DEFS})
   endif ()
 
   # Current project's include path
-  set(PL_CURRENT_PROJECT_INCLUDE_DIRS ${PL_CURRENT_PROJECT_NAME}_INCLUDE_DIRS)
+  set(RE_CURRENT_PROJECT_INCLUDE_DIRS ${RE_CURRENT_PROJECT_NAME}_INCLUDE_DIRS)
 
   # Default value
-  set(${PL_CURRENT_PROJECT_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/Public CACHE INTERNAL "")
-  set(${PL_CURRENT_PROJECT_NAME}_INCLUDE_DIRS ${PL_CURRENT_PROJECT_INCLUDE_DIRS} CACHE INTERNAL "")
+  set(${RE_CURRENT_PROJECT_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/Public CACHE INTERNAL "")
+  set(${RE_CURRENT_PROJECT_NAME}_INCLUDE_DIRS ${RE_CURRENT_PROJECT_INCLUDE_DIRS} CACHE INTERNAL "")
 
   # Current project's output link libraries
-  set(PL_CURRENT_PROJECT_LIBRARIES ${PL_CURRENT_PROJECT_NAME}_LIBRARIES)
-  set(${PL_CURRENT_PROJECT_NAME}_EXT_LIBS ${PL_CURRENT_EXT_LIBS})
+  set(RE_CURRENT_PROJECT_LIBRARIES ${RE_CURRENT_PROJECT_NAME}_LIBRARIES)
+  set(${RE_CURRENT_PROJECT_NAME}_EXT_LIBS ${RE_CURRENT_EXT_LIBS})
 
 endmacro()
 
-#macro(pl_add_include_paths)
+#macro(re_add_include_paths)
 #    foreach(path ${ARGN})
-#        # pl_debug_message("For ${PL_CURRENT_PROJECT_NAME}; add include path: ${path}")
-#        set(PL_CURRENT_INCLUDE_DIRS ${PL_CURRENT_INCLUDE_DIRS} ${path})
+#        # re_debug_message("For ${RE_CURRENT_PROJECT_NAME}; add include path: ${path}")
+#        set(RE_CURRENT_INCLUDE_DIRS ${RE_CURRENT_INCLUDE_DIRS} ${path})
 #    endforeach()
 #endmacro()
-macro(pl_set_external_install_dirs dir)
-  set(${PL_CURRENT_PROJECT_NAME}_INCLUDE_DIRS ${dir} CACHE INTERNAL "")
+macro(re_set_external_install_dirs dir)
+  set(${RE_CURRENT_PROJECT_NAME}_INCLUDE_DIRS ${dir} CACHE INTERNAL "")
 endmacro()
 
 ################################################################################
-# MACRO: pl_project
+# MACRO: re_project
 #
 # Defines a new project.
 ################################################################################
-macro(pl_project name)
+macro(re_project name)
 
   # Define the project variables
-  set(PL_CURRENT_PROJECT_NAME ${name})
-  set(PL_CURRENT_OUTPUT_NAME "${PL_CURRENT_PACKAGE}.${name}")
+  set(RE_CURRENT_PROJECT_NAME ${name})
+  set(RE_CURRENT_OUTPUT_NAME "${RE_CURRENT_PACKAGE}.${name}")
 
   # The IDE path
-  string(REPLACE "${PL_CURRENT_PACKAGE_ROOT}" "" PL_CURRENT_IDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
-  set(PL_CURRENT_IDE_PATH ${PL_CURRENT_PACKAGE}${PL_CURRENT_IDE_PATH})
-  get_filename_component(PL_CURRENT_IDE_PATH ${PL_CURRENT_IDE_PATH} DIRECTORY)
+  string(REPLACE "${RE_CURRENT_PACKAGE_ROOT}" "" RE_CURRENT_IDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
+  set(RE_CURRENT_IDE_PATH ${RE_CURRENT_PACKAGE}${RE_CURRENT_IDE_PATH})
+  get_filename_component(RE_CURRENT_IDE_PATH ${RE_CURRENT_IDE_PATH} DIRECTORY)
 
   # create the project
-  project(${PL_CURRENT_PROJECT_NAME} C CXX ${PL_RC_COMPILER})
+  project(${RE_CURRENT_PROJECT_NAME} C CXX ${RE_RC_COMPILER})
 
   # initialize project lists
-  set(PL_CURRENT_SOURCES "")
-  set(PL_CURRENT_INCLUDES "")
-  set(PL_CURRENT_EXT_LIBS "")
-  set(PL_CURRENT_COMPILE_DEFS "")
-  set(PL_CURRENT_LINK_DIRS "")
-  set(PL_CURRENT_COMPILE_FLAGS "")
-  set(PL_CURRENT_LINKER_FLAGS "")
-  set(PL_CURRENT_DEPENDENCIES "")
-  set(PL_CURRENT_EXT_INCLUDE_DIRS "")
-  set(PL_CURRENT_LIST_OF_FEATURES "")
+  set(RE_CURRENT_SOURCES "")
+  set(RE_CURRENT_INCLUDES "")
+  set(RE_CURRENT_EXT_LIBS "")
+  set(RE_CURRENT_COMPILE_DEFS "")
+  set(RE_CURRENT_LINK_DIRS "")
+  set(RE_CURRENT_COMPILE_FLAGS "")
+  set(RE_CURRENT_LINKER_FLAGS "")
+  set(RE_CURRENT_DEPENDENCIES "")
+  set(RE_CURRENT_EXT_INCLUDE_DIRS "")
+  set(RE_CURRENT_LIST_OF_FEATURES "")
 
-  set(PL_CURRENT_PROJECT_DIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(PL_CURRENT_DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR}/Download)
-  set(PL_CURRENT_SRC_DIR ${CMAKE_CURRENT_BINARY_DIR}/Source)
-  set(PL_CURRENT_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/Build)
-  set(PL_CURRENT_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/Install)
-  set(PL_CURRENT_TMP_DIR ${CMAKE_CURRENT_BINARY_DIR}/Temp)
-  set(PL_CURRENT_STAMP_DIR ${CMAKE_CURRENT_BINARY_DIR}/Stamp)
+  set(RE_CURRENT_PROJECT_DIR ${CMAKE_CURRENT_BINARY_DIR})
+  set(RE_CURRENT_DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR}/Download)
+  set(RE_CURRENT_SRC_DIR ${CMAKE_CURRENT_BINARY_DIR}/Source)
+  set(RE_CURRENT_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/Build)
+  set(RE_CURRENT_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/Install)
+  set(RE_CURRENT_TMP_DIR ${CMAKE_CURRENT_BINARY_DIR}/Temp)
+  set(RE_CURRENT_STAMP_DIR ${CMAKE_CURRENT_BINARY_DIR}/Stamp)
 
   # Create specific include path
   set(${name}_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/Public)
 
   # Set the default includes paths
-  pl_add_include_paths(
+  re_add_include_paths(
     ${CMAKE_CURRENT_SOURCE_DIR}/Public
     ${CMAKE_CURRENT_SOURCE_DIR}/Private
-    ${PL_CONFIG_FILE_LOCATION}
+    ${RE_CONFIG_FILE_LOCATION}
   )
 
   # Set default platform compile definitions
-  #    pl_group_sources()
+  #    re_group_sources()
   if (WIN32)
-    pl_add_compile_defs(${WIN32_COMPILE_DEFS})
+    re_add_compile_defs(${WIN32_COMPILE_DEFS})
   elseif (LINUX)
-    pl_add_compile_defs(${LINUX_COMPILE_DEFS})
+    re_add_compile_defs(${LINUX_COMPILE_DEFS})
   endif ()
 
   # Current project's include path
-  set(PL_CURRENT_PROJECT_INCLUDE_DIRS ${PL_CURRENT_PROJECT_NAME}_INCLUDE_DIRS)
+  set(RE_CURRENT_PROJECT_INCLUDE_DIRS ${RE_CURRENT_PROJECT_NAME}_INCLUDE_DIRS)
 
   # Default value
-  set(PL_CURRENT_PROJECT_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Public CACHE INTERNAL "")
+  set(RE_CURRENT_PROJECT_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Public CACHE INTERNAL "")
 
-  set(${PL_CURRENT_PROJECT_NAME}_INCLUDE_DIRS ${PL_CURRENT_PROJECT_INCLUDE_DIRS} CACHE INTERNAL "")
+  set(${RE_CURRENT_PROJECT_NAME}_INCLUDE_DIRS ${RE_CURRENT_PROJECT_INCLUDE_DIRS} CACHE INTERNAL "")
 
   # Current project's output link libraries
-  set(PL_CURRENT_PROJECT_LIBRARIES ${PL_CURRENT_PROJECT_NAME}_LIBRARIES)
-  set(${PL_CURRENT_PROJECT_NAME}_EXT_LIBS ${PL_CURRENT_EXT_LIBS} CACHE INTERNAL "")
+  set(RE_CURRENT_PROJECT_LIBRARIES ${RE_CURRENT_PROJECT_NAME}_LIBRARIES)
+  set(${RE_CURRENT_PROJECT_NAME}_EXT_LIBS ${RE_CURRENT_EXT_LIBS} CACHE INTERNAL "")
 
-  pl_add_include_paths(${${PL_CURRENT_PROJECT_NAME}_EXT_INCLUDE_DIRS} ${PL_CURRENT_EXT_INCLUDE_DIRS})
+  re_add_include_paths(${${RE_CURRENT_PROJECT_NAME}_EXT_INCLUDE_DIRS} ${RE_CURRENT_EXT_INCLUDE_DIRS})
 
 endmacro()
 
 ################################################################################
-# MACRO: pl_build_library
+# MACRO: re_build_library
 ################################################################################
-macro(pl_build_library type)
+macro(re_build_library type)
   set(lib_type ${type})
 
   if ("${lib_type}" STREQUAL "")
@@ -437,117 +437,117 @@ macro(pl_build_library type)
   endif ()
 
   if ("${type}" STREQUAL "SHARED" OR "${type}" STREQUAL "PLUGIN")
-    pl_add_compile_defs(_WINDLL _USRDLL)
+    re_add_compile_defs(_WINDLL _USRDLL)
 
     set(lib_type "SHARED")
   else ()
-    pl_remove_compile_defs(_WINDLL _USRDLL)
+    re_remove_compile_defs(_WINDLL _USRDLL)
   endif ()
 
   if (LINUX)
     if ("${type}" STREQUAL "STATIC")
 
-      pl_add_compile_flags("-fPIC")
+      re_add_compile_flags("-fPIC")
     endif ()
   endif ()
 
   # Add library to build
-  add_library(${PL_CURRENT_PROJECT_NAME} ${lib_type} ${PL_CURRENT_SOURCES})
+  add_library(${RE_CURRENT_PROJECT_NAME} ${lib_type} ${RE_CURRENT_SOURCES})
 
   # Generate the folder structure in IDE
-  pl_group_sources()
+  re_group_sources()
 
   # Includes
-  include_directories(${PL_CURRENT_PROJECT_NAME} ${PL_CURRENT_INCLUDES})
+  include_directories(${RE_CURRENT_PROJECT_NAME} ${RE_CURRENT_INCLUDES})
 
-  link_directories(${PL_CURRENT_PROJECT_NAME} ${PL_CURRENT_LINK_DIRS})
+  link_directories(${RE_CURRENT_PROJECT_NAME} ${RE_CURRENT_LINK_DIRS})
 
   #set_target_properties(
-  #  ${PL_CURRENT_PROJECT_NAME}
-  #  PROPERTIES IMPORTED_LOCATION ${PL_CURRENT_DEPENDENCIES})
+  #  ${RE_CURRENT_PROJECT_NAME}
+  #  PROPERTIES IMPORTED_LOCATION ${RE_CURRENT_DEPENDENCIES})
 
   # Link all libraries
   target_link_libraries(
-    ${PL_CURRENT_PROJECT_NAME}
+    ${RE_CURRENT_PROJECT_NAME}
     PUBLIC
-    ${PL_CURRENT_EXT_LIBS})
+    ${RE_CURRENT_EXT_LIBS})
 
-  message("Current PL_CURRENT_EXT_LIBS")
-  message(${PL_CURRENT_EXT_LIBS})
+  message("Current RE_CURRENT_EXT_LIBS")
+  message(${RE_CURRENT_EXT_LIBS})
 
   # Dependencies
-  if (NOT "${PL_CURRENT_DEPENDENCIES}" STREQUAL "")
-    message("CURRENT PL_CURRENT_DEPENDENCIES")
-    message(${PL_CURRENT_DEPENDENCIES})
-    add_dependencies(${PL_CURRENT_PROJECT_NAME} ${PL_CURRENT_DEPENDENCIES})
+  if (NOT "${RE_CURRENT_DEPENDENCIES}" STREQUAL "")
+    message("CURRENT RE_CURRENT_DEPENDENCIES")
+    message(${RE_CURRENT_DEPENDENCIES})
+    add_dependencies(${RE_CURRENT_PROJECT_NAME} ${RE_CURRENT_DEPENDENCIES})
   endif ()
 
   # Apply cotire
-  # cotire(${PL_CURRENT_PROJECT_NAME})
+  # cotire(${RE_CURRENT_PROJECT_NAME})
 
   # Preprocessor definitions
   set_target_properties(
-    ${PL_CURRENT_PROJECT_NAME}
+    ${RE_CURRENT_PROJECT_NAME}
     PROPERTIES
     COMPILE_DEFINITIONS
-    "${PL_CURRENT_COMPILE_DEFS}"
+    "${RE_CURRENT_COMPILE_DEFS}"
   )
   set_target_properties(
-    ${PL_CURRENT_PROJECT_NAME}
+    ${RE_CURRENT_PROJECT_NAME}
     PROPERTIES
     COMPILE_FLAGS
-    "${PL_CURRENT_COMPILE_FLAGS}"
+    "${RE_CURRENT_COMPILE_FLAGS}"
   )
 
   # Solution folders
   set_property(
-    TARGET ${PL_CURRENT_PROJECT_NAME}
+    TARGET ${RE_CURRENT_PROJECT_NAME}
     PROPERTY
     FOLDER
-    "${PL_CURRENT_IDE_PATH}"
+    "${RE_CURRENT_IDE_PATH}"
   )
 
   # Output file
   set_property(
-    TARGET ${PL_CURRENT_PROJECT_NAME}
+    TARGET ${RE_CURRENT_PROJECT_NAME}
     PROPERTY
     OUTPUT_NAME
-    ${PL_CURRENT_OUTPUT_NAME}
+    ${RE_CURRENT_OUTPUT_NAME}
   )
 
   # Set SO versions
   set_property(
-    TARGET ${PL_CURRENT_PROJECT_NAME}
+    TARGET ${RE_CURRENT_PROJECT_NAME}
     PROPERTY
     VERSION
-    ${PL_PROJECT_VERSION_MAJOR}.${PL_PROJECT_VERSION_MINOR}.${PL_PROJECT_VERSION_PATCH}
+    ${RE_PROJECT_VERSION_MAJOR}.${RE_PROJECT_VERSION_MINOR}.${RE_PROJECT_VERSION_PATCH}
   )
   set_property(
-    TARGET ${PL_CURRENT_PROJECT_NAME}
+    TARGET ${RE_CURRENT_PROJECT_NAME}
     PROPERTY
     SOVERSION
-    ${PL_PROJECT_VERSION_MAJOR}
+    ${RE_PROJECT_VERSION_MAJOR}
   )
 
   # Input libraries for other projects
-  set(${PL_CURRENT_PROJECT_NAME}_LIBRARIES ${PL_CURRENT_PROJECT_NAME} CACHE INTERNAL "")
-  set(${PL_CURRENT_PROJECT_NAME}_EXT_LIBS ${PL_CURRENT_EXT_LIBS} CACHE INTERNAL "")
+  set(${RE_CURRENT_PROJECT_NAME}_LIBRARIES ${RE_CURRENT_PROJECT_NAME} CACHE INTERNAL "")
+  set(${RE_CURRENT_PROJECT_NAME}_EXT_LIBS ${RE_CURRENT_EXT_LIBS} CACHE INTERNAL "")
 
   # If the library should be interpreted and used as a plugin we have to create a module
   # description file
   if ("${type}" STREQUAL "PLUGIN")
-    pl_create_plugin()
+    re_create_plugin()
   endif ()
 
   # Installation runtime and link libraries and then the include directory
   install(
-    TARGETS ${PL_CURRENT_PROJECT_NAME}
+    TARGETS ${RE_CURRENT_PROJECT_NAME}
     RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin COMPONENT Runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib COMPONENT Runtime
     ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib COMPONENT SDK
   )
   install(
-    DIRECTORY ${${PL_CURRENT_PROJECT_INCLUDE_DIRS}}/${PL_CURRENT_PROJECT_NAME}
+    DIRECTORY ${${RE_CURRENT_PROJECT_INCLUDE_DIRS}}/${RE_CURRENT_PROJECT_NAME}
     DESTINATION ${CMAKE_INSTALL_PREFIX}/include
   ) # DESTINATION ${CMAKE_BINARY_DIR}
 
@@ -555,21 +555,21 @@ endmacro()
 
 
 ################################################################################
-# MACRO: pl_create_plugin
+# MACRO: re_create_plugin
 #
 # Will automatically add the REPlugin project to the dependencies list of
 # the current library. It will also add a post_build command to create the
 # necessary module description file.
 ################################################################################
-macro(pl_create_plugin)
+macro(re_create_plugin)
 
   # Add a dependency to REPlugin so that we can be save the project was compiled
   # before using it
-  pl_add_dependencies(PLPlugin)
+  re_add_dependencies(PLPlugin)
 
   # The first will receive the exact location of the compiled library
   # The second will receive the path to this library
-  #set(library_file $<TARGET_FILE:${PL_CURRENT_PROJECT_NAME}>)
+  #set(library_file $<TARGET_FILE:${RE_CURRENT_PROJECT_NAME}>)
   #get_filename_component(library_path ${lib_file} PATH)
   #get_filename_component(library_name ${lib_file} NAME)
 
@@ -580,22 +580,22 @@ macro(pl_create_plugin)
   # Finally, after receiving all necessary information, we'll call REPlugin
   # with this information
   #     message("Will now show the correct directory of REPlugin")
-  #     message($<TARGET_FILE_DIR:${PL_CURRENT_PROJECT_NAME}>)
-  # pl_debug_message("DO THIS: $<TARGET_FILE:REPlugin> $<TARGET_FILE_DIR:${PL_CURRENT_PROJECT_NAME}> --entry-file $<TARGET_FILE_NAME:${PL_CURRENT_PROJECT_NAME}> --write-plugin --verbose --debug --output-path $<TARGET_FILE_DIR:${PL_CURRENT_PROJECT_NAME}>")
+  #     message($<TARGET_FILE_DIR:${RE_CURRENT_PROJECT_NAME}>)
+  # re_debug_message("DO THIS: $<TARGET_FILE:REPlugin> $<TARGET_FILE_DIR:${RE_CURRENT_PROJECT_NAME}> --entry-file $<TARGET_FILE_NAME:${RE_CURRENT_PROJECT_NAME}> --write-plugin --verbose --debug --output-path $<TARGET_FILE_DIR:${RE_CURRENT_PROJECT_NAME}>")
   add_custom_command(
-    TARGET ${PL_CURRENT_PROJECT_NAME}
+    TARGET ${RE_CURRENT_PROJECT_NAME}
     POST_BUILD
-    COMMAND $<TARGET_FILE:PLPlugin> $<TARGET_FILE_DIR:${PL_CURRENT_PROJECT_NAME}> --module-path $<TARGET_LINKER_FILE:${PL_CURRENT_PROJECT_NAME}> --verbose --output-path $<TARGET_FILE_DIR:${PL_CURRENT_PROJECT_NAME}>
+    COMMAND $<TARGET_FILE:PLPlugin> $<TARGET_FILE_DIR:${RE_CURRENT_PROJECT_NAME}> --module-path $<TARGET_LINKER_FILE:${RE_CURRENT_PROJECT_NAME}> --verbose --output-path $<TARGET_FILE_DIR:${RE_CURRENT_PROJECT_NAME}>
     #       WORKING_DIRECTORY ${replugin_path}
-    #$<TARGET_FILE_DIR:${PL_CURRENT_PROJECT_NAME}>
+    #$<TARGET_FILE_DIR:${RE_CURRENT_PROJECT_NAME}>
   )
 
 endmacro()
 
 ################################################################################
-# MACRO: pl_build_executable
+# MACRO: re_build_executable
 ################################################################################
-macro(pl_build_executable subsystem)
+macro(re_build_executable subsystem)
 
   if (WIN32)
     if ("${subsystem}" MATCHES "WIN32")
@@ -606,121 +606,121 @@ macro(pl_build_executable subsystem)
 
     # Add build options for subsystem
     if ("${subsys}" MATCHES "WIN32")
-      pl_remove_compile_defs(_CONSOLE)
-      pl_add_compile_defs(_WINDOWS)
+      re_remove_compile_defs(_CONSOLE)
+      re_add_compile_defs(_WINDOWS)
     else ()
-      pl_remove_compile_defs(_WINDOWS)
-      pl_add_compile_defs(_CONSOLE)
+      re_remove_compile_defs(_WINDOWS)
+      re_add_compile_defs(_CONSOLE)
     endif ()
   endif ()
 
-  pl_add_compile_flags("-fPIC")
+  re_add_compile_flags("-fPIC")
 
   # Add the executable to the build
-  add_executable(${PL_CURRENT_PROJECT_NAME} ${subsys} ${PL_CURRENT_SOURCES})
+  add_executable(${RE_CURRENT_PROJECT_NAME} ${subsys} ${RE_CURRENT_SOURCES})
 
   # Generate folder structure in IDE
-  pl_group_sources()
+  re_group_sources()
 
   # Add includes
-  include_directories(${PL_CURRENT_PROJECT_NAME} ${PL_CURRENT_INCLUDES})
+  include_directories(${RE_CURRENT_PROJECT_NAME} ${RE_CURRENT_INCLUDES})
 
-  link_directories(${PL_CURRENT_PROJECT_NAME} ${PL_CURRENT_LINK_DIRS})
+  link_directories(${RE_CURRENT_PROJECT_NAME} ${RE_CURRENT_LINK_DIRS})
 
 
 
   #set_target_properties(
-  #  ${PL_CURRENT_PROJECT_NAME}
-  #  PROPERTIES IMPORTED_LOCATION ${PL_CURRENT_EXT_LIBS} ${PL_CURRENT_DEPENDENCIES})
+  #  ${RE_CURRENT_PROJECT_NAME}
+  #  PROPERTIES IMPORTED_LOCATION ${RE_CURRENT_EXT_LIBS} ${RE_CURRENT_DEPENDENCIES})
 
   # Gather all external libraries
-  #foreach(EXT ${PL_CURRENT_DEPENDENCIES})
-  #  set(PL_CURRENT_EXT_LIBS ${PL_CURRENT_EXT_LIBS} ${${EXT}_EXT_LIBS})
+  #foreach(EXT ${RE_CURRENT_DEPENDENCIES})
+  #  set(RE_CURRENT_EXT_LIBS ${RE_CURRENT_EXT_LIBS} ${${EXT}_EXT_LIBS})
   #endforeach()
   # Link libraries
   target_link_libraries(
-    ${PL_CURRENT_PROJECT_NAME}
+    ${RE_CURRENT_PROJECT_NAME}
     PUBLIC
-    ${PL_CURRENT_EXT_LIBS})
+    ${RE_CURRENT_EXT_LIBS})
   # Dependencies
-  if (NOT "${PL_CURRENT_DEPENDENCIES}" STREQUAL "")
-    add_dependencies(${PL_CURRENT_PROJECT_NAME} ${PL_CURRENT_DEPENDENCIES})
+  if (NOT "${RE_CURRENT_DEPENDENCIES}" STREQUAL "")
+    add_dependencies(${RE_CURRENT_PROJECT_NAME} ${RE_CURRENT_DEPENDENCIES})
   endif ()
 
   # Preprocessor defintions
   set_target_properties(
-    ${PL_CURRENT_PROJECT_NAME}
+    ${RE_CURRENT_PROJECT_NAME}
     PROPERTIES
     COMPILE_DEFINITIONS
-    "${PL_CURRENT_COMPILE_DEFS}"
+    "${RE_CURRENT_COMPILE_DEFS}"
   )
   set_target_properties(
-    ${PL_CURRENT_PROJECT_NAME}
+    ${RE_CURRENT_PROJECT_NAME}
     PROPERTIES
     COMPILE_FLAGS
-    "${PL_CURRENT_COMPILE_FLAGS}"
+    "${RE_CURRENT_COMPILE_FLAGS}"
   )
   set_target_properties(
-    ${PL_CURRENT_PROJECT_NAME}
+    ${RE_CURRENT_PROJECT_NAME}
     PROPERTIES
     LINK_FLAGS
-    "${PL_CURRENT_LINKER_FLAGS}"
+    "${RE_CURRENT_LINKER_FLAGS}"
   )
 
   # Solution folders
   set_property(
-    TARGET ${PL_CURRENT_PROJECT_NAME}
-    PROPERTY FOLDER "${PL_CURRENT_IDE_PATH}"
+    TARGET ${RE_CURRENT_PROJECT_NAME}
+    PROPERTY FOLDER "${RE_CURRENT_IDE_PATH}"
   )
 
   # Output file
   set_property(
-    TARGET ${PL_CURRENT_PROJECT_NAME}
+    TARGET ${RE_CURRENT_PROJECT_NAME}
     PROPERTY
     OUTPUT_NAME
-    ${PL_CURRENT_OUTPUT_NAME}
+    ${RE_CURRENT_OUTPUT_NAME}
   )
 
   # Install
   install(
-    TARGETS ${PL_CURRENT_PROJECT_NAME}
+    TARGETS ${RE_CURRENT_PROJECT_NAME}
     RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin COMPONENT SDK
     LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib COMPONENT Runtime
     ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib COMPONENT SDK
   )
 endmacro()
 
-macro(pl_build_external)
+macro(re_build_external)
   set_property(
-    TARGET ${PL_CURRENT_PROJECT_NAME}
-    PROPERTY FOLDER "${PL_CURRENT_PACKAGE}"
+    TARGET ${RE_CURRENT_PROJECT_NAME}
+    PROPERTY FOLDER "${RE_CURRENT_PACKAGE}"
   )
 
-  if (NOT "${PL_CURRENT_DEPENDENCIES}" STREQUAL "")
-    add_dependencies(${PL_CURRENT_PROJECT_NAME} ${PL_CURRENT_DEPENDENCIES})
+  if (NOT "${RE_CURRENT_DEPENDENCIES}" STREQUAL "")
+    add_dependencies(${RE_CURRENT_PROJECT_NAME} ${RE_CURRENT_DEPENDENCIES})
   endif ()
 endmacro()
 
 
-macro(pl_memory_check)
+macro(re_memory_check)
   if (UNIX)
     find_program(VALGRIND valgrind)
     if (VALGRIND)
       add_custom_target(
-        ${PL_CURRENT_PROJECT_NAME}_MemCheck
-        valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -v ./Tests.${PL_CURRENT_PROJECT_NAME}
-        DEPENDS ${PL_CURRENT_DEPENDENCIES} ${PL_CURRENT_PROJECT_NAME}
+        ${RE_CURRENT_PROJECT_NAME}_MemCheck
+        valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -v ./Tests.${RE_CURRENT_PROJECT_NAME}
+        DEPENDS ${RE_CURRENT_DEPENDENCIES} ${RE_CURRENT_PROJECT_NAME}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
       )
     endif ()
   endif ()
-endmacro(pl_memory_check)
+endmacro(re_memory_check)
 
 
 ################################################################################
-# MACRO: pl_build_documentation
+# MACRO: re_build_documentation
 ################################################################################
-macro(pl_build_documentation)
+macro(re_build_documentation)
   FIND_PACKAGE(Doxygen)
   if (NOT DOXYGEN_FOUND)
     message(FATAL_ERROR "Doxygen is needed to build the documentation. Please install it correctly")
@@ -729,7 +729,7 @@ macro(pl_build_documentation)
   set(doxyfile_in ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
   set(doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
-  configupl_file(${doxyfile_in} ${doxyfile} @ONLY)
+  configure_file(${doxyfile_in} ${doxyfile} @ONLY)
 
   add_custom_target(Documentation
     COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
@@ -742,67 +742,67 @@ endmacro()
 
 
 ################################################################################
-# MACRO: pl_doc_project
+# MACRO: re_doc_project
 ################################################################################
-macro(pl_doc_project name)
+macro(re_doc_project name)
   # GetBegin project
-  project(${PL_CURRENT_PACKAGE}.${name})
+  project(${RE_CURRENT_PACKAGE}.${name})
 
   # Set project variables
-  set(PL_CURRENT_PROJECT ${name})
-  set(PL_CURRENT_TARGET ${name})
-  set(PL_CURRENT_OUTPUT_DIR ${CMAKE_BINARY_DIR}/Documentation/${PL_CURRENT_TARGET})
+  set(RE_CURRENT_PROJECT ${name})
+  set(RE_CURRENT_TARGET ${name})
+  set(RE_CURRENT_OUTPUT_DIR ${CMAKE_BINARY_DIR}/Documentation/${RE_CURRENT_TARGET})
 
   # Declare a target for the project
-  add_custom_target(${PL_CURRENT_PACKAGE}.${PL_CURRENT_TARGET})
-endmacro(pl_doc_project name)
+  add_custom_target(${RE_CURRENT_PACKAGE}.${RE_CURRENT_TARGET})
+endmacro(re_doc_project name)
 
 
 ################################################################################
-# MACRO: pl_add_dvi_document
+# MACRO: re_add_dvi_document
 ################################################################################
-macro(pl_add_dvi_document target texfile)
+macro(re_add_dvi_document target texfile)
   # Set project variables
-  set(PL_CURRENT_TARGET_TEX ${texfile})
-  set(PL_CURRENT_TARGET_DVI ${PL_CURRENT_OUTPUT_DIR}/${target}.dvi)
+  set(RE_CURRENT_TARGET_TEX ${texfile})
+  set(RE_CURRENT_TARGET_DVI ${RE_CURRENT_OUTPUT_DIR}/${target}.dvi)
 
   # Check if LaTeX compiler is available
   if (LATEX_COMPILER)
     # Invoke LaTeX compiler (three times needed actually to get everything right)
     add_custom_command(
-      OUTPUT ${PL_CURRENT_TARGET_DVI}
-      DEPENDS ${PL_CURRENT_TARGET_TEX}
+      OUTPUT ${RE_CURRENT_TARGET_DVI}
+      DEPENDS ${RE_CURRENT_TARGET_TEX}
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
       COMMAND ${LATEX_COMPILER}
-      ARGS -halt-on-error -quiet -output-directory=${PL_CURRENT_OUTPUT_DIR} ${PL_CURRENT_TARGET_TEX}
+      ARGS -halt-on-error -quiet -output-directory=${RE_CURRENT_OUTPUT_DIR} ${RE_CURRENT_TARGET_TEX}
       COMMAND ${LATEX_COMPILER}
-      ARGS -halt-on-error -quiet -output-directory=${PL_CURRENT_OUTPUT_DIR} ${PL_CURRENT_TARGET_TEX}
+      ARGS -halt-on-error -quiet -output-directory=${RE_CURRENT_OUTPUT_DIR} ${RE_CURRENT_TARGET_TEX}
       COMMAND ${LATEX_COMPILER}
-      ARGS -halt-on-error -quiet -output-directory=${PL_CURRENT_OUTPUT_DIR} ${PL_CURRENT_TARGET_TEX}
+      ARGS -halt-on-error -quiet -output-directory=${RE_CURRENT_OUTPUT_DIR} ${RE_CURRENT_TARGET_TEX}
       COMMENT "Compiling LaTeX: ${target}.dvi"
     )
 
     # Declare a target
-    add_custom_target(${PL_CURRENT_PACKAGE}.${target}-DVI
-      DEPENDS ${PL_CURRENT_TARGET_DVI}
+    add_custom_target(${RE_CURRENT_PACKAGE}.${target}-DVI
+      DEPENDS ${RE_CURRENT_TARGET_DVI}
       )
 
     # Depend Docs-target on DVI-target
-    # add_dependencies(Docs-${PL_CURRENT_TARGET} Docs-${target}-DVI)
+    # add_dependencies(Docs-${RE_CURRENT_TARGET} Docs-${target}-DVI)
   endif ()
-endmacro(pl_add_dvi_document)
+endmacro(re_add_dvi_document)
 
 
-macro(pl_add_pdf_document target texfile)
+macro(re_add_pdf_document target texfile)
   # Set project variables
-  #    set(PL_CURRENT_TARGET_DVI ${dvifile})
-  set(PL_CURRENT_TARGET_PDF ${PL_CURRENT_OUTPUT_DIR}/${target}.pdf)
+  #    set(RE_CURRENT_TARGET_DVI ${dvifile})
+  set(RE_CURRENT_TARGET_PDF ${RE_CURRENT_OUTPUT_DIR}/${target}.pdf)
 
   # Check if LaTeX compiler and PDF converter are available
   if (LATEX_COMPILER AND PDFLATEX_COMPILER)
     # Invoke PDF converter
     add_custom_command(
-      OUTPUT ${PL_CURRENT_TARGET_PDF}
+      OUTPUT ${RE_CURRENT_TARGET_PDF}
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
       COMMAND ${PDFLATEX_COMPILER}
       ARGS ${texfile}
@@ -810,15 +810,15 @@ macro(pl_add_pdf_document target texfile)
     )
 
     # Declare a target
-    add_custom_target(${PL_CURRENT_PACKAGE}.${target}-PDF
-      DEPENDS ${PL_CURRENT_TARGET_PDF}
+    add_custom_target(${RE_CURRENT_PACKAGE}.${target}-PDF
+      DEPENDS ${RE_CURRENT_TARGET_PDF}
       )
 
     #        file (COPY "${CMAKE_CURRENT_SOURCE_DIR}/${target}.pdf"
-    #                DESTINATION "${PL_CURRENT_OUTPUT_DIR}")
+    #                DESTINATION "${RE_CURRENT_OUTPUT_DIR}")
 
   endif ()
-endmacro(pl_add_pdf_document)
+endmacro(re_add_pdf_document)
 
 
 # Requires:
@@ -1174,17 +1174,17 @@ endmacro()
 
 
 ################################################################################
-# MACRO: pl_add_package_group
+# MACRO: re_add_package_group
 ################################################################################
-macro(pl_add_package_group name prefix)
+macro(re_add_package_group name prefix)
 
 endmacro()
 
 
 ################################################################################
-# MACRO: pl_add_package_group
+# MACRO: re_add_package_group
 ################################################################################
-macro(pl_initialze_qt5)
+macro(re_initialze_qt5)
 
   # Find includes in corresponding build directories
   set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -1196,13 +1196,13 @@ macro(pl_initialze_qt5)
 endmacro()
 
 
-macro(pl_conditional_include module_name external_dep)
+macro(re_conditional_include module_name external_dep)
   set(upper_name "")
   string(TOUPPER ${module_name} upper_name)
 
-  if (PL_WITH_${upper_name}_SUPPORT)
-    pl_add_feature(${module_name} ${external_dep} PL_WITH_${upper_name}_SUPPORT)
+  if (RE_WITH_${upper_name}_SUPPORT)
+    re_add_feature(${module_name} ${external_dep} RE_WITH_${upper_name}_SUPPORT)
   else()
-    message("The feature PL_WITH_${upper_name}_SUPPORT is not active")
+    message("The feature RE_WITH_${upper_name}_SUPPORT is not active")
   endif()
 endmacro()

@@ -23,11 +23,11 @@
 
 
 # We want to use the rc.exe resource compiler on Window under MSVC
-set(PL_RC_COMPILER "RC")
+set(RE_RC_COMPILER "RC")
 
 # Support Window
-list(REMOVE_ITEM PL_UNSUPPORTED_PLATFORMS Windows)
-set(PL_SUPPORTED_PLATFORMS Windows)
+list(REMOVE_ITEM RE_UNSUPPORTED_PLATFORMS Windows)
+set(RE_SUPPORTED_PLATFORMS Windows)
 
 
 ##################################################
@@ -82,7 +82,7 @@ set(WIN32_COMPILE_DEFS
   _CRT_SECURE_NO_DEPRECATE   # Disable CRT deprecation warnings
   )
 
-if ((NOT PL_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
+if ((NOT RE_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
   message(STATUS "Setting x64 build preprocessor definitions")
   set(WIN32_COMPILE_DEFS
     ${WIN32_COMPILE_DEFS}

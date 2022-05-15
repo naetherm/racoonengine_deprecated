@@ -62,6 +62,7 @@ set(FILES
   Private/Math/Frustum.cpp
   Private/Math/Math.cpp
   Private/Math/Transform.cpp
+  Private/Math/Vec2i.cpp
 
   # Memory
   Private/Memory/Memory.cpp

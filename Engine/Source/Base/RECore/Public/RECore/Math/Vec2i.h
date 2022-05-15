@@ -42,26 +42,107 @@ namespace RECore {
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
-*  @brief
-*    Frustum
-*/
+ * @class
+ * Vec2i
+ *
+ * @brief
+ * Basic 2d vector implementation
+ */
 class Vec2i {
 public:
 
+  /**
+   * Default constructor
+   */
   Vec2i();
 
+  /**
+   * @brief
+   * Copy constructor.
+   *
+   * @param[in] rhs
+   * The object to copy.
+   */
   Vec2i(const Vec2i& rhs);
 
+  /**
+   * @brief
+   * Constructor
+   *
+   * @param[in] x
+   * x coordinate
+   * @param[in] y
+   * y coordinate
+   */
   Vec2i(int x, int y);
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~Vec2i() = default;
 
 
-  Vec2i& operator=(const Vec2i& rhs);
+  /**
+   * @brief
+   * Copy operator.
+   *
+   * @param[in] rhs
+   * The other object.
+   *
+   * @return
+   * Reference to this instance.
+   */
+  inline Vec2i& operator=(const Vec2i& rhs);
 
-  bool operator==(const Vec2i& rhs) const;
+  /**
+   * @brief
+   * Compare operator
+   */
+  inline bool operator==(const Vec2i& rhs) const;
 
-  bool operator!=(const Vec2i& rhs) const;
+  /**
+   * @brief
+   * Compare operator
+   */
+  inline bool operator!=(const Vec2i& rhs) const;
+
+
+  /**
+   * @brief
+   * Returns x component.
+   *
+   * @return
+   * X component.
+   */
+  [[nodiscard]] inline int getX() const;
+
+  /**
+   * @brief
+   * Returns y component.
+   *
+   * @return
+   * Y component.
+   */
+  [[nodiscard]] inline int getY() const;
+
+  /**
+   * @brief
+   * Sets the x component
+   *
+   * @param[in] x
+   * The x component.
+   */
+  inline void setX(int x);
+
+  /**
+   * @brief
+   * Sets the y component
+   *
+   * @param[in] x
+   * The y component.
+   */
+  inline void setY(int y);
 
 private:
 
@@ -74,3 +155,9 @@ private:
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // RECore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "RECore/Math/Vec2i.inl"

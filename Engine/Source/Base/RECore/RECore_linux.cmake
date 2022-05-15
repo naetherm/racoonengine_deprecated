@@ -1,5 +1,5 @@
 
-set(PL_BUILD_DEPENDENCIES
+set(RE_BUILD_DEPENDENCIES
   pthread
   dl
   atomic

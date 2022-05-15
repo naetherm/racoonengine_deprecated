@@ -102,7 +102,7 @@ private:
     dbus_connection_flush(&cConnection);
     if (dbus_error_is_set(&sError)) {
       // TODO(naetherm) Log
-      // PL_LOG(Error, "BTLinux: DBUS match error (" + std::string(sError.message) + ')')
+      // RE_LOG(Error, "BTLinux: DBUS match error (" + std::string(sError.message) + ')')
     } else {
       // Listen for signals
       bool bAbort = false;
@@ -182,7 +182,7 @@ private:
 
             // Device info
             // TODO(naetherm) Log
-            //PL_LOG(Info, "BTLinux: Found device '" + sDeviceName + "', Address = " + sDeviceAddress)
+            //RE_LOG(Info, "BTLinux: Found device '" + sDeviceName + "', Address = " + sDeviceAddress)
 
             // Convert address from string to bytes
             const int nAddress0 = std::atoi(sDeviceAddress.substr( 0, 2).c_str());
@@ -276,7 +276,7 @@ private:
 
     // Get DBUS connection
     // TODO(naetherm) Log
-    // PL_LOG(Info, "BTLinux: Discovering Bluetooth devices")
+    // RE_LOG(Info, "BTLinux: Discovering Bluetooth devices")
     DBusConnection *pConnection = dbus_bus_get(DBUS_BUS_SYSTEM, &sError);
     if (pConnection) {
       // Get default Bluetooth adapter
@@ -309,7 +309,7 @@ private:
 
         if (dbus_error_is_set(&sError)) {
           // TODO(naetherm) Log
-          //PL_LOG(Error, "BTLinux (Set timeout for device discovery): DBUS error (" + std::string(sError.message) + ')')
+          //RE_LOG(Error, "BTLinux (Set timeout for device discovery): DBUS error (" + std::string(sError.message) + ')')
         } else {
           // Start device discovery
           pMessage = dbus_message_new_method_call("org.bluez", sAdapter.c_str(), "org.bluez.Adapter", "StartDiscovery");
@@ -321,7 +321,7 @@ private:
 
           if (dbus_error_is_set(&sError)) {}
             // TODO(naetherm) Log
-            // PL_LOG(Error, "BTLinux (Start device discovery): DBUS error (" + std::string(sError.message) + ')')
+            // RE_LOG(Error, "BTLinux (Start device discovery): DBUS error (" + std::string(sError.message) + ')')
           else {
             enumerateBluetoothDevices(lstDevices, *pConnection);
           }
@@ -333,7 +333,7 @@ private:
       dbus_connection_unref(pConnection);
     } else {
       // TODO(naetherm) Log
-      // PL_LOG(Error, "BTLinux: Could not create DBUS connection")
+      // RE_LOG(Error, "BTLinux: Could not create DBUS connection")
     }
   }
 

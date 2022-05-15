@@ -35,9 +35,9 @@ set(LINUX_COMPILE_DEFS
   LINUX
   PIC
   _REENTRANT
-  ARCHITECTURE_STRING="${PL_TARGET_ARCHBITSIZE}"
+  ARCHITECTURE_STRING="${RE_TARGET_ARCHBITSIZE}"
   )
-if ((NOT PL_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
+if ((NOT RE_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
   message(STATUS "Setting x64 build preprocessor definitions")
 
   set(LINUX_COMPILE_DEFS
@@ -61,7 +61,7 @@ endif ()
 ################################################################################
 # Compiler flags
 ################################################################################
-if ((NOT PL_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
+if ((NOT RE_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
   message(STATUS "Add compiler flags for 32Bit on 64Bit host")
 
   set(LINUX_COMPILE_FLAGS
@@ -100,7 +100,7 @@ endif ()
 ################################################################################
 # Linker flags
 ################################################################################
-if ((NOT PL_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
+if ((NOT RE_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
   message(STATUS "Add linker flags for 32Bit on 64Bit host")
 
   set(LINUX_LINKER_FLAGS

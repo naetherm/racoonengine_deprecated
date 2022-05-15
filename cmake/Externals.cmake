@@ -19,7 +19,7 @@
 #////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function(pl_download_package URL HASH LOCAL_PATH)
+function(re_download_package URL HASH LOCAL_PATH)
   #
   get_filename_component(file_name ${URL} NAME)
 
@@ -65,41 +65,41 @@ function(pl_download_package URL HASH LOCAL_PATH)
 endfunction()
 
 
-function(pl_associate_package)
+function(re_associate_package)
   set(_singleValues PACKAGE_NAME PACKAGE_HASH)
   set(_multiValues TARGETS)
 
-  cmake_parse_arguments(pl_associate_package "" "${_singleValues}" "${_multiValues}" "${ARGN}")
+  cmake_parse_arguments(re_associate_package "" "${_singleValues}" "${_multiValues}" "${ARGN}")
 
-  pl_download_package("http://data.racoonstudios.de/${pl_associate_package_PACKAGE_NAME}" ${pl_associate_package_PACKAGE_HASH} ${PL_EXTERNAL_LIBRARIES})
+  re_download_package("http://data.racoonstudios.de/${re_associate_package_PACKAGE_NAME}" ${re_associate_package_PACKAGE_HASH} ${RE_EXTERNAL_LIBRARIES})
 
-  if(NOT pl_associate_package_TARGETS)
-    message(FATAL_ERROR "pl_associate_package was called without the TARGETS argument, at least one target is required")
+  if(NOT re_associate_package_TARGETS)
+    message(FATAL_ERROR "re_associate_package was called without the TARGETS argument, at least one target is required")
   endif()
 
-  if(NOT pl_associate_package_PACKAGE_NAME)
-    message(FATAL_ERROR "pl_associate_package was called without the PACKAGE_NAME argument, this is required")
+  if(NOT re_associate_package_PACKAGE_NAME)
+    message(FATAL_ERROR "re_associate_package was called without the PACKAGE_NAME argument, this is required")
   endif()
 
-  if(NOT pl_associate_package_PACKAGE_HASH)
-    message(FATAL_ERROR "pl_associate_package was called without the PACKAGE_HASH argument, this is required")
+  if(NOT re_associate_package_PACKAGE_HASH)
+    message(FATAL_ERROR "re_associate_package was called without the PACKAGE_HASH argument, this is required")
   endif()
 
-  foreach(pkg ${pl_associate_package_TARGETS})
-    set_property(GLOBAL PROPERTY PL_PACKAGE_ASSOCIATION_${pkg} ${pl_associate_package_PACKAGE_NAME})
-    set_property(GLOBAL PROPERTY PL_PACKAGE_HASH_${pl_associate_package_PACKAGE_NAME} ${pl_associate_package_HASH})
+  foreach(pkg ${re_associate_package_TARGETS})
+    set_property(GLOBAL PROPERTY RE_PACKAGE_ASSOCIATION_${pkg} ${re_associate_package_PACKAGE_NAME})
+    set_property(GLOBAL PROPERTY RE_PACKAGE_HASH_${re_associate_package_PACKAGE_NAME} ${re_associate_package_HASH})
   endforeach()
 
-  set_property(GLOBAL APPEND PROPERTY PL_PACKAGE_NAMES ${pl_associate_package_PACKAGE_NAME})
-  set_property(GLOBAL PROPERTY PL_PACKAGE_TARGETS_${pl_associate_package_PACKAGE_NAME} ${pl_associate_package_TARGETS})
+  set_property(GLOBAL APPEND PROPERTY RE_PACKAGE_NAMES ${re_associate_package_PACKAGE_NAME})
+  set_property(GLOBAL PROPERTY RE_PACKAGE_TARGETS_${re_associate_package_PACKAGE_NAME} ${re_associate_package_TARGETS})
 
   # Add to cmake_module_path
-  #message("INFO: pl_associate_package_PACKAGE_NAME: ${pl_associate_package_PACKAGE_NAME}")
-  #message("INFO: pl_associate_package_TARGETS: ${pl_associate_package_TARGETS}")
-  set(CMAKE_MODULE_PATH "${PL_EXTERNAL_LIBRARIES}/${pl_associate_package_PACKAGE_NAME}" ${CMAKE_MODULE_PATH} PARENT_SCOPE)
+  #message("INFO: re_associate_package_PACKAGE_NAME: ${re_associate_package_PACKAGE_NAME}")
+  #message("INFO: re_associate_package_TARGETS: ${re_associate_package_TARGETS}")
+  set(CMAKE_MODULE_PATH "${RE_EXTERNAL_LIBRARIES}/${re_associate_package_PACKAGE_NAME}" ${CMAKE_MODULE_PATH} PARENT_SCOPE)
 
   #message("INFO CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
-  foreach(pkg ${pl_associate_package_TARGETS})
+  foreach(pkg ${re_associate_package_TARGETS})
   #  find_package(${pkg} REQUIRED MODULE)
   endforeach()
 

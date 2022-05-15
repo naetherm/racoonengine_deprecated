@@ -73,7 +73,7 @@ public:
    */
   static constexpr SizeType NPOS = (SizeType) -1;
 
-#ifdef PL_SYSTEM_BIG_ENDIAN
+#ifdef RE_SYSTEM_BIG_ENDIAN
   // Big Endian use LSB, unless we want to reorder struct layouts on endianness, Bit is set when we are in Heap
   static constexpr SizeType kHeapMask = 0x1;
   static constexpr SizeType kSSOMask  = 0x1;
@@ -83,7 +83,7 @@ public:
   static constexpr SizeType kSSOMask = 0x80;
 #endif
 
-#ifdef PL_SYSTEM_BIG_ENDIAN
+#ifdef RE_SYSTEM_BIG_ENDIAN
   static constexpr SizeType kMaxSize = (~kHeapMask) >> 1;
 #else
   static constexpr SizeType kMaxSize = ~kHeapMask;

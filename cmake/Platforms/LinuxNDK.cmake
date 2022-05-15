@@ -25,7 +25,7 @@
 ##################################################
 
 list(REMOVE_ITEM NE_UNSUPPORTED_PLATFORMS Android)
-set(PL_SUPPORTED_PLATFORMS Android)
+set(RE_SUPPORTED_PLATFORMS Android)
 
 ##################################################
 ## Preprocessor definitions
@@ -84,7 +84,7 @@ set(LINUX_LINKER_FLAGS
 # Above we set "nostdlib" to avoid using the standard C library of the host system.
 # Now we have to tell the linker to use Androids stripped down version of libc ("bionic"),
 # present in the location specified by using the "-L" in the "LDFLAGS"-option above.
-#add_to_list(PL_CURRENT_LIBS c)
+#add_to_list(RE_CURRENT_LIBS c)
 
 set(ANDROID_SUPPORTED_NDK_VERSIONS -r7b -r7 -r6b -r6 -r5c -r5b -r5 "")
 if (CMAKE_HOST_WIN32)

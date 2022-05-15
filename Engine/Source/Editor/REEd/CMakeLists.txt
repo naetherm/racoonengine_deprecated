@@ -22,7 +22,7 @@
 ##################################################
 ## Project
 ##################################################
-pl_add_target(
+re_add_target(
   NAME REEd EXECUTABLE
   NAMESPACE RE
   FILES_CMAKE
@@ -31,7 +31,7 @@ pl_add_target(
     ${CMAKE_CURRENT_SOURCE_DIR}/REEd_${PAL_PLATFORM_NAME_LOWERCASE}.cmake
   INCLUDE_DIRECTORIES
     PUBLIC
-      ${PL_CONFIG_FILE_LOCATION}
+      ${RE_CONFIG_FILE_LOCATION}
       ${CMAKE_CURRENT_SOURCE_DIR}/Public
       ${CMAKE_CURRENT_SOURCE_DIR}/Private
   BUILD_DEPENDENCIES

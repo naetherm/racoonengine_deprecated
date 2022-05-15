@@ -81,7 +81,7 @@ void Function<R(TArgs...)>::Swap(Function<R(TArgs...)> &cSource) noexcept {
   Base::Swap(cSource);
 }
 
-#if PL_RTTI_ENABLED
+#if RE_RTTI_ENABLED
 
 template<typename R, typename... TArgs>
 const std::type_info& Function<R(TArgs...)>::TargetType() const noexcept {

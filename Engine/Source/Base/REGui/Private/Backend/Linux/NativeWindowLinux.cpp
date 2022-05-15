@@ -23,13 +23,117 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Backend/Linux/NativeWindowLinux.h"
+#include "REGui/Backend/Linux/GuiLinux.h"
+#include "REGui/Gui/Gui.h"
+#include "REGui/Gui/NativeWindow.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui
-{
+namespace REGui {
+
+
+NativeWindowLinux::NativeWindowLinux(NativeWindow *nativeWindow)
+: NativeWindowImpl(nativeWindow)
+, mNativeWindowHandle(0)
+, mScreen(0)
+, mDestroyed(false) {
+
+}
+
+NativeWindowLinux::~NativeWindowLinux() {
+  destroy();
+}
+
+void NativeWindowLinux::createWindow(RECore::handle nativeWindowHandle) {
+  // Save native window handle
+  mNativeWindowHandle = static_cast<::Window>(nativeWindowHandle);
+}
+
+bool NativeWindowLinux::isDestroyed() const {
+  return mDestroyed;
+}
+
+void NativeWindowLinux::destroy() {
+  if (!mDestroyed) {
+    GuiLinux* guiLinux = static_cast<GuiLinux*>(mNativeWindow->getGui()->getImpl());
+
+    XEvent event;
+    event.type = ClientMessage;
+    event.xclient.window = mNativeWindowHandle;
+    event.xclient.message_type = 0;
+    event.xclient.format = 32;
+    event.xclient.data.l[0] = guiLinux->mClientProtocols.DestroyWidget;
+    event.xclient.data.l[1] = 0;
+    event.xclient.data.l[2] = 0;
+    XSendEvent(mDisplay, mNativeWindowHandle, False, NoEventMask, &event);
+
+    XSync(mDisplay, False);
+  }
+}
+
+RECore::handle NativeWindowLinux::getNativeWindowHandle() const {
+  return mNativeWindowHandle;
+}
+
+void NativeWindowLinux::setPosition(const RECore::Vec2i &position) {
+  if (mSize != position) {
+    if (!mDestroyed) {
+      XWindowChanges changes;
+      changes.width = position.getX();
+      changes.height = position.getY();
+      XConfigureWindow(
+        mDisplay,
+        mNativeWindowHandle,
+        CWX | CWY,
+        &changes);
+
+      XSync(mDisplay, False);
+
+      mPosition = position;
+    }
+  }
+}
+
+RECore::Vec2i NativeWindowLinux::getPosition() const {
+  return mPosition;
+}
+
+void NativeWindowLinux::setSize(const RECore::Vec2i &size) {
+  if (mSize != size) {
+    if (!mDestroyed) {
+      XWindowChanges changes;
+      changes.width = size.getX();
+      changes.height = size.getY();
+      XConfigureWindow(
+        mDisplay,
+        mNativeWindowHandle,
+        CWWidth | CWHeight,
+        &changes);
+
+      XSync(mDisplay, False);
+
+      mSize = size;
+    }
+  }
+}
+
+RECore::Vec2i NativeWindowLinux::getSize() const {
+  return mSize;
+}
+
+void NativeWindowLinux::redraw() {
+  if (!mDestroyed) {
+    XEvent event;
+    event.type = Expose;
+    event.xany.window = mNativeWindowHandle;
+    event.xexpose.count = 0;
+    XSendEvent(mDisplay, mNativeWindowHandle, False, 0, &event);
+
+    XSync(mDisplay, False);
+  }
+}
 
 
 //[-------------------------------------------------------]
