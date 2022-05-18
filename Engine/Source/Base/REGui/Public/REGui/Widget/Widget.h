@@ -50,7 +50,23 @@ public:
   virtual ~Widget();
 
 
+  /**
+   * @brief
+   * This method is called in the beginning, when the frame starts.
+   */
+  virtual void beginFrame();
+
+  /**
+   * @brief
+   * This is the main drawing method.
+   */
   virtual void draw();
+
+  /**
+   * @brief
+   * This is called in the end of frame drawing.
+   */
+  virtual void endFrame();
 
 protected:
 

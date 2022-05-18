@@ -22,12 +22,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/Application/GuiContext.h"
-#include <RECore/Platform/Platform.h>
-#include <RERHI/Rhi.h>
-#if defined(LINUX)
-#include <RERHI/Linux/X11Context.h>
-#endif
+#include "REGui/Gui/GuiManagerImpl.h"
 
 
 //[-------------------------------------------------------]
@@ -36,60 +31,16 @@
 namespace REGui {
 
 
-GuiContext::GuiContext()
-: mRhiContext(nullptr)
-, mRhi(nullptr)
-, mRendererContext(nullptr)
-, mRenderer(nullptr) {
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+GuiManagerImpl::GuiManagerImpl(GuiManager *guiManager)
+: mGuiManager(guiManager) {
 
 }
 
-GuiContext::~GuiContext() {
-  delete mRenderer;
-  delete mRendererContext;
-  delete mRhi;
-  delete mRhiContext;
-}
-
-void GuiContext::initialize(const RECore::String& rhiName) {
-  mRhiName = rhiName;
-
-  this->mSharedLibraryName = RECore::Platform::instance().getSharedLibraryPrefix() + "RERHI" + mRhiName + "." +
-                             RECore::Platform::instance().getSharedLibraryExtension();
-
-  // Create the RHI context
-}
-
-void GuiContext::setRhiName(const RECore::String &rhiName) {
-  mRhiName = rhiName;
-}
-
-const RECore::String &GuiContext::getRhiName() const {
-  return mRhiName;
-}
-
-const RERHI::RHIContext *GuiContext::getRhiContext() const {
-  return mRhiContext;
-}
-
-const RECore::String &GuiContext::getSharedLibraryName() const {
-  return mSharedLibraryName;
-}
-
-const RECore::DynLib &GuiContext::getRhiSharedLibrary() const {
-  return mRhiSharedLibrary;
-}
-
-const RERHI::RHIDynamicRHI *GuiContext::getRhi() const {
-  return mRhi;
-}
-
-const RERenderer::Context *GuiContext::getRendererContext() const {
-  return mRendererContext;
-}
-
-const RERenderer::IRenderer *GuiContext::getRenderer() const {
-  return mRenderer;
+GuiManagerImpl::~GuiManagerImpl() {
+  // Nothing to do here
 }
 
 

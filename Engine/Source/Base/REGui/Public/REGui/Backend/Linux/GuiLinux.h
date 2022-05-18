@@ -71,6 +71,8 @@ public:
 
   [[nodiscard]] ::Display* getDisplay() const;
 
+  [[nodiscard]] ::Window getWindowHandle() const;
+
 public:
 
   bool hasPendingMessages() override;
@@ -109,6 +111,19 @@ private:
    * Pointer to an x-event.
    */
   REGUI_API void processXEvent(XEvent* event);
+
+
+  void onDraw();
+
+  void onResize(RECore::uint32 width, RECore::uint32 height);
+
+  void onKeyInput(uint32_t keySym, char character, bool pressed);
+
+  void onMouseMoveInput(int x, int y);
+
+  void onMouseButtonInput(uint32_t button, bool pressed);
+
+  void onMouseWheelInput(bool scrollUp);
 
 private:
 

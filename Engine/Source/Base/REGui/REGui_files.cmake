@@ -4,10 +4,16 @@ set(FILES
   Private/REGui.cpp
 
   # Application
+  Private/Application/MinGuiApplication.cpp
   Private/Application/GuiApplication.cpp
   Private/Application/GuiContext.cpp
 
   # Gui
+  # The current fast single-window implementation
+  Private/Gui/GuiManager.cpp
+  Private/Gui/GuiManagerImpl.cpp
+  # The later (new) interface
+  Private/Gui/AppWindow.cpp
   Private/Gui/Gui.cpp
   Private/Gui/GuiImpl.cpp
   Private/Gui/GuiMessage.cpp
@@ -35,4 +41,7 @@ set(FILES
 
   # Menu
   Private/Widget/Menu/MenuBar.cpp
+
+  # Window
+  Private/Widget/Window/MainWindow.cpp
 )

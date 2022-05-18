@@ -20,14 +20,15 @@
 
 
 //[-------------------------------------------------------]
+//[ Header guard                                          ]
+//[-------------------------------------------------------]
+#pragma once
+
+
+//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/Application/GuiContext.h"
-#include <RECore/Platform/Platform.h>
-#include <RERHI/Rhi.h>
-#if defined(LINUX)
-#include <RERHI/Linux/X11Context.h>
-#endif
+#include "REGui/REGui.h"
 
 
 //[-------------------------------------------------------]
@@ -36,61 +37,53 @@
 namespace REGui {
 
 
-GuiContext::GuiContext()
-: mRhiContext(nullptr)
-, mRhi(nullptr)
-, mRendererContext(nullptr)
-, mRenderer(nullptr) {
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class GuiManager;
 
-}
 
-GuiContext::~GuiContext() {
-  delete mRenderer;
-  delete mRendererContext;
-  delete mRhi;
-  delete mRhiContext;
-}
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+ * @class
+ * GuiManagerImpl
+ *
+ * @brief
+ * Interface implementation for a platform specific gui manager implementation.
+ */
+class GuiManagerImpl {
+public:
 
-void GuiContext::initialize(const RECore::String& rhiName) {
-  mRhiName = rhiName;
+  GuiManagerImpl(GuiManager* guiManager);
 
-  this->mSharedLibraryName = RECore::Platform::instance().getSharedLibraryPrefix() + "RERHI" + mRhiName + "." +
-                             RECore::Platform::instance().getSharedLibraryExtension();
+  virtual ~GuiManagerImpl();
 
-  // Create the RHI context
-}
+public:
 
-void GuiContext::setRhiName(const RECore::String &rhiName) {
-  mRhiName = rhiName;
-}
+  virtual void onWindowResize(RECore::uint32 width, RECore::uint32 height) = 0;
 
-const RECore::String &GuiContext::getRhiName() const {
-  return mRhiName;
-}
+  virtual void onKeyInput(RECore::uint32 keySym, char character, bool pressed) = 0;
 
-const RERHI::RHIContext *GuiContext::getRhiContext() const {
-  return mRhiContext;
-}
+  virtual void onMouseMoveInput(int x, int y) = 0;
 
-const RECore::String &GuiContext::getSharedLibraryName() const {
-  return mSharedLibraryName;
-}
+  virtual void onMouseButtonInput(RECore::uint32 button, bool pressed) = 0;
 
-const RECore::DynLib &GuiContext::getRhiSharedLibrary() const {
-  return mRhiSharedLibrary;
-}
+  virtual void onMouseWheelInput(bool scrollUp) = 0;
 
-const RERHI::RHIDynamicRHI *GuiContext::getRhi() const {
-  return mRhi;
-}
+  virtual void initializeImGuiKeyMap() = 0;
 
-const RERenderer::Context *GuiContext::getRendererContext() const {
-  return mRendererContext;
-}
+  virtual void onNewFrame(RERHI::RHIRenderTarget& renderTarget) = 0;
 
-const RERenderer::IRenderer *GuiContext::getRenderer() const {
-  return mRenderer;
-}
+protected:
+  /** Pointer to the platform independent gui manager implementation */
+  GuiManager* mGuiManager;
+
+  RECore::uint32 mWindowWidth;
+  RECore::uint32 mWindowHeight;
+  RECore::uint64 mTime;
+};
 
 
 //[-------------------------------------------------------]

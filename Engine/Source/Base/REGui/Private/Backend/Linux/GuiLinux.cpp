@@ -23,8 +23,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Backend/Linux/GuiLinux.h"
+#include "REGui/Gui/Gui.h"
 #include "REGui/Gui/Screen.h"
+#include "REGui/Gui/NativeWindow.h"
+#include <RECore/Math/Vec2i.h>
 #include <RECore/String/BasicRegEx.h>
+#include <imgui.h>
+#include <imgui_internal.h>
 
 
 //[-------------------------------------------------------]
@@ -96,6 +101,10 @@ GuiLinux::~GuiLinux() {
   return mDisplay;
 }
 
+::Window GuiLinux::getWindowHandle() const {
+  return mHiddenWindow;
+}
+
 bool GuiLinux::hasPendingMessages() {
   return (XPending(mDisplay) > 0);
 }
@@ -103,10 +112,13 @@ bool GuiLinux::hasPendingMessages() {
 void GuiLinux::processMessage() {
   // Wait and get event
   XEvent event;
-  XNextEvent(mDisplay, &event);
 
-  // Process event
-  processXEvent(&event);
+  while (hasPendingMessages()) {
+    XNextEvent(mDisplay, &event);
+
+    // Process event
+    processXEvent(&event);
+  }
 }
 
 void GuiLinux::postMessage(const GuiMessage& guiMessage) {
@@ -163,7 +175,137 @@ int GuiLinux::errorHandler(Display *display, XErrorEvent *error) {
 }
 
 void GuiLinux::processXEvent(XEvent *event) {
+  NativeWindow* nativeWindow = mGui->getWindow(event->xany.window);
 
+  if (nativeWindow) {
+    switch(event->type) {
+      case Expose:
+        // Draw me!
+        if (!event->xexpose.count) {
+          onDraw();
+        }
+        break;
+      case DestroyNotify:
+        // Destroy me!
+        break;
+      case ConfigureNotify:
+      {
+        onResize(event->xconfigure.width, event->xconfigure.height);
+        break;
+      }
+      case ClientMessage:
+        break;
+      case KeyPress:
+      case KeyRelease:
+      {
+        const int buffer_size = 2;
+        char buffer[buffer_size + 1];
+        KeySym keySym;
+        int count = XLookupString(&event->xkey, buffer, buffer_size, &keySym, nullptr);
+        buffer[count] = 0;
+
+        onKeyInput(keySym, buffer[0], event->type == KeyPress);
+        break;
+      }
+      case ButtonPress:
+      case ButtonRelease:
+      {
+        const bool isPressed = (ButtonPress == event->type);
+        if (isPressed && (event->xbutton.button == 4 || event->xbutton.button == 5)) // Wheel buttons
+        {
+          onMouseWheelInput(event->xbutton.button == 4);
+        }
+        else
+        {
+          onMouseButtonInput(event->xbutton.button, isPressed);
+        }
+        break;
+      }
+      case MotionNotify: {
+        {
+          onMouseMoveInput(event->xmotion.x, event->xmotion.y);
+          break;
+        }
+      }
+    }
+  }
+}
+
+
+void GuiLinux::onDraw() {
+
+}
+
+void GuiLinux::onResize(RECore::uint32 width, RECore::uint32 height) {
+
+}
+
+void GuiLinux::onKeyInput(uint32_t keySym, char character, bool pressed) {
+  ImGuiIO& imGuiIo = ImGui::GetIO();
+  if (keySym < 512)
+  {
+    imGuiIo.KeysDown[keySym] = pressed;
+  }
+  else if (XK_Alt_L == keySym)
+  {
+    imGuiIo.KeyAlt = pressed;
+  }
+  else if (XK_Shift_L == keySym)
+  {
+    imGuiIo.KeyShift = pressed;
+  }
+  else if (XK_Control_L == keySym)
+  {
+    imGuiIo.KeyCtrl = pressed;
+  }
+  else if (XK_Super_L == keySym)
+  {
+    imGuiIo.KeySuper = pressed;
+  }
+  else if ((keySym & 0xff00) == 0xff00)
+  {
+    // It is a special key (e.g. tab key) map the value to a range between 0x0ff and 0x1ff
+    imGuiIo.KeysDown[(keySym & 0x1ff)] = pressed;
+  }
+  if (pressed && character > 0)
+  {
+    imGuiIo.AddInputCharacter(character);
+  }
+}
+
+void GuiLinux::onMouseMoveInput(int x, int y) {
+  float windowWidth  = 1.0f;
+  float windowHeight = 1.0f;
+  {
+    RECore::Vec2i windowSize = mGui->getMainWindow()->getSize();
+    // Ensure that none of them is ever zero
+    if (windowSize.getX() >= 1)
+    {
+      windowWidth = static_cast<float>(windowSize.getX());
+    }
+    if (windowSize.getY() >= 1)
+    {
+      windowHeight = static_cast<float>(windowSize.getY());
+    }
+  }
+
+  {
+    ImGuiIO& imGuiIo = ImGui::GetIO();
+    imGuiIo.MousePos.x = static_cast<float>(x) * (imGuiIo.DisplaySize.x / windowWidth);
+    imGuiIo.MousePos.y = static_cast<float>(y) * (imGuiIo.DisplaySize.y / windowHeight);
+  }
+}
+
+void GuiLinux::onMouseButtonInput(uint32_t button, bool pressed) {
+  // The mouse buttons on X11 starts at index 1 for the left mouse button. In ImGui the left mouse button is at index 0. Compensate it.
+  if (button > 0 && button <= 5)
+  {
+    ImGui::GetIO().MouseDown[button - 1] = pressed;
+  }
+}
+
+void GuiLinux::onMouseWheelInput(bool scrollUp) {
+  ImGui::GetIO().MouseWheel += scrollUp ? -1.0f : 1.0f;
 }
 
 

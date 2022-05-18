@@ -23,11 +23,14 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Gui/Gui.h"
+#include "REGui/Gui/NativeWindow.h"
 #include "REGui/Gui/Screen.h"
 #if defined(LINUX)
 #include "REGui/Backend/Linux/GuiLinux.h"
 #elif defined(WIN32)
 #endif
+#include <imgui.h>
+#include <imgui_internal.h>
 
 
 //[-------------------------------------------------------]
@@ -45,7 +48,8 @@ Gui &Gui::instance() {
 Gui::Gui()
 : mpImpl(nullptr)
 , mGuiContext(nullptr)
-, mDefaultScreen(nullptr) {
+, mDefaultScreen(nullptr)
+, mMainWindow(nullptr) {
 #if defined(LINUX)
   mpImpl = new GuiLinux(this);
 #endif
@@ -58,21 +62,57 @@ Gui::~Gui() {
     }
     mScreens.clear();
   }
+  // Do not delete the gui context, we will manage this
+
   // Clear all screens
   delete mpImpl;
 }
+
+
+void Gui::initialize(GuiContext *guiContext) {
+  // Sync the gui context
+  mGuiContext = guiContext;
+}
+
 
 GuiImpl *Gui::getImpl() const {
   return mpImpl;
 }
 
 bool Gui::isActive() const {
-  return false;
+  // Check if the platform dependent gui implementation is active and whether there is a window to work on
+  return ((mpImpl != nullptr) && !mWindows.empty());
 }
 
 
-void Gui::processMessages() {
+void Gui::update() {
 
+}
+
+void Gui::processMessages() {
+  mpImpl->processMessage();
+}
+
+void Gui::addWindow(NativeWindow* nativeWindow) {
+  // TODO(naetherm): This will always be the main window for now
+  mMainWindow = nativeWindow;
+  mWindows.emplace(nativeWindow->getWindowHandle(), nativeWindow);
+}
+
+void Gui::removeWindow(NativeWindow* nativeWindow) {
+  // Find native window by its handle
+}
+
+NativeWindow* Gui::getWindow(RECore::handle nativeWindowHandle) const {
+  auto iter = mWindows.find(nativeWindowHandle);
+  if (iter != mWindows.end()) {
+    return iter->second;
+  }
+  return nullptr;
+}
+
+NativeWindow* Gui::getMainWindow() const {
+  return mMainWindow;
 }
 
 

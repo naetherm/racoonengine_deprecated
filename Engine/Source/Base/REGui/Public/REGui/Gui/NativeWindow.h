@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
+#include <RECore/Math/Vec2i.h>
 #include <RERHI/Rhi.h>
 
 
@@ -42,6 +43,7 @@ namespace REGui {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Gui;
+class NativeWindowImpl;
 
 
 //[-------------------------------------------------------]
@@ -82,6 +84,8 @@ public:
    */
   [[nodiscard]] Gui* getGui() const;
 
+  [[nodiscard]] RECore::handle getWindowHandle() const;
+
   /**
    * @brief
    * Gets pointer to the internally used swapchain implementation.
@@ -91,9 +95,49 @@ public:
    */
   [[nodiscard]] RERHI::RHISwapChainPtr getSwapChain() const;
 
+  void setSwapChain(RERHI::RHISwapChainPtr swapChainPtr);
+
+  /**
+   * @brief
+   * Sets the position of the window.
+   *
+   * @param[in] position
+   * Position of the window.
+   */
+  void setPosition(const RECore::Vec2i& position);
+
+  /**
+   * @brief
+   * Returns the position of the window.
+   *
+   * @return
+   * Position of the window.
+   */
+  RECore::Vec2i getPosition() const;
+
+  /**
+   * @brief
+   * Sets the size of the window.
+   *
+   * @param[in] size
+   * The size
+   */
+  void setSize(const RECore::Vec2i& size);
+
+  /**
+   * @brief
+   * Get the size of the window.
+   *
+   * @return
+   * Size of window.
+   */
+  RECore::Vec2i getSize() const;
+
 protected:
   /** Pointer to gui implementation, always valid! */
   Gui* mGui;
+  /** Pointer to platform dependent native window implementation */
+  NativeWindowImpl* mImpl;
   /** Pointer to swapchain implementation, always valid! */
   RERHI::RHISwapChainPtr mSwapChain;
 };

@@ -20,14 +20,16 @@
 
 
 //[-------------------------------------------------------]
+//[ Header guard                                          ]
+//[-------------------------------------------------------]
+#pragma once
+
+
+//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/Application/GuiContext.h"
-#include <RECore/Platform/Platform.h>
-#include <RERHI/Rhi.h>
-#if defined(LINUX)
-#include <RERHI/Linux/X11Context.h>
-#endif
+#include "REGui/REGui.h"
+#include "REGui/Gui/GuiManagerImpl.h"
 
 
 //[-------------------------------------------------------]
@@ -36,61 +38,34 @@
 namespace REGui {
 
 
-GuiContext::GuiContext()
-: mRhiContext(nullptr)
-, mRhi(nullptr)
-, mRendererContext(nullptr)
-, mRenderer(nullptr) {
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+class GuiManagerLinux : public GuiManagerImpl {
+public:
 
-}
+  GuiManagerLinux(GuiManager* guiManager);
+  
+  ~GuiManagerLinux() override;
+  
+public:
 
-GuiContext::~GuiContext() {
-  delete mRenderer;
-  delete mRendererContext;
-  delete mRhi;
-  delete mRhiContext;
-}
+  void onWindowResize(RECore::uint32 width, RECore::uint32 height) override;
 
-void GuiContext::initialize(const RECore::String& rhiName) {
-  mRhiName = rhiName;
+  void onKeyInput(RECore::uint32 keySym, char character, bool pressed) override;
 
-  this->mSharedLibraryName = RECore::Platform::instance().getSharedLibraryPrefix() + "RERHI" + mRhiName + "." +
-                             RECore::Platform::instance().getSharedLibraryExtension();
+  void onMouseMoveInput(int x, int y) override;
 
-  // Create the RHI context
-}
+  void onMouseButtonInput(RECore::uint32 button, bool pressed) override;
 
-void GuiContext::setRhiName(const RECore::String &rhiName) {
-  mRhiName = rhiName;
-}
+  void onMouseWheelInput(bool scrollUp);
 
-const RECore::String &GuiContext::getRhiName() const {
-  return mRhiName;
-}
+  void initializeImGuiKeyMap() override;
 
-const RERHI::RHIContext *GuiContext::getRhiContext() const {
-  return mRhiContext;
-}
-
-const RECore::String &GuiContext::getSharedLibraryName() const {
-  return mSharedLibraryName;
-}
-
-const RECore::DynLib &GuiContext::getRhiSharedLibrary() const {
-  return mRhiSharedLibrary;
-}
-
-const RERHI::RHIDynamicRHI *GuiContext::getRhi() const {
-  return mRhi;
-}
-
-const RERenderer::Context *GuiContext::getRendererContext() const {
-  return mRendererContext;
-}
-
-const RERenderer::IRenderer *GuiContext::getRenderer() const {
-  return mRenderer;
-}
+  void onNewFrame(RERHI::RHIRenderTarget& renderTarget) override;
+  
+protected:
+};
 
 
 //[-------------------------------------------------------]

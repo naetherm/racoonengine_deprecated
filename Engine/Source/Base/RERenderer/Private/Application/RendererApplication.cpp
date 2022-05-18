@@ -211,7 +211,7 @@ void RendererApplication::onCreateRendererContext() {
       }
     } else {
       // Error
-      RE_LOG(Error, "Unable to find the symbol 'CreateRHIInstance'")
+      RE_LOG(Error, "Unable to find the symbol 'createRHIInstance'")
     }
   } else {
     // Error

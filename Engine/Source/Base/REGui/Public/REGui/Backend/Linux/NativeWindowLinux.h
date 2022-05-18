@@ -79,6 +79,8 @@ public:
    */
   void createWindow(RECore::handle nativeWindowHandle) override;
 
+  void createWindow() override;
+
   /**
    * @brief
    * Check if the window has been destroyed.
@@ -152,6 +154,14 @@ private:
   int mScreen;
   RECore::Vec2i mPosition;
   RECore::Vec2i mSize;
+
+
+  // Atoms
+  ::Atom					 WM_DELETE_WINDOW;		/**< System atom for delete */
+  ::Atom					 UTF8_STRING;			/**< Atom for the type of a window title */
+  ::Atom 					 WM_NAME;				/**< Window title (old?) */
+  ::Atom 					 _NET_WM_NAME;			/**< Window title */
+  ::Atom 					 _NET_WM_VISIBLE_NAME;	/**< Window title (visible title, can be different) */
 
   bool mDestroyed;
 };

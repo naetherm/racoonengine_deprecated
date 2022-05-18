@@ -44,6 +44,10 @@ Widget::~Widget() {
 
 }
 
+void Widget::beginFrame() {
+
+}
+
 void Widget::draw() {
   if (this->mIsEnabled) {
     this->drawInternal();
@@ -55,6 +59,10 @@ void Widget::draw() {
       ImGui::SameLine();
     }
   }
+}
+
+void Widget::endFrame() {
+
 }
 
 

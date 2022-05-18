@@ -20,14 +20,16 @@
 
 
 //[-------------------------------------------------------]
+//[ Header guard                                          ]
+//[-------------------------------------------------------]
+#pragma once
+
+
+//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/Application/GuiContext.h"
-#include <RECore/Platform/Platform.h>
-#include <RERHI/Rhi.h>
-#if defined(LINUX)
-#include <RERHI/Linux/X11Context.h>
-#endif
+#include "REGui/REGui.h"
+#include "REGui/Widget/Container/Container.h"
 
 
 //[-------------------------------------------------------]
@@ -36,61 +38,37 @@
 namespace REGui {
 
 
-GuiContext::GuiContext()
-: mRhiContext(nullptr)
-, mRhi(nullptr)
-, mRendererContext(nullptr)
-, mRenderer(nullptr) {
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class NativeWindow;
 
-}
 
-GuiContext::~GuiContext() {
-  delete mRenderer;
-  delete mRendererContext;
-  delete mRhi;
-  delete mRhiContext;
-}
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+ * @class
+ * MainWindow
+ *
+ * @brief
+ *
+ */
+class MainWindow {
+public:
 
-void GuiContext::initialize(const RECore::String& rhiName) {
-  mRhiName = rhiName;
+  MainWindow();
 
-  this->mSharedLibraryName = RECore::Platform::instance().getSharedLibraryPrefix() + "RERHI" + mRhiName + "." +
-                             RECore::Platform::instance().getSharedLibraryExtension();
+  virtual ~MainWindow();
 
-  // Create the RHI context
-}
 
-void GuiContext::setRhiName(const RECore::String &rhiName) {
-  mRhiName = rhiName;
-}
+  virtual void onUpdate();
 
-const RECore::String &GuiContext::getRhiName() const {
-  return mRhiName;
-}
+protected:
 
-const RERHI::RHIContext *GuiContext::getRhiContext() const {
-  return mRhiContext;
-}
-
-const RECore::String &GuiContext::getSharedLibraryName() const {
-  return mSharedLibraryName;
-}
-
-const RECore::DynLib &GuiContext::getRhiSharedLibrary() const {
-  return mRhiSharedLibrary;
-}
-
-const RERHI::RHIDynamicRHI *GuiContext::getRhi() const {
-  return mRhi;
-}
-
-const RERenderer::Context *GuiContext::getRendererContext() const {
-  return mRendererContext;
-}
-
-const RERenderer::IRenderer *GuiContext::getRenderer() const {
-  return mRenderer;
-}
+  /** Pointer to native window implementation */
+  NativeWindow* mNativeWindow;
+};
 
 
 //[-------------------------------------------------------]

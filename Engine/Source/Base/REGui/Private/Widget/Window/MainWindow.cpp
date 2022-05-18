@@ -22,12 +22,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/Application/GuiContext.h"
-#include <RECore/Platform/Platform.h>
-#include <RERHI/Rhi.h>
-#if defined(LINUX)
-#include <RERHI/Linux/X11Context.h>
-#endif
+#include "REGui/Widget/Window/MainWindow.h"
+#include "REGui/Gui/Gui.h"
+#include "REGui/Gui/NativeWindow.h"
 
 
 //[-------------------------------------------------------]
@@ -35,61 +32,20 @@
 //[-------------------------------------------------------]
 namespace REGui {
 
+MainWindow::MainWindow()
+: mNativeWindow(nullptr) {
+  Gui& gui = Gui::instance();
 
-GuiContext::GuiContext()
-: mRhiContext(nullptr)
-, mRhi(nullptr)
-, mRendererContext(nullptr)
-, mRenderer(nullptr) {
+  mNativeWindow = new NativeWindow(&gui);
+}
+
+MainWindow::~MainWindow() {
 
 }
 
-GuiContext::~GuiContext() {
-  delete mRenderer;
-  delete mRendererContext;
-  delete mRhi;
-  delete mRhiContext;
-}
 
-void GuiContext::initialize(const RECore::String& rhiName) {
-  mRhiName = rhiName;
+void MainWindow::onUpdate() {
 
-  this->mSharedLibraryName = RECore::Platform::instance().getSharedLibraryPrefix() + "RERHI" + mRhiName + "." +
-                             RECore::Platform::instance().getSharedLibraryExtension();
-
-  // Create the RHI context
-}
-
-void GuiContext::setRhiName(const RECore::String &rhiName) {
-  mRhiName = rhiName;
-}
-
-const RECore::String &GuiContext::getRhiName() const {
-  return mRhiName;
-}
-
-const RERHI::RHIContext *GuiContext::getRhiContext() const {
-  return mRhiContext;
-}
-
-const RECore::String &GuiContext::getSharedLibraryName() const {
-  return mSharedLibraryName;
-}
-
-const RECore::DynLib &GuiContext::getRhiSharedLibrary() const {
-  return mRhiSharedLibrary;
-}
-
-const RERHI::RHIDynamicRHI *GuiContext::getRhi() const {
-  return mRhi;
-}
-
-const RERenderer::Context *GuiContext::getRendererContext() const {
-  return mRendererContext;
-}
-
-const RERenderer::IRenderer *GuiContext::getRenderer() const {
-  return mRenderer;
 }
 
 

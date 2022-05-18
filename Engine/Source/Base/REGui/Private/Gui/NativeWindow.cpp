@@ -23,13 +23,67 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Gui/NativeWindow.h"
+#include "REGui/Gui/Gui.h"
+#if defined(LINUX)
+#include "REGui/Backend/Linux/NativeWindowLinux.h"
+#endif
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui
-{
+namespace REGui {
+
+
+NativeWindow::NativeWindow(Gui *gui)
+: mGui(gui)
+, mImpl(nullptr) {
+#if defined(LINUX)
+  mImpl = new NativeWindowLinux(this);
+#endif
+
+  // Do the final step for creation
+  mImpl->createWindow();
+
+  // TODO(naetherm): Should we self-register ourself?
+  gui->addWindow(this);
+}
+
+NativeWindow::~NativeWindow() {
+  delete mImpl;
+}
+
+Gui *NativeWindow::getGui() const {
+  return mGui;
+}
+
+RECore::handle NativeWindow::getWindowHandle() const {
+  return mImpl->getNativeWindowHandle();
+}
+
+RERHI::RHISwapChainPtr NativeWindow::getSwapChain() const {
+  return mSwapChain;
+}
+
+void NativeWindow::setSwapChain(RERHI::RHISwapChainPtr swapChainPtr) {
+  mSwapChain = swapChainPtr;
+}
+
+void NativeWindow::setPosition(const RECore::Vec2i &position) {
+  mImpl->setPosition(position);
+}
+
+RECore::Vec2i NativeWindow::getPosition() const {
+  return mImpl->getPosition();
+}
+
+void NativeWindow::setSize(const RECore::Vec2i &size) {
+  mImpl->setSize(size);
+}
+
+RECore::Vec2i NativeWindow::getSize() const {
+  return mImpl->getSize();
+}
 
 
 //[-------------------------------------------------------]

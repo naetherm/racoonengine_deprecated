@@ -22,12 +22,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/Application/GuiContext.h"
-#include <RECore/Platform/Platform.h>
-#include <RERHI/Rhi.h>
-#if defined(LINUX)
-#include <RERHI/Linux/X11Context.h>
-#endif
+#include "REGui/Application/MinGuiApplication.h"
+#include "REGui/Gui/AppWindow.h"
 
 
 //[-------------------------------------------------------]
@@ -36,60 +32,64 @@
 namespace REGui {
 
 
-GuiContext::GuiContext()
-: mRhiContext(nullptr)
-, mRhi(nullptr)
-, mRendererContext(nullptr)
-, mRenderer(nullptr) {
+//[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+re_class_metadata(MinGuiApplication, "REGui", RERenderer::RendererApplication, "Renderer application class")
+  // Constructors
+  re_constructor_1_metadata(ParameterConstructor, RECore::Frontend &,
+                            "Parameter constructor. Frontend this application instance is running in as first parameter.",
+                            "")
+re_class_metadata_end(MinGuiApplication)
+
+
+MinGuiApplication::MinGuiApplication(RECore::Frontend& frontend)
+: RERenderer::RendererApplication(frontend)
+, mMainWindow(nullptr) {
 
 }
 
-GuiContext::~GuiContext() {
-  delete mRenderer;
-  delete mRendererContext;
-  delete mRhi;
-  delete mRhiContext;
+MinGuiApplication::~MinGuiApplication() {
+  if (mMainWindow) {
+    delete mMainWindow;
+  }
 }
 
-void GuiContext::initialize(const RECore::String& rhiName) {
-  mRhiName = rhiName;
 
-  this->mSharedLibraryName = RECore::Platform::instance().getSharedLibraryPrefix() + "RERHI" + mRhiName + "." +
-                             RECore::Platform::instance().getSharedLibraryExtension();
+bool MinGuiApplication::onStart() {
 
-  // Create the RHI context
+  if (RERenderer::RendererApplication::onStart()) {
+    // Create example
+
+
+    return true;
+  }
+
+  // Error
+  return false;
 }
 
-void GuiContext::setRhiName(const RECore::String &rhiName) {
-  mRhiName = rhiName;
+
+void MinGuiApplication::onStop() {
+
+  RERenderer::RendererApplication::onStop();
 }
 
-const RECore::String &GuiContext::getRhiName() const {
-  return mRhiName;
+void MinGuiApplication::onSize() {
+  RERenderer::RendererApplication::onSize();
 }
 
-const RERHI::RHIContext *GuiContext::getRhiContext() const {
-  return mRhiContext;
+void MinGuiApplication::onUpdate() {
+  RERenderer::RendererApplication::onUpdate();
 }
 
-const RECore::String &GuiContext::getSharedLibraryName() const {
-  return mSharedLibraryName;
+
+void MinGuiApplication::main() {
+
 }
 
-const RECore::DynLib &GuiContext::getRhiSharedLibrary() const {
-  return mRhiSharedLibrary;
-}
+void MinGuiApplication::createMainWindow() {
 
-const RERHI::RHIDynamicRHI *GuiContext::getRhi() const {
-  return mRhi;
-}
-
-const RERenderer::Context *GuiContext::getRendererContext() const {
-  return mRendererContext;
-}
-
-const RERenderer::IRenderer *GuiContext::getRenderer() const {
-  return mRenderer;
 }
 
 

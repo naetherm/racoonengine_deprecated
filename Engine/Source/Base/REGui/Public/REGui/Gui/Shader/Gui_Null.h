@@ -19,53 +19,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-//[-------------------------------------------------------]
-//[ Header guard                                          ]
-//[-------------------------------------------------------]
-#pragma once
-
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include <REGui/Application/GuiApplication.h>
-
-
-//[-------------------------------------------------------]
-//[ Classes                                               ]
-//[-------------------------------------------------------]
-/**
- * @class
- * Application
- *
- * @brief
- * Example gui application.
- */
-class Application : public REGui::GuiApplication {
-
-
-  //[-------------------------------------------------------]
-  //[ RTTI interface                                        ]
-  //[-------------------------------------------------------]
-  re_class_def()
-  re_class_def_end
-
-public:
-
-  /**
-   * @brief
-   * Constructor.
-   *
-   * @param[in] frontend
-   * Reference to the frontend instance.
-   */
-  Application();
-
-  /**
-   * @brief
-   * Destructor.
-   */
-  ~Application() override;
-
-protected:
-};
+#ifdef RHI_NULL
+	if (rhi.getNameId() == RERHI::NameId::NULL_DUMMY)
+	{
+		vertexShaderSourceCode = fragmentShaderSourceCode = "42";
+	}
+	else
+#endif
+{
+	// Error! (unsupported RHI)
+RE_LOG(Critical, std::string("The RHI implementation \"") + rhi.getName() + std::string("\" isn't supported by the renderer debug GUI"))
+}

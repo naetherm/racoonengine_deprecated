@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
 #include <RECore/String/String.h>
+#include <map>
 #include <vector>
 
 
@@ -45,6 +46,7 @@ namespace REGui {
 class GuiImpl;
 class Screen;
 class GuiContext;
+class NativeWindow;
 
 
 //[-------------------------------------------------------]
@@ -92,10 +94,24 @@ public:
   [[nodiscard]] bool isActive() const;
 
 
+  void update();
+
   //[-------------------------------------------------------]
   //[ Message processing                                    ]
   //[-------------------------------------------------------]
   void processMessages();
+
+
+  //[-------------------------------------------------------]
+  //[ Windows                                               ]
+  //[-------------------------------------------------------]
+  void addWindow(NativeWindow* nativeWindow);
+
+  void removeWindow(NativeWindow* nativeWindow);
+
+  [[nodiscard]] NativeWindow* getWindow(RECore::handle nativeWindowHandle) const;
+
+  NativeWindow* getMainWindow() const;
 
 
   //[-------------------------------------------------------]
@@ -151,6 +167,10 @@ protected:
   std::vector<Screen*> mScreens;
   /** Pointer to the default screen, always valid! */
   Screen* mDefaultScreen;
+  /** Map containing all active windows */
+  std::map<RECore::handle, NativeWindow*> mWindows;
+  /** Pointer to main window */
+  NativeWindow* mMainWindow;
 };
 
 

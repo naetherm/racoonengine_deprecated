@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
-#include <RECore/Math/Vec2i.h>
+#include <RERenderer/Application/RendererApplication.h>
 
 
 //[-------------------------------------------------------]
@@ -41,129 +41,100 @@ namespace REGui {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class NativeWindow;
+class AppWindow;
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-/**
- * @class
- * NativeWindowImpl
- *
- * @brief
- * Native window implementation.
- */
-class NativeWindowImpl {
+class MinGuiApplication : public RERenderer::RendererApplication {
+
+  //[-------------------------------------------------------]
+  //[ RTTI interface                                        ]
+  //[-------------------------------------------------------]
+  re_class_def()
+  re_class_def_end
+
 public:
 
   /**
    * @brief
    * Constructor.
    *
-   * @param[in] nativeWindow
-   * Pointer to native window.
+   * @param frontend
+   * The frontend implementation.
    */
-  REGUI_API NativeWindowImpl(NativeWindow* nativeWindow);
+  MinGuiApplication(RECore::Frontend& frontend);
 
   /**
    * @brief
    * Destructor
    */
-  REGUI_API virtual ~NativeWindowImpl();
-
-
-  /**
-   * @brief
-   * Returns pointer to platform independent native window.
-   *
-   * @return
-   * Platform independent native window.
-   */
-  REGUI_API NativeWindow* getNativeWindow() const;
-
-public:
-
-  /**
-   * @brief
-   * Create native window implementation.
-   *
-   * @param[in] nativeWindowHandle
-   * The native window handle of the system.
-   */
-  virtual void createWindow(RECore::handle nativeWindowHandle) = 0;
-  virtual void createWindow() = 0;
-
-  /**
-   * @brief
-   * Check if the window has been destroyed.
-   *
-   * @return
-   * True if the windows is destroyed, false otherwise.
-   */
-  virtual bool isDestroyed() const = 0;
-
-  /**
-   * @brief
-   * Destroy the window.
-   */
-  virtual void destroy() = 0;
-
-  /**
-   * @brief
-   * Returns the native window handle.
-   *
-   * @return
-   * Native window handle.
-   */
-  virtual RECore::handle getNativeWindowHandle() const = 0;
-
-  /**
-   * @brief
-   * Sets the position of the window.
-   *
-   * @param[in] position
-   * Position of the window.
-   */
-  virtual void setPosition(const RECore::Vec2i& position) = 0;
-
-  /**
-   * @brief
-   * Returns the position of the window.
-   *
-   * @return
-   * Position of the window.
-   */
-  virtual RECore::Vec2i getPosition() const = 0;
-
-  /**
-   * @brief
-   * Sets the size of the window.
-   *
-   * @param[in] size
-   * The size
-   */
-  virtual void setSize(const RECore::Vec2i& size) = 0;
-
-  /**
-   * @brief
-   * Get the size of the window.
-   *
-   * @return
-   * Size of window.
-   */
-  virtual RECore::Vec2i getSize() const = 0;
-
-  /**
-   * @brief
-   * Redraw the window.
-   */
-  virtual void redraw() = 0;
+  ~MinGuiApplication() override;
 
 protected:
-  /** Pointer to platform independent native window object */
-  NativeWindow* mNativeWindow;
+
+  REGUI_API virtual void createMainWindow();
+
+protected:
+
+  /**
+   *  @brief
+   *    Initialization function that is called prior to onInit()
+   *
+   *  @return
+   *    'true' if all went fine, else 'false' which will stop the application
+   *
+   *  @remarks
+   *    The default implementation does the following tasks:
+   *    - Everything that PLCore::CoreApplication::onStart() does
+   *    - Return and go on with onInit()
+   */
+  bool onStart() override;
+
+  /**
+   *  @brief
+   *    De-initialization function that is called after onDeInit()
+   *
+   *  @remarks
+   *    The default implementation does the following tasks:
+   *    - Save renderer related configuration
+   *    - Destroy renderer context
+   *    - Everything that FrontendApplication::onStop() does
+   */
+  void onStop() override;
+
+  /**
+   *  @brief
+   *    Called when the window size has been changed
+   *
+   *  @note
+   *    - The default implementation is empty
+   */
+  void onSize() override;
+
+  /**
+   *  @brief
+   *    Called to let the frontend update it's states
+   *
+   *  @remarks
+   *    The default implementation does the following tasks:
+   *    - Everything that PLCore::FrontendApplication::onUpdate() does
+   *    - Update renderer context
+   */
+  void onUpdate() override;
+
 private:
+
+  /**
+   * @brief
+   * Main routine.
+   */
+  void main() override;
+
+protected:
+  /** Pointer to the window to draw, always valid! */
+  AppWindow* mMainWindow;
 };
 
 

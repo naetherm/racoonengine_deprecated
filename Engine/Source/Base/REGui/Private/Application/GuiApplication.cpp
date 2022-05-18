@@ -25,6 +25,16 @@
 #include "REGui/Application/GuiApplication.h"
 #include "REGui/Gui/Gui.h"
 #include "REGui/Gui/NativeWindow.h"
+#include <RECore/Log/Log.h>
+#include <RECore/Platform/Platform.h>
+#include <RERenderer/RendererImpl.h>
+#include <RERenderer/Context.h>
+#include <RECore/File/PhysicsFSFileManager.h>
+#include "REGui/Widget/Window/MainWindow.h"
+#if defined(LINUX)
+#include "REGui/Backend/Linux/GuiLinux.h"
+#include <RERHI/Linux/X11Context.h>
+#endif
 
 
 //[-------------------------------------------------------]
@@ -44,28 +54,38 @@ re_class_metadata_end(GuiApplication)
 
 GuiApplication::GuiApplication()
 : mGuiContext(nullptr)
-, mNativeWindow(nullptr)
+, mMainWindow(nullptr)
 , EventHandlerOnDestroy(&GuiApplication::onDestroyMainWindow, this) {
-  // TODO(naetherm): This is temporarily
+  // TODO(naetherm): This is temporarily and will late on be replaced by a configuration file
   m_cCommandLine.addParameter("RHI", "-r", "--rhi", "RHI Interface", "");
 }
 
 GuiApplication::~GuiApplication() {
-
+  if (mGuiContext) {
+    delete mGuiContext;
+  }
 }
 
-NativeWindow *GuiApplication::getMainWindow() const {
-  return mNativeWindow;
+MainWindow *GuiApplication::getMainWindow() const {
+  return mMainWindow;
 }
 
-void GuiApplication::setMainWindow(NativeWindow *nativeWindow) {
-  mNativeWindow = nativeWindow;
+void GuiApplication::setMainWindow(MainWindow *nativeWindow) {
+  mMainWindow = nativeWindow;
 }
 
 bool GuiApplication::onStart() {
+  mFileManager = new RECore::PhysicsFSFileManager(std_filesystem::canonical(std_filesystem::current_path() / "..").generic_string());
+  mcCoreContext.initialize(*mFileManager);
+  // Get gui instance here
+  Gui& gui = Gui::instance();
   if (CoreApplication::onStart()) {
     // Before we start create the gui context first
     createGuiContext();
+
+    // Initialize the gui (and the gui context
+    gui.initialize(mGuiContext);
+
     // Create main window
     onCreateMainWindow();
     if (!m_bRunning) {
@@ -87,13 +107,59 @@ void GuiApplication::main() {
   // Run main loop
   Gui& gui = Gui::instance();
   // Process gui message loop
-  if (gui.isActive() && m_bRunning) {
+  while (gui.isActive() && m_bRunning) {
+    gui.update();
+
     gui.processMessages();
   }
 }
 
 void GuiApplication::createGuiContext() {
+  Gui& gui = Gui::instance();
+  // We will need the gui early so we can access platform dependent information
+  mGuiContext = new GuiContext();
+  mGuiContext->setRhiName(m_cCommandLine.getValue("RHI"));
+  mGuiContext->mSharedLibraryName = RECore::Platform::instance().getSharedLibraryPrefix() + "RERHI" + mGuiContext->getRhiName() + "." +
+                             RECore::Platform::instance().getSharedLibraryExtension();
 
+  RE_LOG(Info, std::string(("Starting Gui with " + mGuiContext->getRhiName() + " rhi").cstr()))
+
+#if defined(LINUX)
+  mGuiContext->mRhiContext = new RERHI::X11Context(
+    reinterpret_cast<GuiLinux*>(gui.getImpl())->getDisplay(),
+    reinterpret_cast<GuiLinux*>(gui.getImpl())->getWindowHandle());
+#endif
+
+  // Initialize library
+  auto *pLib = new RECore::DynLib();
+  if (pLib->load(mGuiContext->mSharedLibraryName)) {
+    typedef RERHI::RHIDynamicRHI *(*RHI_INSTANCER)(const RERHI::RHIContext &);
+    RHI_INSTANCER _Creator = reinterpret_cast<RHI_INSTANCER>(pLib->getSymbol("createRhiInstance"));
+    if (_Creator) {
+      mGuiContext->mRhi = _Creator(*mGuiContext->mRhiContext);
+
+      if (mGuiContext->mRhi) {
+        mGuiContext->mRhi->AddReference();
+        RE_LOG(Info, std::string("Successfully created the RHI backend of ") + mGuiContext->mSharedLibraryName.cstr())
+      } else {
+        // Error
+        RE_LOG(Error, "Creation of dynamic RHI failed.")
+      }
+    } else {
+      // Error
+      RE_LOG(Error, "Unable to find the symbol 'createRHIInstance'")
+    }
+  } else {
+    // Error
+    RE_LOG(Error, std::string("Unable to load the library ") + mGuiContext->mSharedLibraryName.cstr())
+  }
+
+  // Create renderer instance
+  {
+    mGuiContext->mRendererContext = new RERenderer::Context(*mGuiContext->mRhi, mcCoreContext);
+    mGuiContext->mRenderer = new RERenderer::RendererImpl(*mGuiContext->mRendererContext);
+    RE_LOG(Info,"Created renderer context")
+  }
 }
 
 void GuiApplication::onDestroyMainWindow() {
@@ -101,7 +167,7 @@ void GuiApplication::onDestroyMainWindow() {
 }
 
 void GuiApplication::onCreateMainWindow() {
-
+  mMainWindow = new MainWindow();
 }
 
 //[-------------------------------------------------------]

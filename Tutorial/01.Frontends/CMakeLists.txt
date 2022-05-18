@@ -22,3 +22,4 @@
 # Current package
 ################################################################################
 re_add_subdirectory(01.01.FrontendOS)
+re_add_subdirectory(01.02.Gui)

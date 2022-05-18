@@ -43,7 +43,7 @@ namespace REGui {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class NativeWindow;
+class MainWindow;
 
 
 //[-------------------------------------------------------]
@@ -62,7 +62,6 @@ class NativeWindow;
  * associated with this application.
  */
 class GuiApplication : public RECore::CoreApplication {
-
 
   //[-------------------------------------------------------]
   //[ RTTI interface                                        ]
@@ -92,7 +91,7 @@ public:
    * @return
    * Main window, can be a nullptr.
    */
-  REGUI_API NativeWindow* getMainWindow() const;
+  REGUI_API MainWindow* getMainWindow() const;
 
   /**
    * @brief
@@ -101,7 +100,7 @@ public:
    * @param[in] nativeWindow
    * Pointer to the main window to set.
    */
-  REGUI_API void setMainWindow(NativeWindow* nativeWindow);
+  REGUI_API void setMainWindow(MainWindow* nativeWindow);
 
   //[-------------------------------------------------------]
   //[ Protected virtual PLCore::AbstractLifecycle functions ]
@@ -174,8 +173,9 @@ protected:
 protected:
   /** Pointer to the gui context */
   GuiContext* mGuiContext;
+  RECore::IFileManager*		mFileManager;		///< File manager instance, can be a null pointer
   /** Pointer to the main window */
-  NativeWindow* mNativeWindow;
+  MainWindow* mMainWindow;
   /** Event handler */
   RECore::EventHandler<> EventHandlerOnDestroy;
 };

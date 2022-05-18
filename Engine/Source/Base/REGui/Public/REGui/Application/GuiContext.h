@@ -30,6 +30,16 @@
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
 #include <RECore/String/String.h>
+#include <RECore/System/DynLib.h>
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace RERenderer {
+class Context;
+class IRenderer;
+}
 
 
 //[-------------------------------------------------------]
@@ -49,6 +59,9 @@ namespace REGui {
  * Gui context implementation.
  */
 class GuiContext {
+
+  friend class GuiApplication;
+
 public:
 
   /**
@@ -62,6 +75,9 @@ public:
    * Destructor
    */
   REGUI_API virtual ~GuiContext();
+
+
+  void initialize(const RECore::String& rhiName);
 
 
   /**
@@ -82,9 +98,33 @@ public:
    */
   [[nodiscard]] const RECore::String& getRhiName() const;
 
-protected:
+  [[nodiscard]] const RERHI::RHIContext* getRhiContext() const;
 
+  [[nodiscard]] const RECore::String& getSharedLibraryName() const;
+
+  [[nodiscard]] const RECore::DynLib& getRhiSharedLibrary() const;
+
+  [[nodiscard]] const RERHI::RHIDynamicRHI* getRhi() const;
+
+  [[nodiscard]] const RERenderer::Context* getRendererContext() const;
+
+  [[nodiscard]] const RERenderer::IRenderer* getRenderer() const;
+
+protected:
+  /** The name of the RHI instance */
   RECore::String mRhiName;
+  /** RHI context */
+  RERHI::RHIContext* mRhiContext;
+  /** The shared library name of the RHI library */
+  RECore::String mSharedLibraryName;
+  /** The shared library */
+  RECore::DynLib mRhiSharedLibrary;
+  /** RHI instance */
+  RERHI::RHIDynamicRHI* mRhi;
+  /** Renderer context instance */
+  RERenderer::Context* mRendererContext;
+  /** Renderer instance */
+  RERenderer::IRenderer* mRenderer;
 };
 
 

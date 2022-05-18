@@ -51,6 +51,57 @@ void NativeWindowLinux::createWindow(RECore::handle nativeWindowHandle) {
   mNativeWindowHandle = static_cast<::Window>(nativeWindowHandle);
 }
 
+void NativeWindowLinux::createWindow() {
+  // Gui (for display)
+  Gui& gui = Gui::instance();
+  GuiLinux* guiLinux = reinterpret_cast<GuiLinux*>(gui.getImpl());
+
+  // Atoms
+  WM_DELETE_WINDOW	= XInternAtom(guiLinux->getDisplay(), "WM_DELETE_WINDOW",	 True);
+  UTF8_STRING			= XInternAtom(guiLinux->getDisplay(), "UTF8_STRING",			 False);
+  WM_NAME				= XInternAtom(guiLinux->getDisplay(), "WM_NAME",				 False);
+  _NET_WM_NAME		= XInternAtom(guiLinux->getDisplay(), "_NET_WM_NAME",		 False);
+  _NET_WM_VISIBLE_NAME = XInternAtom(guiLinux->getDisplay(), "_NET_WM_VISIBLE_NAME", False);
+  // Save native window handle
+  {
+    const unsigned int width = 800;
+    const unsigned int height = 600;
+    const int screen = DefaultScreen(guiLinux->getDisplay());
+    Visual* visual = DefaultVisual(guiLinux->getDisplay(), screen);
+    const int depth = DefaultDepth(guiLinux->getDisplay(), screen);
+
+    // Create native os window instance with black background (else we will se trash if nothing has been drawn)
+    XSetWindowAttributes windowAttributes;
+    windowAttributes.background_pixel = 0;
+    windowAttributes.event_mask = ExposureMask | StructureNotifyMask | EnterWindowMask | LeaveWindowMask | FocusChangeMask | VisibilityChangeMask | KeyPressMask | MotionNotify;
+    mNativeWindowHandle = XCreateWindow(
+      guiLinux->getDisplay(),
+      XRootWindow(guiLinux->getDisplay(), screen),
+      0,
+      0,
+      width,
+      height,
+      0,
+      depth,
+      InputOutput,
+      visual,
+      CWBackPixel | CWEventMask,
+      &windowAttributes);
+    XSetWMProtocols(guiLinux->getDisplay(), mNativeWindowHandle, &WM_DELETE_WINDOW, 1);
+
+    // Set icon
+
+    // Title
+
+    // Make visible
+    XMapRaised(guiLinux->getDisplay(), mNativeWindowHandle);
+
+    // Push everything
+    XSync(guiLinux->getDisplay(), False);
+  }
+
+}
+
 bool NativeWindowLinux::isDestroyed() const {
   return mDestroyed;
 }
