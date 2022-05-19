@@ -43,6 +43,7 @@ namespace REGui {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Gui;
+class GuiMessage;
 class NativeWindowImpl;
 
 
@@ -85,6 +86,8 @@ public:
   [[nodiscard]] Gui* getGui() const;
 
   [[nodiscard]] RECore::handle getWindowHandle() const;
+
+  void onMessage(const GuiMessage& guiMessage);
 
   /**
    * @brief
@@ -132,6 +135,10 @@ public:
    * Size of window.
    */
   RECore::Vec2i getSize() const;
+
+private:
+
+  void initializeSwapChain();
 
 protected:
   /** Pointer to gui implementation, always valid! */

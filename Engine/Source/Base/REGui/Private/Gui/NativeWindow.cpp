@@ -23,7 +23,10 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Gui/NativeWindow.h"
+#include "REGui/Application/GuiContext.h"
 #include "REGui/Gui/Gui.h"
+#include "REGui/Gui/GuiMessage.h"
+#include <RECore/Log/Log.h>
 #if defined(LINUX)
 #include "REGui/Backend/Linux/NativeWindowLinux.h"
 #endif
@@ -45,8 +48,8 @@ NativeWindow::NativeWindow(Gui *gui)
   // Do the final step for creation
   mImpl->createWindow();
 
-  // TODO(naetherm): Should we self-register ourself?
-  gui->addWindow(this);
+  // Initialize the swap chain
+  initializeSwapChain();
 }
 
 NativeWindow::~NativeWindow() {
@@ -59,6 +62,16 @@ Gui *NativeWindow::getGui() const {
 
 RECore::handle NativeWindow::getWindowHandle() const {
   return mImpl->getNativeWindowHandle();
+}
+
+void NativeWindow::onMessage(const GuiMessage &guiMessage) {
+  switch (guiMessage.getType()) {
+    case MessageOnDraw:
+      {
+        this->mImpl->redraw();
+        break;
+      }
+  }
 }
 
 RERHI::RHISwapChainPtr NativeWindow::getSwapChain() const {
@@ -83,6 +96,25 @@ void NativeWindow::setSize(const RECore::Vec2i &size) {
 
 RECore::Vec2i NativeWindow::getSize() const {
   return mImpl->getSize();
+}
+
+
+void NativeWindow::initializeSwapChain() {
+  {
+    RERHI::RHIDynamicRHI* rhi = mGui->getGuiContext()->getRhi();
+    const RERHI::Capabilities& capabilities = rhi->getCapabilities();
+    RERHI::RHIRenderPass* renderPass = rhi->createRenderPass(
+      1,
+      &capabilities.preferredSwapChainColorTextureFormat,
+      capabilities.preferredSwapChainDepthStencilTextureFormat,
+      1 RHI_RESOURCE_DEBUG_NAME("MainWindow"));
+    renderPass->AddReference();
+
+    mSwapChain = rhi->createSwapChain(
+      *renderPass,
+      RERHI::WindowHandle{getWindowHandle(), nullptr, nullptr});
+    mSwapChain->AddReference();	// Internal RHI reference
+  }
 }
 
 

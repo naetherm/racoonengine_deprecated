@@ -26,6 +26,7 @@
 #include "REGui/Gui/Gui.h"
 #include "REGui/Gui/Screen.h"
 #include "REGui/Gui/NativeWindow.h"
+#include "REGui/Widget/Window/MainWindow.h"
 #include <RECore/Math/Vec2i.h>
 #include <RECore/String/BasicRegEx.h>
 #include <imgui.h>
@@ -175,14 +176,15 @@ int GuiLinux::errorHandler(Display *display, XErrorEvent *error) {
 }
 
 void GuiLinux::processXEvent(XEvent *event) {
-  NativeWindow* nativeWindow = mGui->getWindow(event->xany.window);
+  NativeWindow* nativeWindow = mGui->getWindow(event->xany.window)->getNativeWindow();
 
   if (nativeWindow) {
     switch(event->type) {
       case Expose:
         // Draw me!
         if (!event->xexpose.count) {
-          onDraw();
+          //onDraw();
+          mGui->sendMessage(GuiMessage::onDraw(nativeWindow));
         }
         break;
       case DestroyNotify:
@@ -277,7 +279,7 @@ void GuiLinux::onMouseMoveInput(int x, int y) {
   float windowWidth  = 1.0f;
   float windowHeight = 1.0f;
   {
-    RECore::Vec2i windowSize = mGui->getMainWindow()->getSize();
+    RECore::Vec2i windowSize = mGui->getMainWindow()->getNativeWindow()->getSize();
     // Ensure that none of them is ever zero
     if (windowSize.getX() >= 1)
     {

@@ -73,7 +73,8 @@ void NativeWindowLinux::createWindow() {
     // Create native os window instance with black background (else we will se trash if nothing has been drawn)
     XSetWindowAttributes windowAttributes;
     windowAttributes.background_pixel = 0;
-    windowAttributes.event_mask = ExposureMask | StructureNotifyMask | EnterWindowMask | LeaveWindowMask | FocusChangeMask | VisibilityChangeMask | KeyPressMask | MotionNotify;
+    windowAttributes.event_mask = ExposureMask | StructureNotifyMask | EnterWindowMask | LeaveWindowMask |
+                                  FocusChangeMask | VisibilityChangeMask | KeyPressMask | MotionNotify;
     mNativeWindowHandle = XCreateWindow(
       guiLinux->getDisplay(),
       XRootWindow(guiLinux->getDisplay(), screen),

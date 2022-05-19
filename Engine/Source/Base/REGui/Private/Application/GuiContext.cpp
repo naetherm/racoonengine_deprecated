@@ -68,7 +68,7 @@ const RECore::String &GuiContext::getRhiName() const {
   return mRhiName;
 }
 
-const RERHI::RHIContext *GuiContext::getRhiContext() const {
+RERHI::RHIContext *GuiContext::getRhiContext() const {
   return mRhiContext;
 }
 
@@ -80,15 +80,15 @@ const RECore::DynLib &GuiContext::getRhiSharedLibrary() const {
   return mRhiSharedLibrary;
 }
 
-const RERHI::RHIDynamicRHI *GuiContext::getRhi() const {
+RERHI::RHIDynamicRHI *GuiContext::getRhi() const {
   return mRhi;
 }
 
-const RERenderer::Context *GuiContext::getRendererContext() const {
+RERenderer::Context *GuiContext::getRendererContext() const {
   return mRendererContext;
 }
 
-const RERenderer::IRenderer *GuiContext::getRenderer() const {
+RERenderer::IRenderer *GuiContext::getRenderer() const {
   return mRenderer;
 }
 

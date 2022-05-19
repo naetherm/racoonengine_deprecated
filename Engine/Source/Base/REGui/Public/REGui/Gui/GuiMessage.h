@@ -29,7 +29,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
+#include "REGui/Gui/GuiTypes.h"
 #include "REGui/Gui/MessageTypes.h"
+#include <RECore/Math/Vec2i.h>
 
 
 //[-------------------------------------------------------]
@@ -58,6 +60,24 @@ public:
   static REGUI_API GuiMessage onCreate(NativeWindow* nativeWindow);
 
   static REGUI_API GuiMessage onDestroy(NativeWindow* nativeWindow);
+
+  static REGUI_API GuiMessage onDraw(NativeWindow* nativeWindow);
+
+  static REGUI_API GuiMessage onMove(NativeWindow* nativeWindow, const RECore::Vec2i& position);
+
+  static REGUI_API GuiMessage onSize(NativeWindow* nativeWindow, const RECore::Vec2i& size);
+
+  static REGUI_API GuiMessage onMouseMove(NativeWindow* nativeWindow, const RECore::Vec2i& position);
+
+  static REGUI_API GuiMessage onMouseButtonDown(NativeWindow* nativeWindow, EMouseButton button);
+
+  static REGUI_API GuiMessage onMouseButtonUp(NativeWindow* nativeWindow, EMouseButton button);
+
+  static REGUI_API GuiMessage onMouseWheel(NativeWindow* nativeWindow, int delta);
+
+  static REGUI_API GuiMessage onKeyDown(NativeWindow* nativeWindow, RECore::uint32 key, RECore::uint32 modifiers);
+
+  static REGUI_API GuiMessage onKeyUp(NativeWindow* nativeWindow, RECore::uint32 key, RECore::uint32 modifiers);
 
   //[-------------------------------------------------------]
   //[ Public functions                                      ]
@@ -95,9 +115,25 @@ public:
 
   REGUI_API GuiMessage& operator=(const GuiMessage& rhs);
 
-  NativeWindow* getWindow() const;
+  inline NativeWindow* getWindow() const;
 
-  EMessageType getType() const;
+  inline EMessageType getType() const;
+
+  inline RECore::uint32 getData() const;
+
+  inline int getDelta() const;
+
+  inline EMouseButton getMouseButton() const;
+
+  inline RECore::uint32 getKey() const;
+
+  inline void* getDataPointer() const;
+
+  inline RECore::uint32 getExtData() const;
+
+  inline RECore::uint32 getModifiers() const;
+
+  inline const RECore::Vec2i& getPositionSize() const;
 
   //[-------------------------------------------------------]
   //[ Protected data                                        ]
@@ -107,6 +143,21 @@ protected:
   NativeWindow* mNativeWindow;
   // Message type
   EMessageType mMessageType;
+
+  union {
+    RECore::int32 mData;
+    int mDelta;
+    EMouseButton mMouseButton;
+    RECore::uint32 mKey;
+  } mDataBlock1;
+
+  union {
+    void* mDataPtr;
+    RECore::uint32 mExtData;
+    RECore::uint32 mModifiers;
+  } mDataBlock2;
+
+  RECore::Vec2i mPositionSize;
 };
 
 
@@ -114,3 +165,9 @@ protected:
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // REGui
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "REGui/Gui/GuiMessage.inl"

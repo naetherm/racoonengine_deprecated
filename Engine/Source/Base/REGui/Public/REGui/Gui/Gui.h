@@ -32,6 +32,7 @@
 #include <RECore/String/String.h>
 #include <map>
 #include <vector>
+#include <imgui.h>
 
 
 //[-------------------------------------------------------]
@@ -46,7 +47,8 @@ namespace REGui {
 class GuiImpl;
 class Screen;
 class GuiContext;
-class NativeWindow;
+class GuiMessage;
+class MainWindow;
 
 
 //[-------------------------------------------------------]
@@ -91,6 +93,8 @@ public:
    */
   [[nodiscard]] GuiImpl* getImpl() const;
 
+  [[nodiscard]] GuiContext* getGuiContext() const;
+
   [[nodiscard]] bool isActive() const;
 
 
@@ -105,13 +109,19 @@ public:
   //[-------------------------------------------------------]
   //[ Windows                                               ]
   //[-------------------------------------------------------]
-  void addWindow(NativeWindow* nativeWindow);
+  void addWindow(MainWindow* nativeWindow);
 
-  void removeWindow(NativeWindow* nativeWindow);
+  void removeWindow(MainWindow* nativeWindow);
 
-  [[nodiscard]] NativeWindow* getWindow(RECore::handle nativeWindowHandle) const;
+  [[nodiscard]] MainWindow* getWindow(RECore::handle nativeWindowHandle) const;
 
-  NativeWindow* getMainWindow() const;
+  MainWindow* getMainWindow() const;
+
+
+  //[-------------------------------------------------------]
+  //[ Gui Messages                                          ]
+  //[-------------------------------------------------------]
+  void sendMessage(const GuiMessage& guiMessage);
 
 
   //[-------------------------------------------------------]
@@ -158,19 +168,56 @@ protected:
    */
   void initialize(GuiContext* guiContext);
 
+private:
+
+  void createFixedBuildInRhiConfigurationResources();
+
+  const RERHI::RHIVertexArrayPtr& getFillVertexArrayPtr(RERHI::RHICommandBuffer* commandBuffer);
+
+  void fillGraphicsCommandBuffer(RERHI::RHICommandBuffer& commandBuffer);
+
+  void fillGraphicsCommandBufferUsingFixedBuildInRhiConfiguration(RERHI::RHICommandBuffer& commandBuffer);
+
+  RERHI::RHIResourceGroupPtr getResourceGroupByTexture(RERHI::RHITexture2D* texture);
+
 protected:
   /** Platform dependent gui implementation */
   GuiImpl* mpImpl;
   /** Pointer to the gui context, always valid! */
   GuiContext* mGuiContext;
+
+  ImGuiContext*	   mImGuiContext;
   /** List of available screens/monitors */
   std::vector<Screen*> mScreens;
   /** Pointer to the default screen, always valid! */
   Screen* mDefaultScreen;
   /** Map containing all active windows */
-  std::map<RECore::handle, NativeWindow*> mWindows;
+  std::map<RECore::handle, MainWindow*> mWindows;
   /** Pointer to main window */
-  NativeWindow* mMainWindow;
+  MainWindow* mMainWindow;
+
+
+  RERHI::RHICommandBuffer mCommandBuffer;
+
+  // Collected resources
+  std::map<RERHI::RHITexture2D*, RERHI::RHIResourceGroupPtr> mTextures;
+
+  // Fixed builtin RHI Configuration resources
+  /** Pointer to the default font texture for imgui */
+  RERHI::RHITexture2DPtr mDefaultFontTexture;
+  RERHI::RHIRootSignaturePtr mRootSignature;
+  RERHI::RHIGraphicsProgramPtr mGraphicsProgram;
+  RERHI::RHIGraphicsPipelineStatePtr mGraphicsPipelineState;
+  RERHI::RHIUniformBufferPtr mVertexShaderUniformBuffer;
+  RECore::handle mObjectSpaceToClipSpaceMatrixUniformHandle;
+  RERHI::RHIResourceGroupPtr mResourceGroup;
+  RERHI::RHIResourceGroupPtr mSamplerStateGroup;
+  // Vertex and index buffers
+  RERHI::RHIVertexBufferPtr mVertexBuffer;
+  RECore::uint32 mNumberOfAllocatedVertices;
+  RERHI::RHIIndexBufferPtr mIndexBuffer;
+  RECore::uint32 mNumberOfAllocatedIndices;
+  RERHI::RHIVertexArrayPtr mVertexArray;
 };
 
 

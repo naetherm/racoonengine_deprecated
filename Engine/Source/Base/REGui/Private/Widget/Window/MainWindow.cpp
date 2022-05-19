@@ -25,6 +25,8 @@
 #include "REGui/Widget/Window/MainWindow.h"
 #include "REGui/Gui/Gui.h"
 #include "REGui/Gui/NativeWindow.h"
+#include <imgui.h>
+#include <imgui_internal.h>
 
 
 //[-------------------------------------------------------]
@@ -37,6 +39,9 @@ MainWindow::MainWindow()
   Gui& gui = Gui::instance();
 
   mNativeWindow = new NativeWindow(&gui);
+
+  // Add this window to list of all windows
+  gui.addWindow(this);
 }
 
 MainWindow::~MainWindow() {
@@ -44,8 +49,14 @@ MainWindow::~MainWindow() {
 }
 
 
-void MainWindow::onUpdate() {
+NativeWindow* MainWindow::getNativeWindow() const {
+  return mNativeWindow;
+}
 
+
+void MainWindow::onUpdate() {
+  // Draw code goes right here
+  ImGui::ShowDemoWindow();
 }
 
 

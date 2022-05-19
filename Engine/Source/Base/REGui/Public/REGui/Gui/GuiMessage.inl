@@ -19,7 +19,54 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-{
-	// Error! (unsupported RHI)
-RE_LOG(Info, std::string("The RHI implementation \"") + rhi->getName() + std::string("\" isn't supported by the renderer debug GUI"))
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace REGui {
+
+
+NativeWindow* GuiMessage::getWindow() const {
+  return mNativeWindow;
 }
+
+EMessageType GuiMessage::getType() const {
+  return mMessageType;
+}
+
+RECore::uint32 GuiMessage::getData() const {
+  return mDataBlock1.mData;
+}
+
+int GuiMessage::getDelta() const {
+  return mDataBlock1.mDelta;
+}
+
+EMouseButton GuiMessage::getMouseButton() const {
+  return mDataBlock1.mMouseButton;
+}
+
+RECore::uint32 GuiMessage::getKey() const {
+  return mDataBlock1.mKey;
+}
+
+void* GuiMessage::getDataPointer() const {
+  return mDataBlock2.mDataPtr;
+}
+
+RECore::uint32 GuiMessage::getExtData() const {
+  return mDataBlock2.mExtData;
+}
+
+RECore::uint32 GuiMessage::getModifiers() const {
+  return mDataBlock2.mModifiers;
+}
+
+const RECore::Vec2i& GuiMessage::getPositionSize() const {
+  return mPositionSize;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // REGui

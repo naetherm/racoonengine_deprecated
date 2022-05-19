@@ -98,17 +98,17 @@ public:
    */
   [[nodiscard]] const RECore::String& getRhiName() const;
 
-  [[nodiscard]] const RERHI::RHIContext* getRhiContext() const;
+  [[nodiscard]] RERHI::RHIContext* getRhiContext() const;
 
   [[nodiscard]] const RECore::String& getSharedLibraryName() const;
 
   [[nodiscard]] const RECore::DynLib& getRhiSharedLibrary() const;
 
-  [[nodiscard]] const RERHI::RHIDynamicRHI* getRhi() const;
+  [[nodiscard]] RERHI::RHIDynamicRHI* getRhi() const;
 
-  [[nodiscard]] const RERenderer::Context* getRendererContext() const;
+  [[nodiscard]] RERenderer::Context* getRendererContext() const;
 
-  [[nodiscard]] const RERenderer::IRenderer* getRenderer() const;
+  [[nodiscard]] RERenderer::IRenderer* getRenderer() const;
 
 protected:
   /** The name of the RHI instance */

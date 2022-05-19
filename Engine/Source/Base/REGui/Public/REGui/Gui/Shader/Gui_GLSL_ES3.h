@@ -22,8 +22,8 @@
 //[-------------------------------------------------------]
 //[ Shader start                                          ]
 //[-------------------------------------------------------]
-#ifdef RHI_OPENGLES3
-if (rhi.getNameId() == RERHI::NameId::OPENGLES3)
+
+if (rhi->getNameId() == RERHI::NameId::OPENGLES3)
 {
 
 
@@ -88,4 +88,3 @@ void main()
 //[-------------------------------------------------------]
 }
 else
-#endif

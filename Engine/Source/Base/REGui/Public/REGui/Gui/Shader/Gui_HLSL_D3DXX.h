@@ -22,8 +22,7 @@
 //[-------------------------------------------------------]
 //[ Shader start                                          ]
 //[-------------------------------------------------------]
-#if defined(RHI_DIRECT3D10) || defined(RHI_DIRECT3D11) || defined(RHI_DIRECT3D12)
-if (rhi.getNameId() == RERHI::NameId::DIRECT3D10 || rhi.getNameId() == RERHI::NameId::DIRECT3D11 || rhi.getNameId() == RERHI::NameId::DIRECT3D12)
+if (rhi->getNameId() == RERHI::NameId::DIRECT3D10 || rhi->getNameId() == RERHI::NameId::DIRECT3D11 || rhi->getNameId() == RERHI::NameId::DIRECT3D12)
 {
 
 
@@ -92,4 +91,3 @@ float4 main(float4 Position : SV_POSITION, float2 TexCoord : TEXCOORD0, float4 C
 //[-------------------------------------------------------]
 }
 else
-#endif

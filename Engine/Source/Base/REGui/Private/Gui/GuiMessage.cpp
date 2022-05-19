@@ -42,6 +42,60 @@ GuiMessage GuiMessage::onDestroy(NativeWindow *nativeWindow) {
   return GuiMessage(nativeWindow, EMessageType::MessageOnDestroy);
 }
 
+GuiMessage GuiMessage::onDraw(NativeWindow* nativeWindow) {
+  return GuiMessage(nativeWindow, EMessageType::MessageOnDraw);
+}
+
+GuiMessage GuiMessage::onMove(NativeWindow* nativeWindow, const RECore::Vec2i& position) {
+  GuiMessage guiMessage(nativeWindow, EMessageType::MessageOnMove);
+  guiMessage.mPositionSize = position;
+  return guiMessage;
+}
+
+GuiMessage GuiMessage::onSize(NativeWindow* nativeWindow, const RECore::Vec2i& size) {
+  GuiMessage guiMessage(nativeWindow, EMessageType::MessageOnSize);
+  guiMessage.mPositionSize = size;
+  return guiMessage;
+}
+
+GuiMessage GuiMessage::onMouseMove(NativeWindow* nativeWindow, const RECore::Vec2i& position) {
+  GuiMessage guiMessage(nativeWindow, EMessageType::MessageOnMouseMove);
+  guiMessage.mPositionSize = position;
+  return guiMessage;
+}
+
+GuiMessage GuiMessage::onMouseButtonDown(NativeWindow* nativeWindow, EMouseButton button) {
+  GuiMessage guiMessage(nativeWindow, EMessageType::MessageOnMouseButtonDown);
+  guiMessage.mDataBlock1.mMouseButton = button;
+  return guiMessage;
+}
+
+GuiMessage GuiMessage::onMouseButtonUp(NativeWindow* nativeWindow, EMouseButton button) {
+  GuiMessage guiMessage(nativeWindow, EMessageType::MessageOnMouseButtonUp);
+  guiMessage.mDataBlock1.mMouseButton = button;
+  return guiMessage;
+}
+
+GuiMessage GuiMessage::onMouseWheel(NativeWindow* nativeWindow, int delta) {
+  GuiMessage guiMessage(nativeWindow, EMessageType::MessageOnMouseWheel);
+  guiMessage.mDataBlock1.mDelta = delta;
+  return guiMessage;
+}
+
+GuiMessage GuiMessage::onKeyDown(NativeWindow* nativeWindow, RECore::uint32 key, RECore::uint32 modifiers) {
+  GuiMessage guiMessage(nativeWindow, EMessageType::MessageOnKeyDown);
+  guiMessage.mDataBlock1.mKey = key;
+  guiMessage.mDataBlock2.mModifiers = modifiers;
+  return guiMessage;
+}
+
+GuiMessage GuiMessage::onKeyUp(NativeWindow* nativeWindow, RECore::uint32 key, RECore::uint32 modifiers) {
+  GuiMessage guiMessage(nativeWindow, EMessageType::MessageOnDestroy);
+  guiMessage.mDataBlock1.mKey = key;
+  guiMessage.mDataBlock2.mModifiers = modifiers;
+  return guiMessage;
+}
+
 
 GuiMessage::GuiMessage(NativeWindow *nativeWindow, EMessageType messageType)
 : mNativeWindow(nativeWindow)
@@ -69,14 +123,6 @@ GuiMessage& GuiMessage::operator=(const GuiMessage &rhs) {
   mMessageType = rhs.mMessageType;
 
   return *this;
-}
-
-NativeWindow* GuiMessage::getWindow() const {
-  return mNativeWindow;
-}
-
-EMessageType GuiMessage::getType() const {
-  return mMessageType;
 }
 
 

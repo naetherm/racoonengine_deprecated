@@ -22,8 +22,8 @@
 //[-------------------------------------------------------]
 //[ Shader start                                          ]
 //[-------------------------------------------------------]
-#ifdef RHI_DIRECT3D9
-if (rhi.getNameId() == RERHI::NameId::DIRECT3D9)
+
+if (rhi->getNameId() == RERHI::NameId::DIRECT3D9)
 {
 
 
@@ -88,4 +88,3 @@ float4 main(float4 Position : SV_POSITION, float2 TexCoord : TEXCOORD0, float4 C
 //[-------------------------------------------------------]
 }
 else
-#endif

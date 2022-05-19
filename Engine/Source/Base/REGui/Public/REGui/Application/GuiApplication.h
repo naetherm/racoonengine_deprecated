@@ -174,6 +174,7 @@ protected:
   /** Pointer to the gui context */
   GuiContext* mGuiContext;
   RECore::IFileManager*		mFileManager;		///< File manager instance, can be a null pointer
+
   /** Pointer to the main window */
   MainWindow* mMainWindow;
   /** Event handler */

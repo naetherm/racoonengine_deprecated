@@ -282,7 +282,7 @@ void Gui::onInitialization()
     }
 
     // Since we're always dispatching the same commands to the RHI, we can fill the command buffer once during initialization and then reuse it multiple times during runtime
-    fillCommandBuffer();
+    //fillCommandBuffer();
   }
 
 	loadIni();
@@ -733,7 +733,7 @@ void Gui::fillCommandBuffer()
     RERHI::Command::SetGraphicsVertexArray::create(mFBCommandBuffer, mVertexArray);
 
     // Render the specified geometric primitive, based on an array of vertices
-    RERHI::Command::DrawGraphics::create(mFBCommandBuffer, 6);
+    RERHI::Command::DrawGraphics::create(mFBCommandBuffer, 3);
   }
 
 }

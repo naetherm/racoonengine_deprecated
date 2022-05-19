@@ -62,6 +62,9 @@ public:
   virtual ~MainWindow();
 
 
+  NativeWindow* getNativeWindow() const;
+
+
   virtual void onUpdate();
 
 protected:
