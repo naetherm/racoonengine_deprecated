@@ -20,6 +20,7 @@ set(FILES
   Private/Gui/NativeWindow.cpp
   Private/Gui/NativeWindowImpl.cpp
   Private/Gui/Screen.cpp
+  Private/Gui/WindowManager.cpp
 
   # Theme
   Private/Theme/Theme.cpp
