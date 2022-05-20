@@ -98,7 +98,7 @@ public:
    * @return
    * True if there is such a window, false otherwise.
    */
-  [[nodiscard]] bool hasMainWindow(MainWindow* mainWindow);
+  [[nodiscard]] bool hasMainWindow(MainWindow* mainWindow) const;
 
   /**
    * @brief
@@ -110,7 +110,7 @@ public:
    * @return
    * True if there is such a window, false otherwise.
    */
-  [[nodiscard]] bool hasMainWindow(RECore::handle windowHandle);
+  [[nodiscard]] bool hasMainWindow(RECore::handle windowHandle) const;
 
   /**
    * @brief
@@ -122,7 +122,7 @@ public:
    * @return
    * Pointer to window if it exists, nullptr otherwise.
    */
-  MainWindow* getMainWindow(RECore::handle windowHandle);
+  MainWindow* getMainWindow(RECore::handle windowHandle) const;
 private:
   /** Map containing pointers to main windows */
   std::map<RECore::handle, MainWindow*> mWindows;

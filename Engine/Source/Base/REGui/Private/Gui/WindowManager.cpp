@@ -55,17 +55,17 @@ void WindowManager::removeMainWindow(MainWindow *mainWindow) {
   }
 }
 
-bool WindowManager::hasMainWindow(MainWindow *mainWindow) {
+bool WindowManager::hasMainWindow(MainWindow *mainWindow) const {
   auto iter = mWindows.find(mainWindow->getNativeWindow()->getWindowHandle());
   return (iter != mWindows.end());
 }
 
-bool WindowManager::hasMainWindow(RECore::handle windowHandle) {
+bool WindowManager::hasMainWindow(RECore::handle windowHandle) const {
   auto iter = mWindows.find(windowHandle);
   return (iter != mWindows.end());
 }
 
-MainWindow *WindowManager::getMainWindow(RECore::handle windowHandle) {
+MainWindow *WindowManager::getMainWindow(RECore::handle windowHandle) const {
   auto iter = mWindows.find(windowHandle);
   return (iter != mWindows.end()) ? iter->second : nullptr;
 }
