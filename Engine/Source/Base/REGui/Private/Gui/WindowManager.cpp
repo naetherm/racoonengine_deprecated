@@ -38,7 +38,11 @@ WindowManager::WindowManager() {
 }
 
 WindowManager::~WindowManager() {
-
+  // Clear
+  for (auto iter = mWindows.begin(); iter != mWindows.end(); ++iter) {
+    delete iter->second;
+  }
+  mWindows.clear();
 }
 
 
