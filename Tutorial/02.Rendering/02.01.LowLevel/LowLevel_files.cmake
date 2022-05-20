@@ -4,6 +4,7 @@ set(FILES
   Private/Application.cpp
   Private/ExampleBase.cpp
 
+  Private/Empty/Empty.cpp
   Private/ComputeShader/ComputeShader.cpp
   Private/CubeTexture/CubeTexture.cpp
   Private/GeometryShader/GeometryShader.cpp

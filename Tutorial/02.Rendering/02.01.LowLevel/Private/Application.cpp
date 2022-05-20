@@ -32,6 +32,7 @@
 #include <RECore/Linux/WindowOSLinux.h>
 #endif
 
+#include "Empty/Empty.h"
 #include "ComputeShader/ComputeShader.h"
 #include "CubeTexture/CubeTexture.h"
 #include "GeometryShader/GeometryShader.h"
@@ -115,6 +116,7 @@ bool Application::onStart() {
     this->mMainSwapChain->AddReference();
 
     // Create and initialize the example
+    if (sExample == "Empty") { this->mExampleBase = new Empty(*this, "Empty"); }
     if (sExample == "ComputeShader") { this->mExampleBase = new ComputeShader(*this, "ComputeShader"); }
     if (sExample == "CubeTexture") { this->mExampleBase = new CubeTexture(*this, "CubeTexture"); }
     if (sExample == "GeometryShader") { this->mExampleBase = new GeometryShader(*this, "GeometryShader"); }
