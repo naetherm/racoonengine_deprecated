@@ -42,7 +42,7 @@ WindowManager::~WindowManager() {
 }
 
 
-bool WindowManager::hasWindows() {
+bool WindowManager::hasWindows() const {
   return mWindows.empty();
 }
 
