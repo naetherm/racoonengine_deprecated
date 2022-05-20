@@ -41,6 +41,11 @@ WindowManager::~WindowManager() {
 
 }
 
+
+bool WindowManager::hasWindows() {
+  return mWindows.empty();
+}
+
 void WindowManager::addMainWindow(MainWindow *mainWindow) {
   auto iter = mWindows.find(mainWindow->getNativeWindow()->getWindowHandle());
   if (iter != mWindows.end()) {

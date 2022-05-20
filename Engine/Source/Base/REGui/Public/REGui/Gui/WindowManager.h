@@ -72,6 +72,16 @@ public:
 
   /**
    * @brief
+   * Returns whether there is at least one window.
+   *
+   * @return
+   * True if no window is registered, false otherwise.
+   */
+  [[nodiscard]] bool hasWindows() const;
+
+
+  /**
+   * @brief
    * Adds mainWindow to the list of all windows.
    *
    * @param[in] mainWindow
