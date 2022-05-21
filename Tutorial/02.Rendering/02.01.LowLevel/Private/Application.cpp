@@ -69,8 +69,8 @@ Application::Application(RECore::Frontend &frontend)
   // Register command line options:
   // [-r/--rhi] The rendering hardware interface
   // [-e/--example] The example to execute
-  m_cCommandLine.addParameter("RHI", "-r", "--rhi", "Low-Level RHI", "");
-  m_cCommandLine.addParameter("Example", "-e", "--example", "The example to execute", "");
+  m_cCommandLine.addParameter("RHI", "-r", "--rhi", "Low-Level RHI, one of: OpenGL", "", true);
+  m_cCommandLine.addParameter("Example", "-e", "--example", "One of: Empty, ComputeShader, CubeTexture, GeometryShader, IndirectBuffer, Instancing, MeshShader, Queries, RenderToTexture, TessellationShader, Texture, Triangle VertexBuffer, Gpgpu, IcosahedronTessellation, InstancedCubes", "", true);
 }
 
 Application::~Application() {
