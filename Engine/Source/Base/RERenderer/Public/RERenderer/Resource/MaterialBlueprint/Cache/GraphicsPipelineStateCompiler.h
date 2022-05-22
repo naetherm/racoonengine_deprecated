@@ -81,7 +81,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t GraphicsProgramCacheId;	///< Graphics program cache identifier, result of hashing the shader combination IDs of the referenced shaders
+	typedef RECore::uint32 GraphicsProgramCacheId;	///< Graphics program cache identifier, result of hashing the shader combination IDs of the referenced shaders
 
 
 	//[-------------------------------------------------------]
@@ -122,14 +122,14 @@ namespace RERenderer
 
 		void setAsynchronousCompilationEnabled(bool enabled);
 
-		[[nodiscard]] inline uint32_t getNumberOfCompilerThreads() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfCompilerThreads() const
 		{
 			return mNumberOfCompilerThreads;
 		}
 
-		void setNumberOfCompilerThreads(uint32_t numberOfCompilerThreads);
+		void setNumberOfCompilerThreads(RECore::uint32 numberOfCompilerThreads);
 
-		[[nodiscard]] inline uint32_t getNumberOfInFlightCompilerRequests() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfInFlightCompilerRequests() const
 		{
 			return mNumberOfInFlightCompilerRequests;
 		}
@@ -172,7 +172,7 @@ namespace RERenderer
 				graphicsProgramCacheId(RECore::getInvalid<GraphicsProgramCacheId>()),
 				graphicsPipelineStateObject(nullptr)
 			{
-				for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
+				for (RECore::uint8 i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
 				{
 					shaderCache[i] = nullptr;
 				}
@@ -182,7 +182,7 @@ namespace RERenderer
 				graphicsProgramCacheId(compilerRequest.graphicsProgramCacheId),
 				graphicsPipelineStateObject(compilerRequest.graphicsPipelineStateObject)
 			{
-				for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
+				for (RECore::uint8 i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
 				{
 					shaderCache[i]		= compilerRequest.shaderCache[i];
 					shaderSourceCode[i] = compilerRequest.shaderSourceCode[i];
@@ -209,7 +209,7 @@ namespace RERenderer
 		void flushQueue(std::mutex& mutex, const CompilerRequests& compilerRequests);
 		void builderThreadWorker();
 		void compilerThreadWorker();
-		[[nodiscard]] RERHI::RHIGraphicsPipelineState* createGraphicsPipelineState(const MaterialBlueprintResource& materialBlueprintResource, uint32_t serializedGraphicsPipelineStateHash, RERHI::RHIGraphicsProgram& graphicsProgram) const;
+		[[nodiscard]] RERHI::RHIGraphicsPipelineState* createGraphicsPipelineState(const MaterialBlueprintResource& materialBlueprintResource, RECore::uint32 serializedGraphicsPipelineStateHash, RERHI::RHIGraphicsProgram& graphicsProgram) const;
 
 
 	//[-------------------------------------------------------]
@@ -218,8 +218,8 @@ namespace RERenderer
 	private:
 		IRenderer&					  mRenderer;	///< Renderer instance, do not destroy the instance
 		bool						  mAsynchronousCompilationEnabled;
-		uint32_t					  mNumberOfCompilerThreads;
-		std::atomic<uint32_t>		  mNumberOfInFlightCompilerRequests;
+		RECore::uint32					  mNumberOfCompilerThreads;
+		std::atomic<RECore::uint32>		  mNumberOfInFlightCompilerRequests;
 		std::mutex					  mInFlightGraphicsProgramCachesMutex;
 		InFlightGraphicsProgramCaches mInFlightGraphicsProgramCaches;
 

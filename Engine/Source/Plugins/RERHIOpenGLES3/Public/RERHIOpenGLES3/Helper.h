@@ -50,7 +50,7 @@ static constexpr const char* GLSLES_NAME = "GLSLES";	///< ASCII name of this sha
 //[-------------------------------------------------------]
 //[ Global functions                                      ]
 //[-------------------------------------------------------]
-void updateWidthHeight(uint32_t mipmapIndex, uint32_t textureWidth, uint32_t textureHeight, uint32_t& width, uint32_t& height)
+void updateWidthHeight(RECore::uint32 mipmapIndex, RECore::uint32 textureWidth, RECore::uint32 textureHeight, RECore::uint32& width, RECore::uint32& height)
 {
   RERHI::RHITexture::getMipmapSize(mipmapIndex, textureWidth, textureHeight);
   if (width > textureWidth)
@@ -134,7 +134,7 @@ public:
 
           // Output the debug string
           RE_LOG(Critical, informationLog)
-          //if (openGLES3Rhi.getContext().getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
+          //if (openGLES3Rhi.getContext().getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), informationLog))
           {
             //	DEBUG_BREAK;
           }

@@ -62,8 +62,8 @@ class CompositorWorkspaceInstance;
 //[-------------------------------------------------------]
 namespace RERenderer
 {
-typedef uint32_t SceneResourceId;		///< POD scene resource identifier
-typedef uint32_t MaterialResourceId;	///< POD material resource identifier
+typedef RECore::uint32 SceneResourceId;		///< POD scene resource identifier
+typedef RECore::uint32 MaterialResourceId;	///< POD material resource identifier
 }
 
 

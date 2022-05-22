@@ -30,6 +30,16 @@
 #include "RECore/Tools/CommandLine.h"
 
 
+namespace {
+
+namespace detail {
+
+static constexpr RECore::uint32 LINE_LENGTH = 79;
+
+}
+}
+
+
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
@@ -105,7 +115,7 @@ uint32 Min(uint32 nA, uint32 nB)
 void PrintDescription(uint32 nIndent, const String &sText)
 {
 	// Print description
-	if (nIndent + sText.length() < 79) {
+	if (nIndent + sText.length() < detail::LINE_LENGTH) {
 		// Description still fits on the line, just print it out
 		Platform::instance().getConsole().print(sText + '\n');
 	} else {
@@ -114,6 +124,32 @@ void PrintDescription(uint32 nIndent, const String &sText)
 		const String sEmpty = SetStringLength("", nPos);
 
 		// Get text word for word
+    RECore::uint32 nStartPos = 0;
+    RECore::uint32 nIndex = 0;
+    while (nIndex != RECore::String::NPOS) {
+      nIndex = sText.findFirstOf(" ", nStartPos);
+      String word = sText.substr(nStartPos, nIndex);
+
+      if (nStartPos > nIndent) {
+        Platform::instance().getConsole().print(' ');
+        nStartPos++;
+      }
+
+      // Break line when necessary
+      nStartPos += word.length();
+      if (nStartPos >= 100) {
+        Platform::instance().getConsole().print('\n');
+        Platform::instance().getConsole().print(sEmpty);
+        nStartPos = nIndent + word.length();
+      }
+
+      // Print word
+      Platform::instance().getConsole().print(word);
+
+      //nStartPos = nIndex;
+    }
+
+    /*
 		static CRegEx cRegEx("\\s*([^\\s]+)");
 		uint32 nParsePos = 0;
 		while (cRegEx.match(sText, nParsePos)) {
@@ -136,7 +172,7 @@ void PrintDescription(uint32 nIndent, const String &sText)
 			// Print word
 			Platform::instance().getConsole().print(sWord);
 		}
-
+    */
 		// Break line for next option to be consistent to the other if-branch
 		Platform::instance().getConsole().print('\n');
 	}

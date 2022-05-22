@@ -121,11 +121,11 @@ VulkanContext::~VulkanContext()
 }
 
 
-uint32_t VulkanContext::findMemoryTypeIndex(uint32_t typeFilter, VkMemoryPropertyFlags vkMemoryPropertyFlags) const
+RECore::uint32 VulkanContext::findMemoryTypeIndex(RECore::uint32 typeFilter, VkMemoryPropertyFlags vkMemoryPropertyFlags) const
 {
   VkPhysicalDeviceMemoryProperties vkPhysicalDeviceMemoryProperties;
   vkGetPhysicalDeviceMemoryProperties(mVkPhysicalDevice, &vkPhysicalDeviceMemoryProperties);
-  for (uint32_t i = 0; i < vkPhysicalDeviceMemoryProperties.memoryTypeCount; ++i)
+  for (RECore::uint32 i = 0; i < vkPhysicalDeviceMemoryProperties.memoryTypeCount; ++i)
   {
     if ((typeFilter & (1 << i)) && (vkPhysicalDeviceMemoryProperties.memoryTypes[i].propertyFlags & vkMemoryPropertyFlags) == vkMemoryPropertyFlags)
     {

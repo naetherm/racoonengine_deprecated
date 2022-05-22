@@ -73,15 +73,15 @@ namespace RERenderer
 		mNumberOfMultisamples(1),
 		mCurrentlyUsedNumberOfMultisamples(1),
 		mResolutionScale(1.0f),
-		mRenderTargetWidth(RECore::getInvalid<uint32_t>()),
-		mRenderTargetHeight(RECore::getInvalid<uint32_t>()),
+		mRenderTargetWidth(RECore::getInvalid<RECore::uint32>()),
+		mRenderTargetHeight(RECore::getInvalid<RECore::uint32>()),
 		mCompositorWorkspaceResourceId(RECore::getInvalid<CompositorWorkspaceResourceId>()),
 		mFramebufferManagerInitialized(false),
 		mExecutionRenderTarget(nullptr),
 		mCompositorInstancePassShadowMap(nullptr)
 		#ifdef RHI_STATISTICS
 			, mPipelineStatisticsQueryPoolPtr((renderer.getRhi().getNameId() == RERHI::NameId::OPENGL && strstr(renderer.getRhi().getCapabilities().deviceName, "AMD ") != nullptr) ? nullptr : renderer.getRhi().createQueryPool(RERHI::QueryType::PIPELINE_STATISTICS, 2 RHI_RESOURCE_DEBUG_NAME("Compositor workspace instance"))),	// TODO(naetherm) When using OpenGL "GL_ARB_pipeline_statistics_query" features, "glCopyImageSubData()" will horribly stall/freeze on Windows using AMD Radeon 18.12.2 (tested on 16 December 2018). No issues with NVIDIA GeForce game ready driver 417.35 (release data 12/12/2018).
-			mPreviousCurrentPipelineStatisticsQueryIndex(RECore::getInvalid<uint32_t>()),
+			mPreviousCurrentPipelineStatisticsQueryIndex(RECore::getInvalid<RECore::uint32>()),
 			mCurrentPipelineStatisticsQueryIndex(0),
 			mPipelineStatisticsQueryResult{}
 		#endif
@@ -95,7 +95,7 @@ namespace RERenderer
 		destroySequentialCompositorNodeInstances();
 	}
 
-	void CompositorWorkspaceInstance::setNumberOfMultisamples(uint8_t numberOfMultisamples)
+	void CompositorWorkspaceInstance::setNumberOfMultisamples(RECore::uint8 numberOfMultisamples)
 	{
 		// Sanity checks
 		RHI_ASSERT(numberOfMultisamples == 1 || numberOfMultisamples == 2 || numberOfMultisamples == 4 || numberOfMultisamples == 8, "Invalid number of multisamples")
@@ -105,7 +105,7 @@ namespace RERenderer
 		mNumberOfMultisamples = numberOfMultisamples;
 	}
 
-	const CompositorWorkspaceInstance::RenderQueueIndexRange* CompositorWorkspaceInstance::getRenderQueueIndexRangeByRenderQueueIndex(uint8_t renderQueueIndex) const
+	const CompositorWorkspaceInstance::RenderQueueIndexRange* CompositorWorkspaceInstance::getRenderQueueIndexRangeByRenderQueueIndex(RECore::uint8 renderQueueIndex) const
 	{
 		for (const RenderQueueIndexRange& renderQueueIndexRange : mRenderQueueIndexRanges)
 		{
@@ -181,8 +181,8 @@ namespace RERenderer
 			mExecutionRenderTarget = &renderTarget;
 
 			// Get the main render target size
-			uint32_t renderTargetWidth  = 1;
-			uint32_t renderTargetHeight = 1;
+			RECore::uint32 renderTargetWidth  = 1;
+			RECore::uint32 renderTargetHeight = 1;
 			renderTarget.getWidthAndHeight(renderTargetWidth, renderTargetHeight);
 
 			{ // Do we need to destroy previous framebuffers and render target textures?
@@ -193,8 +193,8 @@ namespace RERenderer
 					destroy = true;
 				}
 				{
-					const uint32_t currentRenderTargetWidth  = static_cast<uint32_t>(static_cast<float>(renderTargetWidth) * mResolutionScale);
-					const uint32_t currentRenderTargetHeight = static_cast<uint32_t>(static_cast<float>(renderTargetHeight) * mResolutionScale);
+					const RECore::uint32 currentRenderTargetWidth  = static_cast<RECore::uint32>(static_cast<float>(renderTargetWidth) * mResolutionScale);
+					const RECore::uint32 currentRenderTargetHeight = static_cast<RECore::uint32>(static_cast<float>(renderTargetHeight) * mResolutionScale);
 					if (mRenderTargetWidth != currentRenderTargetWidth || mRenderTargetHeight != currentRenderTargetHeight)
 					{
 						mRenderTargetWidth  = currentRenderTargetWidth;
@@ -279,8 +279,8 @@ namespace RERenderer
 						compositorNodeInstance->onPostCommandBufferDispatch();
 					}
 					{
-						const uint32_t numberOfResources = materialBlueprintResourceManager.getNumberOfResources();
-						for (uint32_t i = 0; i < numberOfResources; ++i)
+						const RECore::uint32 numberOfResources = materialBlueprintResourceManager.getNumberOfResources();
+						for (RECore::uint32 i = 0; i < numberOfResources; ++i)
 						{
 							PassBufferManager* passBufferManager = materialBlueprintResourceManager.getByIndex(i).getPassBufferManager();
 							if (nullptr != passBufferManager)
@@ -312,7 +312,7 @@ namespace RERenderer
 				{
 					// We explicitly wait if the previous result isn't available yet to avoid
 					// "D3D11 WARNING: ID3D10Query::Begin: Begin is being invoked on a Query, where the previous results have not been obtained with GetData. This is valid; but unusual. The previous results are being abandoned, and new Query results will be generated. [ EXECUTION WARNING #408: QUERY_BEGIN_ABANDONING_PREVIOUS_RESULTS]"
-					if (RECore::isValid(mPreviousCurrentPipelineStatisticsQueryIndex) && !rhi.getQueryPoolResults(*mPipelineStatisticsQueryPoolPtr, sizeof(RERHI::PipelineStatisticsQueryResult), reinterpret_cast<uint8_t*>(&mPipelineStatisticsQueryResult), mPreviousCurrentPipelineStatisticsQueryIndex, 1, 0, RERHI::QueryResultFlags::WAIT))
+					if (RECore::isValid(mPreviousCurrentPipelineStatisticsQueryIndex) && !rhi.getQueryPoolResults(*mPipelineStatisticsQueryPoolPtr, sizeof(RERHI::PipelineStatisticsQueryResult), reinterpret_cast<RECore::uint8*>(&mPipelineStatisticsQueryResult), mPreviousCurrentPipelineStatisticsQueryIndex, 1, 0, RERHI::QueryResultFlags::WAIT))
 					{
 						mPipelineStatisticsQueryResult = {};
 					}
@@ -346,7 +346,7 @@ namespace RERenderer
 			FramebufferManager& framebufferManager = mRenderer.getCompositorWorkspaceResourceManager().getFramebufferManager();
 
 			// For render queue index ranges gathering and merging
-			typedef std::pair<uint8_t, uint8_t> LocalRenderQueueIndexRange;
+			typedef std::pair<RECore::uint8, RECore::uint8> LocalRenderQueueIndexRange;
 			typedef std::vector<LocalRenderQueueIndexRange> LocalRenderQueueIndexRanges;
 			LocalRenderQueueIndexRanges individualRenderQueueIndexRanges;
 
@@ -406,8 +406,8 @@ namespace RERenderer
 									compositorNodeInstance->mCompositorInstancePasses.push_back(compositorInstancePass);
 
 									// Gather render queue index range
-									uint8_t minimumRenderQueueIndex = 0;
-									uint8_t maximumRenderQueueIndex = 0;
+									RECore::uint8 minimumRenderQueueIndex = 0;
+									RECore::uint8 maximumRenderQueueIndex = 0;
 									if (compositorResourcePass->getRenderQueueIndexRange(minimumRenderQueueIndex, maximumRenderQueueIndex))
 									{
 										individualRenderQueueIndexRanges.emplace_back(minimumRenderQueueIndex, maximumRenderQueueIndex);

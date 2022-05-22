@@ -73,7 +73,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t GraphicsPipelineStateSignatureId;	///< Graphics pipeline state signature identifier, result of hashing the referenced shaders as well as other pipeline state properties
+	typedef RECore::uint32 GraphicsPipelineStateSignatureId;	///< Graphics pipeline state signature identifier, result of hashing the referenced shaders as well as other pipeline state properties
 
 
 	//[-------------------------------------------------------]
@@ -168,7 +168,7 @@ namespace RERenderer
 		*  @return
 		*    The requested graphics pipeline state cache instance, null pointer on error, do not destroy the instance
 		*/
-		[[nodiscard]] const GraphicsPipelineStateCache* getGraphicsPipelineStateCacheByCombination(uint32_t serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties, bool allowEmergencySynchronousCompilation);
+		[[nodiscard]] const GraphicsPipelineStateCache* getGraphicsPipelineStateCacheByCombination(RECore::uint32 serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties, bool allowEmergencySynchronousCompilation);
 
 		/**
 		*  @brief
@@ -198,7 +198,7 @@ namespace RERenderer
 
 		GraphicsPipelineStateCacheManager& operator=(const GraphicsPipelineStateCacheManager&) = delete;
 
-		GraphicsPipelineStateCache* getFallbackGraphicsPipelineStateCache(uint32_t serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties);
+		GraphicsPipelineStateCache* getFallbackGraphicsPipelineStateCache(RECore::uint32 serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties);
 
 		//[-------------------------------------------------------]
 		//[ Pipeline state object cache                           ]

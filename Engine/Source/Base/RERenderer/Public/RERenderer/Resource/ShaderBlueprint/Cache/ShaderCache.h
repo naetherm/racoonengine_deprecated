@@ -50,8 +50,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t			 ShaderCacheId;	///< Shader cache identifier, identical to the shader combination ID
-	typedef RECore::StringId			 AssetId;		///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::uint32			 ShaderCacheId;	///< Shader cache identifier, identical to the shader combination ID
+	typedef RECore::StringId			 AssetId;		///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
 	typedef std::vector<AssetId> AssetIds;
 
 
@@ -164,7 +164,7 @@ namespace RERenderer
 		ShaderCacheId		mShaderCacheId;
 		ShaderCache*		mMasterShaderCache;			///< If there's a master shader cache instance, we don't own the references shader but only redirect to it (multiple shader combinations resulting in same shader source code topic), don't destroy the instance
 		AssetIds			mAssetIds;					///< List of IDs of the assets (shader blueprint, shader piece) which took part in the shader cache creation
-		uint64_t			mCombinedAssetFileHashes;	///< Combination of the file hash of all assets (shader blueprint, shader piece) which took part in the shader cache creation
+		RECore::uint64			mCombinedAssetFileHashes;	///< Combination of the file hash of all assets (shader blueprint, shader piece) which took part in the shader cache creation
 		RERHI::ShaderBytecode mShaderBytecode;
 		RERHI::RHIShaderPtr		mShaderPtr;
 

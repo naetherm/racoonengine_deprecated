@@ -70,7 +70,7 @@ public:
   *  @param[in] numberOfQueries
   *    Number of queries
   */
-  OcclusionTimestampQueryPool(RHIDynamicRHI& openGLRhi, RERHI::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  OcclusionTimestampQueryPool(RHIDynamicRHI& openGLRhi, RERHI::QueryType queryType, RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

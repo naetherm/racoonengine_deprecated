@@ -76,7 +76,7 @@ public:
   *  @param[in] id
   *    The unique compact vertex array ID
   */
-  VertexArrayNoVao(RHIDynamicRHI& openGLRhi, const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  VertexArrayNoVao(RHIDynamicRHI& openGLRhi, const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief
@@ -109,9 +109,9 @@ private:
   //[ Private data                                          ]
   //[-------------------------------------------------------]
 private:
-  uint32_t					  mNumberOfAttributes;			///< Number of attributes (position, color, texture coordinate, normal...), having zero attributes is valid
+  RECore::uint32					  mNumberOfAttributes;			///< Number of attributes (position, color, texture coordinate, normal...), having zero attributes is valid
   RERHI::VertexAttribute*		  mAttributes;					///< At least "numberOfAttributes" instances of vertex attributes, can be a null pointer in case there are zero attributes
-  uint32_t					  mNumberOfVertexBuffers;		///< Number of vertex buffers, having zero vertex buffers is valid
+  RECore::uint32					  mNumberOfVertexBuffers;		///< Number of vertex buffers, having zero vertex buffers is valid
   RERHI::VertexArrayVertexBuffer* mVertexBuffers;				///< At least mNumberOfVertexBuffers instances of vertex array vertex buffers, can be a null pointer in case there are zero vertex buffers, the data is internally copied and you have to free your memory if you no longer need it
   bool						  mIsGL_ARB_instanced_arrays;	///< Is the "GL_ARB_instanced_arrays"-extension supported?
 

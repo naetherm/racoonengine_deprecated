@@ -41,7 +41,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId CompositorFramebufferId;	///< Compositor framebuffer identifier, internally just a POD "uint32_t"
+	typedef RECore::StringId CompositorFramebufferId;	///< Compositor framebuffer identifier, internally just a POD "RECore::uint32"
 
 
 	//[-------------------------------------------------------]
@@ -61,7 +61,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("ResolveMultisample");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("ResolveMultisample");
 
 
 	//[-------------------------------------------------------]
@@ -83,7 +83,7 @@ namespace RERenderer
 			return TYPE_ID;
 		}
 
-		virtual void deserialize(uint32_t numberOfBytes, const uint8_t* data) override;
+		virtual void deserialize(RECore::uint32 numberOfBytes, const RECore::uint8* data) override;
 
 
 	//[-------------------------------------------------------]

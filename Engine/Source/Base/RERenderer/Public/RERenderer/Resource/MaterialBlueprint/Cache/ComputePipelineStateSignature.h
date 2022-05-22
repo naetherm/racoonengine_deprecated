@@ -50,9 +50,9 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialBlueprintResourceId;		///< POD material blueprint resource identifier
-	typedef uint32_t ComputePipelineStateSignatureId;	///< Compute pipeline state signature identifier, result of hashing the referenced shaders as well as other pipeline state properties
-	typedef uint32_t ShaderCombinationId;				///< Shader combination identifier, result of hashing the shader combination generating shader blueprint resource, shader properties and dynamic shader pieces
+	typedef RECore::uint32 MaterialBlueprintResourceId;		///< POD material blueprint resource identifier
+	typedef RECore::uint32 ComputePipelineStateSignatureId;	///< Compute pipeline state signature identifier, result of hashing the referenced shaders as well as other pipeline state properties
+	typedef RECore::uint32 ShaderCombinationId;				///< Shader combination identifier, result of hashing the shader combination generating shader blueprint resource, shader properties and dynamic shader pieces
 
 
 	//[-------------------------------------------------------]

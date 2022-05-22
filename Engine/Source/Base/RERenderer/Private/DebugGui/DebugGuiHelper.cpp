@@ -110,7 +110,7 @@ namespace
 		}
 
 		// Basing on https://stackoverflow.com/a/33390058
-		const char* stringFormatCommas(uint64_t number, char* output)
+		const char* stringFormatCommas(RECore::uint64 number, char* output)
 		{
 			char* outputBackup = output;	// Backup pointer for return
 			char buffer[100];
@@ -149,7 +149,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
-	uint32_t DebugGuiHelper::mDrawTextCounter = 0;
+	RECore::uint32 DebugGuiHelper::mDrawTextCounter = 0;
 
 
 	//[-------------------------------------------------------]
@@ -259,8 +259,8 @@ namespace RERenderer
 			const glm::mat4 objectSpaceToClipSpaceMatrix = cameraSceneItem.getViewSpaceToClipSpaceMatrix(static_cast<float>(imGuiIO.DisplaySize.x) / imGuiIO.DisplaySize.y) * cameraSceneItem.getCameraRelativeWorldSpaceToViewSpaceMatrix() * objectSpaceToWorldSpace;
 
 			// Get skeleton data
-			const uint8_t numberOfBones = skeletonResource->getNumberOfBones();
-			const uint8_t* boneParentIndices = skeletonResource->getBoneParentIndices();
+			const RECore::uint8 numberOfBones = skeletonResource->getNumberOfBones();
+			const RECore::uint8* boneParentIndices = skeletonResource->getBoneParentIndices();
 			const glm::mat4* globalBoneMatrices = skeletonResource->getGlobalBoneMatrices();
 
 			// Draw skeleton hierarchy as lines
@@ -274,7 +274,7 @@ namespace RERenderer
 				ImDrawList* imDrawList = ImGui::GetWindowDrawList();
 				ImVec2 parentBonePosition;
 				ImVec2 bonePosition;
-				for (uint8_t boneIndex = 1; boneIndex < numberOfBones; ++boneIndex)
+				for (RECore::uint8 boneIndex = 1; boneIndex < numberOfBones; ++boneIndex)
 				{
 					::detail::draw3DLine(objectSpaceToClipSpaceMatrix, globalBoneMatrices[boneParentIndices[boneIndex]][3], globalBoneMatrices[boneIndex][3], WHITE_COLOR, 6.0f, *imDrawList, displaySize, displayPos);
 				}
@@ -290,7 +290,7 @@ namespace RERenderer
 		ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize, ImGuiCond_FirstUseEver);
 		if (ImGui::Begin("grid", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus))
 		{
-			const int32_t NUMBER_OF_LINES_PER_DIRECTION = 10;
+			const RECore::int32 NUMBER_OF_LINES_PER_DIRECTION = 10;
 			static const ImColor GREY_COLOR(0.5f, 0.5f, 0.5f, 1.0f);
 			ImDrawList* imDrawList = ImGui::GetWindowDrawList();
 			const ImGuiIO& imGuiIO = ImGui::GetIO();
@@ -302,14 +302,14 @@ namespace RERenderer
 			const glm::vec3 centerPosition(RECore::Math::makeMultipleOf(cameraPosition.x, cellSize) - worldSpaceCameraPosition.x, yPosition - worldSpaceCameraPosition.y, RECore::Math::makeMultipleOf(cameraPosition.z, cellSize) - worldSpaceCameraPosition.z);
 
 			// Lines along z axis
-			for (int32_t z = -NUMBER_OF_LINES_PER_DIRECTION; z <= NUMBER_OF_LINES_PER_DIRECTION; ++z)
+			for (RECore::int32 z = -NUMBER_OF_LINES_PER_DIRECTION; z <= NUMBER_OF_LINES_PER_DIRECTION; ++z)
 			{
 				const float thickness = (0 == z || NUMBER_OF_LINES_PER_DIRECTION == std::abs(z)) ? 4.0f : 1.0f;
 				//::detail::draw3DLine(objectSpaceToClipSpaceMatrix, centerPosition + glm::vec3(-NUMBER_OF_LINES_PER_DIRECTION * cellSize, 0.0f, static_cast<float>(z) * cellSize), centerPosition + glm::vec3(NUMBER_OF_LINES_PER_DIRECTION * cellSize, 0.0f, static_cast<float>(z) * cellSize), GREY_COLOR, thickness, *imDrawList);
 			}
 
 			// Lines along x axis
-			for (int32_t x = -NUMBER_OF_LINES_PER_DIRECTION; x <= NUMBER_OF_LINES_PER_DIRECTION; ++x)
+			for (RECore::int32 x = -NUMBER_OF_LINES_PER_DIRECTION; x <= NUMBER_OF_LINES_PER_DIRECTION; ++x)
 			{
 				const float thickness = (0 == x || NUMBER_OF_LINES_PER_DIRECTION == std::abs(x)) ? 4.0f : 1.0f;
 				//::detail::draw3DLine(objectSpaceToClipSpaceMatrix, centerPosition + glm::vec3(static_cast<float>(x) * cellSize, 0.0f, -NUMBER_OF_LINES_PER_DIRECTION * cellSize), centerPosition + glm::vec3(static_cast<float>(x) * cellSize, 0.0f, NUMBER_OF_LINES_PER_DIRECTION * cellSize), GREY_COLOR, thickness, *imDrawList);
@@ -363,17 +363,17 @@ namespace RERenderer
 						}
 					}
 				}
-				ImGui::Text("Rendered renderable managers %s", ::detail::stringFormatCommas(static_cast<uint64_t>(processedRenderableManager.size()), temporary));
-				ImGui::Text("Rendered renderables %s", ::detail::stringFormatCommas(static_cast<uint64_t>(numberOfRenderables), temporary));
+				ImGui::Text("Rendered renderable managers %s", ::detail::stringFormatCommas(static_cast<RECore::uint64>(processedRenderableManager.size()), temporary));
+				ImGui::Text("Rendered renderables %s", ::detail::stringFormatCommas(static_cast<RECore::uint64>(numberOfRenderables), temporary));
 
 				// Command buffer metrics
 				const RERHI::RHICommandBuffer& commandBuffer = compositorWorkspaceInstance->getCommandBuffer();
 				#ifdef RHI_STATISTICS
-					const uint32_t numberOfCommands = commandBuffer.getNumberOfCommands();
+					const RECore::uint32 numberOfCommands = commandBuffer.getNumberOfCommands();
 				#else
-					uint32_t numberOfCommands = 0;
+					RECore::uint32 numberOfCommands = 0;
 					{
-						const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
+						const RECore::uint8* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
 						RERHI::ConstCommandPacket constCommandPacket = commandPacketBuffer;
 						while (nullptr != constCommandPacket)
 						{
@@ -381,7 +381,7 @@ namespace RERenderer
 							++numberOfCommands;
 
 							{ // Next command
-								const uint32_t nextCommandPacketByteIndex = RERHI::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
+								const RECore::uint32 nextCommandPacketByteIndex = RERHI::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
 								constCommandPacket = (~0u != nextCommandPacketByteIndex) ? &commandPacketBuffer[nextCommandPacketByteIndex] : nullptr;
 							}
 						}
@@ -390,22 +390,22 @@ namespace RERenderer
 				if (ImGui::TreeNode("EmittedCommands", "Emitted commands: %s", ::detail::stringFormatCommas(numberOfCommands, temporary)))
 				{
 					// Loop through all commands and count them
-					uint32_t numberOfCommandFunctions[static_cast<uint8_t>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] = {};
-					const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
+					RECore::uint32 numberOfCommandFunctions[static_cast<RECore::uint8>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] = {};
+					const RECore::uint8* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
 					RERHI::ConstCommandPacket constCommandPacket = commandPacketBuffer;
 					while (nullptr != constCommandPacket)
 					{
 						// Count command packet
-						++numberOfCommandFunctions[static_cast<uint32_t>(RERHI::CommandPacketHelper::loadCommandDispatchFunctionIndex(constCommandPacket))];
+						++numberOfCommandFunctions[static_cast<RECore::uint32>(RERHI::CommandPacketHelper::loadCommandDispatchFunctionIndex(constCommandPacket))];
 
 						{ // Next command
-							const uint32_t nextCommandPacketByteIndex = RERHI::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
+							const RECore::uint32 nextCommandPacketByteIndex = RERHI::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
 							constCommandPacket = (~0u != nextCommandPacketByteIndex) ? &commandPacketBuffer[nextCommandPacketByteIndex] : nullptr;
 						}
 					}
 
 					// Print the number of emitted command functions
-					static constexpr const char* commandFunction[static_cast<uint32_t>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
+					static constexpr const char* commandFunction[static_cast<RECore::uint32>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
 					{
 						// Command buffer
 						"DispatchCommandBuffer",
@@ -443,7 +443,7 @@ namespace RERenderer
 						"BeginDebugEvent",
 						"EndDebugEvent"
 					};
-					for (uint32_t i = 0; i < static_cast<uint32_t>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS); ++i)
+					for (RECore::uint32 i = 0; i < static_cast<RECore::uint32>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS); ++i)
 					{
 						ImGui::Text("%s: %s", commandFunction[i], ::detail::stringFormatCommas(numberOfCommandFunctions[i], temporary));
 					}

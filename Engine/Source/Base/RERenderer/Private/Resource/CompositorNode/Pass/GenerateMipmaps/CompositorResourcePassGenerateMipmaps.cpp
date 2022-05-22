@@ -36,7 +36,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RERenderer::ICompositorResourcePass methods ]
 	//[-------------------------------------------------------]
-	void CompositorResourcePassGenerateMipmaps::deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
+	void CompositorResourcePassGenerateMipmaps::deserialize([[maybe_unused]] RECore::uint32 numberOfBytes, const RECore::uint8* data)
 	{
 		// Sanity check
 		ASSERT(sizeof(v1CompositorNode::PassGenerateMipmaps) == numberOfBytes, "Invalid number of bytes")

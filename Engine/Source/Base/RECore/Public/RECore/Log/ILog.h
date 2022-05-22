@@ -88,7 +88,7 @@ public:
   *  @return
   *    "true" to request debug break, else "false"
   */
-  [[nodiscard]] virtual bool print(Type type, const char* attachment, const char* file, uint32_t line, const char* format, ...) = 0;
+  [[nodiscard]] virtual bool print(Type type, const char* attachment, const char* file, uint32 line, const char* format, ...) = 0;
 
   // Protected methods
 protected:
@@ -122,7 +122,7 @@ protected:
 #define RHI_LOG(context, type, format, ...) \
 		do \
 		{ \
-			if ((context).getLog().print(RECore::ILog::Type::type, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
+			if ((context).getLog().print(RECore::ILog::Type::type, nullptr, __FILE__, static_cast<uint32>(__LINE__), format, ##__VA_ARGS__)) \
 			{ \
 				DEBUG_BREAK; \
 			} \
@@ -134,7 +134,7 @@ protected:
 			if (!loggedOnce) \
 			{ \
 				loggedOnce = true; \
-				if ((context).getLog().print(RECore::ILog::Type::type, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
+				if ((context).getLog().print(RECore::ILog::Type::type, nullptr, __FILE__, static_cast<uint32>(__LINE__), format, ##__VA_ARGS__)) \
 				{ \
 					DEBUG_BREAK; \
 				} \

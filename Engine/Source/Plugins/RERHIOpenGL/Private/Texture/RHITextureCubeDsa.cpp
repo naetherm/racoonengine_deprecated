@@ -43,8 +43,8 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-TextureCubeDsa::TextureCubeDsa(RHIDynamicRHI &openGLRhi, uint32_t width, RERHI::TextureFormat::Enum textureFormat,
-                               const void *data, uint32_t textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+TextureCubeDsa::TextureCubeDsa(RHIDynamicRHI &openGLRhi, RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat,
+                               const void *data, RECore::uint32 textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   TextureCube(openGLRhi, width, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER) {
 // Sanity checks
   RHI_ASSERT(0 == (textureFlags & RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data,
@@ -64,7 +64,7 @@ TextureCubeDsa::TextureCubeDsa(RHIDynamicRHI &openGLRhi, uint32_t width, RERHI::
 // Calculate the number of mipmaps
   const bool dataContainsMipmaps = (textureFlags & RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS);
   const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & RERHI::TextureFlag::GENERATE_MIPMAPS));
-  const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
+  const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
 
 // Create the OpenGL texture instance
 // TODO(naetherm) "GL_ARB_direct_state_access" AMD graphics card driver bug ahead
@@ -93,8 +93,8 @@ TextureCubeDsa::TextureCubeDsa(RHIDynamicRHI &openGLRhi, uint32_t width, RERHI::
 //   etc.
 
 // Upload all mipmaps of all faces
-      const uint32_t format = Mapping::getOpenGLFormat(textureFormat);
-      for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
+      const RECore::uint32 format = Mapping::getOpenGLFormat(textureFormat);
+      for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
         const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(
           textureFormat, width, width));
         if (isArbDsa) {
@@ -106,16 +106,16 @@ TextureCubeDsa::TextureCubeDsa(RHIDynamicRHI &openGLRhi, uint32_t width, RERHI::
                                         numberOfBytesPerSlice * 6, data);
 
 // Move on to the next mipmap
-          data = static_cast<const uint8_t *>(data) + numberOfBytesPerSlice * 6;
+          data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerSlice * 6;
         } else {
-          for (uint32_t face = 0; face < 6; ++face) {
+          for (RECore::uint32 face = 0; face < 6; ++face) {
 // Upload the current face
             glCompressedTextureImage2DEXT(mOpenGLTexture, GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
                                           static_cast<GLint>(mipmap), format, static_cast<GLsizei>(width),
                                           static_cast<GLsizei>(width), 0, numberOfBytesPerSlice, data);
 
 // Move on to the next face
-            data = static_cast<const uint8_t *>(data) + numberOfBytesPerSlice;
+            data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerSlice;
           }
         }
 
@@ -134,14 +134,14 @@ TextureCubeDsa::TextureCubeDsa(RHIDynamicRHI &openGLRhi, uint32_t width, RERHI::
       } else {
         const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(
           textureFormat, width, width));
-        for (uint32_t face = 0; face < 6; ++face) {
+        for (RECore::uint32 face = 0; face < 6; ++face) {
 // Upload the current face
           glCompressedTextureImage2DEXT(mOpenGLTexture, GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, 0, mOpenGLInternalFormat,
                                         static_cast<GLsizei>(width), static_cast<GLsizei>(width), 0,
                                         numberOfBytesPerSlice, data);
 
 // Move on to the next face
-          data = static_cast<const uint8_t *>(data) + numberOfBytesPerSlice;
+          data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerSlice;
         }
       }
     }
@@ -156,12 +156,12 @@ TextureCubeDsa::TextureCubeDsa(RHIDynamicRHI &openGLRhi, uint32_t width, RERHI::
 //   etc.
 
 // Upload all mipmaps of all faces
-      const uint32_t format = Mapping::getOpenGLFormat(textureFormat);
-      const uint32_t type = Mapping::getOpenGLType(textureFormat);
-      for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
+      const RECore::uint32 format = Mapping::getOpenGLFormat(textureFormat);
+      const RECore::uint32 type = Mapping::getOpenGLType(textureFormat);
+      for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
         const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(
           textureFormat, width, width));
-        for (uint32_t face = 0; face < 6; ++face) {
+        for (RECore::uint32 face = 0; face < 6; ++face) {
 // Upload the current face
           if (isArbDsa) {
 // We know that "data" must be valid when we're in here due to the "RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS"-flag
@@ -174,7 +174,7 @@ TextureCubeDsa::TextureCubeDsa(RHIDynamicRHI &openGLRhi, uint32_t width, RERHI::
           }
 
 // Move on to the next face
-          data = static_cast<const uint8_t *>(data) + numberOfBytesPerSlice;
+          data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerSlice;
         }
 
 // Move on to the next mipmap and ensure the size is always at least 1x1
@@ -188,15 +188,15 @@ TextureCubeDsa::TextureCubeDsa(RHIDynamicRHI &openGLRhi, uint32_t width, RERHI::
                               Mapping::getOpenGLFormat(textureFormat), Mapping::getOpenGLType(textureFormat), data);
         }
       } else {
-        const uint32_t numberOfBytesPerSlice = RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width,
+        const RECore::uint32 numberOfBytesPerSlice = RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width,
                                                                                               width);
-        const uint32_t openGLFormat = Mapping::getOpenGLFormat(textureFormat);
-        const uint32_t openGLType = Mapping::getOpenGLType(textureFormat);
-        for (uint32_t face = 0; face < 6; ++face) {
+        const RECore::uint32 openGLFormat = Mapping::getOpenGLFormat(textureFormat);
+        const RECore::uint32 openGLType = Mapping::getOpenGLType(textureFormat);
+        for (RECore::uint32 face = 0; face < 6; ++face) {
           glTextureImage2DEXT(mOpenGLTexture, GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, 0,
                               static_cast<GLint>(mOpenGLInternalFormat), static_cast<GLsizei>(width),
                               static_cast<GLsizei>(width), 0, openGLFormat, openGLType, data);
-          data = static_cast<const uint8_t *>(data) + numberOfBytesPerSlice;
+          data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerSlice;
         }
       }
     }

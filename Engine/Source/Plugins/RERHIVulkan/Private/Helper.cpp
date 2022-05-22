@@ -71,12 +71,12 @@ void Helper::endSingleTimeCommands(const RHIDynamicRHI& vulkanRhi, VkCommandBuff
     {
       VK_STRUCTURE_TYPE_SUBMIT_INFO,	// sType (VkStructureType)
       nullptr,						// pNext (const void*)
-      0,								// waitSemaphoreCount (uint32_t)
+      0,								// waitSemaphoreCount (RECore::uint32)
       nullptr,						// pWaitSemaphores (const VkSemaphore*)
       nullptr,						// pWaitDstStageMask (const VkPipelineStageFlags*)
-      1,								// commandBufferCount (uint32_t)
+      1,								// commandBufferCount (RECore::uint32)
       &vkCommandBuffer,				// pCommandBuffers (const VkCommandBuffer*)
-      0,								// signalSemaphoreCount (uint32_t)
+      0,								// signalSemaphoreCount (RECore::uint32)
       nullptr							// pSignalSemaphores (const VkSemaphore*)
     };
   if (vkQueueSubmit(vkQueue, 1, &vkSubmitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
@@ -111,7 +111,7 @@ void Helper::transitionVkImageLayout(const RHIDynamicRHI& vulkanRhi, VkImage vkI
   endSingleTimeCommands(vulkanRhi, vkCommandBuffer);
 }
 
-void Helper::transitionVkImageLayout(const RHIDynamicRHI& vulkanRhi, VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageAspectFlags vkImageAspectFlags, uint32_t levelCount, uint32_t layerCount, VkImageLayout oldVkImageLayout, VkImageLayout newVkImageLayout)
+void Helper::transitionVkImageLayout(const RHIDynamicRHI& vulkanRhi, VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageAspectFlags vkImageAspectFlags, RECore::uint32 levelCount, RECore::uint32 layerCount, VkImageLayout oldVkImageLayout, VkImageLayout newVkImageLayout)
 {
   VkImageMemoryBarrier vkImageMemoryBarrier =
     {
@@ -121,15 +121,15 @@ void Helper::transitionVkImageLayout(const RHIDynamicRHI& vulkanRhi, VkCommandBu
       0,										// dstAccessMask (VkAccessFlags)
       oldVkImageLayout,						// oldLayout (VkImageLayout)
       newVkImageLayout,						// newLayout (VkImageLayout)
-      VK_QUEUE_FAMILY_IGNORED,				// srcQueueFamilyIndex (uint32_t)
-      VK_QUEUE_FAMILY_IGNORED,				// dstQueueFamilyIndex (uint32_t)
+      VK_QUEUE_FAMILY_IGNORED,				// srcQueueFamilyIndex (RECore::uint32)
+      VK_QUEUE_FAMILY_IGNORED,				// dstQueueFamilyIndex (RECore::uint32)
       vkImage,								// image (VkImage)
       { // subresourceRange (VkImageSubresourceRange)
         vkImageAspectFlags,	// aspectMask (VkImageAspectFlags)
-        0,					// baseMipLevel (uint32_t)
-        levelCount,			// levelCount (uint32_t)
-        0,					// baseArrayLayer (uint32_t)
-        layerCount			// layerCount (uint32_t)
+        0,					// baseMipLevel (RECore::uint32)
+        levelCount,			// levelCount (RECore::uint32)
+        0,					// baseArrayLayer (RECore::uint32)
+        layerCount			// layerCount (RECore::uint32)
       }
     };
 
@@ -182,8 +182,8 @@ void Helper::transitionVkImageLayout(const RHIDynamicRHI& vulkanRhi, VkCommandBu
       0,										// dstAccessMask (VkAccessFlags)
       oldVkImageLayout,						// oldLayout (VkImageLayout)
       newVkImageLayout,						// newLayout (VkImageLayout)
-      VK_QUEUE_FAMILY_IGNORED,				// srcQueueFamilyIndex (uint32_t)
-      VK_QUEUE_FAMILY_IGNORED,				// dstQueueFamilyIndex (uint32_t)
+      VK_QUEUE_FAMILY_IGNORED,				// srcQueueFamilyIndex (RECore::uint32)
+      VK_QUEUE_FAMILY_IGNORED,				// dstQueueFamilyIndex (RECore::uint32)
       vkImage,								// image (VkImage)
       vkImageSubresourceRange					// subresourceRange (VkImageSubresourceRange)
     };
@@ -341,8 +341,8 @@ void Helper::createAndAllocateVkBuffer(const RHIDynamicRHI& vulkanRhi, VkBufferU
       numberOfBytes,											// size (VkDeviceSize)
       static_cast<VkBufferUsageFlags>(vkBufferUsageFlagBits),	// usage (VkBufferUsageFlags)
       VK_SHARING_MODE_EXCLUSIVE,								// sharingMode (VkSharingMode)
-      0,														// queueFamilyIndexCount (uint32_t)
-      nullptr													// pQueueFamilyIndices (const uint32_t*)
+      0,														// queueFamilyIndexCount (RECore::uint32)
+      nullptr													// pQueueFamilyIndices (const RECore::uint32*)
     };
   if (vkCreateBuffer(vkDevice, &vkBufferCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &vkBuffer) != VK_SUCCESS)
   {
@@ -357,7 +357,7 @@ void Helper::createAndAllocateVkBuffer(const RHIDynamicRHI& vulkanRhi, VkBufferU
       VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,															// sType (VkStructureType)
       nullptr,																						// pNext (const void*)
       vkMemoryRequirements.size,																		// allocationSize (VkDeviceSize)
-      vulkanContext.findMemoryTypeIndex(vkMemoryRequirements.memoryTypeBits, vkMemoryPropertyFlags)	// memoryTypeIndex (uint32_t)
+      vulkanContext.findMemoryTypeIndex(vkMemoryRequirements.memoryTypeBits, vkMemoryPropertyFlags)	// memoryTypeIndex (RECore::uint32)
     };
   if (vkAllocateMemory(vkDevice, &vkMemoryAllocateInfo, vulkanRhi.getVkAllocationCallbacks(), &vkDeviceMemory) != VK_SUCCESS)
   {
@@ -397,7 +397,7 @@ void Helper::destroyAndFreeVkBuffer(const RHIDynamicRHI& vulkanRhi, VkBuffer& vk
 //[-------------------------------------------------------]
 //[ Image                                                 ]
 //[-------------------------------------------------------]
-VkImageLayout Helper::getVkImageLayoutByTextureFlags(uint32_t textureFlags)
+VkImageLayout Helper::getVkImageLayoutByTextureFlags(RECore::uint32 textureFlags)
 {
   if (textureFlags & RERHI::TextureFlag::RENDER_TARGET)
   {
@@ -411,12 +411,12 @@ VkImageLayout Helper::getVkImageLayoutByTextureFlags(uint32_t textureFlags)
 }
 
 // TODO(naetherm) Trivial implementation to have something to start with. Need to use more clever memory management and stating buffers later on.
-VkFormat Helper::createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageType vkImageType, VkImageViewType vkImageViewType, const VkExtent3D& vkExtent3D, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, uint8_t numberOfMultisamples, VkImage& vkImage, VkDeviceMemory& vkDeviceMemory, VkImageView& vkImageView)
+VkFormat Helper::createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageType vkImageType, VkImageViewType vkImageViewType, const VkExtent3D& vkExtent3D, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, RECore::uint8 numberOfMultisamples, VkImage& vkImage, VkDeviceMemory& vkDeviceMemory, VkImageView& vkImageView)
 {
   // Calculate the number of mipmaps
   const bool dataContainsMipmaps = (textureFlags & RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS);
   const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & RERHI::TextureFlag::GENERATE_MIPMAPS));
-  uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? RERHI::RHITexture::getNumberOfMipmaps(vkExtent3D.width, vkExtent3D.height) : 1;
+  RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? RERHI::RHITexture::getNumberOfMipmaps(vkExtent3D.width, vkExtent3D.height) : 1;
 
   // Get Vulkan image usage flags
   RHI_ASSERT((textureFlags & RERHI::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Vulkan render target textures can't be filled using provided data")
@@ -449,8 +449,8 @@ VkFormat Helper::createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageTyp
   // Get Vulkan format
   const VkFormat vkFormat   = Mapping::getVulkanFormat(textureFormat);
   const bool     layered    = (VK_IMAGE_VIEW_TYPE_1D_ARRAY == vkImageViewType || VK_IMAGE_VIEW_TYPE_2D_ARRAY == vkImageViewType || VK_IMAGE_VIEW_TYPE_CUBE == vkImageViewType || VK_IMAGE_VIEW_TYPE_CUBE_ARRAY == vkImageViewType);
-  const uint32_t layerCount = layered ? vkExtent3D.depth : 1;
-  const uint32_t depth	  = layered ? 1 : vkExtent3D.depth;
+  const RECore::uint32 layerCount = layered ? vkExtent3D.depth : 1;
+  const RECore::uint32 depth	  = layered ? 1 : vkExtent3D.depth;
   const VkSampleCountFlagBits vkSampleCountFlagBits = Mapping::getVulkanSampleCountFlagBits(vulkanRhi.getContext(), numberOfMultisamples);
   VkImageAspectFlags vkImageAspectFlags = isDepthTextureFormat ? VK_IMAGE_ASPECT_DEPTH_BIT : VK_IMAGE_ASPECT_COLOR_BIT;
   if (::detail::hasVkFormatStencilComponent(vkFormat))
@@ -459,13 +459,13 @@ VkFormat Helper::createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageTyp
   }
 
   // Calculate the number of bytes
-  uint32_t numberOfBytes = 0;
+  RECore::uint32 numberOfBytes = 0;
   if (dataContainsMipmaps)
   {
-    uint32_t currentWidth  = vkExtent3D.width;
-    uint32_t currentHeight = vkExtent3D.height;
-    uint32_t currentDepth  = depth;
-    for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+    RECore::uint32 currentWidth  = vkExtent3D.width;
+    RECore::uint32 currentHeight = vkExtent3D.height;
+    RECore::uint32 currentDepth  = depth;
+    for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
     {
       numberOfBytes += RERHI::TextureFormat::getNumberOfBytesPerSlice(static_cast<RERHI::TextureFormat::Enum>(textureFormat), currentWidth, currentHeight) * currentDepth;
       currentWidth = RERHI::RHITexture::getHalfSize(currentWidth);
@@ -499,32 +499,32 @@ VkFormat Helper::createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageTyp
     createAndAllocateVkBuffer(vulkanRhi, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, numberOfBytes, data, stagingVkBuffer, stagingVkDeviceMemory);
 
     { // Upload all mipmaps
-      const uint32_t numberOfUploadedMipmaps = generateMipmaps ? 1 : numberOfMipmaps;
+      const RECore::uint32 numberOfUploadedMipmaps = generateMipmaps ? 1 : numberOfMipmaps;
 
       // Create and begin Vulkan command buffer
       VkCommandBuffer vkCommandBuffer = beginSingleTimeCommands(vulkanRhi);
       transitionVkImageLayout(vulkanRhi, vkCommandBuffer, vkImage, vkImageAspectFlags, numberOfUploadedMipmaps, layerCount, VK_IMAGE_LAYOUT_PREINITIALIZED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
 
       // Upload all mipmaps
-      uint32_t bufferOffset  = 0;
-      uint32_t currentWidth  = vkExtent3D.width;
-      uint32_t currentHeight = vkExtent3D.height;
-      uint32_t currentDepth  = depth;
+      RECore::uint32 bufferOffset  = 0;
+      RECore::uint32 currentWidth  = vkExtent3D.width;
+      RECore::uint32 currentHeight = vkExtent3D.height;
+      RECore::uint32 currentDepth  = depth;
 
       // Allocate list of VkBufferImageCopy and setup VkBufferImageCopy data for each mipmap level
       std::vector<VkBufferImageCopy> vkBufferImageCopyList;
       vkBufferImageCopyList.reserve(numberOfUploadedMipmaps);
-      for (uint32_t mipmap = 0; mipmap < numberOfUploadedMipmaps; ++mipmap)
+      for (RECore::uint32 mipmap = 0; mipmap < numberOfUploadedMipmaps; ++mipmap)
       {
         vkBufferImageCopyList.push_back({
                                           bufferOffset,									// bufferOffset (VkDeviceSize)
-                                          0,												// bufferRowLength (uint32_t)
-                                          0,												// bufferImageHeight (uint32_t)
+                                          0,												// bufferRowLength (RECore::uint32)
+                                          0,												// bufferImageHeight (RECore::uint32)
                                           { // imageSubresource (VkImageSubresourceLayers)
                                             vkImageAspectFlags,							// aspectMask (VkImageAspectFlags)
-                                            mipmap,										// mipLevel (uint32_t)
-                                            0,											// baseArrayLayer (uint32_t)
-                                            layerCount									// layerCount (uint32_t)
+                                            mipmap,										// mipLevel (RECore::uint32)
+                                            0,											// baseArrayLayer (RECore::uint32)
+                                            layerCount									// layerCount (RECore::uint32)
                                           },
                                           { 0, 0, 0 },									// imageOffset (VkOffset3D)
                                           { currentWidth, currentHeight, currentDepth }	// imageExtent (VkExtent3D)
@@ -538,7 +538,7 @@ VkFormat Helper::createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageTyp
       }
 
       // Copy Vulkan buffer to Vulkan image
-      vkCmdCopyBufferToImage(vkCommandBuffer, stagingVkBuffer, vkImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, static_cast<uint32_t>(vkBufferImageCopyList.size()), vkBufferImageCopyList.data());
+      vkCmdCopyBufferToImage(vkCommandBuffer, stagingVkBuffer, vkImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, static_cast<RECore::uint32>(vkBufferImageCopyList.size()), vkBufferImageCopyList.data());
 
       // End and destroy Vulkan command buffer
       if (generateMipmaps)
@@ -546,10 +546,10 @@ VkFormat Helper::createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageTyp
         const VkImageSubresourceRange vkImageSubresourceRange =
           {
             vkImageAspectFlags,	// aspectMask (VkImageAspectFlags)
-            0,					// baseMipLevel (uint32_t)
-            1,					// levelCount (uint32_t)
-            0,					// baseArrayLayer (uint32_t)
-            layerCount			// layerCount (uint32_t)
+            0,					// baseMipLevel (RECore::uint32)
+            1,					// levelCount (RECore::uint32)
+            0,					// baseArrayLayer (RECore::uint32)
+            layerCount			// layerCount (RECore::uint32)
           };
         transitionVkImageLayout(vulkanRhi, vkCommandBuffer, vkImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, vkImageSubresourceRange, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT);
       }
@@ -585,15 +585,15 @@ VkFormat Helper::createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageTyp
       VkCommandBuffer vkCommandBuffer = beginSingleTimeCommands(vulkanRhi);
 
       // Copy down mips from n-1 to n
-      for (uint32_t i = 1; i < numberOfMipmaps; ++i)
+      for (RECore::uint32 i = 1; i < numberOfMipmaps; ++i)
       {
         const VkImageBlit VkImageBlit =
           {
             { // srcSubresource (VkImageSubresourceLayers)
               vkImageAspectFlags,	// aspectMask (VkImageAspectFlags)
-              i - 1,				// mipLevel (uint32_t)
-              0,					// baseArrayLayer (uint32_t)
-              layerCount			// layerCount (uint32_t)
+              i - 1,				// mipLevel (RECore::uint32)
+              0,					// baseArrayLayer (RECore::uint32)
+              layerCount			// layerCount (RECore::uint32)
             },
             { // srcOffsets[2] (VkOffset3D)
               { 0, 0, 0 },
@@ -601,9 +601,9 @@ VkFormat Helper::createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageTyp
             },
             { // dstSubresource (VkImageSubresourceLayers)
               vkImageAspectFlags,	// aspectMask (VkImageAspectFlags)
-              i,					// mipLevel (uint32_t)
-              0,					// baseArrayLayer (uint32_t)
-              layerCount			// layerCount (uint32_t)
+              i,					// mipLevel (RECore::uint32)
+              0,					// baseArrayLayer (RECore::uint32)
+              layerCount			// layerCount (RECore::uint32)
             },
             { // dstOffsets[2] (VkOffset3D)
               { 0, 0, 0 },
@@ -613,10 +613,10 @@ VkFormat Helper::createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageTyp
         const VkImageSubresourceRange vkImageSubresourceRange =
           {
             vkImageAspectFlags,	// aspectMask (VkImageAspectFlags)
-            i,					// baseMipLevel (uint32_t)
-            1,					// levelCount (uint32_t)
-            0,					// baseArrayLayer (uint32_t)
-            layerCount			// layerCount (uint32_t)
+            i,					// baseMipLevel (RECore::uint32)
+            1,					// levelCount (RECore::uint32)
+            0,					// baseArrayLayer (RECore::uint32)
+            layerCount			// layerCount (RECore::uint32)
           };
 
         // Transition current mip level to transfer destination
@@ -633,10 +633,10 @@ VkFormat Helper::createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageTyp
         const VkImageSubresourceRange vkImageSubresourceRange =
           {
             vkImageAspectFlags,		// aspectMask (VkImageAspectFlags)
-            0,						// baseMipLevel (uint32_t)
-            numberOfMipmaps,		// levelCount (uint32_t)
-            0,						// baseArrayLayer (uint32_t)
-            layerCount				// layerCount (uint32_t)
+            0,						// baseMipLevel (RECore::uint32)
+            numberOfMipmaps,		// levelCount (RECore::uint32)
+            0,						// baseArrayLayer (RECore::uint32)
+            layerCount				// layerCount (RECore::uint32)
           };
         transitionVkImageLayout(vulkanRhi, vkCommandBuffer, vkImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, vkImageSubresourceRange, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT);
       }
@@ -650,7 +650,7 @@ VkFormat Helper::createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageTyp
   return vkFormat;
 }
 
-void Helper::createAndAllocateVkImage(const RHIDynamicRHI& vulkanRhi, VkImageCreateFlags vkImageCreateFlags, VkImageType vkImageType, const VkExtent3D& vkExtent3D, uint32_t mipLevels, uint32_t arrayLayers, VkFormat vkFormat, VkSampleCountFlagBits vkSampleCountFlagBits, VkImageTiling vkImageTiling, VkImageUsageFlags vkImageUsageFlags, VkMemoryPropertyFlags vkMemoryPropertyFlags, VkImage& vkImage, VkDeviceMemory& vkDeviceMemory)
+void Helper::createAndAllocateVkImage(const RHIDynamicRHI& vulkanRhi, VkImageCreateFlags vkImageCreateFlags, VkImageType vkImageType, const VkExtent3D& vkExtent3D, RECore::uint32 mipLevels, RECore::uint32 arrayLayers, VkFormat vkFormat, VkSampleCountFlagBits vkSampleCountFlagBits, VkImageTiling vkImageTiling, VkImageUsageFlags vkImageUsageFlags, VkMemoryPropertyFlags vkMemoryPropertyFlags, VkImage& vkImage, VkDeviceMemory& vkDeviceMemory)
 {
   const VulkanContext& vulkanContext = vulkanRhi.getVulkanContext();
   const VkDevice vkDevice = vulkanContext.getVkDevice();
@@ -664,14 +664,14 @@ void Helper::createAndAllocateVkImage(const RHIDynamicRHI& vulkanRhi, VkImageCre
         vkImageType,							// imageType (VkImageType)
         vkFormat,								// format (VkFormat)
         vkExtent3D,								// extent (VkExtent3D)
-        mipLevels,								// mipLevels (uint32_t)
-        arrayLayers,							// arrayLayers (uint32_t)
+        mipLevels,								// mipLevels (RECore::uint32)
+        arrayLayers,							// arrayLayers (RECore::uint32)
         vkSampleCountFlagBits,					// samples (VkSampleCountFlagBits)
         vkImageTiling,							// tiling (VkImageTiling)
         vkImageUsageFlags,						// usage (VkImageUsageFlags)
         VK_SHARING_MODE_EXCLUSIVE,				// sharingMode (VkSharingMode)
-        0,										// queueFamilyIndexCount (uint32_t)
-        nullptr,								// pQueueFamilyIndices (const uint32_t*)
+        0,										// queueFamilyIndexCount (RECore::uint32)
+        nullptr,								// pQueueFamilyIndices (const RECore::uint32*)
         VK_IMAGE_LAYOUT_PREINITIALIZED			// initialLayout (VkImageLayout)
       };
     if (vkCreateImage(vkDevice, &vkImageCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &vkImage) != VK_SUCCESS)
@@ -688,7 +688,7 @@ void Helper::createAndAllocateVkImage(const RHIDynamicRHI& vulkanRhi, VkImageCre
         VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,															// sType (VkStructureType)
         nullptr,																						// pNext (const void*)
         vkMemoryRequirements.size,																		// allocationSize (VkDeviceSize)
-        vulkanContext.findMemoryTypeIndex(vkMemoryRequirements.memoryTypeBits, vkMemoryPropertyFlags)	// memoryTypeIndex (uint32_t)
+        vulkanContext.findMemoryTypeIndex(vkMemoryRequirements.memoryTypeBits, vkMemoryPropertyFlags)	// memoryTypeIndex (RECore::uint32)
       };
     if (vkAllocateMemory(vkDevice, &vkMemoryAllocateInfo, vulkanRhi.getVkAllocationCallbacks(), &vkDeviceMemory) != VK_SUCCESS)
     {
@@ -726,7 +726,7 @@ void Helper::destroyAndFreeVkImage(const RHIDynamicRHI& vulkanRhi, VkImage& vkIm
   destroyAndFreeVkImage(vulkanRhi, vkImage, vkDeviceMemory);
 }
 
-void Helper::createVkImageView(const RHIDynamicRHI& vulkanRhi, VkImage vkImage, VkImageViewType vkImageViewType, uint32_t levelCount, uint32_t layerCount, VkFormat vkFormat, VkImageAspectFlags vkImageAspectFlags, VkImageView& vkImageView)
+void Helper::createVkImageView(const RHIDynamicRHI& vulkanRhi, VkImage vkImage, VkImageViewType vkImageViewType, RECore::uint32 levelCount, RECore::uint32 layerCount, VkFormat vkFormat, VkImageAspectFlags vkImageAspectFlags, VkImageView& vkImageView)
 {
   const VkImageViewCreateInfo vkImageViewCreateInfo =
     {
@@ -744,10 +744,10 @@ void Helper::createVkImageView(const RHIDynamicRHI& vulkanRhi, VkImage vkImage, 
       },
       { // subresourceRange (VkImageSubresourceRange)
         vkImageAspectFlags,						// aspectMask (VkImageAspectFlags)
-        0,										// baseMipLevel (uint32_t)
-        levelCount,								// levelCount (uint32_t)
-        0,										// baseArrayLayer (uint32_t)
-        layerCount								// layerCount (uint32_t)
+        0,										// baseMipLevel (RECore::uint32)
+        levelCount,								// levelCount (RECore::uint32)
+        0,										// baseArrayLayer (RECore::uint32)
+        layerCount								// layerCount (RECore::uint32)
       }
     };
   if (vkCreateImageView(vulkanRhi.getVulkanContext().getVkDevice(), &vkImageViewCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &vkImageView) != VK_SUCCESS)
@@ -760,7 +760,7 @@ void Helper::createVkImageView(const RHIDynamicRHI& vulkanRhi, VkImage vkImage, 
 //[ Debug                                                 ]
 //[-------------------------------------------------------]
 #ifdef DEBUG
-void Helper::setDebugObjectName(VkDevice vkDevice, VkDebugReportObjectTypeEXT vkDebugReportObjectTypeEXT, uint64_t object, const char* objectName)
+void Helper::setDebugObjectName(VkDevice vkDevice, VkDebugReportObjectTypeEXT vkDebugReportObjectTypeEXT, RECore::uint64 object, const char* objectName)
 			{
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
@@ -769,7 +769,7 @@ void Helper::setDebugObjectName(VkDevice vkDevice, VkDebugReportObjectTypeEXT vk
 						VK_STRUCTURE_TYPE_DEBUG_MARKER_OBJECT_NAME_INFO_EXT,	// sType (VkStructureType)
 						nullptr,												// pNext (const void*)
 						vkDebugReportObjectTypeEXT,								// objectType (VkDebugReportObjectTypeEXT)
-						object,													// object (uint64_t)
+						object,													// object (RECore::uint64)
 						objectName												// pObjectName (const char*)
 					};
 					vkDebugMarkerSetObjectNameEXT(vkDevice, &vkDebugMarkerObjectNameInfoEXT);

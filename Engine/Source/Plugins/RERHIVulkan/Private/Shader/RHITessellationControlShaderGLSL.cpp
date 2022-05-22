@@ -45,7 +45,7 @@ TessellationControlShaderGlsl::TessellationControlShaderGlsl(RHIDynamicRHI &vulk
   if (nullptr != vkDebugMarkerSetObjectNameEXT)
         {
           RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TCS", 6)	// 6 = "TCS: " including terminating zero
-          Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT, (uint64_t)mVkShaderModule, detailedDebugName);
+          Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT, (RECore::uint64)mVkShaderModule, detailedDebugName);
         }
 #endif
 }
@@ -72,7 +72,7 @@ TessellationControlShaderGlsl::TessellationControlShaderGlsl(RHIDynamicRHI &vulk
   if (nullptr != vkDebugMarkerSetObjectNameEXT)
         {
           RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TCS", 6)	// 6 = "TCS: " including terminating zero
-          Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT, (uint64_t)mVkShaderModule, detailedDebugName);
+          Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT, (RECore::uint64)mVkShaderModule, detailedDebugName);
         }
 #endif
 }

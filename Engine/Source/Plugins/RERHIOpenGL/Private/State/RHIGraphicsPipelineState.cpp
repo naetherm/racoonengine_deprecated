@@ -44,7 +44,7 @@ class RHIDynamicRHI;
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &openGLRhi,
-                                             const RERHI::GraphicsPipelineState &graphicsPipelineState, uint16_t id
+                                             const RERHI::GraphicsPipelineState &graphicsPipelineState, RECore::uint16 id
                                              RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
   RHIGraphicsPipelineState(openGLRhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mOpenGLPrimitiveTopology(0xFFFF),  // Unknown default setting

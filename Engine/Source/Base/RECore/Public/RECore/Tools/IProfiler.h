@@ -62,7 +62,7 @@ public:
   *  @param[in] hashCache
   *    Hash cache, can be a null pointer (less efficient)
   */
-  virtual void beginCpuSample(const char* name, uint32_t* hashCache) = 0;
+  virtual void beginCpuSample(const char* name, uint32* hashCache) = 0;
 
   /**
   *  @brief
@@ -79,7 +79,7 @@ public:
   *  @param[in] hashCache
   *    Hash cache, can be a null pointer (less efficient)
   */
-  virtual void beginGpuSample(const char* name, uint32_t* hashCache) = 0;
+  virtual void beginGpuSample(const char* name, uint32* hashCache) = 0;
 
   /**
   *  @brief

@@ -103,7 +103,7 @@ public:
   *  @return
   *    Bus type
   */
-  [[nodiscard]] inline uint16_t getBusType() const
+  [[nodiscard]] inline RECore::uint16 getBusType() const
   {
     return m_nBusType;
   }
@@ -115,7 +115,7 @@ public:
   *  @return
   *    Vendor ID
   */
-  [[nodiscard]] inline uint16_t getVendorID() const
+  [[nodiscard]] inline RECore::uint16 getVendorID() const
   {
     return m_nVendor;
   }
@@ -127,7 +127,7 @@ public:
   *  @return
   *    Product ID
   */
-  [[nodiscard]] inline uint16_t getProductID() const
+  [[nodiscard]] inline RECore::uint16 getProductID() const
   {
     return m_nProduct;
   }
@@ -139,7 +139,7 @@ public:
   *  @return
   *    Version
   */
-  [[nodiscard]] inline uint16_t getVersion() const
+  [[nodiscard]] inline RECore::uint16 getVersion() const
   {
     return m_nVersion;
   }
@@ -212,10 +212,10 @@ public:
   //[-------------------------------------------------------]
 private:
   int		 m_nFile;		///< File handle
-  uint16_t m_nBusType;	///< Bus type (e.g. USB)
-  uint16_t m_nVendor;		///< Vendor ID
-  uint16_t m_nProduct;	///< Product ID
-  uint16_t m_nVersion;	///< Version
+  RECore::uint16 m_nBusType;	///< Bus type (e.g. USB)
+  RECore::uint16 m_nVendor;		///< Vendor ID
+  RECore::uint16 m_nProduct;	///< Product ID
+  RECore::uint16 m_nVersion;	///< Version
 
 
 };

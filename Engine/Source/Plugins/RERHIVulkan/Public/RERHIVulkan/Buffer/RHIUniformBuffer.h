@@ -68,7 +68,7 @@ public:
   *  @param[in] bufferUsage
   *    Indication of the buffer usage
   */
-  UniformBuffer(RHIDynamicRHI& vulkanRhi, uint32_t numberOfBytes, const void* data, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  UniformBuffer(RHIDynamicRHI& vulkanRhi, RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

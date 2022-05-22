@@ -206,7 +206,7 @@ namespace RERenderer
 			}
 		};
 		typedef std::vector<UniformBuffer> UniformBuffers;
-		typedef std::vector<uint8_t>	   ScratchBuffer;
+		typedef std::vector<RECore::uint8>	   ScratchBuffer;
 
 
 	//[-------------------------------------------------------]
@@ -219,7 +219,7 @@ namespace RERenderer
 		const MaterialBlueprintResourceManager&	mMaterialBlueprintResourceManager;
 		PassData								mPassData;
 		UniformBuffers							mUniformBuffers;
-		uint32_t								mCurrentUniformBufferIndex;
+		RECore::uint32								mCurrentUniformBufferIndex;
 		ScratchBuffer							mScratchBuffer;
 
 

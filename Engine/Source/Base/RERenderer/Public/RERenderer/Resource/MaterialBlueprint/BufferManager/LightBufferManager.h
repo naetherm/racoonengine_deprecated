@@ -71,8 +71,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t			 TextureResourceId;	///< POD texture resource identifier
-	typedef RECore::StringId			 AssetId;			///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::uint32			 TextureResourceId;	///< POD texture resource identifier
+	typedef RECore::StringId			 AssetId;			///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
 	typedef std::vector<AssetId> AssetIds;
 
 
@@ -192,7 +192,7 @@ namespace RERenderer
 	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
-		typedef std::vector<uint8_t> ScratchBuffer;
+		typedef std::vector<RECore::uint8> ScratchBuffer;
 
 
 	//[-------------------------------------------------------]

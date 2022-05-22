@@ -71,7 +71,7 @@ void Gpgpu::onInitialization()
 
 		// Setup
 		RERHI::RootSignatureBuilder rootSignatureBuilder;
-		rootSignatureBuilder.initialize(static_cast<uint32_t>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+		rootSignatureBuilder.initialize(static_cast<RECore::uint32>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
 		// Create the instance
 		mRootSignature = getRhi()->createRootSignature(rootSignatureBuilder);
@@ -117,15 +117,15 @@ void Gpgpu::onInitialization()
 			RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 			"Position",								// name[32] (char)
 			"POSITION",								// semanticName[32] (char)
-			0,										// semanticIndex (uint32_t)
+			0,										// semanticIndex (RECore::uint32)
 			// Data source
-			0,										// inputSlot (uint32_t)
-			0,										// alignedByteOffset (uint32_t)
-			sizeof(float) * 2,						// strideInBytes (uint32_t)
-			0										// instancesPerElement (uint32_t)
+			0,										// inputSlot (RECore::uint32)
+			0,										// alignedByteOffset (RECore::uint32)
+			sizeof(float) * 2,						// strideInBytes (RECore::uint32)
+			0										// instancesPerElement (RECore::uint32)
 		}
 	};
-	const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+	const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
 	{ // Create vertex array object (VAO) for content generation
 		// Create the vertex buffer object (VBO)
@@ -145,7 +145,7 @@ void Gpgpu::onInitialization()
 		//    reference of the used vertex buffer objects (VBO). If the reference counter of a
 		//    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
 		const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-		mVertexArrayContentGeneration = mBufferManager->createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
+		mVertexArrayContentGeneration = mBufferManager->createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
 	}
 
 	{ // Create vertex array object (VAO) for content processing
@@ -167,7 +167,7 @@ void Gpgpu::onInitialization()
 		//    reference of the used vertex buffer objects (VBO). If the reference counter of a
 		//    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
 		const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-		mVertexArrayContentProcessing = mBufferManager->createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
+		mVertexArrayContentProcessing = mBufferManager->createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
 	}
 
 	{
@@ -262,8 +262,8 @@ void Gpgpu::fillCommandBufferContentGeneration()
 
 	{ // Set the viewport and scissor rectangle
 		// Get the render target with and height
-		uint32_t width  = 1;
-		uint32_t height = 1;
+		RECore::uint32 width  = 1;
+		RECore::uint32 height = 1;
 		RERHI::RHIRenderTarget* renderTarget = mFramebuffer[0];
 		if (nullptr != renderTarget)
 		{
@@ -337,7 +337,7 @@ void Gpgpu::onDoJob()
 	if (getRhi()->map(*mTexture2D[1], 0, RERHI::MapType::READ, 0, mappedSubresource))
 	{
 		// Get the processed content pointer
-//		const uint8_t* data = static_cast<uint8_t*>(mappedSubresource.data);
+//		const RECore::uint8* data = static_cast<RECore::uint8*>(mappedSubresource.data);
 
 		// TODO(naetherm) Write it out as image?
 

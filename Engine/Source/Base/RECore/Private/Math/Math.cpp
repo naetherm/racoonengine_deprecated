@@ -114,9 +114,9 @@ namespace RECore
 		return std::floor(value / primaryValue + 0.5) * primaryValue;
 	}
 
-	uint32_t Math::makeMultipleOf(uint32_t value, uint32_t primaryValue)
+	uint32 Math::makeMultipleOf(uint32 value, uint32 primaryValue)
 	{
-		return static_cast<uint32_t>(std::ceil(static_cast<float>(value) / static_cast<float>(primaryValue))) * primaryValue;
+		return static_cast<uint32>(std::ceil(static_cast<float>(value) / static_cast<float>(primaryValue))) * primaryValue;
 	}
 
 	const glm::mat4& Math::getTextureScaleBiasMatrix(bool upperLeftOrigin, bool zeroToOneClipZ)
@@ -133,15 +133,15 @@ namespace RECore
 		return (upperLeftOrigin && zeroToOneClipZ) ? SHADOW_SCALE_BIAS_MATRIX_DIRECT3D : SHADOW_SCALE_BIAS_MATRIX_OPENGL;
 	}
 
-	uint32_t Math::calculateFNV1a32(const uint8_t* content, uint32_t numberOfBytes, uint32_t hash)
+	uint32 Math::calculateFNV1a32(const RECore::uint8* content, uint32 numberOfBytes, uint32 hash)
 	{
 		// Sanity checks
 		ASSERT(nullptr != content, "The content must be valid to be able to calculate a FNV1a32 hash")
 		ASSERT(0 != numberOfBytes, "The content must be valid to be able to calculate a FNV1a32 hash")
 
 		// 32-bit FNV-1a implementation basing on http://www.isthe.com/chongo/tech/comp/fnv/
-		static constexpr uint32_t FNV1a_MAGIC_PRIME_32 = 0x1000193u;
-		const uint8_t* end = content + numberOfBytes;
+		static constexpr uint32 FNV1a_MAGIC_PRIME_32 = 0x1000193u;
+		const RECore::uint8* end = content + numberOfBytes;
 		for ( ; content < end; ++content)
 		{
 			hash = (hash ^ *content) * FNV1a_MAGIC_PRIME_32;
@@ -149,15 +149,15 @@ namespace RECore
 		return hash;
 	}
 
-	uint64_t Math::calculateFNV1a64(const uint8_t* content, uint32_t numberOfBytes, uint64_t hash)
+	RECore::uint64 Math::calculateFNV1a64(const RECore::uint8* content, uint32 numberOfBytes, RECore::uint64 hash)
 	{
 		// Sanity checks
 		ASSERT(nullptr != content, "The content must be valid to be able to calculate a FNV1a32 hash")
 		ASSERT(0 != numberOfBytes, "The content must be valid to be able to calculate a FNV1a32 hash")
 
 		// 64-bit FNV-1a implementation basing on http://www.isthe.com/chongo/tech/comp/fnv/
-		static constexpr uint64_t FNV1a_MAGIC_PRIME_64 = 0x100000001B3u;
-		const uint8_t* end = content + numberOfBytes;
+		static constexpr RECore::uint64 FNV1a_MAGIC_PRIME_64 = 0x100000001B3u;
+		const RECore::uint8* end = content + numberOfBytes;
 		for ( ; content < end; ++content)
 		{
 			hash = (hash ^ *content) * FNV1a_MAGIC_PRIME_64;
@@ -165,17 +165,17 @@ namespace RECore
 		return hash;
 	}
 
-	uint64_t Math::calculateFileFNV1a64ByVirtualFilename(const IFileManager& fileManager, VirtualFilename virtualFilename)
+	RECore::uint64 Math::calculateFileFNV1a64ByVirtualFilename(const IFileManager& fileManager, VirtualFilename virtualFilename)
 	{
-		uint64_t hash = FNV1a_INITIAL_HASH_64;
+		RECore::uint64 hash = FNV1a_INITIAL_HASH_64;
 
 		// Try open file
 		IFile* file = fileManager.openFile(IFileManager::FileMode::READ, virtualFilename);
 		if (nullptr != file)
 		{
 			// Read the file content into chunks and process them
-			static constexpr uint32_t NUMBER_OF_CHUNK_BYTES = 32768;
-			uint8_t chunkBuffer[NUMBER_OF_CHUNK_BYTES];
+			static constexpr uint32 NUMBER_OF_CHUNK_BYTES = 32768;
+			RECore::uint8 chunkBuffer[NUMBER_OF_CHUNK_BYTES];
 			const size_t numberOfFileBytes = file->getNumberOfBytes();
 			const size_t numberOfChunks = numberOfFileBytes / NUMBER_OF_CHUNK_BYTES;
 			for (size_t i = 0; i < numberOfChunks; ++i)
@@ -191,7 +191,7 @@ namespace RECore
 			{
 				// Process the remaining bytes
 				file->read(chunkBuffer, remainingFileBytes);
-				hash = calculateFNV1a64(chunkBuffer, static_cast<uint32_t>(remainingFileBytes), hash);
+				hash = calculateFNV1a64(chunkBuffer, static_cast<uint32>(remainingFileBytes), hash);
 			}
 
 			// Close file

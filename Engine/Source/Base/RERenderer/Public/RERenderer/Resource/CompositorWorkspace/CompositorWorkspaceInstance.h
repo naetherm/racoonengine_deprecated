@@ -59,9 +59,9 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;						///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
-	typedef uint32_t CompositorWorkspaceResourceId;	///< POD compositor workspace resource identifier
-	typedef RECore::StringId CompositorPassTypeId;			///< Compositor pass type identifier, internally just a POD "uint32_t"
+	typedef RECore::StringId AssetId;						///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::uint32 CompositorWorkspaceResourceId;	///< POD compositor workspace resource identifier
+	typedef RECore::StringId CompositorPassTypeId;			///< Compositor pass type identifier, internally just a POD "RECore::uint32"
 
 
 	//[-------------------------------------------------------]
@@ -93,11 +93,11 @@ namespace RERenderer
 
 		struct RenderQueueIndexRange final
 		{
-			uint8_t			   minimumRenderQueueIndex;	///< Fixed during runtime
-			uint8_t			   maximumRenderQueueIndex;	///< Fixed during runtime
+			RECore::uint8			   minimumRenderQueueIndex;	///< Fixed during runtime
+			RECore::uint8			   maximumRenderQueueIndex;	///< Fixed during runtime
 			RenderableManagers renderableManagers;		///< Dynamic during runtime
 
-			inline RenderQueueIndexRange(uint8_t _minimumRenderQueueIndex, uint8_t _maximumRenderQueueIndex) :
+			inline RenderQueueIndexRange(RECore::uint8 _minimumRenderQueueIndex, RECore::uint8 _maximumRenderQueueIndex) :
 				minimumRenderQueueIndex(_minimumRenderQueueIndex),
 				maximumRenderQueueIndex(_maximumRenderQueueIndex)
 			{}
@@ -117,12 +117,12 @@ namespace RERenderer
 			return mRenderer;
 		}
 
-		[[nodiscard]] inline uint8_t getNumberOfMultisamples() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfMultisamples() const
 		{
 			return mNumberOfMultisamples;
 		}
 
-		void setNumberOfMultisamples(uint8_t numberOfMultisamples);	// The number of multisamples per pixel (valid values: 1, 2, 4, 8); Changes are considered to be expensive since internal RHI resources might need to be updated when rendering the next time
+		void setNumberOfMultisamples(RECore::uint8 numberOfMultisamples);	// The number of multisamples per pixel (valid values: 1, 2, 4, 8); Changes are considered to be expensive since internal RHI resources might need to be updated when rendering the next time
 
 		[[nodiscard]] inline float getResolutionScale() const
 		{
@@ -139,7 +139,7 @@ namespace RERenderer
 			return mRenderQueueIndexRanges;
 		}
 
-		[[nodiscard]] const RenderQueueIndexRange* getRenderQueueIndexRangeByRenderQueueIndex(uint8_t renderQueueIndex) const;	// Can be a null pointer, don't destroy the instance
+		[[nodiscard]] const RenderQueueIndexRange* getRenderQueueIndexRangeByRenderQueueIndex(RECore::uint8 renderQueueIndex) const;	// Can be a null pointer, don't destroy the instance
 		[[nodiscard]] const ICompositorInstancePass* getFirstCompositorInstancePassByCompositorPassTypeId(CompositorPassTypeId compositorPassTypeId) const;
 		void executeVr(RERHI::RHIRenderTarget& renderTarget, CameraSceneItem* cameraSceneItem, const LightSceneItem* lightSceneItem);	// If "Renderer::IVrManager::isRunning()" is true, virtual reality rendering is used, don't use this method if you want to render e.g. into a texture for other purposes
 		void execute(RERHI::RHIRenderTarget& renderTarget, const CameraSceneItem* cameraSceneItem, const LightSceneItem* lightSceneItem, bool singlePassStereoInstancing = false);
@@ -192,11 +192,11 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
 		IRenderer&						 mRenderer;
-		uint8_t							 mNumberOfMultisamples;
-		uint8_t							 mCurrentlyUsedNumberOfMultisamples;
+		RECore::uint8							 mNumberOfMultisamples;
+		RECore::uint8							 mCurrentlyUsedNumberOfMultisamples;
 		float							 mResolutionScale;
-		uint32_t						 mRenderTargetWidth;
-		uint32_t						 mRenderTargetHeight;
+		RECore::uint32						 mRenderTargetWidth;
+		RECore::uint32						 mRenderTargetHeight;
 		CompositorWorkspaceResourceId	 mCompositorWorkspaceResourceId;
 		CompositorNodeInstances			 mSequentialCompositorNodeInstances;	///< We're responsible to destroy the compositor node instances if we no longer need them
 		bool							 mFramebufferManagerInitialized;
@@ -209,8 +209,8 @@ namespace RERenderer
 		CompositorInstancePassShadowMap* mCompositorInstancePassShadowMap;		///< Can be a null pointer, don't destroy the instance
 		#ifdef RHI_STATISTICS
 			RERHI::RHIQueryPoolPtr				   mPipelineStatisticsQueryPoolPtr;					///< Double buffered asynchronous pipeline statistics query pool, can be a null pointer
-			uint32_t						   mPreviousCurrentPipelineStatisticsQueryIndex;	///< Can be "RECore::getInvalid<uint32_t>()"
-			uint32_t						   mCurrentPipelineStatisticsQueryIndex;			///< Toggles between 0 or 1
+			RECore::uint32						   mPreviousCurrentPipelineStatisticsQueryIndex;	///< Can be "RECore::getInvalid<RECore::uint32>()"
+			RECore::uint32						   mCurrentPipelineStatisticsQueryIndex;			///< Toggles between 0 or 1
 			RERHI::PipelineStatisticsQueryResult mPipelineStatisticsQueryResult;					///< Due to double buffered asynchronous pipeline statistics query pool, this is the pipeline statistics query result of the previous frame
 		#endif
 

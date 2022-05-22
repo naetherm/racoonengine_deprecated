@@ -69,7 +69,7 @@ public:
   *  @return
   *    "true" to request debug break, else "false"
   */
-  [[nodiscard]] virtual bool handleAssert(const char* expression, const char* file, uint32_t line, const char* format, ...) = 0;
+  [[nodiscard]] virtual bool handleAssert(const char* expression, const char* file, uint32 line, const char* format, ...) = 0;
 
   // Protected methods
 protected:
@@ -104,7 +104,7 @@ protected:
 #define RHI_ASSERT(expression, format, ...) \
 			do \
 			{ \
-				if (!(expression) && DefaultAssert::handleAssert(#expression, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
+				if (!(expression) && DefaultAssert::handleAssert(#expression, __FILE__, static_cast<uint32>(__LINE__), format, ##__VA_ARGS__)) \
 				{ \
 					DEBUG_BREAK; \
 				} \
@@ -116,7 +116,7 @@ protected:
 				if (!loggedOnce && !(expression)) \
 				{ \
 					loggedOnce = true; \
-					if (DefaultAssert::handleAssert(#expression, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
+					if (DefaultAssert::handleAssert(#expression, __FILE__, static_cast<uint32>(__LINE__), format, ##__VA_ARGS__)) \
 					{ \
 						DEBUG_BREAK; \
 					} \

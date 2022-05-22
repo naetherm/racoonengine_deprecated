@@ -74,7 +74,7 @@ public:
   *  @param[in] textureFormat
   *    Texture buffer data format
   */
-  TextureBufferDsa(RHIDynamicRHI& openGLRhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  TextureBufferDsa(RHIDynamicRHI& openGLRhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

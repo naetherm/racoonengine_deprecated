@@ -185,7 +185,7 @@ namespace RERenderer
 												else
 												{
 													// Error!
-													if (print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to open the file \"%s\" for writing", virtualFilename.c_str()))
+													if (print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<RECore::uint32>(__LINE__), "Failed to open the file \"%s\" for writing", virtualFilename.c_str()))
 													{
 														DEBUG_BREAK;
 													}
@@ -224,7 +224,7 @@ namespace RERenderer
 	//[ Protected virtual RECore::DefaultLog methods             ]
 	//[-------------------------------------------------------]
 	protected:
-		[[nodiscard]] inline virtual bool printInternal(Type type, const char* attachment, const char* file, uint32_t line, const char* message, uint32_t numberOfCharacters) override
+		[[nodiscard]] inline virtual bool printInternal(Type type, const char* attachment, const char* file, RECore::uint32 line, const char* message, RECore::uint32 numberOfCharacters) override
 		{
 			// Call the base implementation
 			const bool requestDebugBreak = DefaultLog::printInternal(type, attachment, file, line, message, numberOfCharacters);

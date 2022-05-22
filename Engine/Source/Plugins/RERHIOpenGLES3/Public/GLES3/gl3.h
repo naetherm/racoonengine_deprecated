@@ -78,7 +78,7 @@ typedef unsigned int GLbitfield;
 typedef int GLint;
 typedef unsigned char GLboolean;
 typedef int GLsizei;
-typedef khronos_uint8_t GLubyte;
+typedef khronos_RECore::uint8 GLubyte;
 #define GL_DEPTH_BUFFER_BIT               0x00000100
 #define GL_STENCIL_BUFFER_BIT             0x00000400
 #define GL_COLOR_BUFFER_BIT               0x00004000

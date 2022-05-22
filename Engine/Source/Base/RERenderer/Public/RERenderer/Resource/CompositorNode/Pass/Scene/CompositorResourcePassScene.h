@@ -41,7 +41,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialTechniqueId;	///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
+	typedef RECore::uint32 MaterialTechniqueId;	///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
 
 
 	//[-------------------------------------------------------]
@@ -61,19 +61,19 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("Scene");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("Scene");
 
 
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline uint8_t getMinimumRenderQueueIndex() const	///< Inclusive
+		[[nodiscard]] inline RECore::uint8 getMinimumRenderQueueIndex() const	///< Inclusive
 		{
 			return mMinimumRenderQueueIndex;
 		}
 
-		[[nodiscard]] inline uint8_t getMaximumRenderQueueIndex() const	///< Inclusive
+		[[nodiscard]] inline RECore::uint8 getMaximumRenderQueueIndex() const	///< Inclusive
 		{
 			return mMaximumRenderQueueIndex;
 		}
@@ -98,8 +98,8 @@ namespace RERenderer
 			return TYPE_ID;
 		}
 
-		virtual void deserialize(uint32_t numberOfBytes, const uint8_t* data) override;
-		[[nodiscard]] virtual bool getRenderQueueIndexRange(uint8_t& minimumRenderQueueIndex, uint8_t& maximumRenderQueueIndex) const override;
+		virtual void deserialize(RECore::uint32 numberOfBytes, const RECore::uint8* data) override;
+		[[nodiscard]] virtual bool getRenderQueueIndexRange(RECore::uint8& minimumRenderQueueIndex, RECore::uint8& maximumRenderQueueIndex) const override;
 
 
 	//[-------------------------------------------------------]
@@ -129,8 +129,8 @@ namespace RERenderer
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint8_t				mMinimumRenderQueueIndex;	///< Inclusive
-		uint8_t				mMaximumRenderQueueIndex;	///< Inclusive
+		RECore::uint8				mMinimumRenderQueueIndex;	///< Inclusive
+		RECore::uint8				mMaximumRenderQueueIndex;	///< Inclusive
 		bool				mTransparentPass;
 		MaterialTechniqueId	mMaterialTechniqueId;
 

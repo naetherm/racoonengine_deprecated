@@ -77,24 +77,24 @@ namespace
 				RERHI::VertexAttributeFormat::FLOAT_3,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Position",								// name[32] (char)
 				"POSITION",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				0,										// alignedByteOffset (uint32_t)
-				sizeof(float) * 7,						// strideInBytes (uint32_t)
-				1										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				0,										// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 7,						// strideInBytes (RECore::uint32)
+				1										// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 1
 				// Data destination
 				RERHI::VertexAttributeFormat::FLOAT_4,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Adjacency",							// name[32] (char)
 				"TEXCOORD",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				sizeof(float) * 3,						// alignedByteOffset (uint32_t)
-				sizeof(float) * 7,						// strideInBytes (uint32_t)
-				1										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				sizeof(float) * 3,						// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 7,						// strideInBytes (RECore::uint32)
+				1										// instancesPerElement (RECore::uint32)
 			}
 		};
 
@@ -116,7 +116,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
-	const RERHI::VertexAttributes TerrainSceneItem::VERTEX_ATTRIBUTES(static_cast<uint32_t>(GLM_COUNTOF(::detail::TerrainVertexAttributesLayout)), ::detail::TerrainVertexAttributesLayout);
+	const RERHI::VertexAttributes TerrainSceneItem::VERTEX_ATTRIBUTES(static_cast<RECore::uint32>(GLM_COUNTOF(::detail::TerrainVertexAttributesLayout)), ::detail::TerrainVertexAttributesLayout);
 
 
 	//[-------------------------------------------------------]
@@ -204,22 +204,22 @@ namespace RERenderer
 	{
 		// The index buffer describes one tile of NxN patches: Four vertices per quad, with "::detail::VERTICES_PER_TILE_EDGE" - 1 quads per tile edge
 		int index = 0;
-		uint16_t indices[::detail::NUMBER_OF_INDICES];
+		RECore::uint16 indices[::detail::NUMBER_OF_INDICES];
 		for (int y = 0; y < ::detail::VERTICES_PER_TILE_EDGE - 1; ++y)
 		{
 			const int rowStart = y * ::detail::VERTICES_PER_TILE_EDGE;
 			for (int x = 0; x < ::detail::VERTICES_PER_TILE_EDGE - 1; ++x)
 			{
-				indices[index++] = static_cast<uint16_t>(rowStart + x);
-				indices[index++] = static_cast<uint16_t>(rowStart + x + ::detail::VERTICES_PER_TILE_EDGE);
-				indices[index++] = static_cast<uint16_t>(rowStart + x + ::detail::VERTICES_PER_TILE_EDGE + 1);
-				indices[index++] = static_cast<uint16_t>(rowStart + x + 1);
+				indices[index++] = static_cast<RECore::uint16>(rowStart + x);
+				indices[index++] = static_cast<RECore::uint16>(rowStart + x + ::detail::VERTICES_PER_TILE_EDGE);
+				indices[index++] = static_cast<RECore::uint16>(rowStart + x + ::detail::VERTICES_PER_TILE_EDGE + 1);
+				indices[index++] = static_cast<RECore::uint16>(rowStart + x + 1);
 			}
 		}
 		RHI_ASSERT(::detail::NUMBER_OF_INDICES == index, "Invalid index")
 
 		// Create the index buffer object (IBO)
-		mIndexBufferPtr = bufferManager.createIndexBuffer(sizeof(uint16_t) * ::detail::NUMBER_OF_INDICES, indices, 0, RERHI::BufferUsage::STATIC_DRAW, RERHI::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME("Terrain tile ring"));
+		mIndexBufferPtr = bufferManager.createIndexBuffer(sizeof(RECore::uint16) * ::detail::NUMBER_OF_INDICES, indices, 0, RERHI::BufferUsage::STATIC_DRAW, RERHI::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME("Terrain tile ring"));
 	}
 
 	void TerrainSceneItem::createTerrainTileRing(TerrainTileRing& terrainTileRing, RERHI::RHIBufferManager& bufferManager, int holeWidth, int outerWidth, float tileSize) const
@@ -237,7 +237,7 @@ namespace RERenderer
 		{
 			// Create the vertex buffer data
 			int index = 0;
-			::detail::InstanceData* vertexBufferData = new ::detail::InstanceData[static_cast<uint32_t>(numberOfTiles)];
+			::detail::InstanceData* vertexBufferData = new ::detail::InstanceData[static_cast<RECore::uint32>(numberOfTiles)];
 			const float halfWidth = 0.5f * static_cast<float>(outerWidth);
 			for (int y = 0; y < outerWidth; ++y)
 			{
@@ -326,7 +326,7 @@ namespace RERenderer
 
 		// Create vertex array object (VAO)
 		const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-		terrainTileRing.vertexArrayPtr = bufferManager.createVertexArray(TerrainSceneItem::VERTEX_ATTRIBUTES, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, mIndexBufferPtr RHI_RESOURCE_DEBUG_NAME("Terrain tile ring"));
+		terrainTileRing.vertexArrayPtr = bufferManager.createVertexArray(TerrainSceneItem::VERTEX_ATTRIBUTES, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, mIndexBufferPtr RHI_RESOURCE_DEBUG_NAME("Terrain tile ring"));
 	}
 
 

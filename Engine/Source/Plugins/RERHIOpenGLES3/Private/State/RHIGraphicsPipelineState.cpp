@@ -33,7 +33,7 @@
 namespace RERHIOpenGLES3 {
 
 GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &openGLES3Rhi,
-                                             const RERHI::GraphicsPipelineState &graphicsPipelineState, uint16_t id
+                                             const RERHI::GraphicsPipelineState &graphicsPipelineState, RECore::uint16 id
                                              RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
   RHIGraphicsPipelineState(openGLES3Rhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mOpenGLES3PrimitiveTopology(Mapping::getOpenGLES3Type(graphicsPipelineState.primitiveTopology)),

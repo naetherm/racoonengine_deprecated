@@ -54,10 +54,10 @@ PRAGMA_WARNING_POP
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace RECore {
-template<class ELEMENT_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
+template<class ELEMENT_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS>
 class PackedElementManager;
 
-template<class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
+template<class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS>
 class ResourceManagerTemplate;
 }
 namespace RERenderer {
@@ -76,8 +76,8 @@ namespace RERenderer
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
 	typedef std::vector<SubMesh> SubMeshes;
-	typedef uint32_t			 MeshResourceId;		///< POD mesh resource identifier
-	typedef uint32_t			 SkeletonResourceId;	///< POD skeleton resource identifier
+	typedef RECore::uint32			 MeshResourceId;		///< POD mesh resource identifier
+	typedef RECore::uint32			 SkeletonResourceId;	///< POD skeleton resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -148,22 +148,22 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Vertex and index data                                 ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] inline uint32_t getNumberOfVertices() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfVertices() const
 		{
 			return mNumberOfVertices;
 		}
 
-		inline void setNumberOfVertices(uint32_t numberOfVertices)
+		inline void setNumberOfVertices(RECore::uint32 numberOfVertices)
 		{
 			mNumberOfVertices = numberOfVertices;
 		}
 
-		[[nodiscard]] inline uint32_t getNumberOfIndices() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfIndices() const
 		{
 			return mNumberOfIndices;
 		}
 
-		inline void setNumberOfIndices(uint32_t numberOfIndices)
+		inline void setNumberOfIndices(RECore::uint32 numberOfIndices)
 		{
 			mNumberOfIndices = numberOfIndices;
 		}
@@ -197,12 +197,12 @@ namespace RERenderer
 			return mSubMeshes;
 		}
 
-		[[nodiscard]] inline uint8_t getNumberOfLods() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfLods() const
 		{
 			return mNumberOfLods;
 		}
 
-		inline void setNumberOfLods(uint8_t numberOfLods)
+		inline void setNumberOfLods(RECore::uint8 numberOfLods)
 		{
 			mNumberOfLods = numberOfLods;
 		}
@@ -317,13 +317,13 @@ namespace RERenderer
 		glm::vec3 mBoundingSpherePosition;
 		float	  mBoundingSphereRadius;
 		// Vertex and index data
-		uint32_t			 mNumberOfVertices;			///< Number of vertices
-		uint32_t			 mNumberOfIndices;			///< Number of indices
+		RECore::uint32			 mNumberOfVertices;			///< Number of vertices
+		RECore::uint32			 mNumberOfIndices;			///< Number of indices
 		RERHI::RHIVertexArrayPtr mVertexArray;				///< Vertex array object (VAO), can be a null pointer, directly containing also the index data of all LODs
 		RERHI::RHIVertexArrayPtr mPositionOnlyVertexArray;	///< Optional position-only vertex array object (VAO) which can reduce the number of processed vertices up to half, can be a null pointer, can be used for position-only rendering (e.g. shadow map rendering) using the same vertex data that the original vertex array object (VAO) uses, directly containing also the index data of all LODs
 		// Sub-meshes and LODs
 		SubMeshes			 mSubMeshes;			///< Sub-meshes, directly containing also the sub-meshes of all LODs, each LOD has the same number of sub-meshes
-		uint8_t				 mNumberOfLods;			///< Number of LODs, there's always at least one LOD, namely the original none reduced version
+		RECore::uint8				 mNumberOfLods;			///< Number of LODs, there's always at least one LOD, namely the original none reduced version
 		// Optional skeleton
 		SkeletonResourceId	 mSkeletonResourceId;	///< Resource ID of the used skeleton, can be invalid
 

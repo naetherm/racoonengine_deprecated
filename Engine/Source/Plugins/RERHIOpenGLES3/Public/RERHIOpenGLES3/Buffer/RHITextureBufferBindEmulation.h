@@ -71,7 +71,7 @@ public:
   *  @param[in] textureFormat
   *    Texture buffer data format
   */
-  TextureBufferBindEmulation(RHIDynamicRHI& openGLES3Rhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage, [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  TextureBufferBindEmulation(RHIDynamicRHI& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage, [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

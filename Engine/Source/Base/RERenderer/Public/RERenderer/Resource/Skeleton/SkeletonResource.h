@@ -41,10 +41,10 @@ PRAGMA_WARNING_POP
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace RECore {
-template<class ELEMENT_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
+template<class ELEMENT_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS>
 class PackedElementManager;
 
-template<class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
+template<class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS>
 class ResourceManagerTemplate;
 }
 namespace RERenderer {
@@ -62,7 +62,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t SkeletonResourceId;	///< POD skeleton resource identifier
+	typedef RECore::uint32 SkeletonResourceId;	///< POD skeleton resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -94,25 +94,25 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		// static constexpr uint32_t NUMBER_OF_BONE_SPACE_DATA_BYTES = sizeof(glm::mat3x4);	// Linear blend skinning (LBS) using matrices; there's no runtime switch by intent since dual quaternion skinning (DQS) is the way to go, don't remove this reference comment
-		static constexpr uint32_t NUMBER_OF_BONE_SPACE_DATA_BYTES = 32;	// Dual quaternion skinning (DQS); "sizeof(glm::dualquat)" not used due to unavailable forward declaration inside "glm/fwd.hpp"
+		// static constexpr RECore::uint32 NUMBER_OF_BONE_SPACE_DATA_BYTES = sizeof(glm::mat3x4);	// Linear blend skinning (LBS) using matrices; there's no runtime switch by intent since dual quaternion skinning (DQS) is the way to go, don't remove this reference comment
+		static constexpr RECore::uint32 NUMBER_OF_BONE_SPACE_DATA_BYTES = 32;	// Dual quaternion skinning (DQS); "sizeof(glm::dualquat)" not used due to unavailable forward declaration inside "glm/fwd.hpp"
 
 
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline uint8_t getNumberOfBones() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfBones() const
 		{
 			return mNumberOfBones;
 		}
 
-		[[nodiscard]] inline const uint8_t* getBoneParentIndices() const
+		[[nodiscard]] inline const RECore::uint8* getBoneParentIndices() const
 		{
 			return mBoneParentIndices;
 		}
 
-		[[nodiscard]] inline const uint32_t* getBoneIds() const
+		[[nodiscard]] inline const RECore::uint32* getBoneIds() const
 		{
 			return mBoneIds;
 		}
@@ -137,18 +137,18 @@ namespace RERenderer
 			return mGlobalBoneMatrices;
 		}
 
-		[[nodiscard]] inline uint32_t getTotalNumberOfBoneSpaceDataBytes() const
+		[[nodiscard]] inline RECore::uint32 getTotalNumberOfBoneSpaceDataBytes() const
 		{
 			ASSERT(0 != mNumberOfBones, "Each skeleton must have at least one bone")
-			return static_cast<uint32_t>(NUMBER_OF_BONE_SPACE_DATA_BYTES * mNumberOfBones);
+			return static_cast<RECore::uint32>(NUMBER_OF_BONE_SPACE_DATA_BYTES * mNumberOfBones);
 		}
 
-		[[nodiscard]] inline const uint8_t* getBoneSpaceData() const
+		[[nodiscard]] inline const RECore::uint8* getBoneSpaceData() const
 		{
 			return mBoneSpaceData;
 		}
 
-		[[nodiscard]] uint32_t getBoneIndexByBoneId(uint32_t boneId) const;	// Bone IDs = "RERenderer::StringId" on bone name, "RECore::getInvalid<uint32_t>()" if unknown bone ID
+		[[nodiscard]] RECore::uint32 getBoneIndexByBoneId(RECore::uint32 boneId) const;	// Bone IDs = "RERenderer::StringId" on bone name, "RECore::getInvalid<RECore::uint32>()" if unknown bone ID
 		void localToGlobalPose();
 
 
@@ -232,14 +232,14 @@ namespace RERenderer
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint8_t	   mNumberOfBones;		///< Number of bones
+		RECore::uint8	   mNumberOfBones;		///< Number of bones
 		// Structure-of-arrays (SoA)
-		uint8_t*   mBoneParentIndices;	///< Cache friendly depth-first rolled up bone parent indices, null pointer only in case of horrible error, free the memory if no longer required
-		uint32_t*  mBoneIds;			///< Cache friendly depth-first rolled up bone IDs ("RERenderer::StringId" on bone name), null pointer only in case of horrible error, don't free the memory because it's owned by "mBoneParentIndices"
+		RECore::uint8*   mBoneParentIndices;	///< Cache friendly depth-first rolled up bone parent indices, null pointer only in case of horrible error, free the memory if no longer required
+		RECore::uint32*  mBoneIds;			///< Cache friendly depth-first rolled up bone IDs ("RERenderer::StringId" on bone name), null pointer only in case of horrible error, don't free the memory because it's owned by "mBoneParentIndices"
 		glm::mat4* mLocalBoneMatrices;	///< Cache friendly depth-first rolled up local bone matrices, null pointer only in case of horrible error, don't free the memory because it's owned by "mBoneParentIndices"
 		glm::mat4* mBoneOffsetMatrices;	///< Cache friendly depth-first rolled up bone offset matrices (object space to bone space), null pointer only in case of horrible error, don't free the memory because it's owned by "mBoneParentIndices"
 		glm::mat4* mGlobalBoneMatrices;	///< Cache friendly depth-first rolled up global bone matrices, null pointer only in case of horrible error, don't free the memory because it's owned by "mBoneParentIndices"
-		uint8_t*   mBoneSpaceData;		///< Cache friendly depth-first rolled up bone space data, null pointer only in case of horrible error, don't free the memory because it's owned by "mBoneParentIndices"
+		RECore::uint8*   mBoneSpaceData;		///< Cache friendly depth-first rolled up bone space data, null pointer only in case of horrible error, don't free the memory because it's owned by "mBoneParentIndices"
 
 
 	};

@@ -39,7 +39,7 @@ namespace RERenderer {
 class TextureResource;
 }
 namespace RECore {
-	template <class ELEMENT_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class PackedElementManager;
+	template <class ELEMENT_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS> class PackedElementManager;
 }
 
 
@@ -53,7 +53,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t TextureResourceId;	///< POD texture resource identifier
+	typedef RECore::uint32 TextureResourceId;	///< POD texture resource identifier
 
 
 	//[-------------------------------------------------------]

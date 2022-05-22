@@ -43,10 +43,10 @@ PRAGMA_WARNING_POP
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace RECore {
-template<class ELEMENT_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
+template<class ELEMENT_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS>
 class PackedElementManager;
 
-template<class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
+template<class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS>
 class ResourceManagerTemplate;
 }
 namespace RERenderer {
@@ -64,7 +64,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t CompositorWorkspaceResourceId;	///< POD compositor workspace resource identifier
+	typedef RECore::uint32 CompositorWorkspaceResourceId;	///< POD compositor workspace resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -93,7 +93,7 @@ namespace RERenderer
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
-		inline void reserveCompositorNodes(uint32_t numberOfCompositorNodes)
+		inline void reserveCompositorNodes(RECore::uint32 numberOfCompositorNodes)
 		{
 			mCompositorNodeAssetIds.reserve(numberOfCompositorNodes);
 		}

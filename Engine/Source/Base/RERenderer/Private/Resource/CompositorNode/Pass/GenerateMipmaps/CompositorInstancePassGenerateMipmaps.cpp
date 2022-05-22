@@ -77,9 +77,9 @@ namespace RERenderer
 
 						// Render target size changed?
 						RERHI::RHITexture2D* texture2D = static_cast<RERHI::RHITexture2D*>(texture);
-						const uint32_t renderTargetWidth = texture2D->getWidth();
-						const uint32_t renderTargetHeight = texture2D->getHeight();
-						const uint32_t numberOfMipmaps = RERHI::RHITexture::getNumberOfMipmaps(renderTargetWidth, renderTargetHeight);
+						const RECore::uint32 renderTargetWidth = texture2D->getWidth();
+						const RECore::uint32 renderTargetHeight = texture2D->getHeight();
+						const RECore::uint32 numberOfMipmaps = RERHI::RHITexture::getNumberOfMipmaps(renderTargetWidth, renderTargetHeight);
 						if (mRenderTargetWidth != renderTargetWidth || mRenderTargetHeight != renderTargetHeight)
 						{
 							mRenderTargetWidth = renderTargetWidth;
@@ -87,7 +87,7 @@ namespace RERenderer
 							mFramebuffersPtrs.resize(numberOfMipmaps);
 							RERHI::RHIDynamicRHI& rhi = renderer.getRhi();
 							RERHI::RHIRenderPass* renderPass = rhi.createRenderPass(0, nullptr, RERHI::TextureFormat::D32_FLOAT, 1 RHI_RESOURCE_DEBUG_NAME("Compositor instance pass generate mipmap"));	// TODO(naetherm) Make the texture format flexible, custom mipmap generation also makes sense for color textures
-							for (uint32_t mipmapIndex = 1; mipmapIndex < numberOfMipmaps; ++mipmapIndex)
+							for (RECore::uint32 mipmapIndex = 1; mipmapIndex < numberOfMipmaps; ++mipmapIndex)
 							{
 								const RERHI::FramebufferAttachment depthFramebufferAttachment(texture, mipmapIndex, 0);
 								mFramebuffersPtrs[mipmapIndex] = rhi.createFramebuffer(*renderPass, nullptr, &depthFramebufferAttachment RHI_RESOURCE_DEBUG_NAME(("Compositor instance pass generate mipmap " + std::to_string(mipmapIndex)).c_str()));
@@ -104,9 +104,9 @@ namespace RERenderer
 							RENDERER_SCOPED_PROFILER_EVENT_DYNAMIC(renderer.getContext(), mCommandBuffer, compositorResourcePassGenerateMipmaps.getDebugName())
 
 							// Basing on "Hierarchical-Z map based occlusion culling" - "Hi-Z map construction" - http://rastergrid.com/blog/2010/10/hierarchical-z-map-based-occlusion-culling/
-							uint32_t currentWidth = renderTargetWidth;
-							uint32_t currentHeight = renderTargetHeight;
-							for (uint32_t mipmapIndex = 1; mipmapIndex < numberOfMipmaps; ++mipmapIndex)
+							RECore::uint32 currentWidth = renderTargetWidth;
+							RECore::uint32 currentHeight = renderTargetHeight;
+							for (RECore::uint32 mipmapIndex = 1; mipmapIndex < numberOfMipmaps; ++mipmapIndex)
 							{
 								// Calculate next viewport size and ensure that the viewport size is always at least 1x1
 								currentWidth = RERHI::RHITexture::getHalfSize(currentWidth);
@@ -177,8 +177,8 @@ namespace RERenderer
 		ICompositorInstancePass(compositorResourcePassGenerateMipmaps, compositorNodeInstance),
 		mCompositorResourcePassCompute(nullptr),
 		mCompositorInstancePassCompute(nullptr),
-		mRenderTargetWidth(RECore::getInvalid<uint32_t>()),
-		mRenderTargetHeight(RECore::getInvalid<uint32_t>())
+		mRenderTargetWidth(RECore::getInvalid<RECore::uint32>()),
+		mRenderTargetHeight(RECore::getInvalid<RECore::uint32>())
 	{
 		// Handle texture mipmap generation via custom material blueprint
 		const AssetId materialBlueprintAssetId = compositorResourcePassGenerateMipmaps.getMaterialBlueprintAssetId();

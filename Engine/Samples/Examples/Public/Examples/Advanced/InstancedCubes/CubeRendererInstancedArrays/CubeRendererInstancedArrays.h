@@ -71,7 +71,7 @@ public:
 	*  @param[in] sceneRadius
 	*    Scene radius
 	*/
-	CubeRendererInstancedArrays(RERHI::RHIDynamicRHI& rhi, RERHI::RHIRenderPass& renderPass, uint32_t numberOfTextures, uint32_t sceneRadius);
+	CubeRendererInstancedArrays(RERHI::RHIDynamicRHI& rhi, RERHI::RHIRenderPass& renderPass, RECore::uint32 numberOfTextures, RECore::uint32 sceneRadius);
 
 	/**
 	*  @brief
@@ -84,7 +84,7 @@ public:
 //[ Public virtual ICubeRenderer methods                  ]
 //[-------------------------------------------------------]
 public:
-	virtual void setNumberOfCubes(uint32_t numberOfCubes) override;
+	virtual void setNumberOfCubes(RECore::uint32 numberOfCubes) override;
 	virtual void fillCommandBuffer(float globalTimer, float globalScale, float lightPositionX, float lightPositionY, float lightPositionZ, RERHI::RHICommandBuffer& commandBuffer) override;
 
 
@@ -106,9 +106,9 @@ private:
 	RERHI::RHIBufferManagerPtr	 mBufferManager;					///< Buffer manager, can be a null pointer
 	RERHI::RHITextureManagerPtr  mTextureManager;					///< Texture manager, can be a null pointer
 	RERHI::RHICommandBuffer		 mCommandBuffer;					///< Command buffer which is recorded once and then used multiple times
-	uint32_t				 mNumberOfTextures;					///< Number of textures
-	uint32_t				 mSceneRadius;						///< Scene radius
-	uint32_t				 mMaximumNumberOfInstancesPerBatch;	///< Maximum number of instances per batch
+	RECore::uint32				 mNumberOfTextures;					///< Number of textures
+	RECore::uint32				 mSceneRadius;						///< Scene radius
+	RECore::uint32				 mMaximumNumberOfInstancesPerBatch;	///< Maximum number of instances per batch
 	RERHI::RHIRootSignaturePtr	 mRootSignature;					///< Root signature, can be a null pointer
 	RERHI::RHITexture2DPtr		 mTexture2D;						///< 2D texture, can be a null pointer
 	RERHI::RHIUniformBufferPtr	 mUniformBufferStaticVs;			///< Static vertex shader uniform buffer object (UBO), can be a null pointer
@@ -120,7 +120,7 @@ private:
 	RERHI::RHIGraphicsProgramPtr mGraphicsProgram;					///< Graphics program, can be a null pointer
 	RERHI::RHIVertexBufferPtr	 mVertexBuffer;						///< Vertex buffer object (VBO), can be a null pointer
 	RERHI::RHIIndexBufferPtr	 mIndexBuffer;						///< Index buffer object (IBO), can be a null pointer
-	uint32_t				 mNumberOfBatches;					///< Current number of batches
+	RECore::uint32				 mNumberOfBatches;					///< Current number of batches
 	BatchInstancedArrays*	 mBatches;							///< Batches, can be a null pointer
 
 

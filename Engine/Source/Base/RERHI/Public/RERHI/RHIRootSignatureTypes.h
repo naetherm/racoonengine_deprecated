@@ -101,30 +101,30 @@ namespace RERHI
 	struct DescriptorRange
 	{
 		DescriptorRangeType rangeType;
-		uint32_t			numberOfDescriptors;
-		uint32_t			baseShaderRegister;	///< When using explicit binding locations
-		uint32_t			registerSpace;
-		uint32_t			offsetInDescriptorsFromTableStart;
+		RECore::uint32			numberOfDescriptors;
+		RECore::uint32			baseShaderRegister;	///< When using explicit binding locations
+		RECore::uint32			registerSpace;
+		RECore::uint32			offsetInDescriptorsFromTableStart;
 
 		// The rest is not part of "D3D12_DESCRIPTOR_RANGE" and was added to support Vulkan, OpenGL and Direct3D 9 as well
-		static constexpr uint32_t NAME_LENGTH = 31 + 1;	///< +1 for the terminating zero
+		static constexpr RECore::uint32 NAME_LENGTH = 31 + 1;	///< +1 for the terminating zero
 		char					  baseShaderRegisterName[NAME_LENGTH];	///< When not using explicit binding locations (OpenGL ES 3, legacy GLSL profiles)
 		ShaderVisibility		  shaderVisibility;
 		ResourceType			  resourceType;
 	};
 	struct DescriptorRangeBuilder final : public DescriptorRange
 	{
-		static constexpr uint32_t OFFSET_APPEND = 0xffffffff;
+		static constexpr RECore::uint32 OFFSET_APPEND = 0xffffffff;
 		static inline void initialize(
 			DescriptorRange& range,
 			ResourceType _resourceType,
-			uint32_t _baseShaderRegister,
+			RECore::uint32 _baseShaderRegister,
 			const char _baseShaderRegisterName[NAME_LENGTH],
 			ShaderVisibility _shaderVisibility,
 			DescriptorRangeType _rangeType =  DescriptorRangeType::NUMBER_OF_RANGE_TYPES,	// Automatically determine the descriptor range type basing on the resource type
-			uint32_t _numberOfDescriptors = 1,
-			uint32_t _registerSpace = 0,
-			uint32_t _offsetInDescriptorsFromTableStart = OFFSET_APPEND)
+			RECore::uint32 _numberOfDescriptors = 1,
+			RECore::uint32 _registerSpace = 0,
+			RECore::uint32 _offsetInDescriptorsFromTableStart = OFFSET_APPEND)
 		{
 			if (DescriptorRangeType::NUMBER_OF_RANGE_TYPES == _rangeType)
 			{
@@ -198,34 +198,34 @@ namespace RERHI
 		{}
 		inline DescriptorRangeBuilder(
 			ResourceType _resourceType,
-			uint32_t _baseShaderRegister,
+			RECore::uint32 _baseShaderRegister,
 			const char _baseShaderRegisterName[NAME_LENGTH],
 			ShaderVisibility _shaderVisibility,
 			DescriptorRangeType _rangeType = DescriptorRangeType::NUMBER_OF_RANGE_TYPES,	// Automatically determine the descriptor range type basing on the resource type
-			uint32_t _numberOfDescriptors = 1,
-			uint32_t _registerSpace = 0,
-			uint32_t _offsetInDescriptorsFromTableStart = OFFSET_APPEND)
+			RECore::uint32 _numberOfDescriptors = 1,
+			RECore::uint32 _registerSpace = 0,
+			RECore::uint32 _offsetInDescriptorsFromTableStart = OFFSET_APPEND)
 		{
 			initialize(_resourceType, _baseShaderRegister, _baseShaderRegisterName, _shaderVisibility, _rangeType, _numberOfDescriptors, _registerSpace, _offsetInDescriptorsFromTableStart);
 		}
 		inline void initializeSampler(
-			uint32_t _baseShaderRegister,
+			RECore::uint32 _baseShaderRegister,
 			ShaderVisibility _shaderVisibility,
-			uint32_t _numberOfDescriptors = 1,
-			uint32_t _registerSpace = 0,
-			uint32_t _offsetInDescriptorsFromTableStart = OFFSET_APPEND)
+			RECore::uint32 _numberOfDescriptors = 1,
+			RECore::uint32 _registerSpace = 0,
+			RECore::uint32 _offsetInDescriptorsFromTableStart = OFFSET_APPEND)
 		{
 			initialize(*this, ResourceType::SAMPLER_STATE, _baseShaderRegister, "", _shaderVisibility, DescriptorRangeType::SAMPLER, _numberOfDescriptors, _registerSpace, _offsetInDescriptorsFromTableStart);
 		}
 		inline void initialize(
 			ResourceType _resourceType,
-			uint32_t _baseShaderRegister,
+			RECore::uint32 _baseShaderRegister,
 			const char _baseShaderRegisterName[NAME_LENGTH],
 			ShaderVisibility _shaderVisibility,
 			DescriptorRangeType _rangeType = DescriptorRangeType::NUMBER_OF_RANGE_TYPES,	// Automatically determine the descriptor range type basing on the resource type
-			uint32_t _numberOfDescriptors = 1,
-			uint32_t _registerSpace = 0,
-			uint32_t _offsetInDescriptorsFromTableStart = OFFSET_APPEND)
+			RECore::uint32 _numberOfDescriptors = 1,
+			RECore::uint32 _registerSpace = 0,
+			RECore::uint32 _offsetInDescriptorsFromTableStart = OFFSET_APPEND)
 		{
 			initialize(*this, _resourceType, _baseShaderRegister, _baseShaderRegisterName, _shaderVisibility, _rangeType, _numberOfDescriptors, _registerSpace, _offsetInDescriptorsFromTableStart);
 		}
@@ -244,14 +244,14 @@ namespace RERHI
 	*/
 	struct RootDescriptorTable
 	{
-		uint32_t numberOfDescriptorRanges;
-		uint64_t descriptorRanges;			///< Can't use "const DescriptorRange*" because we need to have something platform neutral we can easily serialize without getting too fine granular
+		RECore::uint32 numberOfDescriptorRanges;
+		RECore::uint64 descriptorRanges;			///< Can't use "const DescriptorRange*" because we need to have something platform neutral we can easily serialize without getting too fine granular
 	};
 	struct RootDescriptorTableBuilder final : public RootDescriptorTable
 	{
 		static inline void initialize(
 			RootDescriptorTable& rootDescriptorTable,
-			uint32_t _numberOfDescriptorRanges,
+			RECore::uint32 _numberOfDescriptorRanges,
 			const DescriptorRange* _descriptorRanges)
 		{
 			rootDescriptorTable.numberOfDescriptorRanges = _numberOfDescriptorRanges;
@@ -262,13 +262,13 @@ namespace RERHI
 		inline explicit RootDescriptorTableBuilder(const RootDescriptorTableBuilder&)
 		{}
 		inline RootDescriptorTableBuilder(
-			uint32_t _numberOfDescriptorRanges,
+			RECore::uint32 _numberOfDescriptorRanges,
 			const DescriptorRange* _descriptorRanges)
 		{
 			initialize(_numberOfDescriptorRanges, _descriptorRanges);
 		}
 		inline void initialize(
-			uint32_t _numberOfDescriptorRanges,
+			RECore::uint32 _numberOfDescriptorRanges,
 			const DescriptorRange* _descriptorRanges)
 		{
 			initialize(*this, _numberOfDescriptorRanges, _descriptorRanges);
@@ -306,17 +306,17 @@ namespace RERHI
 	*/
 	struct RootConstants
 	{
-		uint32_t shaderRegister;
-		uint32_t registerSpace;
-		uint32_t numberOf32BitValues;
+		RECore::uint32 shaderRegister;
+		RECore::uint32 registerSpace;
+		RECore::uint32 numberOf32BitValues;
 	};
 	struct RootConstantsBuilder final : public RootConstants
 	{
 		static inline void initialize(
 			RootConstants& rootConstants,
-			uint32_t _numberOf32BitValues,
-			uint32_t _shaderRegister,
-			uint32_t _registerSpace = 0)
+			RECore::uint32 _numberOf32BitValues,
+			RECore::uint32 _shaderRegister,
+			RECore::uint32 _registerSpace = 0)
 		{
 			rootConstants.numberOf32BitValues = _numberOf32BitValues;
 			rootConstants.shaderRegister = _shaderRegister;
@@ -327,16 +327,16 @@ namespace RERHI
 		inline explicit RootConstantsBuilder(const RootConstantsBuilder&)
 		{}
 		inline RootConstantsBuilder(
-			uint32_t _numberOf32BitValues,
-			uint32_t _shaderRegister,
-			uint32_t _registerSpace = 0)
+			RECore::uint32 _numberOf32BitValues,
+			RECore::uint32 _shaderRegister,
+			RECore::uint32 _registerSpace = 0)
 		{
 			initialize(_numberOf32BitValues, _shaderRegister, _registerSpace);
 		}
 		inline void initialize(
-			uint32_t _numberOf32BitValues,
-			uint32_t _shaderRegister,
-			uint32_t _registerSpace = 0)
+			RECore::uint32 _numberOf32BitValues,
+			RECore::uint32 _shaderRegister,
+			RECore::uint32 _registerSpace = 0)
 		{
 			initialize(*this, _numberOf32BitValues, _shaderRegister, _registerSpace);
 		}
@@ -354,12 +354,12 @@ namespace RERHI
 	*/
 	struct RootDescriptor
 	{
-		uint32_t shaderRegister;
-		uint32_t registerSpace;
+		RECore::uint32 shaderRegister;
+		RECore::uint32 registerSpace;
 	};
 	struct RootDescriptorBuilder final : public RootDescriptor
 	{
-		static inline void initialize(RootDescriptor& table, uint32_t _shaderRegister, uint32_t _registerSpace = 0)
+		static inline void initialize(RootDescriptor& table, RECore::uint32 _shaderRegister, RECore::uint32 _registerSpace = 0)
 		{
 			table.shaderRegister = _shaderRegister;
 			table.registerSpace = _registerSpace;
@@ -369,14 +369,14 @@ namespace RERHI
 		inline explicit RootDescriptorBuilder(const RootDescriptorBuilder&)
 		{}
 		inline RootDescriptorBuilder(
-			uint32_t _shaderRegister,
-			uint32_t _registerSpace = 0)
+			RECore::uint32 _shaderRegister,
+			RECore::uint32 _registerSpace = 0)
 		{
 			initialize(_shaderRegister, _registerSpace);
 		}
 		inline void initialize(
-			uint32_t _shaderRegister,
-			uint32_t _registerSpace = 0)
+			RECore::uint32 _shaderRegister,
+			RECore::uint32 _registerSpace = 0)
 		{
 			initialize(*this, _shaderRegister, _registerSpace);
 		}
@@ -405,13 +405,13 @@ namespace RERHI
 	struct RootParameterData final
 	{
 		RootParameterType	parameterType;
-		uint32_t			numberOfDescriptorRanges;
+		RECore::uint32			numberOfDescriptorRanges;
 	};
 	struct RootParameterBuilder final : public RootParameter
 	{
 		static inline void initializeAsDescriptorTable(
 			RootParameter& rootParam,
-			uint32_t numberOfDescriptorRanges,
+			RECore::uint32 numberOfDescriptorRanges,
 			const DescriptorRange* descriptorRanges)
 		{
 			rootParam.parameterType = RootParameterType::DESCRIPTOR_TABLE;
@@ -419,33 +419,33 @@ namespace RERHI
 		}
 		static inline void initializeAsConstants(
 			RootParameter& rootParam,
-			uint32_t numberOf32BitValues,
-			uint32_t shaderRegister,
-			uint32_t registerSpace = 0)
+			RECore::uint32 numberOf32BitValues,
+			RECore::uint32 shaderRegister,
+			RECore::uint32 registerSpace = 0)
 		{
 			rootParam.parameterType = RootParameterType::CONSTANTS_32BIT;
 			RootConstantsBuilder::initialize(rootParam.constants, numberOf32BitValues, shaderRegister, registerSpace);
 		}
 		static inline void initializeAsConstantBufferView(
 			RootParameter& rootParam,
-			uint32_t shaderRegister,
-			uint32_t registerSpace = 0)
+			RECore::uint32 shaderRegister,
+			RECore::uint32 registerSpace = 0)
 		{
 			rootParam.parameterType = RootParameterType::UBV;
 			RootDescriptorBuilder::initialize(rootParam.descriptor, shaderRegister, registerSpace);
 		}
 		static inline void initializeAsShaderResourceView(
 			RootParameter& rootParam,
-			uint32_t shaderRegister,
-			uint32_t registerSpace = 0)
+			RECore::uint32 shaderRegister,
+			RECore::uint32 registerSpace = 0)
 		{
 			rootParam.parameterType = RootParameterType::SRV;
 			RootDescriptorBuilder::initialize(rootParam.descriptor, shaderRegister, registerSpace);
 		}
 		static inline void initializeAsUnorderedAccessView(
 			RootParameter& rootParam,
-			uint32_t shaderRegister,
-			uint32_t registerSpace = 0)
+			RECore::uint32 shaderRegister,
+			RECore::uint32 registerSpace = 0)
 		{
 			rootParam.parameterType = RootParameterType::UAV;
 			RootDescriptorBuilder::initialize(rootParam.descriptor, shaderRegister, registerSpace);
@@ -455,33 +455,33 @@ namespace RERHI
 		inline explicit RootParameterBuilder(const RootParameterBuilder&)
 		{}
 		inline void initializeAsDescriptorTable(
-			uint32_t numberOfDescriptorRanges,
+			RECore::uint32 numberOfDescriptorRanges,
 			const DescriptorRange* descriptorRanges)
 		{
 			initializeAsDescriptorTable(*this, numberOfDescriptorRanges, descriptorRanges);
 		}
 		inline void initializeAsConstants(
-			uint32_t numberOf32BitValues,
-			uint32_t shaderRegister,
-			uint32_t registerSpace = 0)
+			RECore::uint32 numberOf32BitValues,
+			RECore::uint32 shaderRegister,
+			RECore::uint32 registerSpace = 0)
 		{
 			initializeAsConstants(*this, numberOf32BitValues, shaderRegister, registerSpace);
 		}
 		inline void initializeAsConstantBufferView(
-			uint32_t shaderRegister,
-			uint32_t registerSpace = 0)
+			RECore::uint32 shaderRegister,
+			RECore::uint32 registerSpace = 0)
 		{
 			initializeAsConstantBufferView(*this, shaderRegister, registerSpace);
 		}
 		inline void initializeAsShaderResourceView(
-			uint32_t shaderRegister,
-			uint32_t registerSpace = 0)
+			RECore::uint32 shaderRegister,
+			RECore::uint32 registerSpace = 0)
 		{
 			initializeAsShaderResourceView(*this, shaderRegister, registerSpace);
 		}
 		inline void initializeAsUnorderedAccessView(
-			uint32_t shaderRegister,
-			uint32_t registerSpace = 0)
+			RECore::uint32 shaderRegister,
+			RECore::uint32 registerSpace = 0)
 		{
 			initializeAsUnorderedAccessView(*this, shaderRegister, registerSpace);
 		}
@@ -546,13 +546,13 @@ namespace RERHI
 		TextureAddressMode	addressV;
 		TextureAddressMode	addressW;
 		float				mipLodBias;
-		uint32_t			maxAnisotropy;
+		RECore::uint32			maxAnisotropy;
 		ComparisonFunc		comparisonFunc;
 		StaticBorderColor	borderColor;
 		float				minLod;
 		float				maxLod;
-		uint32_t			shaderRegister;
-		uint32_t			registerSpace;
+		RECore::uint32			shaderRegister;
+		RECore::uint32			registerSpace;
 		ShaderVisibility	shaderVisibility;
 	};
 
@@ -570,9 +570,9 @@ namespace RERHI
 	*/
 	struct RootSignature
 	{
-		uint32_t				 numberOfParameters;
+		RECore::uint32				 numberOfParameters;
 		const RootParameter*	 parameters;
-		uint32_t				 numberOfStaticSamplers;
+		RECore::uint32				 numberOfStaticSamplers;
 		const StaticSampler*	 staticSamplers;
 		RootSignatureFlags::Enum flags;
 	};
@@ -580,9 +580,9 @@ namespace RERHI
 	{
 		static inline void initialize(
 			RootSignature& rootSignature,
-			uint32_t _numberOfParameters,
+			RECore::uint32 _numberOfParameters,
 			const RootParameter* _parameters,
-			uint32_t _numberOfStaticSamplers = 0,
+			RECore::uint32 _numberOfStaticSamplers = 0,
 			const StaticSampler* _staticSamplers = nullptr,
 			RootSignatureFlags::Enum _flags = RootSignatureFlags::NONE)
 		{
@@ -597,18 +597,18 @@ namespace RERHI
 		inline explicit RootSignatureBuilder(const RootSignatureBuilder&)
 		{}
 		inline RootSignatureBuilder(
-			uint32_t _numberOfParameters,
+			RECore::uint32 _numberOfParameters,
 			const RootParameter* _parameters,
-			uint32_t _numberOfStaticSamplers = 0,
+			RECore::uint32 _numberOfStaticSamplers = 0,
 			const StaticSampler* _staticSamplers = nullptr,
 			RootSignatureFlags::Enum _flags = RootSignatureFlags::NONE)
 		{
 			initialize(_numberOfParameters, _parameters, _numberOfStaticSamplers, _staticSamplers, _flags);
 		}
 		inline void initialize(
-			uint32_t _numberOfParameters,
+			RECore::uint32 _numberOfParameters,
 			const RootParameter* _parameters,
-			uint32_t _numberOfStaticSamplers = 0,
+			RECore::uint32 _numberOfStaticSamplers = 0,
 			const StaticSampler* _staticSamplers = nullptr,
 			RootSignatureFlags::Enum _flags = RootSignatureFlags::NONE)
 		{

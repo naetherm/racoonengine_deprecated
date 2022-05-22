@@ -78,7 +78,7 @@ public:
   *  @param[in] numberOfMultisamples
   *    The number of multisamples per pixel (valid values: 1, 2, 4, 8)
   */
-  Texture2DBind(RHIDynamicRHI& openGLRhi, uint32_t width, uint32_t height, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  Texture2DBind(RHIDynamicRHI& openGLRhi, RECore::uint32 width, RECore::uint32 height, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief
@@ -91,7 +91,7 @@ public:
   //[ Public virtual Texture2D methods                      ]
   //[-------------------------------------------------------]
 public:
-  virtual void setMinimumMaximumMipmapIndex(uint32_t minimumMipmapIndex, uint32_t maximumMipmapIndex) override;
+  virtual void setMinimumMaximumMipmapIndex(RECore::uint32 minimumMipmapIndex, RECore::uint32 maximumMipmapIndex) override;
 
 
   //[-------------------------------------------------------]

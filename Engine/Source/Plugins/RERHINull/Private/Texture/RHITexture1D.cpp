@@ -31,7 +31,7 @@
 //[-------------------------------------------------------]
 namespace RERHINull {
 
-Texture1D::Texture1D(RHIDynamicRHI& nullRhi, uint32_t width RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+Texture1D::Texture1D(RHIDynamicRHI& nullRhi, RECore::uint32 width RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 RHITexture1D(nullRhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 {}
 

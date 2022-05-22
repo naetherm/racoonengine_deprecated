@@ -162,7 +162,7 @@ namespace RERenderer
 
 			{ // Tell the temporary root signature about the descriptor ranges
 				RERHI::DescriptorRange* descriptorRange = mDescriptorRanges.data();
-				for (uint32_t i = 0; i < rootSignatureHeader.numberOfRootParameters; ++i)
+				for (RECore::uint32 i = 0; i < rootSignatureHeader.numberOfRootParameters; ++i)
 				{
 					RERHI::RootParameter& rootParameter = mRootParameters[i];
 					if (RERHI::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
@@ -198,7 +198,7 @@ namespace RERenderer
 		{ // Read in the uniform buffers
 			MaterialBlueprintResource::UniformBuffers& uniformBuffers = mMaterialBlueprintResource->mUniformBuffers;
 			uniformBuffers.resize(materialBlueprintHeader.numberOfUniformBuffers);
-			for (uint32_t i = 0; i < materialBlueprintHeader.numberOfUniformBuffers; ++i)
+			for (RECore::uint32 i = 0; i < materialBlueprintHeader.numberOfUniformBuffers; ++i)
 			{
 				MaterialBlueprintResource::UniformBuffer& uniformBuffer = uniformBuffers[i];
 
@@ -223,7 +223,7 @@ namespace RERenderer
 		{ // Read in the texture buffers
 			MaterialBlueprintResource::TextureBuffers& textureBuffers = mMaterialBlueprintResource->mTextureBuffers;
 			textureBuffers.resize(materialBlueprintHeader.numberOfTextureBuffers);
-			for (uint32_t i = 0; i < materialBlueprintHeader.numberOfTextureBuffers; ++i)
+			for (RECore::uint32 i = 0; i < materialBlueprintHeader.numberOfTextureBuffers; ++i)
 			{
 				MaterialBlueprintResource::TextureBuffer& textureBuffer = textureBuffers[i];
 
@@ -309,7 +309,7 @@ namespace RERenderer
 				else
 				{
 					// The material blueprint is using a graphics pipeline state
-					for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
+					for (RECore::uint8 i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
 					{
 						if (RECore::isValid(mGraphicsShaderBlueprintAssetId[i]))
 						{
@@ -487,7 +487,7 @@ namespace RERenderer
 		else
 		{
 			// The material blueprint is using a graphics pipeline state
-			for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
+			for (RECore::uint8 i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
 			{
 				const ShaderBlueprintResourceId shaderBlueprintResourceId = mMaterialBlueprintResource->mGraphicsShaderBlueprintResourceId[i];
 				if (RECore::isValid(shaderBlueprintResourceId) && RECore::IResource::LoadingState::LOADED != shaderBlueprintResourceManager.getResourceByResourceId(shaderBlueprintResourceId).getLoadingState())
@@ -523,7 +523,7 @@ namespace RERenderer
 		// Create the sampler states
 		const MaterialBlueprintResourceManager& materialBlueprintResourceManager = mMaterialBlueprintResource->getResourceManager<MaterialBlueprintResourceManager>();
 		const RERHI::FilterMode defaultTextureFilterMode = materialBlueprintResourceManager.getDefaultTextureFilterMode();
-		const uint8_t defaultMaximumTextureAnisotropy = materialBlueprintResourceManager.getDefaultMaximumTextureAnisotropy();
+		const RECore::uint8 defaultMaximumTextureAnisotropy = materialBlueprintResourceManager.getDefaultMaximumTextureAnisotropy();
 		MaterialBlueprintResource::SamplerStates& samplerStates = mMaterialBlueprintResource->mSamplerStates;
 		const size_t numberOfSamplerStates = samplerStates.size();
 		v1MaterialBlueprint::SamplerState* materialBlueprintSamplerState = mMaterialBlueprintSamplerStates;

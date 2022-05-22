@@ -56,7 +56,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId SceneItemTypeId;	///< Scene item type identifier, internally just a POD "uint32_t"
+	typedef RECore::StringId SceneItemTypeId;	///< Scene item type identifier, internally just a POD "RECore::uint32"
 
 
 	//[-------------------------------------------------------]
@@ -124,7 +124,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	public:
 		[[nodiscard]] virtual SceneItemTypeId getSceneItemTypeId() const = 0;
-		virtual void deserialize(uint32_t numberOfBytes, const uint8_t* data) = 0;
+		virtual void deserialize(RECore::uint32 numberOfBytes, const RECore::uint8* data) = 0;
 
 		inline virtual void onAttachedToSceneNode(SceneNode& sceneNode)
 		{
@@ -182,7 +182,7 @@ namespace RERenderer
 		SceneResource& mSceneResource;
 		SceneNode*	   mParentSceneNode;		///< Parent scene node, can be a null pointer, don't destroy the instance
 		SceneItemSet*  mSceneItemSet;			///< Scene item set, always valid, don't destroy the instance
-		uint32_t	   mSceneItemSetIndex;		///< Index inside the scene item set
+		RECore::uint32	   mSceneItemSetIndex;		///< Index inside the scene item set
 		bool		   mCallExecuteOnRendering;	///< Call execute on rendering? ("RERenderer::ISceneItem::onExecuteOnRendering()") Keep this disabled if not needed not waste performance.
 
 

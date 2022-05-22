@@ -86,7 +86,7 @@ namespace RERenderer
 			{
 				mNumberOfVertexBufferDataBytes = mNumberOfUsedVertexBufferDataBytes;
 				delete [] mVertexBufferData;
-				mVertexBufferData = new uint8_t[mNumberOfVertexBufferDataBytes];
+				mVertexBufferData = new RECore::uint8[mNumberOfVertexBufferDataBytes];
 			}
 
 			// Read in the vertex buffer
@@ -103,7 +103,7 @@ namespace RERenderer
 			{
 				mNumberOfIndexBufferDataBytes = mNumberOfUsedIndexBufferDataBytes;
 				delete [] mIndexBufferData;
-				mIndexBufferData = new uint8_t[mNumberOfIndexBufferDataBytes];
+				mIndexBufferData = new RECore::uint8[mNumberOfIndexBufferDataBytes];
 			}
 
 			// Read in the index buffer
@@ -121,7 +121,7 @@ namespace RERenderer
 				{
 					mNumberOfPositionOnlyIndexBufferDataBytes = mNumberOfUsedPositionOnlyIndexBufferDataBytes;
 					delete [] mPositionOnlyIndexBufferData;
-					mPositionOnlyIndexBufferData = new uint8_t[mNumberOfPositionOnlyIndexBufferDataBytes];
+					mPositionOnlyIndexBufferData = new RECore::uint8[mNumberOfPositionOnlyIndexBufferDataBytes];
 				}
 
 				// Read in the position-only index buffer
@@ -158,8 +158,8 @@ namespace RERenderer
 		if (mNumberOfBones > 0)
 		{
 			// Read in the skeleton data in a single burst
-			const uint32_t numberOfSkeletonDataBytes = (sizeof(uint8_t) + sizeof(uint32_t) + sizeof(glm::mat4) * 2) * mNumberOfBones;
-			mSkeletonData = new uint8_t[numberOfSkeletonDataBytes + (sizeof(glm::mat4) + SkeletonResource::NUMBER_OF_BONE_SPACE_DATA_BYTES) * mNumberOfBones];	// "RERenderer::SkeletonResource::mGlobalBoneMatrices" & "RERenderer::SkeletonResource::mBoneSpaceData" aren't serialized
+			const RECore::uint32 numberOfSkeletonDataBytes = (sizeof(RECore::uint8) + sizeof(RECore::uint32) + sizeof(glm::mat4) * 2) * mNumberOfBones;
+			mSkeletonData = new RECore::uint8[numberOfSkeletonDataBytes + (sizeof(glm::mat4) + SkeletonResource::NUMBER_OF_BONE_SPACE_DATA_BYTES) * mNumberOfBones];	// "RERenderer::SkeletonResource::mGlobalBoneMatrices" & "RERenderer::SkeletonResource::mBoneSpaceData" aren't serialized
 			mMemoryFile.read(mSkeletonData, numberOfSkeletonDataBytes);
 		}
 
@@ -183,7 +183,7 @@ namespace RERenderer
 			MaterialResourceManager& materialResourceManager = mRenderer.getMaterialResourceManager();
 			SubMeshes& subMeshes = mMeshResource->getSubMeshes();
 			subMeshes.resize(mNumberOfUsedSubMeshes);
-			for (uint32_t i = 0; i < mNumberOfUsedSubMeshes; ++i)
+			for (RECore::uint32 i = 0; i < mNumberOfUsedSubMeshes; ++i)
 			{
 				// Get source and destination sub-mesh references
 				SubMesh& subMesh = subMeshes[i];
@@ -225,9 +225,9 @@ namespace RERenderer
 			// Pass on the skeleton data to the skeleton resource
 			skeletonResource->mNumberOfBones = mNumberOfBones;
 			skeletonResource->mBoneParentIndices = mSkeletonData;
-			mSkeletonData += sizeof(uint8_t) * mNumberOfBones;
-			skeletonResource->mBoneIds = reinterpret_cast<uint32_t*>(mSkeletonData);
-			mSkeletonData += sizeof(uint32_t) * mNumberOfBones;
+			mSkeletonData += sizeof(RECore::uint8) * mNumberOfBones;
+			skeletonResource->mBoneIds = reinterpret_cast<RECore::uint32*>(mSkeletonData);
+			mSkeletonData += sizeof(RECore::uint32) * mNumberOfBones;
 			skeletonResource->mLocalBoneMatrices = reinterpret_cast<glm::mat4*>(mSkeletonData);
 			mSkeletonData += sizeof(glm::mat4) * mNumberOfBones;
 			skeletonResource->mBoneOffsetMatrices = reinterpret_cast<glm::mat4*>(mSkeletonData);
@@ -303,7 +303,7 @@ namespace RERenderer
 		// Create vertex array object (VAO)
 		const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer, mRenderer.getMeshResourceManager().getDrawIdVertexBufferPtr() };
 		const RERHI::VertexAttributes vertexAttributes(mNumberOfUsedVertexAttributes, mVertexAttributes);
-		mVertexArray = mBufferManager.createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBuffer RHI_RESOURCE_DEBUG_NAME(getAsset().virtualFilename));
+		mVertexArray = mBufferManager.createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBuffer RHI_RESOURCE_DEBUG_NAME(getAsset().virtualFilename));
 
 		// Create the position-only vertex array object (VAO)
 		if (mNumberOfUsedPositionOnlyIndexBufferDataBytes > 0)
@@ -312,7 +312,7 @@ namespace RERenderer
 			indexBuffer = mBufferManager.createIndexBuffer(mNumberOfUsedPositionOnlyIndexBufferDataBytes, mPositionOnlyIndexBufferData, 0, RERHI::BufferUsage::STATIC_DRAW, static_cast<RERHI::IndexBufferFormat::Enum>(mIndexBufferFormat) RHI_RESOURCE_DEBUG_NAME(getAsset().virtualFilename));
 
 			// Create vertex array object (VAO)
-			mPositionOnlyVertexArray = mBufferManager.createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBuffer RHI_RESOURCE_DEBUG_NAME(getAsset().virtualFilename));
+			mPositionOnlyVertexArray = mBufferManager.createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBuffer RHI_RESOURCE_DEBUG_NAME(getAsset().virtualFilename));
 		}
 		else
 		{

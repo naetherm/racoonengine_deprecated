@@ -67,15 +67,15 @@ void TessellationShader::onInitialization()
 				RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Position",								// name[32] (char)
 				"POSITION",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				0,										// alignedByteOffset (uint32_t)
-				sizeof(float) * 2,						// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				0,										// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 2,						// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			}
 		};
-		const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+		const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
 		{ // Create vertex array object (VAO)
 			// Create the vertex buffer object (VBO)
@@ -95,7 +95,7 @@ void TessellationShader::onInitialization()
 			//    reference of the used vertex buffer objects (VBO). If the reference counter of a
 			//    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
 			const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-			mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
+			mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
 		}
 
 		{

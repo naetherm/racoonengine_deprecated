@@ -44,7 +44,7 @@ namespace RERHINull {
 *  @param[in] numberOfSlices
 *    The number of slices
 */
-Texture2DArray::Texture2DArray(RHIDynamicRHI& nullRhi, uint32_t width, uint32_t height, uint32_t numberOfSlices RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+Texture2DArray::Texture2DArray(RHIDynamicRHI& nullRhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 RHITexture2DArray(nullRhi, width, height, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 {}
 

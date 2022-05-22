@@ -62,7 +62,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("SunlightSceneItem");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("SunlightSceneItem");
 
 
 	//[-------------------------------------------------------]
@@ -167,7 +167,7 @@ namespace RERenderer
 			return TYPE_ID;
 		}
 
-		virtual void deserialize(uint32_t numberOfBytes, const uint8_t* data) override;
+		virtual void deserialize(RECore::uint32 numberOfBytes, const RECore::uint8* data) override;
 
 		inline virtual void onAttachedToSceneNode(SceneNode& sceneNode) override
 		{

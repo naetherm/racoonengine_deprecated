@@ -34,7 +34,7 @@ PRAGMA_WARNING_PUSH
 	PRAGMA_WARNING_DISABLE_MSVC(4242)	// warning C4242: '=': conversion from 'int' to 'T', possible loss of data
 	PRAGMA_WARNING_DISABLE_MSVC(4244)	// warning C4244: '=': conversion from 'int' to 'T', possible loss of data
 	PRAGMA_WARNING_DISABLE_MSVC(4324)	// warning C4324: 'xsimd::hadd::<unnamed-tag>': structure was padded due to alignment specifier
-	PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: '=': conversion from 'uint32_t' to 'int32_t', signed/unsigned mismatch
+	PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: '=': conversion from 'RECore::uint32' to 'RECore::int32', signed/unsigned mismatch
 	PRAGMA_WARNING_DISABLE_MSVC(4464)	// warning C4464: relative include path contains '..'
 	PRAGMA_WARNING_DISABLE_MSVC(4505)	// warning C4505: 'xsimd::detail::__ieee754_rem_pio2': unreferenced local function has been removed
 	PRAGMA_WARNING_DISABLE_MSVC(4530)	// warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
@@ -86,7 +86,7 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		typedef std::vector<float, xsimd::aligned_allocator<float, XSIMD_DEFAULT_ALIGNMENT>>			 FloatVector;
 		typedef std::vector<double, xsimd::aligned_allocator<double, XSIMD_DEFAULT_ALIGNMENT>>			 DoubleVector;
-		typedef std::vector<uint32_t, xsimd::aligned_allocator<uint32_t, XSIMD_DEFAULT_ALIGNMENT>>		 IntegerVector;
+		typedef std::vector<RECore::uint32, xsimd::aligned_allocator<RECore::uint32, XSIMD_DEFAULT_ALIGNMENT>>		 IntegerVector;
 		typedef std::vector<ISceneItem*, xsimd::aligned_allocator<ISceneItem*, XSIMD_DEFAULT_ALIGNMENT>> SceneItemVector;	// TODO(naetherm) No raw pointers here (no smart pointers either, handles please)
 
 
@@ -137,7 +137,7 @@ namespace RERenderer
 		// The type and ID of an object
 		SceneItemVector sceneItemVector;
 
-		uint32_t numberOfSceneItems = 0;
+		RECore::uint32 numberOfSceneItems = 0;
 
 
 	};

@@ -50,7 +50,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t SkeletonResourceId;	///< POD skeleton resource identifier
+	typedef RECore::uint32 SkeletonResourceId;	///< POD skeleton resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -74,7 +74,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("SkeletonMeshSceneItem");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("SkeletonMeshSceneItem");
 
 
 	//[-------------------------------------------------------]
@@ -98,7 +98,7 @@ namespace RERenderer
 			return TYPE_ID;
 		}
 
-		virtual void deserialize(uint32_t numberOfBytes, const uint8_t* data) override;
+		virtual void deserialize(RECore::uint32 numberOfBytes, const RECore::uint8* data) override;
 
 
 	//[-------------------------------------------------------]

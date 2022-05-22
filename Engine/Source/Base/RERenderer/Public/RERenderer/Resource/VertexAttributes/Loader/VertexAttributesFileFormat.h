@@ -48,15 +48,15 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("VertexAttributes");
-		static constexpr uint32_t FORMAT_VERSION = 1;
+		static constexpr RECore::uint32 FORMAT_TYPE	 = STRING_ID("VertexAttributes");
+		static constexpr RECore::uint32 FORMAT_VERSION = 1;
 
 		#pragma pack(push)
 		#pragma pack(1)
 			// TODO(naetherm) Implement vertex attributes file format
 			struct VertexAttributesHeader final
 			{
-				uint8_t  numberOfVertexAttributes;
+				RECore::uint8  numberOfVertexAttributes;
 			};
 		#pragma pack(pop)
 

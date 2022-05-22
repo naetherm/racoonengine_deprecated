@@ -50,16 +50,16 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("ShaderBlueprint");
-		static constexpr uint32_t FORMAT_VERSION = 2;
+		static constexpr RECore::uint32 FORMAT_TYPE	 = STRING_ID("ShaderBlueprint");
+		static constexpr RECore::uint32 FORMAT_VERSION = 2;
 
 		#pragma pack(push)
 		#pragma pack(1)
 			struct ShaderBlueprintHeader final
 			{
-				uint16_t numberOfIncludeShaderPieceAssetIds;
-				uint16_t numberOfReferencedShaderProperties;
-				uint32_t numberOfShaderSourceCodeBytes;
+				RECore::uint16 numberOfIncludeShaderPieceAssetIds;
+				RECore::uint16 numberOfReferencedShaderProperties;
+				RECore::uint32 numberOfShaderSourceCodeBytes;
 			};
 		#pragma pack(pop)
 

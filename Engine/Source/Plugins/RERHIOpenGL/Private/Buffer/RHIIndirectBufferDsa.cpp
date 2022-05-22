@@ -42,7 +42,7 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-IndirectBufferDsa::IndirectBufferDsa(RHIDynamicRHI& openGLRhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+IndirectBufferDsa::IndirectBufferDsa(RHIDynamicRHI& openGLRhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 IndirectBuffer(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
   {
     if (openGLRhi.getExtensions().isGL_ARB_direct_state_access())

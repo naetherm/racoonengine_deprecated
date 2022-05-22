@@ -108,16 +108,16 @@ mMeshShaderSeparate(nullptr)
     // The actual locations assigned to uniform variables are not known until the program object is linked successfully
     // -> So we have to build a root signature parameter index -> uniform location mapping here
     const RERHI::RootSignature& rootSignatureData = static_cast<const RootSignature&>(rootSignature).getRootSignature();
-    const uint32_t numberOfRootParameters = rootSignatureData.numberOfParameters;
-    uint32_t uniformBlockBindingIndex = 0;
-    for (uint32_t rootParameterIndex = 0; rootParameterIndex < numberOfRootParameters; ++rootParameterIndex)
+    const RECore::uint32 numberOfRootParameters = rootSignatureData.numberOfParameters;
+    RECore::uint32 uniformBlockBindingIndex = 0;
+    for (RECore::uint32 rootParameterIndex = 0; rootParameterIndex < numberOfRootParameters; ++rootParameterIndex)
     {
       const RERHI::RootParameter& rootParameter = rootSignatureData.parameters[rootParameterIndex];
       if (RERHI::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
       {
         RHI_ASSERT(nullptr != reinterpret_cast<const RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
-        const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
-        for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
+        const RECore::uint32 numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
+        for (RECore::uint32 descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
         {
           const RERHI::DescriptorRange& descriptorRange = reinterpret_cast<const RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges)[descriptorRangeIndex];
 
@@ -307,16 +307,16 @@ mMeshShaderSeparate(&meshShaderSeparate)
     // The actual locations assigned to uniform variables are not known until the program object is linked successfully
     // -> So we have to build a root signature parameter index -> uniform location mapping here
     const RERHI::RootSignature& rootSignatureData = static_cast<const RootSignature&>(rootSignature).getRootSignature();
-    const uint32_t numberOfRootParameters = rootSignatureData.numberOfParameters;
-    uint32_t uniformBlockBindingIndex = 0;
-    for (uint32_t rootParameterIndex = 0; rootParameterIndex < numberOfRootParameters; ++rootParameterIndex)
+    const RECore::uint32 numberOfRootParameters = rootSignatureData.numberOfParameters;
+    RECore::uint32 uniformBlockBindingIndex = 0;
+    for (RECore::uint32 rootParameterIndex = 0; rootParameterIndex < numberOfRootParameters; ++rootParameterIndex)
     {
       const RERHI::RootParameter& rootParameter = rootSignatureData.parameters[rootParameterIndex];
       if (RERHI::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
       {
         RHI_ASSERT(nullptr != reinterpret_cast<const RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
-        const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
-        for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
+        const RECore::uint32 numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
+        for (RECore::uint32 descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
         {
           const RERHI::DescriptorRange& descriptorRange = reinterpret_cast<const RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges)[descriptorRangeIndex];
 

@@ -38,10 +38,10 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace RECore {
-template<class ELEMENT_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
+template<class ELEMENT_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS>
 class PackedElementManager;
 
-template<class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
+template<class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS>
 class ResourceManagerTemplate;
 }
 namespace RERenderer {
@@ -59,7 +59,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t CompositorNodeResourceId;	///< POD compositor node resource identifier
+	typedef RECore::uint32 CompositorNodeResourceId;	///< POD compositor node resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -97,7 +97,7 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Input channels                                        ]
 		//[-------------------------------------------------------]
-		inline void reserveInputChannels(uint32_t numberOfInputChannels)
+		inline void reserveInputChannels(RECore::uint32 numberOfInputChannels)
 		{
 			mInputChannels.reserve(numberOfInputChannels);
 		}
@@ -115,7 +115,7 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Render target textures                                ]
 		//[-------------------------------------------------------]
-		inline void reserveRenderTargetTextures(uint32_t numberOfRenderTargetTextures)
+		inline void reserveRenderTargetTextures(RECore::uint32 numberOfRenderTargetTextures)
 		{
 			mCompositorRenderTargetTextures.reserve(numberOfRenderTargetTextures);
 		}
@@ -133,7 +133,7 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Framebuffers                                          ]
 		//[-------------------------------------------------------]
-		inline void reserveFramebuffers(uint32_t numberOfFramebuffers)
+		inline void reserveFramebuffers(RECore::uint32 numberOfFramebuffers)
 		{
 			mCompositorFramebuffers.reserve(numberOfFramebuffers);
 		}
@@ -151,7 +151,7 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Targets                                               ]
 		//[-------------------------------------------------------]
-		inline void reserveCompositorTargets(uint32_t numberOfCompositorTargets)
+		inline void reserveCompositorTargets(RECore::uint32 numberOfCompositorTargets)
 		{
 			mCompositorTargets.reserve(numberOfCompositorTargets);
 		}
@@ -170,7 +170,7 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Output channels                                       ]
 		//[-------------------------------------------------------]
-		inline void reserveOutputChannels(uint32_t numberOfOutputChannels)
+		inline void reserveOutputChannels(RECore::uint32 numberOfOutputChannels)
 		{
 			mOutputChannels.reserve(numberOfOutputChannels);
 		}

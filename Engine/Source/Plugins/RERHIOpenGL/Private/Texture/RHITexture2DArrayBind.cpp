@@ -43,9 +43,9 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-Texture2DArrayBind::Texture2DArrayBind(RHIDynamicRHI &openGLRhi, uint32_t width, uint32_t height,
-                                       uint32_t numberOfSlices, RERHI::TextureFormat::Enum textureFormat,
-                                       const void *data, uint32_t textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+Texture2DArrayBind::Texture2DArrayBind(RHIDynamicRHI &openGLRhi, RECore::uint32 width, RECore::uint32 height,
+                                       RECore::uint32 numberOfSlices, RERHI::TextureFormat::Enum textureFormat,
+                                       const void *data, RECore::uint32 textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   Texture2DArray(openGLRhi, width, height, numberOfSlices, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER) {
 #ifdef RHI_OPENGL_STATE_CLEANUP
   // Backup the currently set alignment

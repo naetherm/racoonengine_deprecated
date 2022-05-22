@@ -60,8 +60,8 @@ class SceneCullingManager;
 class SceneResourceLoader;
 }
 namespace RECore {
-	template <class ELEMENT_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class PackedElementManager;
-	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
+	template <class ELEMENT_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS> class PackedElementManager;
+	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
 }
 
 
@@ -75,8 +75,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t SceneResourceId;	///< POD scene resource identifier
-	typedef RECore::StringId SceneItemTypeId;	///< Scene item type identifier, internally just a POD "uint32_t"
+	typedef RECore::uint32 SceneResourceId;	///< POD scene resource identifier
+	typedef RECore::StringId SceneItemTypeId;	///< Scene item type identifier, internally just a POD "RECore::uint32"
 
 
 	//[-------------------------------------------------------]

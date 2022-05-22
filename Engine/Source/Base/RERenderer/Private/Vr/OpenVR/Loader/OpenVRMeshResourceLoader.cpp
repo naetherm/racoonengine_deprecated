@@ -69,7 +69,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t NUMBER_OF_VERTICES_PER_FACE = 3;
+		static constexpr RECore::uint32 NUMBER_OF_VERTICES_PER_FACE = 3;
 
 
 		//[-------------------------------------------------------]
@@ -151,7 +151,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t NUMBER_OF_BYTES_PER_VERTEX = sizeof(float) * 3 + sizeof(float) * 2 + sizeof(short) * 4;
+		static constexpr RECore::uint32 NUMBER_OF_BYTES_PER_VERTEX = sizeof(float) * 3 + sizeof(float) * 2 + sizeof(short) * 4;
 
 
 		//[-------------------------------------------------------]
@@ -253,15 +253,15 @@ namespace RERenderer
 			mMaximumBoundingBoxPosition = glm::vec3(std::numeric_limits<float>::lowest());
 
 			// Tell the mesh resource about the number of vertices and indices
-			const uint32_t numberOfVertices = mVrRenderModel->unVertexCount;
-			const uint32_t numberOfIndices = mVrRenderModel->unTriangleCount * 3;
+			const RECore::uint32 numberOfVertices = mVrRenderModel->unVertexCount;
+			const RECore::uint32 numberOfIndices = mVrRenderModel->unTriangleCount * 3;
 			mMeshResource->setNumberOfVertices(numberOfVertices);
 			mMeshResource->setNumberOfIndices(numberOfIndices);
 
 			{ // Fill the vertex buffer data
-				const uint32_t numberOfBytes = numberOfVertices * ::detail::NUMBER_OF_BYTES_PER_VERTEX;
+				const RECore::uint32 numberOfBytes = numberOfVertices * ::detail::NUMBER_OF_BYTES_PER_VERTEX;
 				mVertexBufferData.resize(numberOfBytes);
-				uint8_t* currentVertexBufferData = mVertexBufferData.data();
+				RECore::uint8* currentVertexBufferData = mVertexBufferData.data();
 				const vr::RenderModel_Vertex_t* currentVrRenderModelVertex = mVrRenderModel->rVertexData;
 				mTangentsData.resize(mVrRenderModel->unVertexCount);
 				mBinormalsData.resize(mVrRenderModel->unVertexCount);
@@ -270,7 +270,7 @@ namespace RERenderer
 					// TODO(naetherm) Error handling
 					RHI_ASSERT(false, "MikkTSpace for semi-standard tangent space generation failed")
 				}
-				for (uint32_t i = 0; i < numberOfVertices; ++i, ++currentVrRenderModelVertex)
+				for (RECore::uint32 i = 0; i < numberOfVertices; ++i, ++currentVrRenderModelVertex)
 				{
 					const float* vrRenderModelVertexPosition = currentVrRenderModelVertex->vPosition.v;
 
@@ -325,10 +325,10 @@ namespace RERenderer
 			{ // Fill the index buffer data
 			  // -> We need to flip the vertex winding so we don't need to modify rasterizer states
 				mIndexBufferData.resize(numberOfIndices);
-				uint16_t* currentIndexBufferData = mIndexBufferData.data();
-				for (uint32_t i = 0; i < mVrRenderModel->unTriangleCount; ++i, currentIndexBufferData += 3)
+				RECore::uint16* currentIndexBufferData = mIndexBufferData.data();
+				for (RECore::uint32 i = 0; i < mVrRenderModel->unTriangleCount; ++i, currentIndexBufferData += 3)
 				{
-					const uint32_t offset = i * 3;
+					const RECore::uint32 offset = i * 3;
 					currentIndexBufferData[0] = mVrRenderModel->rIndexData[offset + 2];
 					currentIndexBufferData[1] = mVrRenderModel->rIndexData[offset + 1];
 					currentIndexBufferData[2] = mVrRenderModel->rIndexData[offset + 0];
@@ -383,22 +383,22 @@ namespace RERenderer
 		RERHI::RHIBufferManager& bufferManager = mRenderer.getBufferManager();
 
 		// Create the vertex buffer
-		RERHI::RHIVertexBufferPtr vertexBuffer(bufferManager.createVertexBuffer(static_cast<uint32_t>(mVertexBufferData.size()), mVertexBufferData.data(), 0, RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME(getRenderModelName().c_str())));
+		RERHI::RHIVertexBufferPtr vertexBuffer(bufferManager.createVertexBuffer(static_cast<RECore::uint32>(mVertexBufferData.size()), mVertexBufferData.data(), 0, RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME(getRenderModelName().c_str())));
 
 		// Create the index buffer
-		RERHI::RHIIndexBufferPtr indexBuffer(bufferManager.createIndexBuffer(static_cast<uint32_t>(mIndexBufferData.size() * sizeof(uint16_t)), mIndexBufferData.data(), 0, RERHI::BufferUsage::STATIC_DRAW, RERHI::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME(getRenderModelName().c_str())));
+		RERHI::RHIIndexBufferPtr indexBuffer(bufferManager.createIndexBuffer(static_cast<RECore::uint32>(mIndexBufferData.size() * sizeof(RECore::uint16)), mIndexBufferData.data(), 0, RERHI::BufferUsage::STATIC_DRAW, RERHI::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME(getRenderModelName().c_str())));
 
 		// Create vertex array object (VAO)
 		const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer, mRenderer.getMeshResourceManager().getDrawIdVertexBufferPtr() };
-		return bufferManager.createVertexArray(MeshResource::VERTEX_ATTRIBUTES, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBuffer RHI_RESOURCE_DEBUG_NAME(getRenderModelName().c_str()));
+		return bufferManager.createVertexArray(MeshResource::VERTEX_ATTRIBUTES, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBuffer RHI_RESOURCE_DEBUG_NAME(getRenderModelName().c_str()));
 	}
 
 	const std::string& OpenVRMeshResourceLoader::getRenderModelName() const
 	{
 		// OpenVR render model names can get awful long due to absolute path information, so, we need to store them inside a separate list and tell the asset just about the render model name index
 		const VrManagerOpenVR::RenderModelNames& renderModelNames = static_cast<const VrManagerOpenVR&>(mRenderer.getVrManager()).getRenderModelNames();
-		const uint32_t renderModelNameIndex = static_cast<uint32_t>(std::atoi(getAsset().virtualFilename));
-		RHI_ASSERT(renderModelNameIndex < static_cast<uint32_t>(renderModelNames.size()), "Invalid model name index")
+		const RECore::uint32 renderModelNameIndex = static_cast<RECore::uint32>(std::atoi(getAsset().virtualFilename));
+		RHI_ASSERT(renderModelNameIndex < static_cast<RECore::uint32>(renderModelNames.size()), "Invalid model name index")
 		return renderModelNames[renderModelNameIndex];
 	}
 

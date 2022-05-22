@@ -92,7 +92,7 @@ public:
   //[ Public virtual RERHI::RHIRootSignature methods            ]
   //[-------------------------------------------------------]
 public:
-  virtual RERHI::RHIResourceGroup* createResourceGroup(uint32_t rootParameterIndex, uint32_t numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  virtual RERHI::RHIResourceGroup* createResourceGroup(RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
 
   //[-------------------------------------------------------]

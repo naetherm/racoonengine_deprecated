@@ -76,7 +76,7 @@ public:
 	*  @param[in] numberOfCubes
 	*    Number of cubes
 	*/
-	virtual void setNumberOfCubes(uint32_t numberOfCubes) = 0;
+	virtual void setNumberOfCubes(RECore::uint32 numberOfCubes) = 0;
 
 	/**
 	*  @brief
@@ -119,7 +119,7 @@ protected:
 //[ Protected static data                                 ]
 //[-------------------------------------------------------]
 protected:
-	static constexpr uint32_t MAXIMUM_NUMBER_OF_TEXTURES = 8;	///< Maximum number of textures
+	static constexpr RECore::uint32 MAXIMUM_NUMBER_OF_TEXTURES = 8;	///< Maximum number of textures
 
 
 };

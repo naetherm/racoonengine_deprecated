@@ -70,7 +70,7 @@ class MaterialBlueprintResourceLoader;
 
 class IMaterialBlueprintResourceListener;
 }namespace RECore {
-	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
+	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
 }
 
 
@@ -84,7 +84,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialBlueprintResourceId;	///< POD material blueprint resource identifier
+	typedef RECore::uint32 MaterialBlueprintResourceId;	///< POD material blueprint resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -107,7 +107,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		typedef std::unordered_map<uint32_t, RERHI::SerializedGraphicsPipelineState> SerializedGraphicsPipelineStates;	///< Key = FNV1a hash of "RERHI::SerializedGraphicsPipelineState"
+		typedef std::unordered_map<RECore::uint32, RERHI::SerializedGraphicsPipelineState> SerializedGraphicsPipelineStates;	///< Key = FNV1a hash of "RERHI::SerializedGraphicsPipelineState"
 
 
 	//[-------------------------------------------------------]
@@ -179,12 +179,12 @@ namespace RERenderer
 			return mDefaultTextureFilterMode;
 		}
 
-		[[nodiscard]] inline uint8_t getDefaultMaximumTextureAnisotropy() const
+		[[nodiscard]] inline RECore::uint8 getDefaultMaximumTextureAnisotropy() const
 		{
 			return mDefaultMaximumTextureAnisotropy;
 		}
 
-		void setDefaultTextureFiltering(RERHI::FilterMode filterMode, uint8_t maximumAnisotropy);
+		void setDefaultTextureFiltering(RERHI::FilterMode filterMode, RECore::uint8 maximumAnisotropy);
 
 		//[-------------------------------------------------------]
 		//[ RECore::Manager                                               ]
@@ -222,8 +222,8 @@ namespace RERenderer
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] virtual uint32_t getNumberOfResources() const override;
-		[[nodiscard]] virtual RECore::IResource& getResourceByIndex(uint32_t index) const override;
+		[[nodiscard]] virtual RECore::uint32 getNumberOfResources() const override;
+		[[nodiscard]] virtual RECore::IResource& getResourceByIndex(RECore::uint32 index) const override;
 		[[nodiscard]] virtual RECore::IResource& getResourceByResourceId(RECore::ResourceId resourceId) const override;
 		[[nodiscard]] virtual RECore::IResource* tryGetResourceByResourceId(RECore::ResourceId resourceId) const override;
 		virtual void reloadResourceByAssetId(AssetId assetId) override;
@@ -249,8 +249,8 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Pipeline state object cache                           ]
 		//[-------------------------------------------------------]
-		void addSerializedGraphicsPipelineState(uint32_t serializedGraphicsPipelineStateHash, const RERHI::SerializedGraphicsPipelineState& serializedGraphicsPipelineState);
-		void applySerializedGraphicsPipelineState(uint32_t serializedGraphicsPipelineStateHash, RERHI::GraphicsPipelineState& graphicsPipelineState);
+		void addSerializedGraphicsPipelineState(RECore::uint32 serializedGraphicsPipelineStateHash, const RERHI::SerializedGraphicsPipelineState& serializedGraphicsPipelineState);
+		void applySerializedGraphicsPipelineState(RECore::uint32 serializedGraphicsPipelineStateHash, RERHI::GraphicsPipelineState& graphicsPipelineState);
 		void clearPipelineStateObjectCache();
 		void loadPipelineStateObjectCache(RECore::IFile& file);
 		[[nodiscard]] bool doesPipelineStateObjectCacheNeedSaving() const;
@@ -266,7 +266,7 @@ namespace RERenderer
 		IMaterialBlueprintResourceListener*	mMaterialBlueprintResourceListener;			///< Material blueprint resource listener, always valid, do not destroy the instance
 		MaterialProperties					mGlobalMaterialProperties;					///< Global material properties
 		RERHI::FilterMode						mDefaultTextureFilterMode;					///< Default texture filter mode
-		uint8_t								mDefaultMaximumTextureAnisotropy;			///< Default maximum texture anisotropy
+		RECore::uint8								mDefaultMaximumTextureAnisotropy;			///< Default maximum texture anisotropy
 		std::mutex							mSerializedGraphicsPipelineStatesMutex;		///< "Renderer::GraphicsPipelineStateCompiler" is running asynchronous, hence we need to synchronize the serialized graphics pipeline states access
 		SerializedGraphicsPipelineStates	mSerializedGraphicsPipelineStates;			///< Serialized pipeline states
 		UniformInstanceBufferManager*		mUniformInstanceBufferManager;				///< Uniform instance buffer manager, always valid in a sane none-legacy environment

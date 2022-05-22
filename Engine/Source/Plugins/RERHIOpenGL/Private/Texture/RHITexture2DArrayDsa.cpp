@@ -43,8 +43,8 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-Texture2DArrayDsa::Texture2DArrayDsa(RHIDynamicRHI &openGLRhi, uint32_t width, uint32_t height, uint32_t numberOfSlices,
-                                     RERHI::TextureFormat::Enum textureFormat, const void *data, uint32_t textureFlags
+Texture2DArrayDsa::Texture2DArrayDsa(RHIDynamicRHI &openGLRhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices,
+                                     RERHI::TextureFormat::Enum textureFormat, const void *data, RECore::uint32 textureFlags
                                      RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   Texture2DArray(openGLRhi, width, height, numberOfSlices, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER) {
 #ifdef RHI_OPENGL_STATE_CLEANUP
@@ -59,7 +59,7 @@ Texture2DArrayDsa::Texture2DArrayDsa(RHIDynamicRHI &openGLRhi, uint32_t width, u
 // Calculate the number of mipmaps
   const bool dataContainsMipmaps = (textureFlags & RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS);
   const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & RERHI::TextureFlag::GENERATE_MIPMAPS));
-  const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
+  const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
 
 // Create the OpenGL texture instance
 #ifdef _WIN32
@@ -89,8 +89,8 @@ Texture2DArrayDsa::Texture2DArrayDsa(RHIDynamicRHI &openGLRhi, uint32_t width, u
 //   etc.
 
 // Upload all mipmaps
-      const uint32_t format = Mapping::getOpenGLFormat(textureFormat);
-      for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
+      const RECore::uint32 format = Mapping::getOpenGLFormat(textureFormat);
+      for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
 // Upload the current mipmap
         const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(
           RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height) * numberOfSlices);
@@ -106,7 +106,7 @@ Texture2DArrayDsa::Texture2DArrayDsa(RHIDynamicRHI &openGLRhi, uint32_t width, u
         }
 
 // Move on to the next mipmap and ensure the size is always at least 1x1
-        data = static_cast<const uint8_t *>(data) + numberOfBytesPerSlice;
+        data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerSlice;
         width = getHalfSize(width);
         height = getHalfSize(height);
       }
@@ -139,9 +139,9 @@ Texture2DArrayDsa::Texture2DArrayDsa(RHIDynamicRHI &openGLRhi, uint32_t width, u
 //   etc.
 
 // Upload all mipmaps
-      const uint32_t format = Mapping::getOpenGLFormat(textureFormat);
-      const uint32_t type = Mapping::getOpenGLType(textureFormat);
-      for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
+      const RECore::uint32 format = Mapping::getOpenGLFormat(textureFormat);
+      const RECore::uint32 type = Mapping::getOpenGLType(textureFormat);
+      for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
 // Upload the current mipmap
         const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(
           RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height) * numberOfSlices);
@@ -157,7 +157,7 @@ Texture2DArrayDsa::Texture2DArrayDsa(RHIDynamicRHI &openGLRhi, uint32_t width, u
         }
 
 // Move on to the next mipmap and ensure the size is always at least 1x1
-        data = static_cast<const uint8_t *>(data) + numberOfBytesPerSlice;
+        data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerSlice;
         width = getHalfSize(width);
         height = getHalfSize(height);
       }

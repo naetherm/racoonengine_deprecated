@@ -81,7 +81,7 @@ public:
   *  @param[out] height
   *    Receives the height of the render target, guaranteed to be never ever zero
   */
-  virtual void getWidthAndHeight(uint32_t &width, uint32_t &height) const = 0;
+  virtual void getWidthAndHeight(RECore::uint32 &width, RECore::uint32 &height) const = 0;
 
   // Protected methods
 protected:

@@ -48,7 +48,7 @@ class RHIVertexBuffer;
 	*  @brief
 	*    Vertex attribute format
 	*/
-	enum class VertexAttributeFormat : uint8_t
+	enum class VertexAttributeFormat : RECore::uint8
 	{
 		FLOAT_1			= 0,	///< Float 1 (one component per element, 32 bit floating point per component), supported by DirectX 9, DirectX 10, DirectX 11, OpenGL and OpenGL ES 3
 		FLOAT_2			= 1,	///< Float 2 (two components per element, 32 bit floating point per component), supported by DirectX 9, DirectX 10, DirectX 11, OpenGL and OpenGL ES 3
@@ -75,12 +75,12 @@ class RHIVertexBuffer;
 			VertexAttributeFormat vertexAttributeFormat;	///< Vertex attribute format
 			char				  name[32];					///< Vertex attribute name
 			char				  semanticName[32];			///< Vertex attribute semantic name
-			uint32_t			  semanticIndex;			///< Vertex attribute semantic index
+			RECore::uint32			  semanticIndex;			///< Vertex attribute semantic index
 			// Data source
-			uint32_t			  inputSlot;				///< Index of the vertex input slot to use (see "Rhi::VertexArrayVertexBuffer")
-			uint32_t			  alignedByteOffset;		///< Offset (in bytes) from the start of the vertex to this certain attribute
-			uint32_t			  strideInBytes;			///< Specifies the size in bytes of each vertex entry
-			uint32_t			  instancesPerElement;		/**< Number of instances to draw with the same data before advancing in the buffer by one element.
+			RECore::uint32			  inputSlot;				///< Index of the vertex input slot to use (see "Rhi::VertexArrayVertexBuffer")
+			RECore::uint32			  alignedByteOffset;		///< Offset (in bytes) from the start of the vertex to this certain attribute
+			RECore::uint32			  strideInBytes;			///< Specifies the size in bytes of each vertex entry
+			RECore::uint32			  instancesPerElement;		/**< Number of instances to draw with the same data before advancing in the buffer by one element.
 																 0 for no instancing meaning the data is per-vertex instead of per-instance, 1 for drawing one
 																 instance with the same data, 2 for drawing two instances with the same data and so on.
 																 Instanced arrays is a shader model 3 feature, only supported if "Rhi::Capabilities::instancedArrays" is true.
@@ -100,7 +100,7 @@ class RHIVertexBuffer;
 		struct VertexAttributes final
 		{
 			// Public data
-				  uint32_t		   numberOfAttributes;	///< Number of attributes (position, color, texture coordinate, normal...), having zero attributes is valid
+				  RECore::uint32		   numberOfAttributes;	///< Number of attributes (position, color, texture coordinate, normal...), having zero attributes is valid
 			const VertexAttribute* attributes;			///< At least "numberOfAttributes" instances of vertex array attributes, can be a null pointer in case there are zero attributes, the data is internally copied and you have to free your memory if you no longer need it
 
 			// Public methods
@@ -108,7 +108,7 @@ class RHIVertexBuffer;
 				numberOfAttributes(0),
 				attributes(nullptr)
 			{}
-			inline VertexAttributes(uint32_t _numberOfAttributes, const VertexAttribute* _attributes) :
+			inline VertexAttributes(RECore::uint32 _numberOfAttributes, const VertexAttribute* _attributes) :
 				numberOfAttributes(_numberOfAttributes),
 				attributes(_attributes)
 			{}

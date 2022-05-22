@@ -50,7 +50,7 @@ Framebuffer::~Framebuffer()
 {}
 
 
-void Framebuffer::getWidthAndHeight(uint32_t& width, uint32_t& height) const
+void Framebuffer::getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const
 {
   // TODO(naetherm) Better implementation instead of just returning one (not that important, but would be nice)
   width  = 1;

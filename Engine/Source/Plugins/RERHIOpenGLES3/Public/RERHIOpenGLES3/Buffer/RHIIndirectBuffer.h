@@ -68,7 +68,7 @@ public:
   *  @param[in] indirectBufferFlags
   *    Indirect buffer flags, see "RERHI::IndirectBufferFlag"
   */
-  IndirectBuffer(RHIDynamicRHI& openGLES3Rhi, uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t indirectBufferFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  IndirectBuffer(RHIDynamicRHI& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 indirectBufferFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief
@@ -83,7 +83,7 @@ public:
   *  @return
   *    Writable indirect buffer emulation data pointer, can be a null pointer, don't destroy the returned instance
   */
-  [[nodiscard]] inline uint8_t* getWritableEmulationData() const
+  [[nodiscard]] inline RECore::uint8* getWritableEmulationData() const
   {
     return mData;
   }
@@ -93,7 +93,7 @@ public:
   //[ Public virtual RERHI::RHIIndirectBuffer methods           ]
   //[-------------------------------------------------------]
 public:
-  [[nodiscard]] inline virtual const uint8_t* getEmulationData() const override
+  [[nodiscard]] inline virtual const RECore::uint8* getEmulationData() const override
   {
     return mData;
   }
@@ -121,8 +121,8 @@ private:
   //[ Private data                                          ]
   //[-------------------------------------------------------]
 private:
-  uint32_t mNumberOfBytes;
-  uint8_t* mData;				///< Indirect buffer data, can be a null pointer
+  RECore::uint32 mNumberOfBytes;
+  RECore::uint8* mData;				///< Indirect buffer data, can be a null pointer
 
 
 };

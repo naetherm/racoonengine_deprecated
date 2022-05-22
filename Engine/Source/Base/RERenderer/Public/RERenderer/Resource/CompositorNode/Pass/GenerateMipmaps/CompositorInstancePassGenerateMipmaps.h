@@ -96,8 +96,8 @@ namespace RERenderer
 		RERHI::RHICommandBuffer			   mCommandBuffer;
 		CompositorResourcePassCompute* mCompositorResourcePassCompute;
 		CompositorInstancePassCompute* mCompositorInstancePassCompute;
-		uint32_t					   mRenderTargetWidth;
-		uint32_t					   mRenderTargetHeight;
+		RECore::uint32					   mRenderTargetWidth;
+		RECore::uint32					   mRenderTargetHeight;
 		FramebufferPtrs				   mFramebuffersPtrs;
 
 

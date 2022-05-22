@@ -34,9 +34,9 @@
 //[-------------------------------------------------------]
 namespace RERHIVulkan {
 
-RenderPass::RenderPass(RHIDynamicRHI &vulkanRhi, uint32_t numberOfColorAttachments,
+RenderPass::RenderPass(RHIDynamicRHI &vulkanRhi, RECore::uint32 numberOfColorAttachments,
                        const RERHI::TextureFormat::Enum *colorAttachmentTextureFormats,
-                       RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples
+                       RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples
                        RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHIRenderPass(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mVkRenderPass(VK_NULL_HANDLE),
@@ -48,17 +48,17 @@ RenderPass::RenderPass(RHIDynamicRHI &vulkanRhi, uint32_t numberOfColorAttachmen
   // Vulkan attachment descriptions
   std::vector<VkAttachmentDescription> vkAttachmentDescriptions;
   vkAttachmentDescriptions.resize(mNumberOfColorAttachments + (hasDepthStencilAttachment ? 1u : 0u));
-  uint32_t currentVkAttachmentDescriptionIndex = 0;
+  RECore::uint32 currentVkAttachmentDescriptionIndex = 0;
 
   // Handle color attachments
   typedef std::vector<VkAttachmentReference> VkAttachmentReferences;
   VkAttachmentReferences colorVkAttachmentReferences;
   if (mNumberOfColorAttachments > 0) {
     colorVkAttachmentReferences.resize(mNumberOfColorAttachments);
-    for (uint32_t i = 0; i < mNumberOfColorAttachments; ++i) {
+    for (RECore::uint32 i = 0; i < mNumberOfColorAttachments; ++i) {
       { // Setup Vulkan color attachment references
         VkAttachmentReference &vkAttachmentReference = colorVkAttachmentReferences[currentVkAttachmentDescriptionIndex];
-        vkAttachmentReference.attachment = currentVkAttachmentDescriptionIndex;      // attachment (uint32_t)
+        vkAttachmentReference.attachment = currentVkAttachmentDescriptionIndex;      // attachment (RECore::uint32)
         vkAttachmentReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;  // layout (VkImageLayout)
       }
 
@@ -84,7 +84,7 @@ RenderPass::RenderPass(RHIDynamicRHI &vulkanRhi, uint32_t numberOfColorAttachmen
   // Handle depth stencil attachments
   const VkAttachmentReference depthVkAttachmentReference =
     {
-      currentVkAttachmentDescriptionIndex,        // attachment (uint32_t)
+      currentVkAttachmentDescriptionIndex,        // attachment (RECore::uint32)
       VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL  // layout (VkImageLayout)
     };
   if (hasDepthStencilAttachment) {
@@ -108,22 +108,22 @@ RenderPass::RenderPass(RHIDynamicRHI &vulkanRhi, uint32_t numberOfColorAttachmen
     {
       0,                                        // flags (VkSubpassDescriptionFlags)
       VK_PIPELINE_BIND_POINT_GRAPHICS,                        // pipelineBindPoint (VkPipelineBindPoint)
-      0,                                        // inputAttachmentCount (uint32_t)
+      0,                                        // inputAttachmentCount (RECore::uint32)
       nullptr,                                    // pInputAttachments (const VkAttachmentReference*)
-      mNumberOfColorAttachments,                            // colorAttachmentCount (uint32_t)
+      mNumberOfColorAttachments,                            // colorAttachmentCount (RECore::uint32)
       (mNumberOfColorAttachments > 0) ? colorVkAttachmentReferences.data()
                                       : nullptr,  // pColorAttachments (const VkAttachmentReference*)
       nullptr,                                    // pResolveAttachments (const VkAttachmentReference*)
       hasDepthStencilAttachment ? &depthVkAttachmentReference
                                 : nullptr,        // pDepthStencilAttachment (const VkAttachmentReference*)
-      0,                                        // preserveAttachmentCount (uint32_t)
-      nullptr                                      // pPreserveAttachments (const uint32_t*)
+      0,                                        // preserveAttachmentCount (RECore::uint32)
+      nullptr                                      // pPreserveAttachments (const RECore::uint32*)
     };
   static constexpr std::array<VkSubpassDependency, 2> vkSubpassDependencies =
     {{
        {
-         VK_SUBPASS_EXTERNAL,                            // srcSubpass (uint32_t)
-         0,                                      // dstSubpass (uint32_t)
+         VK_SUBPASS_EXTERNAL,                            // srcSubpass (RECore::uint32)
+         0,                                      // dstSubpass (RECore::uint32)
          VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,                    // srcStageMask (VkPipelineStageFlags)
          VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,                // dstStageMask (VkPipelineStageFlags)
          VK_ACCESS_MEMORY_READ_BIT,                          // srcAccessMask (VkAccessFlags)
@@ -131,8 +131,8 @@ RenderPass::RenderPass(RHIDynamicRHI &vulkanRhi, uint32_t numberOfColorAttachmen
          VK_DEPENDENCY_BY_REGION_BIT                          // dependencyFlags (VkDependencyFlags)
        },
        {
-         0,                                      // srcSubpass (uint32_t)
-         VK_SUBPASS_EXTERNAL,                            // dstSubpass (uint32_t)
+         0,                                      // srcSubpass (RECore::uint32)
+         VK_SUBPASS_EXTERNAL,                            // dstSubpass (RECore::uint32)
          VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,                // srcStageMask (VkPipelineStageFlags)
          VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,                    // dstStageMask (VkPipelineStageFlags)
          VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,  // srcAccessMask (VkAccessFlags)
@@ -145,11 +145,11 @@ RenderPass::RenderPass(RHIDynamicRHI &vulkanRhi, uint32_t numberOfColorAttachmen
       VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,        // sType (VkStructureType)
       nullptr,                        // pNext (const void*)
       0,                            // flags (VkRenderPassCreateFlags)
-      static_cast<uint32_t>(vkAttachmentDescriptions.size()),  // attachmentCount (uint32_t)
+      static_cast<RECore::uint32>(vkAttachmentDescriptions.size()),  // attachmentCount (RECore::uint32)
       vkAttachmentDescriptions.data(),            // pAttachments (const VkAttachmentDescription*)
-      1,                            // subpassCount (uint32_t)
+      1,                            // subpassCount (RECore::uint32)
       &vkSubpassDescription,                  // pSubpasses (const VkSubpassDescription*)
-      static_cast<uint32_t>(vkSubpassDependencies.size()),  // dependencyCount (uint32_t)
+      static_cast<RECore::uint32>(vkSubpassDependencies.size()),  // dependencyCount (RECore::uint32)
       vkSubpassDependencies.data()              // pDependencies (const VkSubpassDependency*)
     };
   if (vkCreateRenderPass(vulkanRhi.getVulkanContext().getVkDevice(), &vkRenderPassCreateInfo,
@@ -159,7 +159,7 @@ RenderPass::RenderPass(RHIDynamicRHI &vulkanRhi, uint32_t numberOfColorAttachmen
     if (nullptr != vkDebugMarkerSetObjectNameEXT)
           {
             RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Render pass", 14)	// 14 = "Render pass: " including terminating zero
-            Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT, (uint64_t)mVkRenderPass, detailedDebugName);
+            Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT, (RECore::uint64)mVkRenderPass, detailedDebugName);
           }
 #endif
   } else {

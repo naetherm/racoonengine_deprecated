@@ -386,15 +386,15 @@ namespace RECore
 			return mapVirtualToAbsoluteFilenameAndMountPoint(fileMode, virtualFilename, mountPoint);
 		}
 
-		[[nodiscard]] inline virtual int64_t getLastModificationTime(VirtualFilename) const override
+		[[nodiscard]] inline virtual RECore::int64 getLastModificationTime(VirtualFilename) const override
 		{
 			ASSERT(false, "Renderer::IFileManager::getLastModificationTime() isn't supported on Android")
 			return -1;
 		}
 
-		[[nodiscard]] inline virtual int64_t getFileSize(VirtualFilename virtualFilename) const override
+		[[nodiscard]] inline virtual RECore::int64 getFileSize(VirtualFilename virtualFilename) const override
 		{
-			int64_t fileSize = -1;
+			RECore::int64 fileSize = -1;
 			const std::string absoluteFilename = mapVirtualToAbsoluteFilename(FileMode::READ, virtualFilename);
 			if (!absoluteFilename.empty())
 			{
@@ -440,7 +440,7 @@ namespace RECore
 				}
 				if (file->RECore::isInvalid())
 				{
-					if (mLog.print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to open file %s", virtualFilename))
+					if (mLog.print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32>(__LINE__), "Failed to open file %s", virtualFilename))
 					{
 						DEBUG_BREAK;
 					}

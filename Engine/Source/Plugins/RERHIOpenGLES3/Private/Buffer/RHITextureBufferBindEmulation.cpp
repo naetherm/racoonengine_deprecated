@@ -33,7 +33,7 @@
 namespace RERHIOpenGLES3 {
 
 
-TextureBufferBindEmulation::TextureBufferBindEmulation(RHIDynamicRHI &openGLES3Rhi, uint32_t numberOfBytes,
+TextureBufferBindEmulation::TextureBufferBindEmulation(RHIDynamicRHI &openGLES3Rhi, RECore::uint32 numberOfBytes,
                                                        const void *data, RERHI::BufferUsage bufferUsage,
                                                        [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat
                                                        RHI_RESOURCE_DEBUG_NAME_PARAMETER) :

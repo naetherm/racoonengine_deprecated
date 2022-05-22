@@ -42,7 +42,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t RenderTargetTextureSignatureId;	///< Render target texture signature identifier, result of hashing render target texture properties
+	typedef RECore::uint32 RenderTargetTextureSignatureId;	///< Render target texture signature identifier, result of hashing render target texture properties
 
 
 	//[-------------------------------------------------------]
@@ -83,8 +83,8 @@ namespace RERenderer
 		*    Default constructor
 		*/
 		inline RenderTargetTextureSignature() :
-			mWidth(RECore::getInvalid<uint32_t>()),
-			mHeight(RECore::getInvalid<uint32_t>()),
+			mWidth(RECore::getInvalid<RECore::uint32>()),
+			mHeight(RECore::getInvalid<RECore::uint32>()),
 			mTextureFormat(RERHI::TextureFormat::UNKNOWN),
 			mFlags(Flag::SHADER_RESOURCE | Flag::RENDER_TARGET | Flag::ALLOW_RESOLUTION_SCALE),
 			mWidthScale(1.0f),
@@ -111,7 +111,7 @@ namespace RERenderer
 		*  @param[in] heightScale
 		*    Height scale
 		*/
-		RenderTargetTextureSignature(uint32_t width, uint32_t height, RERHI::TextureFormat::Enum textureFormat, uint8_t flags, float widthScale, float heightScale);
+		RenderTargetTextureSignature(RECore::uint32 width, RECore::uint32 height, RERHI::TextureFormat::Enum textureFormat, RECore::uint8 flags, float widthScale, float heightScale);
 
 		/**
 		*  @brief
@@ -162,12 +162,12 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Getter for input data                                 ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] inline uint32_t getWidth() const
+		[[nodiscard]] inline RECore::uint32 getWidth() const
 		{
 			return mWidth;
 		}
 
-		[[nodiscard]] inline uint32_t getHeight() const
+		[[nodiscard]] inline RECore::uint32 getHeight() const
 		{
 			return mHeight;
 		}
@@ -177,7 +177,7 @@ namespace RERenderer
 			return mTextureFormat;
 		}
 
-		[[nodiscard]] inline uint8_t getFlags() const
+		[[nodiscard]] inline RECore::uint8 getFlags() const
 		{
 			return mFlags;
 		}
@@ -206,10 +206,10 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
 		// Input data
-		uint32_t				 mWidth;
-		uint32_t				 mHeight;
+		RECore::uint32				 mWidth;
+		RECore::uint32				 mHeight;
 		RERHI::TextureFormat::Enum mTextureFormat;
-		uint8_t					 mFlags;			///< Flags (see "RERenderer::RenderTargetTextureSignature::Flag")
+		RECore::uint8					 mFlags;			///< Flags (see "RERenderer::RenderTargetTextureSignature::Flag")
 		float					 mWidthScale;
 		float					 mHeightScale;
 		// Derived data

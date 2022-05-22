@@ -46,8 +46,8 @@ TextureManager::TextureManager(RHIDynamicRHI &openGLES3Rhi) :
 
 
 RERHI::RHITexture1D *
-TextureManager::createTexture1D(uint32_t width, RERHI::TextureFormat::Enum textureFormat, const void *data,
-                                uint32_t textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage
+TextureManager::createTexture1D(RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat, const void *data,
+                                RECore::uint32 textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage
                                 RHI_RESOURCE_DEBUG_NAME_PARAMETER) {
   RHIDynamicRHI &openGLES3Rhi = static_cast<RHIDynamicRHI &>(getRhi());
 
@@ -61,8 +61,8 @@ TextureManager::createTexture1D(uint32_t width, RERHI::TextureFormat::Enum textu
 }
 
 RERHI::RHITexture1DArray *
-TextureManager::createTexture1DArray(uint32_t width, uint32_t numberOfSlices, RERHI::TextureFormat::Enum textureFormat,
-                                     const void *data, uint32_t textureFlags,
+TextureManager::createTexture1DArray(RECore::uint32 width, RECore::uint32 numberOfSlices, RERHI::TextureFormat::Enum textureFormat,
+                                     const void *data, RECore::uint32 textureFlags,
                                      [[maybe_unused]] RERHI::TextureUsage textureUsage
                                      RHI_RESOURCE_DEBUG_NAME_PARAMETER) {
   RHIDynamicRHI &openGLES3Rhi = static_cast<RHIDynamicRHI &>(getRhi());
@@ -77,10 +77,10 @@ TextureManager::createTexture1DArray(uint32_t width, uint32_t numberOfSlices, RE
 }
 
 RERHI::RHITexture2D *
-TextureManager::createTexture2D(uint32_t width, uint32_t height, RERHI::TextureFormat::Enum textureFormat,
-                                const void *data, uint32_t textureFlags,
+TextureManager::createTexture2D(RECore::uint32 width, RECore::uint32 height, RERHI::TextureFormat::Enum textureFormat,
+                                const void *data, RECore::uint32 textureFlags,
                                 [[maybe_unused]] RERHI::TextureUsage textureUsage,
-                                [[maybe_unused]] uint8_t numberOfMultisamples,
+                                [[maybe_unused]] RECore::uint8 numberOfMultisamples,
                                 [[maybe_unused]] const RERHI::OptimizedTextureClearValue *optimizedTextureClearValue
                                 RHI_RESOURCE_DEBUG_NAME_PARAMETER) {
   RHIDynamicRHI &openGLES3Rhi = static_cast<RHIDynamicRHI &>(getRhi());
@@ -94,9 +94,9 @@ TextureManager::createTexture2D(uint32_t width, uint32_t height, RERHI::TextureF
                                                        RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHITexture2DArray *TextureManager::createTexture2DArray(uint32_t width, uint32_t height, uint32_t numberOfSlices,
+RERHI::RHITexture2DArray *TextureManager::createTexture2DArray(RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices,
                                                                RERHI::TextureFormat::Enum textureFormat,
-                                                               const void *data, uint32_t textureFlags,
+                                                               const void *data, RECore::uint32 textureFlags,
                                                                [[maybe_unused]] RERHI::TextureUsage textureUsage
                                                                RHI_RESOURCE_DEBUG_NAME_PARAMETER) {
   RHIDynamicRHI &openGLES3Rhi = static_cast<RHIDynamicRHI &>(getRhi());
@@ -111,9 +111,9 @@ RERHI::RHITexture2DArray *TextureManager::createTexture2DArray(uint32_t width, u
                                                             data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHITexture3D *TextureManager::createTexture3D(uint32_t width, uint32_t height, uint32_t depth,
+RERHI::RHITexture3D *TextureManager::createTexture3D(RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth,
                                                      RERHI::TextureFormat::Enum textureFormat, const void *data,
-                                                     uint32_t textureFlags,
+                                                     RECore::uint32 textureFlags,
                                                      [[maybe_unused]] RERHI::TextureUsage textureUsage
                                                      RHI_RESOURCE_DEBUG_NAME_PARAMETER) {
   RHIDynamicRHI &openGLES3Rhi = static_cast<RHIDynamicRHI &>(getRhi());
@@ -128,8 +128,8 @@ RERHI::RHITexture3D *TextureManager::createTexture3D(uint32_t width, uint32_t he
 }
 
 RERHI::RHITextureCube *
-TextureManager::createTextureCube(uint32_t width, RERHI::TextureFormat::Enum textureFormat, const void *data,
-                                  uint32_t textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage
+TextureManager::createTextureCube(RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat, const void *data,
+                                  RECore::uint32 textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage
                                   RHI_RESOURCE_DEBUG_NAME_PARAMETER) {
   RHIDynamicRHI &openGLES3Rhi = static_cast<RHIDynamicRHI &>(getRhi());
 
@@ -143,9 +143,9 @@ TextureManager::createTextureCube(uint32_t width, RERHI::TextureFormat::Enum tex
 }
 
 RERHI::RHITextureCubeArray *
-TextureManager::createTextureCubeArray([[maybe_unused]] uint32_t width, [[maybe_unused]] uint32_t numberOfSlices,
+TextureManager::createTextureCubeArray([[maybe_unused]] RECore::uint32 width, [[maybe_unused]] RECore::uint32 numberOfSlices,
                                        [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat,
-                                       [[maybe_unused]] const void *data, [[maybe_unused]] uint32_t textureFlags,
+                                       [[maybe_unused]] const void *data, [[maybe_unused]] RECore::uint32 textureFlags,
                                        [[maybe_unused]] RERHI::TextureUsage textureUsage
                                        RHI_RESOURCE_DEBUG_NAME_PARAMETER) {
 // TODO(naetherm) Implement me, OpenGL ES 3.1 "GL_EXT_texture_cube_map_array"-extension

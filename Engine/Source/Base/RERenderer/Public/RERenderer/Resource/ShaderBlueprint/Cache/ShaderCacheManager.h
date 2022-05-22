@@ -73,8 +73,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t ShaderCacheId;			///< Shader cache identifier, often but not always identical to the shader combination ID
-	typedef uint32_t ShaderSourceCodeId;	///< Shader source code identifier, result of hashing the build shader source code
+	typedef RECore::uint32 ShaderCacheId;			///< Shader cache identifier, often but not always identical to the shader combination ID
+	typedef RECore::uint32 ShaderSourceCodeId;	///< Shader source code identifier, result of hashing the build shader source code
 
 
 	//[-------------------------------------------------------]

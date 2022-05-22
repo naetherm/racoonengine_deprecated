@@ -68,7 +68,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialResourceId;	///< POD material resource identifier
+	typedef RECore::uint32 MaterialResourceId;	///< POD material resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -88,7 +88,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("VrManagerOpenVR");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("VrManagerOpenVR");
 		typedef std::vector<std::string> RenderModelNames;
 
 
@@ -236,7 +236,7 @@ namespace RERenderer
 		// Transform
 		vr::TrackedDevicePose_t	mVrTrackedDevicePose[vr::k_unMaxTrackedDeviceCount];
 		glm::mat4				mDevicePoseMatrix[vr::k_unMaxTrackedDeviceCount];
-		uint32_t				mNumberOfValidDevicePoses;
+		RECore::uint32				mNumberOfValidDevicePoses;
 		glm::mat4				mHmdHeadSpaceToWorldSpaceMatrix;
 		glm::mat4				mPreviousHmdHeadSpaceToWorldSpaceMatrix;
 		// RHI resources

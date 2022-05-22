@@ -33,8 +33,8 @@
 namespace RERHIOpenGLES3 {
 
 
-Texture3D::Texture3D(RHIDynamicRHI &openGLES3Rhi, uint32_t width, uint32_t height, uint32_t depth,
-                     RERHI::TextureFormat::Enum textureFormat, const void *data, uint32_t textureFlags
+Texture3D::Texture3D(RHIDynamicRHI &openGLES3Rhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth,
+                     RERHI::TextureFormat::Enum textureFormat, const void *data, RECore::uint32 textureFlags
                      RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHITexture3D(openGLES3Rhi, width, height, depth RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mTextureFormat(textureFormat),
@@ -63,7 +63,7 @@ Texture3D::Texture3D(RHIDynamicRHI &openGLES3Rhi, uint32_t width, uint32_t heigh
   // Calculate the number of mipmaps
   const bool dataContainsMipmaps = (textureFlags & RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS);
   const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & RERHI::TextureFlag::GENERATE_MIPMAPS));
-  const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height, depth)
+  const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height, depth)
                                                                             : 1;
 
   // Create the OpenGL ES 3 texture instance
@@ -81,7 +81,7 @@ Texture3D::Texture3D(RHIDynamicRHI &openGLES3Rhi, uint32_t width, uint32_t heigh
 
       // Upload all mipmaps
       const GLenum internalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
-      for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
+      for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
         // Upload the current mipmap
         const GLsizei numberOfBytesPerMipmap = static_cast<GLsizei>(
           RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height) * depth);
@@ -90,7 +90,7 @@ Texture3D::Texture3D(RHIDynamicRHI &openGLES3Rhi, uint32_t width, uint32_t heigh
                                data);
 
         // Move on to the next mipmap and ensure the size is always at least 1x1x1
-        data = static_cast<const uint8_t *>(data) + numberOfBytesPerMipmap;
+        data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerMipmap;
         width = getHalfSize(width);
         height = getHalfSize(height);
         depth = getHalfSize(depth);
@@ -116,7 +116,7 @@ Texture3D::Texture3D(RHIDynamicRHI &openGLES3Rhi, uint32_t width, uint32_t heigh
       const GLenum internalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
       const GLenum format = Mapping::getOpenGLES3Format(textureFormat);
       const GLenum type = Mapping::getOpenGLES3Type(textureFormat);
-      for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
+      for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
         // Upload the current mipmap
         const GLsizei numberOfBytesPerMipmap = static_cast<GLsizei>(
           RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height) * depth);
@@ -124,7 +124,7 @@ Texture3D::Texture3D(RHIDynamicRHI &openGLES3Rhi, uint32_t width, uint32_t heigh
                      static_cast<GLsizei>(height), static_cast<GLsizei>(depth), 0, format, type, data);
 
         // Move on to the next mipmap and ensure the size is always at least 1x1x1
-        data = static_cast<const uint8_t *>(data) + numberOfBytesPerMipmap;
+        data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerMipmap;
         width = getHalfSize(width);
         height = getHalfSize(height);
         depth = getHalfSize(depth);

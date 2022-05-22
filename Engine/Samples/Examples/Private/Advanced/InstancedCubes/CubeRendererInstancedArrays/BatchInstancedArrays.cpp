@@ -43,7 +43,7 @@ PRAGMA_WARNING_POP
 //[-------------------------------------------------------]
 //[ Public methods                                        ]
 //[-------------------------------------------------------]
-void BatchInstancedArrays::initialize(RERHI::RHIBufferManager& bufferManager, RERHI::RHIRootSignature& rootSignature, const RERHI::VertexAttributes& vertexAttributes, RERHI::RHIVertexBuffer& vertexBuffer, RERHI::RHIIndexBuffer& indexBuffer, RERHI::RHIGraphicsProgram& graphicsProgram, RERHI::RHIRenderPass& renderPass, uint32_t numberOfCubeInstances, bool alphaBlending, uint32_t numberOfTextures, uint32_t sceneRadius)
+void BatchInstancedArrays::initialize(RERHI::RHIBufferManager& bufferManager, RERHI::RHIRootSignature& rootSignature, const RERHI::VertexAttributes& vertexAttributes, RERHI::RHIVertexBuffer& vertexBuffer, RERHI::RHIIndexBuffer& indexBuffer, RERHI::RHIGraphicsProgram& graphicsProgram, RERHI::RHIRenderPass& renderPass, RECore::uint32 numberOfCubeInstances, bool alphaBlending, RECore::uint32 numberOfTextures, RECore::uint32 sceneRadius)
 {
 	// Set owner RHI instance
 	mRhi = &graphicsProgram.getRhi();
@@ -56,7 +56,7 @@ void BatchInstancedArrays::initialize(RERHI::RHIBufferManager& bufferManager, RE
 
 	{ // Create the texture buffer instance
 		// Allocate the local per instance data
-		const uint32_t numberOfElements = mNumberOfCubeInstances * 2 * 4;
+		const RECore::uint32 numberOfElements = mNumberOfCubeInstances * 2 * 4;
 		float* data = new float[numberOfElements];
 		float* RESTRICT dataCurrent = data;
 
@@ -67,7 +67,7 @@ void BatchInstancedArrays::initialize(RERHI::RHIBufferManager& bufferManager, RE
 		//      -> We don't need to store the w component of the quaternion. It's normalized and storing
 		//         three components while recomputing the fourths component is be sufficient.
 		glm::quat rotation(1.0f, 0.0f, 0.0f, 0.0f);	// Identity rotation quaternion
-		for (uint32_t i = 0; i < mNumberOfCubeInstances; ++i)
+		for (RECore::uint32 i = 0; i < mNumberOfCubeInstances; ++i)
 		{
 			{ // Position
 				// r=x
@@ -112,7 +112,7 @@ void BatchInstancedArrays::initialize(RERHI::RHIBufferManager& bufferManager, RE
 			//    reference of the used vertex buffer objects (VBO). If the reference counter of a
 			//    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
 			const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { &vertexBuffer, vertexBufferPerInstanceData };
-			mVertexArray = bufferManager.createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, &indexBuffer);
+			mVertexArray = bufferManager.createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, &indexBuffer);
 		}
 
 		// Free local per instance data

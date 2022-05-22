@@ -81,7 +81,7 @@ private:
   virtual ~HIDLinux() override
   {
     // Clear devices
-    for (uint32_t i=0; i<m_lstDevices.size(); i++)
+    for (RECore::uint32 i=0; i<m_lstDevices.size(); i++)
       delete m_lstDevices[i];
     m_lstDevices.clear();
   }
@@ -94,7 +94,7 @@ private:
   virtual void enumerateDevices(std::vector<HIDDevice*> &lstDevices) override
   {
     // Clear devices
-    for (uint32_t i=0; i<m_lstDevices.size(); i++)
+    for (RECore::uint32 i=0; i<m_lstDevices.size(); i++)
       delete m_lstDevices[i];
     m_lstDevices.clear();
   }

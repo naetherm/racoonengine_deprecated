@@ -78,7 +78,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("TerrainSceneItem");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("TerrainSceneItem");
 		static const RERHI::VertexAttributes VERTEX_ATTRIBUTES;
 
 

@@ -70,7 +70,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialTechniqueId;	///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
+	typedef RECore::uint32 MaterialTechniqueId;	///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
 
 
 	//[-------------------------------------------------------]
@@ -112,24 +112,24 @@ namespace RERenderer
 		*  @param[in] doSort
 		*    Sort renderables?
 		*/
-		RenderQueue(IndirectBufferManager& indirectBufferManager, uint8_t minimumRenderQueueIndex, uint8_t maximumRenderQueueIndex, bool positionOnlyPass, bool transparentPass, bool doSort);
+		RenderQueue(IndirectBufferManager& indirectBufferManager, RECore::uint8 minimumRenderQueueIndex, RECore::uint8 maximumRenderQueueIndex, bool positionOnlyPass, bool transparentPass, bool doSort);
 
 		inline ~RenderQueue()
 		{
 			// Nothing here
 		}
 
-		[[nodiscard]] inline uint32_t getNumberOfDrawCalls() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfDrawCalls() const
 		{
 			return mNumberOfNullDrawCalls + mNumberOfDrawIndexedCalls + mNumberOfDrawCalls;
 		}
 
-		[[nodiscard]] inline uint8_t getMinimumRenderQueueIndex() const
+		[[nodiscard]] inline RECore::uint8 getMinimumRenderQueueIndex() const
 		{
 			return mMinimumRenderQueueIndex;
 		}
 
-		[[nodiscard]] inline uint8_t getMaximumRenderQueueIndex() const
+		[[nodiscard]] inline RECore::uint8 getMaximumRenderQueueIndex() const
 		{
 			return mMaximumRenderQueueIndex;
 		}
@@ -159,7 +159,7 @@ namespace RERenderer
 			MaterialTechnique*		   materialTechnique;			///< Always valid, don't destroy the instance
 			MaterialBlueprintResource* materialBlueprintResource;	///< Always valid, don't destroy the instance
 			RERHI::RHIPipelineState*	   foundPipelineState;			///< Always valid, don't destroy the instance
-			uint64_t				   sortingKey;					///< Key used for sorting
+			RECore::uint64				   sortingKey;					///< Key used for sorting
 
 			inline QueuedRenderable() :
 				renderable(nullptr),
@@ -169,7 +169,7 @@ namespace RERenderer
 				foundPipelineState(nullptr),
 				sortingKey(0)
 			{}
-			inline QueuedRenderable(const Renderable& _renderable, const MaterialResource& _materialResource, MaterialTechnique& _materialTechnique, MaterialBlueprintResource& _materialBlueprintResource, RERHI::RHIPipelineState& _foundPipelineState, uint64_t _sortingKey) :
+			inline QueuedRenderable(const Renderable& _renderable, const MaterialResource& _materialResource, MaterialTechnique& _materialTechnique, MaterialBlueprintResource& _materialBlueprintResource, RERHI::RHIPipelineState& _foundPipelineState, RECore::uint64 _sortingKey) :
 				renderable(&_renderable),
 				materialResource(&_materialResource),
 				materialTechnique(&_materialTechnique),
@@ -199,11 +199,11 @@ namespace RERenderer
 		const IRenderer&		mRenderer;					///< Renderer instance, we don't own the instance so don't delete it
 		IndirectBufferManager&	mIndirectBufferManager;		///< Indirect buffer manager instance, we don't own the instance so don't delete it
 		Queues					mQueues;
-		uint32_t				mNumberOfNullDrawCalls;
-		uint32_t				mNumberOfDrawIndexedCalls;
-		uint32_t				mNumberOfDrawCalls;
-		uint8_t					mMinimumRenderQueueIndex;	///< Inclusive
-		uint8_t					mMaximumRenderQueueIndex;	///< Inclusive
+		RECore::uint32				mNumberOfNullDrawCalls;
+		RECore::uint32				mNumberOfDrawIndexedCalls;
+		RECore::uint32				mNumberOfDrawCalls;
+		RECore::uint8					mMinimumRenderQueueIndex;	///< Inclusive
+		RECore::uint8					mMaximumRenderQueueIndex;	///< Inclusive
 		bool					mPositionOnlyPass;
 		bool					mTransparentPass;
 		bool					mDoSort;

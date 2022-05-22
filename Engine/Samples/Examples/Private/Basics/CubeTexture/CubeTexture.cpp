@@ -76,7 +76,7 @@ void CubeTexture::onInitialization()
 
 			// Setup
 			RERHI::RootSignatureBuilder rootSignatureBuilder;
-			rootSignatureBuilder.initialize(static_cast<uint32_t>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+			rootSignatureBuilder.initialize(static_cast<RECore::uint32>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
 			// Create the instance
 			mRootSignature = rhi->createRootSignature(rootSignatureBuilder);
@@ -105,7 +105,7 @@ void CubeTexture::onInitialization()
 
 			// Create the resource group
 			RERHI::RHIResource* resources[1] = { pointSamplerResource };
-			mSamplerStateGroup = mRootSignature->createResourceGroup(1, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources);
+			mSamplerStateGroup = mRootSignature->createResourceGroup(1, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources);
 		}
 
 		{ // Create the texture group
@@ -113,12 +113,12 @@ void CubeTexture::onInitialization()
 			resources[0] = mUniformBuffer;
 
 			{ // Create the cube texture
-				static constexpr uint32_t TEXTURE_WIDTH = 1;
-				static constexpr uint32_t TEXEL_ELEMENTS = 4;
-				static constexpr uint32_t NUMBER_OF_BYTES_PER_SLICE = TEXTURE_WIDTH * TEXTURE_WIDTH * TEXEL_ELEMENTS * 6;
-				static constexpr uint32_t NUMBER_OF_BYTES = NUMBER_OF_BYTES_PER_SLICE * 2;
-				uint8_t data[NUMBER_OF_BYTES] = {};
-				uint8_t* currentData = data + NUMBER_OF_BYTES_PER_SLICE;	// The first cube slice will be black
+				static constexpr RECore::uint32 TEXTURE_WIDTH = 1;
+				static constexpr RECore::uint32 TEXEL_ELEMENTS = 4;
+				static constexpr RECore::uint32 NUMBER_OF_BYTES_PER_SLICE = TEXTURE_WIDTH * TEXTURE_WIDTH * TEXEL_ELEMENTS * 6;
+				static constexpr RECore::uint32 NUMBER_OF_BYTES = NUMBER_OF_BYTES_PER_SLICE * 2;
+				RECore::uint8 data[NUMBER_OF_BYTES] = {};
+				RECore::uint8* currentData = data + NUMBER_OF_BYTES_PER_SLICE;	// The first cube slice will be black
 
 				// Face 0 = positive X = red
 				currentData[0] = 255;
@@ -174,7 +174,7 @@ void CubeTexture::onInitialization()
 
 			// Create the texture group
 			RERHI::RHISamplerState* samplerStates[2] = { nullptr, pointSamplerResource };
-			mTextureGroup = mRootSignature->createResourceGroup(0, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, samplerStates);
+			mTextureGroup = mRootSignature->createResourceGroup(0, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, samplerStates);
 		}
 
 		// Vertex input layout
@@ -185,15 +185,15 @@ void CubeTexture::onInitialization()
 				RERHI::VertexAttributeFormat::FLOAT_3,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Position",								// name[32] (char)
 				"POSITION",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				0,										// alignedByteOffset (uint32_t)
-				sizeof(float) * 3,						// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				0,										// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 3,						// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			}
 		};
-		const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+		const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
 		{ // Create vertex array object (VAO)
 			// Our cube is constructed like this
@@ -224,7 +224,7 @@ void CubeTexture::onInitialization()
 			RERHI::RHIVertexBufferPtr vertexBuffer(mBufferManager->createVertexBuffer(sizeof(VERTEX_POSITION), VERTEX_POSITION, 0, RERHI::BufferUsage::STATIC_DRAW));
 
 			// Create the index buffer object (IBO)
-			static constexpr uint16_t INDICES[] =
+			static constexpr RECore::uint16 INDICES[] =
 			{
 				// Back		Triangle
 				0, 3, 2,	// 0
@@ -254,7 +254,7 @@ void CubeTexture::onInitialization()
 			//    reference of the used vertex buffer objects (VBO). If the reference counter of a
 			//    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
 			const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-			mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBuffer);
+			mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBuffer);
 		}
 
 		{ // Create the graphics program
@@ -335,8 +335,8 @@ void CubeTexture::onDraw(RERHI::RHICommandBuffer& commandBuffer)
 			const RERHI::RHIRenderTarget* renderTarget = getMainRenderTarget();
 			if (nullptr != renderTarget)
 			{
-				uint32_t width  = 1;
-				uint32_t height = 1;
+				RECore::uint32 width  = 1;
+				RECore::uint32 height = 1;
 				renderTarget->getWidthAndHeight(width, height);
 
 				// Get the aspect ratio

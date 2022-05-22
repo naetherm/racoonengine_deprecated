@@ -47,11 +47,11 @@ namespace
 		struct FileFormatHeader final
 		{
 			// Format
-			uint32_t formatType;
-			uint32_t formatVersion;
+			RECore::int32 formatType;
+			RECore::int32 formatVersion;
 			// Content
-			uint32_t numberOfCompressedBytes;
-			uint32_t numberOfDecompressedBytes;
+			RECore::int32 numberOfCompressedBytes;
+			RECore::int32 numberOfDecompressedBytes;
 		};
 
 
@@ -72,7 +72,7 @@ namespace RECore
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	bool MemoryFile::loadLz4CompressedDataByVirtualFilename(uint32_t formatType, uint32_t formatVersion, const IFileManager& fileManager, VirtualFilename virtualFilename)
+	bool MemoryFile::loadLz4CompressedDataByVirtualFilename(uint32 formatType, uint32 formatVersion, const IFileManager& fileManager, VirtualFilename virtualFilename)
 	{
 		bool result = false;
 		IFile* file = fileManager.openFile(IFileManager::FileMode::READ, virtualFilename);
@@ -92,7 +92,7 @@ namespace RECore
 		return result;
 	}
 
-	bool MemoryFile::loadLz4CompressedDataFromFile(uint32_t formatType, uint32_t formatVersion, IFile& file)
+	bool MemoryFile::loadLz4CompressedDataFromFile(uint32 formatType, uint32 formatVersion, IFile& file)
 	{
 		// Read in the file format header
 		::detail::FileFormatHeader fileFormatHeader;
@@ -116,7 +116,7 @@ namespace RECore
 		}
 	}
 
-	void MemoryFile::setLz4CompressedDataByFile(IFile& file, uint32_t numberOfCompressedBytes, uint32_t numberOfDecompressedBytes)
+	void MemoryFile::setLz4CompressedDataByFile(IFile& file, uint32 numberOfCompressedBytes, uint32 numberOfDecompressedBytes)
 	{
 		// Sanity checks
 		ASSERT(0 != numberOfCompressedBytes, "Zero LZ4 compressed bytes are invalid")
@@ -134,11 +134,11 @@ namespace RECore
 	{
 		mDecompressedData.resize(mNumberOfDecompressedBytes);
 		[[maybe_unused]] const int numberOfDecompressedBytes = LZ4_decompress_safe(reinterpret_cast<const char*>(mCompressedData.data()), reinterpret_cast<char*>(mDecompressedData.data()), static_cast<int>(mCompressedData.size()), static_cast<int>(mNumberOfDecompressedBytes));
-		ASSERT(mNumberOfDecompressedBytes == static_cast<uint32_t>(numberOfDecompressedBytes), "Invalid number of decompressed bytes")
+		ASSERT(mNumberOfDecompressedBytes == static_cast<uint32>(numberOfDecompressedBytes), "Invalid number of decompressed bytes")
 		mCurrentDataPointer = mDecompressedData.data();
 	}
 
-	bool MemoryFile::writeLz4CompressedDataByVirtualFilename(uint32_t formatType, uint32_t formatVersion, const IFileManager& fileManager, VirtualFilename virtualFilename) const
+	bool MemoryFile::writeLz4CompressedDataByVirtualFilename(uint32 formatType, uint32 formatVersion, const IFileManager& fileManager, VirtualFilename virtualFilename) const
 	{
 		// Open file
 		IFile* file = fileManager.openFile(IFileManager::FileMode::WRITE, virtualFilename);
@@ -154,8 +154,8 @@ namespace RECore
 					::detail::FileFormatHeader fileFormatHeader;
 					fileFormatHeader.formatType				   = formatType;
 					fileFormatHeader.formatVersion			   = formatVersion;
-					fileFormatHeader.numberOfCompressedBytes   = static_cast<uint32_t>(numberOfWrittenBytes);
-					fileFormatHeader.numberOfDecompressedBytes = static_cast<uint32_t>(mDecompressedData.size());
+					fileFormatHeader.numberOfCompressedBytes   = static_cast<uint32>(numberOfWrittenBytes);
+					fileFormatHeader.numberOfDecompressedBytes = static_cast<uint32>(mDecompressedData.size());
 					file->write(&fileFormatHeader, sizeof(::detail::FileFormatHeader));
 				}
 

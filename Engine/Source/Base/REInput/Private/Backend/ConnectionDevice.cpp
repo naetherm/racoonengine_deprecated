@@ -37,11 +37,11 @@ void ConnectionDevice::initThread()
 {
   // Create input buffer
   if (!m_pInputBuffer && m_nInputReportSize > 0)
-    m_pInputBuffer  = new uint8_t[m_nInputReportSize];
+    m_pInputBuffer  = new RECore::uint8[m_nInputReportSize];
 
   // Create output buffer
   if (!m_pOutputBuffer && m_nOutputReportSize > 0)
-    m_pOutputBuffer = new uint8_t[m_nOutputReportSize];
+    m_pOutputBuffer = new RECore::uint8[m_nOutputReportSize];
 
   // Create critical section
   if (nullptr == mMutex)

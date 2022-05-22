@@ -60,9 +60,9 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId CompositorChannelId;		///< Compositor channel identifier, internally just a POD "uint32_t"
-	typedef RECore::StringId CompositorFramebufferId;	///< Compositor framebuffer identifier, internally just a POD "uint32_t"
-	typedef RECore::StringId CompositorPassTypeId;		///< Compositor pass type identifier, internally just a POD "uint32_t"
+	typedef RECore::StringId CompositorChannelId;		///< Compositor channel identifier, internally just a POD "RECore::uint32"
+	typedef RECore::StringId CompositorFramebufferId;	///< Compositor framebuffer identifier, internally just a POD "RECore::uint32"
+	typedef RECore::StringId CompositorPassTypeId;		///< Compositor pass type identifier, internally just a POD "RECore::uint32"
 
 
 	//[-------------------------------------------------------]
@@ -123,7 +123,7 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Passes                                                ]
 		//[-------------------------------------------------------]
-		inline void setNumberOfCompositorResourcePasses(uint32_t numberOfCompositorResourcePasses)
+		inline void setNumberOfCompositorResourcePasses(RECore::uint32 numberOfCompositorResourcePasses)
 		{
 			mCompositorResourcePasses.reserve(numberOfCompositorResourcePasses);
 		}

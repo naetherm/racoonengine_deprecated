@@ -50,17 +50,17 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("SkeletonAnimation");
-		static constexpr uint32_t FORMAT_VERSION = 3;
+		static constexpr RECore::uint32 FORMAT_TYPE	 = STRING_ID("SkeletonAnimation");
+		static constexpr RECore::uint32 FORMAT_VERSION = 3;
 
 		#pragma pack(push)
 		#pragma pack(1)
 			struct SkeletonAnimationHeader final
 			{
-				uint8_t  numberOfChannels;			///< The number of bone animation channels; each channel affects a single bone
+				RECore::uint8  numberOfChannels;			///< The number of bone animation channels; each channel affects a single bone
 				float	 durationInTicks;			///< Duration of the animation in ticks
 				float	 ticksPerSecond;			///< Ticks per second; 0 if not specified in the imported file
-				uint32_t aclCompressedTracksSize;	///< ACL compressed tracks size in bytes
+				RECore::uint32 aclCompressedTracksSize;	///< ACL compressed tracks size in bytes
 			};
 		#pragma pack(pop)
 

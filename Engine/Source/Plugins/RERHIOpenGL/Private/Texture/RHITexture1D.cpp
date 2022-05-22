@@ -50,7 +50,7 @@ Texture1D::~Texture1D()
   glDeleteTextures(1, &mOpenGLTexture);
 }
 
-Texture1D::Texture1D(RHIDynamicRHI& openGLRhi, uint32_t width, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+Texture1D::Texture1D(RHIDynamicRHI& openGLRhi, RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 RHITexture1D(openGLRhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mOpenGLTexture(0),
 mOpenGLInternalFormat(Mapping::getOpenGLInternalFormat(textureFormat))

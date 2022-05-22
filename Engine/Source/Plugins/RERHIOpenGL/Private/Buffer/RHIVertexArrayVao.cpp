@@ -61,9 +61,9 @@ VertexArrayVao::~VertexArrayVao() {
   }
 }
 
-VertexArrayVao::VertexArrayVao(RHIDynamicRHI &openGLRhi, uint32_t numberOfVertexBuffers,
+VertexArrayVao::VertexArrayVao(RHIDynamicRHI &openGLRhi, RECore::uint32 numberOfVertexBuffers,
                                const RERHI::VertexArrayVertexBuffer *vertexBuffers, IndexBuffer *indexBuffer,
-                               uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+                               RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
   VertexArray(openGLRhi, indexBuffer, InternalResourceType::VAO, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mOpenGLVertexArray(0),
   mNumberOfVertexBuffers(numberOfVertexBuffers),

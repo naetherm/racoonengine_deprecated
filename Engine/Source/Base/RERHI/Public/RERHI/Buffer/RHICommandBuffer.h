@@ -63,7 +63,7 @@ class RHIQueryPool;
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 
-enum class CommandDispatchFunctionIndex : uint8_t
+enum class CommandDispatchFunctionIndex : RECore::uint8
 {
   // Command buffer
   DISPATCH_COMMAND_BUFFER = 0,
@@ -111,39 +111,39 @@ typedef const void* ConstCommandPacket;
 // Global functions
 namespace CommandPacketHelper
 {
-static constexpr uint32_t OFFSET_NEXT_COMMAND_PACKET_BYTE_INDEX		= 0u;
-static constexpr uint32_t OFFSET_IMPLEMENTATION_DISPATCH_FUNCTION	= OFFSET_NEXT_COMMAND_PACKET_BYTE_INDEX + sizeof(uint32_t);
-static constexpr uint32_t OFFSET_COMMAND							= OFFSET_IMPLEMENTATION_DISPATCH_FUNCTION + sizeof(uint32_t);	// Don't use "sizeof(CommandDispatchFunctionIndex)" instead of "sizeof(uint32_t)" so we have a known alignment
+static constexpr RECore::uint32 OFFSET_NEXT_COMMAND_PACKET_BYTE_INDEX		= 0u;
+static constexpr RECore::uint32 OFFSET_IMPLEMENTATION_DISPATCH_FUNCTION	= OFFSET_NEXT_COMMAND_PACKET_BYTE_INDEX + sizeof(RECore::uint32);
+static constexpr RECore::uint32 OFFSET_COMMAND							= OFFSET_IMPLEMENTATION_DISPATCH_FUNCTION + sizeof(RECore::uint32);	// Don't use "sizeof(CommandDispatchFunctionIndex)" instead of "sizeof(RECore::uint32)" so we have a known alignment
 
 template <typename T>
-[[nodiscard]] inline uint32_t getNumberOfBytes(uint32_t numberOfAuxiliaryBytes)
+[[nodiscard]] inline RECore::uint32 getNumberOfBytes(RECore::uint32 numberOfAuxiliaryBytes)
 {
   return OFFSET_COMMAND + sizeof(T) + numberOfAuxiliaryBytes;
 }
 
-[[nodiscard]] inline uint32_t getNextCommandPacketByteIndex(const CommandPacket commandPacket)
+[[nodiscard]] inline RECore::uint32 getNextCommandPacketByteIndex(const CommandPacket commandPacket)
 {
-  return *reinterpret_cast<const uint32_t*>(reinterpret_cast<const uint8_t*>(commandPacket) + OFFSET_NEXT_COMMAND_PACKET_BYTE_INDEX);
+  return *reinterpret_cast<const RECore::uint32*>(reinterpret_cast<const RECore::uint8*>(commandPacket) + OFFSET_NEXT_COMMAND_PACKET_BYTE_INDEX);
 }
 
-[[nodiscard]] inline uint32_t getNextCommandPacketByteIndex(const ConstCommandPacket constCommandPacket)
+[[nodiscard]] inline RECore::uint32 getNextCommandPacketByteIndex(const ConstCommandPacket constCommandPacket)
 {
-  return *reinterpret_cast<const uint32_t*>(reinterpret_cast<const uint8_t*>(constCommandPacket) + OFFSET_NEXT_COMMAND_PACKET_BYTE_INDEX);
+  return *reinterpret_cast<const RECore::uint32*>(reinterpret_cast<const RECore::uint8*>(constCommandPacket) + OFFSET_NEXT_COMMAND_PACKET_BYTE_INDEX);
 }
 
-inline void storeNextCommandPacketByteIndex(const CommandPacket commandPacket, uint32_t nextPacketByteIndex)
+inline void storeNextCommandPacketByteIndex(const CommandPacket commandPacket, RECore::uint32 nextPacketByteIndex)
 {
-  *reinterpret_cast<uint32_t*>(reinterpret_cast<uint8_t*>(commandPacket) + OFFSET_NEXT_COMMAND_PACKET_BYTE_INDEX) = nextPacketByteIndex;
+  *reinterpret_cast<RECore::uint32*>(reinterpret_cast<RECore::uint8*>(commandPacket) + OFFSET_NEXT_COMMAND_PACKET_BYTE_INDEX) = nextPacketByteIndex;
 }
 
 [[nodiscard]] inline CommandDispatchFunctionIndex* getCommandDispatchFunctionIndex(const CommandPacket commandPacket)
 {
-  return reinterpret_cast<CommandDispatchFunctionIndex*>(reinterpret_cast<uint8_t*>(commandPacket) + OFFSET_IMPLEMENTATION_DISPATCH_FUNCTION);
+  return reinterpret_cast<CommandDispatchFunctionIndex*>(reinterpret_cast<RECore::uint8*>(commandPacket) + OFFSET_IMPLEMENTATION_DISPATCH_FUNCTION);
 }
 
 [[nodiscard]] inline const CommandDispatchFunctionIndex* getCommandDispatchFunctionIndex(const ConstCommandPacket constCommandPacket)
 {
-  return reinterpret_cast<const CommandDispatchFunctionIndex*>(reinterpret_cast<const uint8_t*>(constCommandPacket) + OFFSET_IMPLEMENTATION_DISPATCH_FUNCTION);
+  return reinterpret_cast<const CommandDispatchFunctionIndex*>(reinterpret_cast<const RECore::uint8*>(constCommandPacket) + OFFSET_IMPLEMENTATION_DISPATCH_FUNCTION);
 }
 
 inline void storeImplementationDispatchFunctionIndex(const CommandPacket commandPacket, CommandDispatchFunctionIndex commandDispatchFunctionIndex)
@@ -164,17 +164,17 @@ inline void storeImplementationDispatchFunctionIndex(const CommandPacket command
 template <typename T>
 [[nodiscard]] inline T* getCommand(const CommandPacket commandPacket)
 {
-  return reinterpret_cast<T*>(reinterpret_cast<uint8_t*>(commandPacket) + OFFSET_COMMAND);
+  return reinterpret_cast<T*>(reinterpret_cast<RECore::uint8*>(commandPacket) + OFFSET_COMMAND);
 }
 
 [[nodiscard]] inline const void* loadCommand(const CommandPacket commandPacket)
 {
-  return reinterpret_cast<uint8_t*>(commandPacket) + OFFSET_COMMAND;
+  return reinterpret_cast<RECore::uint8*>(commandPacket) + OFFSET_COMMAND;
 }
 
 [[nodiscard]] inline const void* loadCommand(const ConstCommandPacket constCommandPacket)
 {
-  return reinterpret_cast<const uint8_t*>(constCommandPacket) + OFFSET_COMMAND;
+  return reinterpret_cast<const RECore::uint8*>(constCommandPacket) + OFFSET_COMMAND;
 }
 
 /**
@@ -182,9 +182,9 @@ template <typename T>
 *    Return auxiliary memory address of the given command; returned memory address is considered unstable and might change as soon as another command is added
 */
 template <typename T>
-[[nodiscard]] inline uint8_t* getAuxiliaryMemory(T* command)
+[[nodiscard]] inline RECore::uint8* getAuxiliaryMemory(T* command)
 {
-  return reinterpret_cast<uint8_t*>(command) + sizeof(T);
+  return reinterpret_cast<RECore::uint8*>(command) + sizeof(T);
 }
 
 /**
@@ -192,9 +192,9 @@ template <typename T>
 *    Return auxiliary memory address of the given command; returned memory address is considered unstable and might change as soon as another command is added
 */
 template <typename T>
-[[nodiscard]] inline const uint8_t* getAuxiliaryMemory(const T* command)
+[[nodiscard]] inline const RECore::uint8* getAuxiliaryMemory(const T* command)
 {
-  return reinterpret_cast<const uint8_t*>(command) + sizeof(T);
+  return reinterpret_cast<const RECore::uint8*>(command) + sizeof(T);
 }
 
 }
@@ -268,7 +268,7 @@ public:
 			*  @note
 			*    - Counting the number of commands inside the command buffer is only a debugging feature and not used in optimized builds
 			*/
-			[[nodiscard]] inline uint32_t getNumberOfCommands() const
+			[[nodiscard]] inline RECore::uint32 getNumberOfCommands() const
 			{
 				return mNumberOfCommands;
 			}
@@ -284,7 +284,7 @@ public:
   *  @note
   *    - Internal, don't access the method if you don't have to
   */
-  [[nodiscard]] inline const uint8_t* getCommandPacketBuffer() const
+  [[nodiscard]] inline const RECore::uint8* getCommandPacketBuffer() const
   {
     return (~0u != mPreviousCommandPacketByteIndex) ? mCommandPacketBuffer : nullptr;
   }
@@ -313,21 +313,21 @@ public:
   *    Pointer to the added command, only null pointer in case of apocalypse, don't destroy the memory
   */
   template <typename U>
-  [[nodiscard]] U* addCommand(uint32_t numberOfAuxiliaryBytes = 0)
+  [[nodiscard]] U* addCommand(RECore::uint32 numberOfAuxiliaryBytes = 0)
   {
     // How many command package buffer bytes are consumed by the command to add?
-    const uint32_t numberOfCommandBytes = CommandPacketHelper::getNumberOfBytes<U>(numberOfAuxiliaryBytes);
+    const RECore::uint32 numberOfCommandBytes = CommandPacketHelper::getNumberOfBytes<U>(numberOfAuxiliaryBytes);
 
-    // 4294967295 is the maximum value of an "uint32_t"-type: Check for overflow
+    // 4294967295 is the maximum value of an "RECore::uint32"-type: Check for overflow
     // -> We use the magic number here to avoid "std::numeric_limits::max()" usage
-    ASSERT((static_cast<uint64_t>(mCurrentCommandPacketByteIndex) + numberOfCommandBytes) < 4294967295u, "Invalid current command packet byte index")
+    ASSERT((static_cast<RECore::uint64>(mCurrentCommandPacketByteIndex) + numberOfCommandBytes) < 4294967295u, "Invalid current command packet byte index")
 
     // Grow command packet buffer, if required
     if (mCommandPacketBufferNumberOfBytes < mCurrentCommandPacketByteIndex + numberOfCommandBytes)
     {
       // Allocate new memory, grow using a known value but do also add the number of bytes consumed by the current command to add (many auxiliary bytes might be requested)
-      const uint32_t newCommandPacketBufferNumberOfBytes = mCommandPacketBufferNumberOfBytes + NUMBER_OF_BYTES_TO_GROW + numberOfCommandBytes;
-      uint8_t* newCommandPacketBuffer = new uint8_t[newCommandPacketBufferNumberOfBytes];
+      const RECore::uint32 newCommandPacketBufferNumberOfBytes = mCommandPacketBufferNumberOfBytes + NUMBER_OF_BYTES_TO_GROW + numberOfCommandBytes;
+      RECore::uint8* newCommandPacketBuffer = new RECore::uint8[newCommandPacketBufferNumberOfBytes];
 
       // Copy over current command package buffer content and free it, if required
       if (nullptr != mCommandPacketBuffer)
@@ -403,18 +403,18 @@ public:
     ASSERT(!isEmpty(), "Can't append empty command buffers")
 
     // How many command package buffer bytes are consumed by the command to add?
-    const uint32_t numberOfCommandBytes = mCurrentCommandPacketByteIndex;
+    const RECore::uint32 numberOfCommandBytes = mCurrentCommandPacketByteIndex;
 
-    // 4294967295 is the maximum value of an "uint32_t"-type: Check for overflow
+    // 4294967295 is the maximum value of an "RECore::uint32"-type: Check for overflow
     // -> We use the magic number here to avoid "std::numeric_limits::max()" usage
-    ASSERT((static_cast<uint64_t>(commandBuffer.mCurrentCommandPacketByteIndex) + numberOfCommandBytes) < 4294967295u, "Invalid current command packet byte index")
+    ASSERT((static_cast<RECore::uint64>(commandBuffer.mCurrentCommandPacketByteIndex) + numberOfCommandBytes) < 4294967295u, "Invalid current command packet byte index")
 
     // Grow command packet buffer, if required
     if (commandBuffer.mCommandPacketBufferNumberOfBytes < commandBuffer.mCurrentCommandPacketByteIndex + numberOfCommandBytes)
     {
       // Allocate new memory, grow using a known value but do also add the number of bytes consumed by the current command to add (many auxiliary bytes might be requested)
-      const uint32_t newCommandPacketBufferNumberOfBytes = commandBuffer.mCommandPacketBufferNumberOfBytes + NUMBER_OF_BYTES_TO_GROW + numberOfCommandBytes;
-      uint8_t* newCommandPacketBuffer = new uint8_t[newCommandPacketBufferNumberOfBytes];
+      const RECore::uint32 newCommandPacketBufferNumberOfBytes = commandBuffer.mCommandPacketBufferNumberOfBytes + NUMBER_OF_BYTES_TO_GROW + numberOfCommandBytes;
+      RECore::uint8* newCommandPacketBuffer = new RECore::uint8[newCommandPacketBufferNumberOfBytes];
 
       // Copy over current command package buffer content and free it, if required
       if (nullptr != commandBuffer.mCommandPacketBuffer)
@@ -439,7 +439,7 @@ public:
 
     // Update command package indices
     CommandPacket commandPacket = &commandBuffer.mCommandPacketBuffer[commandBuffer.mCurrentCommandPacketByteIndex];
-    uint32_t nextCommandPacketByteIndex = CommandPacketHelper::getNextCommandPacketByteIndex(commandPacket);
+    RECore::uint32 nextCommandPacketByteIndex = CommandPacketHelper::getNextCommandPacketByteIndex(commandPacket);
     while (~0u != nextCommandPacketByteIndex)
     {
       nextCommandPacketByteIndex = commandBuffer.mCurrentCommandPacketByteIndex + nextCommandPacketByteIndex;
@@ -471,18 +471,18 @@ public:
 
   // Private definitions
 private:
-  static constexpr uint32_t NUMBER_OF_BYTES_TO_GROW = 8192;
+  static constexpr RECore::uint32 NUMBER_OF_BYTES_TO_GROW = 8192;
 
   // Private data
 private:
   // Memory
-  uint32_t mCommandPacketBufferNumberOfBytes;
-  uint8_t* mCommandPacketBuffer;
+  RECore::uint32 mCommandPacketBufferNumberOfBytes;
+  RECore::uint8* mCommandPacketBuffer;
   // Current state
-  uint32_t mPreviousCommandPacketByteIndex;
-  uint32_t mCurrentCommandPacketByteIndex;
+  RECore::uint32 mPreviousCommandPacketByteIndex;
+  RECore::uint32 mCurrentCommandPacketByteIndex;
 #ifdef RHI_STATISTICS
-  uint32_t mNumberOfCommands;
+  RECore::uint32 mNumberOfCommands;
 #endif
 
 };
@@ -582,17 +582,17 @@ struct SetGraphicsPipelineState final
 struct SetGraphicsResourceGroup final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, uint32_t rootParameterIndex, RHIResourceGroup* resourceGroup)
+  static inline void create(RHICommandBuffer& commandBuffer, RECore::uint32 rootParameterIndex, RHIResourceGroup* resourceGroup)
   {
     *commandBuffer.addCommand<SetGraphicsResourceGroup>() = SetGraphicsResourceGroup(rootParameterIndex, resourceGroup);
   }
   // Constructor
-  inline SetGraphicsResourceGroup(uint32_t _rootParameterIndex, RHIResourceGroup* _resourceGroup) :
+  inline SetGraphicsResourceGroup(RECore::uint32 _rootParameterIndex, RHIResourceGroup* _resourceGroup) :
     rootParameterIndex(_rootParameterIndex),
     resourceGroup(_resourceGroup)
   {}
   // Data
-  uint32_t		rootParameterIndex;
+  RECore::uint32		rootParameterIndex;
   RHIResourceGroup*	resourceGroup;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::SET_GRAPHICS_RESOURCE_GROUP;
@@ -639,11 +639,11 @@ struct SetGraphicsVertexArray final
 struct SetGraphicsViewports final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, uint32_t numberOfViewports, const Viewport* viewports)
+  static inline void create(RHICommandBuffer& commandBuffer, RECore::uint32 numberOfViewports, const Viewport* viewports)
   {
     *commandBuffer.addCommand<SetGraphicsViewports>() = SetGraphicsViewports(numberOfViewports, viewports);
   }
-  static inline void create(RHICommandBuffer& commandBuffer, uint32_t topLeftX, uint32_t topLeftY, uint32_t width, uint32_t height, float minimumDepth = 0.0f, float maximumDepth = 1.0f)
+  static inline void create(RHICommandBuffer& commandBuffer, RECore::uint32 topLeftX, RECore::uint32 topLeftY, RECore::uint32 width, RECore::uint32 height, float minimumDepth = 0.0f, float maximumDepth = 1.0f)
   {
     SetGraphicsViewports* setGraphicsViewportsCommand = commandBuffer.addCommand<SetGraphicsViewports>(sizeof(Viewport));
 
@@ -661,12 +661,12 @@ struct SetGraphicsViewports final
     setGraphicsViewportsCommand->viewports		   = nullptr;
   }
   // Constructor
-  inline SetGraphicsViewports(uint32_t _numberOfViewports, const Viewport* _viewports) :
+  inline SetGraphicsViewports(RECore::uint32 _numberOfViewports, const Viewport* _viewports) :
     numberOfViewports(_numberOfViewports),
     viewports(_viewports)
   {}
   // Data
-  uint32_t		numberOfViewports;
+  RECore::uint32		numberOfViewports;
   const Viewport* viewports;	///< If null pointer, command auxiliary memory is used instead
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::SET_GRAPHICS_VIEWPORTS;
@@ -688,7 +688,7 @@ struct SetGraphicsViewports final
 struct SetGraphicsScissorRectangles final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, uint32_t numberOfScissorRectangles, const ScissorRectangle* scissorRectangles)
+  static inline void create(RHICommandBuffer& commandBuffer, RECore::uint32 numberOfScissorRectangles, const ScissorRectangle* scissorRectangles)
   {
     *commandBuffer.addCommand<SetGraphicsScissorRectangles>() = SetGraphicsScissorRectangles(numberOfScissorRectangles, scissorRectangles);
   }
@@ -708,12 +708,12 @@ struct SetGraphicsScissorRectangles final
     setGraphicsScissorRectanglesCommand->scissorRectangles		   = nullptr;
   }
   // Constructor
-  inline SetGraphicsScissorRectangles(uint32_t _numberOfScissorRectangles, const ScissorRectangle* _scissorRectangles) :
+  inline SetGraphicsScissorRectangles(RECore::uint32 _numberOfScissorRectangles, const ScissorRectangle* _scissorRectangles) :
     numberOfScissorRectangles(_numberOfScissorRectangles),
     scissorRectangles(_scissorRectangles)
   {}
   // Data
-  uint32_t				numberOfScissorRectangles;
+  RECore::uint32				numberOfScissorRectangles;
   const ScissorRectangle* scissorRectangles;	///< If null pointer, command auxiliary memory is used instead
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::SET_GRAPHICS_SCISSOR_RECTANGLES;
@@ -743,7 +743,7 @@ struct SetGraphicsScissorRectangles final
 struct SetGraphicsViewportAndScissorRectangle final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, uint32_t topLeftX, uint32_t topLeftY, uint32_t width, uint32_t height, float minimumDepth = 0.0f, float maximumDepth = 1.0f)
+  static inline void create(RHICommandBuffer& commandBuffer, RECore::uint32 topLeftX, RECore::uint32 topLeftY, RECore::uint32 width, RECore::uint32 height, float minimumDepth = 0.0f, float maximumDepth = 1.0f)
   {
     // Set the graphics viewport
     SetGraphicsViewports::create(commandBuffer, topLeftX, topLeftY, width, height, minimumDepth, maximumDepth);
@@ -805,22 +805,22 @@ struct ClearGraphics final
 {
   // Static methods
   // -> z = 0 instead of 1 due to usage of Reversed-Z (see e.g. https://developer.nvidia.com/content/depth-precision-visualized and https://nlguillemot.wordpress.com/2016/12/07/reversed-z-in-opengl/)
-  static inline void create(RHICommandBuffer& commandBuffer, uint32_t clearFlags, const float color[4], float z = 0.0f, uint32_t stencil = 0)
+  static inline void create(RHICommandBuffer& commandBuffer, RECore::uint32 clearFlags, const float color[4], float z = 0.0f, RECore::uint32 stencil = 0)
   {
     *commandBuffer.addCommand<ClearGraphics>() = ClearGraphics(clearFlags, color, z, stencil);
   }
   // Constructor
-  inline ClearGraphics(uint32_t _clearFlags, const float _color[4], float _z, uint32_t _stencil) :
+  inline ClearGraphics(RECore::uint32 _clearFlags, const float _color[4], float _z, RECore::uint32 _stencil) :
     clearFlags(_clearFlags),
     color{_color[0], _color[1], _color[2], _color[3]},
     z(_z),
     stencil(_stencil)
   {}
   // Data
-  uint32_t clearFlags;
+  RECore::uint32 clearFlags;
   float	 color[4];
   float	 z;
-  uint32_t stencil;
+  RECore::uint32 stencil;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::CLEAR_GRAPHICS;
 };
@@ -847,11 +847,11 @@ struct ClearGraphics final
 struct DrawGraphics final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, const RHIIndirectBuffer& indirectBuffer, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1)
+  static inline void create(RHICommandBuffer& commandBuffer, const RHIIndirectBuffer& indirectBuffer, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1)
   {
     *commandBuffer.addCommand<DrawGraphics>() = DrawGraphics(indirectBuffer, indirectBufferOffset, numberOfDraws);
   }
-  static inline void create(RHICommandBuffer& commandBuffer, uint32_t vertexCountPerInstance, uint32_t instanceCount = 1, uint32_t startVertexLocation = 0, uint32_t startInstanceLocation = 0)
+  static inline void create(RHICommandBuffer& commandBuffer, RECore::uint32 vertexCountPerInstance, RECore::uint32 instanceCount = 1, RECore::uint32 startVertexLocation = 0, RECore::uint32 startInstanceLocation = 0)
   {
     DrawGraphics* drawCommand = commandBuffer.addCommand<DrawGraphics>(sizeof(DrawArguments));
 
@@ -865,15 +865,15 @@ struct DrawGraphics final
     drawCommand->numberOfDraws		  = 1;
   }
   // Constructor
-  inline DrawGraphics(const RHIIndirectBuffer& _indirectBuffer, uint32_t _indirectBufferOffset, uint32_t _numberOfDraws) :
+  inline DrawGraphics(const RHIIndirectBuffer& _indirectBuffer, RECore::uint32 _indirectBufferOffset, RECore::uint32 _numberOfDraws) :
     indirectBuffer(&_indirectBuffer),
     indirectBufferOffset(_indirectBufferOffset),
     numberOfDraws(_numberOfDraws)
   {}
   // Data
   const RHIIndirectBuffer* indirectBuffer;	///< If null pointer, command auxiliary memory is used instead
-  uint32_t			   indirectBufferOffset;
-  uint32_t			   numberOfDraws;
+  RECore::uint32			   indirectBufferOffset;
+  RECore::uint32			   numberOfDraws;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::DRAW_GRAPHICS;
 };
@@ -900,11 +900,11 @@ struct DrawGraphics final
 struct DrawIndexedGraphics final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, const RHIIndirectBuffer& indirectBuffer, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1)
+  static inline void create(RHICommandBuffer& commandBuffer, const RHIIndirectBuffer& indirectBuffer, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1)
   {
     *commandBuffer.addCommand<DrawIndexedGraphics>() = DrawIndexedGraphics(indirectBuffer, indirectBufferOffset, numberOfDraws);
   }
-  static inline void create(RHICommandBuffer& commandBuffer, uint32_t indexCountPerInstance, uint32_t instanceCount = 1, uint32_t startIndexLocation = 0, int32_t baseVertexLocation = 0, uint32_t startInstanceLocation = 0)
+  static inline void create(RHICommandBuffer& commandBuffer, RECore::uint32 indexCountPerInstance, RECore::uint32 instanceCount = 1, RECore::uint32 startIndexLocation = 0, RECore::int32 baseVertexLocation = 0, RECore::uint32 startInstanceLocation = 0)
   {
     DrawIndexedGraphics* drawCommand = commandBuffer.addCommand<DrawIndexedGraphics>(sizeof(DrawIndexedArguments));
 
@@ -918,15 +918,15 @@ struct DrawIndexedGraphics final
     drawCommand->numberOfDraws		  = 1;
   }
   // Constructor
-  inline DrawIndexedGraphics(const RHIIndirectBuffer& _indirectBuffer, uint32_t _indirectBufferOffset, uint32_t _numberOfDraws) :
+  inline DrawIndexedGraphics(const RHIIndirectBuffer& _indirectBuffer, RECore::uint32 _indirectBufferOffset, RECore::uint32 _numberOfDraws) :
     indirectBuffer(&_indirectBuffer),
     indirectBufferOffset(_indirectBufferOffset),
     numberOfDraws(_numberOfDraws)
   {}
   // Data
   const RHIIndirectBuffer* indirectBuffer;	///< If null pointer, command auxiliary memory is used instead
-  uint32_t			   indirectBufferOffset;
-  uint32_t			   numberOfDraws;
+  RECore::uint32			   indirectBufferOffset;
+  RECore::uint32			   numberOfDraws;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::DRAW_INDEXED_GRAPHICS;
 };
@@ -948,11 +948,11 @@ struct DrawIndexedGraphics final
 struct DrawMeshTasks final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, const RHIIndirectBuffer& indirectBuffer, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1)
+  static inline void create(RHICommandBuffer& commandBuffer, const RHIIndirectBuffer& indirectBuffer, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1)
   {
     *commandBuffer.addCommand<DrawMeshTasks>() = DrawMeshTasks(indirectBuffer, indirectBufferOffset, numberOfDraws);
   }
-  static inline void create(RHICommandBuffer& commandBuffer, uint32_t numberOfTasks, uint32_t firstTask = 0)
+  static inline void create(RHICommandBuffer& commandBuffer, RECore::uint32 numberOfTasks, RECore::uint32 firstTask = 0)
   {
     DrawMeshTasks* drawCommand = commandBuffer.addCommand<DrawMeshTasks>(sizeof(DrawMeshTasksArguments));
 
@@ -966,15 +966,15 @@ struct DrawMeshTasks final
     drawCommand->numberOfDraws		  = 1;
   }
   // Constructor
-  inline DrawMeshTasks(const RHIIndirectBuffer& _indirectBuffer, uint32_t _indirectBufferOffset, uint32_t _numberOfDraws) :
+  inline DrawMeshTasks(const RHIIndirectBuffer& _indirectBuffer, RECore::uint32 _indirectBufferOffset, RECore::uint32 _numberOfDraws) :
     indirectBuffer(&_indirectBuffer),
     indirectBufferOffset(_indirectBufferOffset),
     numberOfDraws(_numberOfDraws)
   {}
   // Data
   const RHIIndirectBuffer* indirectBuffer;	///< If null pointer, command auxiliary memory is used instead
-  uint32_t			   indirectBufferOffset;
-  uint32_t			   numberOfDraws;
+  RECore::uint32			   indirectBufferOffset;
+  RECore::uint32			   numberOfDraws;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::DRAW_MESH_TASKS;
 };
@@ -1051,17 +1051,17 @@ struct SetComputePipelineState final
 struct SetComputeResourceGroup final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, uint32_t rootParameterIndex, RHIResourceGroup* resourceGroup)
+  static inline void create(RHICommandBuffer& commandBuffer, RECore::uint32 rootParameterIndex, RHIResourceGroup* resourceGroup)
   {
     *commandBuffer.addCommand<SetComputeResourceGroup>() = SetComputeResourceGroup(rootParameterIndex, resourceGroup);
   }
   // Constructor
-  inline SetComputeResourceGroup(uint32_t _rootParameterIndex, RHIResourceGroup* _resourceGroup) :
+  inline SetComputeResourceGroup(RECore::uint32 _rootParameterIndex, RHIResourceGroup* _resourceGroup) :
     rootParameterIndex(_rootParameterIndex),
     resourceGroup(_resourceGroup)
   {}
   // Data
-  uint32_t		rootParameterIndex;
+  RECore::uint32		rootParameterIndex;
   RHIResourceGroup*	resourceGroup;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::SET_COMPUTE_RESOURCE_GROUP;
@@ -1084,20 +1084,20 @@ struct SetComputeResourceGroup final
 struct DispatchCompute final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ)
+  static inline void create(RHICommandBuffer& commandBuffer, RECore::uint32 groupCountX, RECore::uint32 groupCountY, RECore::uint32 groupCountZ)
   {
     *commandBuffer.addCommand<DispatchCompute>() = DispatchCompute(groupCountX, groupCountY, groupCountZ);
   }
   // Constructor
-  inline DispatchCompute(uint32_t _groupCountX, uint32_t _groupCountY, uint32_t _groupCountZ) :
+  inline DispatchCompute(RECore::uint32 _groupCountX, RECore::uint32 _groupCountY, RECore::uint32 _groupCountZ) :
     groupCountX(_groupCountX),
     groupCountY(_groupCountY),
     groupCountZ(_groupCountZ)
   {}
   // Data
-  uint32_t groupCountX;
-  uint32_t groupCountY;
-  uint32_t groupCountZ;
+  RECore::uint32 groupCountX;
+  RECore::uint32 groupCountY;
+  RECore::uint32 groupCountZ;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::DISPATCH_COMPUTE;
 };
@@ -1119,20 +1119,20 @@ struct DispatchCompute final
 struct SetTextureMinimumMaximumMipmapIndex final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, RHITexture& texture, uint32_t minimumMipmapIndex, uint32_t maximumMipmapIndex)
+  static inline void create(RHICommandBuffer& commandBuffer, RHITexture& texture, RECore::uint32 minimumMipmapIndex, RECore::uint32 maximumMipmapIndex)
   {
     *commandBuffer.addCommand<SetTextureMinimumMaximumMipmapIndex>() = SetTextureMinimumMaximumMipmapIndex(texture, minimumMipmapIndex, maximumMipmapIndex);
   }
   // Constructor
-  inline SetTextureMinimumMaximumMipmapIndex(RHITexture& _texture, uint32_t _minimumMipmapIndex, uint32_t _maximumMipmapIndex) :
+  inline SetTextureMinimumMaximumMipmapIndex(RHITexture& _texture, RECore::uint32 _minimumMipmapIndex, RECore::uint32 _maximumMipmapIndex) :
     texture(&_texture),
     minimumMipmapIndex(_minimumMipmapIndex),
     maximumMipmapIndex(_maximumMipmapIndex)
   {}
   // Data
   RHITexture* texture;
-  uint32_t  minimumMipmapIndex;
-  uint32_t  maximumMipmapIndex;
+  RECore::uint32  minimumMipmapIndex;
+  RECore::uint32  maximumMipmapIndex;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::SET_TEXTURE_MINIMUM_MAXIMUM_MIPMAP_INDEX;
 };
@@ -1231,7 +1231,7 @@ struct GenerateMipmaps final
 struct CopyUniformBufferData final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, RHIUniformBuffer& uniformBuffer, const void* data, uint32_t numberOfBytes)
+  static inline void create(RHICommandBuffer& commandBuffer, RHIUniformBuffer& uniformBuffer, const void* data, RECore::uint32 numberOfBytes)
   {
     CopyUniformBufferData* copyUniformBufferData = commandBuffer.addCommand<CopyUniformBufferData>(numberOfBytes);
     copyUniformBufferData->uniformBuffer = &uniformBuffer;
@@ -1240,7 +1240,7 @@ struct CopyUniformBufferData final
   }
   // Data
   RHIUniformBuffer* uniformBuffer;
-  uint32_t numberOfBytes;
+  RECore::uint32 numberOfBytes;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::COPY_UNIFORM_BUFFER_DATA;
 };
@@ -1344,20 +1344,20 @@ struct SetUniform final
 struct ResetQueryPool final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, RHIQueryPool& queryPool, uint32_t firstQueryIndex = 0, uint32_t numberOfQueries = 1)
+  static inline void create(RHICommandBuffer& commandBuffer, RHIQueryPool& queryPool, RECore::uint32 firstQueryIndex = 0, RECore::uint32 numberOfQueries = 1)
   {
     *commandBuffer.addCommand<ResetQueryPool>() = ResetQueryPool(queryPool, firstQueryIndex, numberOfQueries);
   }
   // Constructor
-  inline ResetQueryPool(RHIQueryPool& _queryPool, uint32_t _firstQueryIndex, uint32_t _numberOfQueries) :
+  inline ResetQueryPool(RHIQueryPool& _queryPool, RECore::uint32 _firstQueryIndex, RECore::uint32 _numberOfQueries) :
     queryPool(&_queryPool),
     firstQueryIndex(_firstQueryIndex),
     numberOfQueries(_numberOfQueries)
   {}
   // Data
   RHIQueryPool* queryPool;
-  uint32_t	firstQueryIndex;
-  uint32_t	numberOfQueries;
+  RECore::uint32	firstQueryIndex;
+  RECore::uint32	numberOfQueries;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::RESET_QUERY_POOL;
 };
@@ -1376,20 +1376,20 @@ struct ResetQueryPool final
 struct BeginQuery final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, RHIQueryPool& queryPool, uint32_t queryIndex = 0, uint32_t queryControlFlags = 0)
+  static inline void create(RHICommandBuffer& commandBuffer, RHIQueryPool& queryPool, RECore::uint32 queryIndex = 0, RECore::uint32 queryControlFlags = 0)
   {
     *commandBuffer.addCommand<BeginQuery>() = BeginQuery(queryPool, queryIndex, queryControlFlags);
   }
   // Constructor
-  inline BeginQuery(RHIQueryPool& _queryPool, uint32_t _queryIndex, uint32_t _queryControlFlags) :
+  inline BeginQuery(RHIQueryPool& _queryPool, RECore::uint32 _queryIndex, RECore::uint32 _queryControlFlags) :
     queryPool(&_queryPool),
     queryIndex(_queryIndex),
     queryControlFlags(_queryControlFlags)
   {}
   // Data
   RHIQueryPool* queryPool;
-  uint32_t	queryIndex;
-  uint32_t	queryControlFlags;
+  RECore::uint32	queryIndex;
+  RECore::uint32	queryControlFlags;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::BEGIN_QUERY;
 };
@@ -1408,7 +1408,7 @@ struct BeginQuery final
 struct ResetAndBeginQuery final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, RHIQueryPool& queryPool, uint32_t queryIndex = 0, uint32_t queryControlFlags = 0)
+  static inline void create(RHICommandBuffer& commandBuffer, RHIQueryPool& queryPool, RECore::uint32 queryIndex = 0, RECore::uint32 queryControlFlags = 0)
   {
     *commandBuffer.addCommand<ResetQueryPool>() = ResetQueryPool(queryPool, queryIndex, 1);
     *commandBuffer.addCommand<BeginQuery>() = BeginQuery(queryPool, queryIndex, queryControlFlags);
@@ -1427,18 +1427,18 @@ struct ResetAndBeginQuery final
 struct EndQuery final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, RHIQueryPool& queryPool, uint32_t queryIndex = 0)
+  static inline void create(RHICommandBuffer& commandBuffer, RHIQueryPool& queryPool, RECore::uint32 queryIndex = 0)
   {
     *commandBuffer.addCommand<EndQuery>() = EndQuery(queryPool, queryIndex);
   }
   // Constructor
-  inline EndQuery(RHIQueryPool& _queryPool, uint32_t _queryIndex) :
+  inline EndQuery(RHIQueryPool& _queryPool, RECore::uint32 _queryIndex) :
     queryPool(&_queryPool),
     queryIndex(_queryIndex)
   {}
   // Data
   RHIQueryPool* queryPool;
-  uint32_t	queryIndex;
+  RECore::uint32	queryIndex;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::END_QUERY;
 };
@@ -1455,18 +1455,18 @@ struct EndQuery final
 struct WriteTimestampQuery final
 {
   // Static methods
-  static inline void create(RHICommandBuffer& commandBuffer, RHIQueryPool& queryPool, uint32_t queryIndex = 0)
+  static inline void create(RHICommandBuffer& commandBuffer, RHIQueryPool& queryPool, RECore::uint32 queryIndex = 0)
   {
     *commandBuffer.addCommand<WriteTimestampQuery>() = WriteTimestampQuery(queryPool, queryIndex);
   }
   // Constructor
-  inline WriteTimestampQuery(RHIQueryPool& _queryPool, uint32_t _queryIndex) :
+  inline WriteTimestampQuery(RHIQueryPool& _queryPool, RECore::uint32 _queryIndex) :
     queryPool(&_queryPool),
     queryIndex(_queryIndex)
   {}
   // Data
   RHIQueryPool* queryPool;
-  uint32_t	queryIndex;
+  RECore::uint32	queryIndex;
   // Static data
   static constexpr CommandDispatchFunctionIndex COMMAND_DISPATCH_FUNCTION_INDEX = CommandDispatchFunctionIndex::WRITE_TIMESTAMP_QUERY;
 };

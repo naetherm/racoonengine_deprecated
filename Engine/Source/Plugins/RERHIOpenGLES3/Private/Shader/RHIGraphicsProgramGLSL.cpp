@@ -46,8 +46,8 @@ GraphicsProgramGlsl::GraphicsProgramGlsl(RHIDynamicRHI &openGLES3Rhi, const RERH
   mOpenGLES3Program(glCreateProgram()),
   mDrawIdUniformLocation(-1) {
   { // Define the vertex array attribute binding locations ("vertex declaration" in Direct3D 9 terminology, "input layout" in Direct3D 10 & 11 terminology)
-    const uint32_t numberOfVertexAttributes = vertexAttributes.numberOfAttributes;
-    for (uint32_t vertexAttribute = 0; vertexAttribute < numberOfVertexAttributes; ++vertexAttribute) {
+    const RECore::uint32 numberOfVertexAttributes = vertexAttributes.numberOfAttributes;
+    for (RECore::uint32 vertexAttribute = 0; vertexAttribute < numberOfVertexAttributes; ++vertexAttribute) {
       glBindAttribLocation(mOpenGLES3Program, vertexAttribute, vertexAttributes.attributes[vertexAttribute].name);
     }
   }
@@ -80,18 +80,18 @@ GraphicsProgramGlsl::GraphicsProgramGlsl(RHIDynamicRHI &openGLES3Rhi, const RERH
     // The actual locations assigned to uniform variables are not known until the program object is linked successfully
     // -> So we have to build a root signature parameter index -> uniform location mapping here
     const RERHI::RootSignature &rootSignatureData = static_cast<const RootSignature &>(rootSignature).getRootSignature();
-    const uint32_t numberOfRootParameters = rootSignatureData.numberOfParameters;
+    const RECore::uint32 numberOfRootParameters = rootSignatureData.numberOfParameters;
     if (numberOfRootParameters > 0) {
-      uint32_t uniformBlockBindingIndex = 0;
+      RECore::uint32 uniformBlockBindingIndex = 0;
       const bool isGL_EXT_texture_buffer = openGLES3Rhi.getOpenGLES3Context().getExtensions().isGL_EXT_texture_buffer();
-      for (uint32_t rootParameterIndex = 0; rootParameterIndex < numberOfRootParameters; ++rootParameterIndex) {
+      for (RECore::uint32 rootParameterIndex = 0; rootParameterIndex < numberOfRootParameters; ++rootParameterIndex) {
         const RERHI::RootParameter &rootParameter = rootSignatureData.parameters[rootParameterIndex];
         if (RERHI::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType) {
           RHI_ASSERT(
             nullptr != reinterpret_cast<const RERHI::DescriptorRange *>(rootParameter.descriptorTable.descriptorRanges),
             "Invalid OpenGL ES 3 descriptor ranges")
-          const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
-          for (uint32_t descriptorRangeIndex = 0;
+          const RECore::uint32 numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
+          for (RECore::uint32 descriptorRangeIndex = 0;
                descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex) {
             const RERHI::DescriptorRange &descriptorRange = reinterpret_cast<const RERHI::DescriptorRange *>(rootParameter.descriptorTable.descriptorRanges)[descriptorRangeIndex];
 

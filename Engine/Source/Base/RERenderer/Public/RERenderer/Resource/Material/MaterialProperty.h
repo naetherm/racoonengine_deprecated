@@ -65,7 +65,7 @@ namespace RERenderer
 		*  @brief
 		*    Usage
 		*/
-		enum class Usage : uint8_t
+		enum class Usage : RECore::uint8
 		{
 			UNKNOWN = 0,				///< Usage not known
 			STATIC,						///< Static property is used for fixed build in values which usually don't change during runtime (for example hard wired material blueprint textures, hard wired uniform buffer element values or static material properties which the RHI should ignore)
@@ -89,7 +89,7 @@ namespace RERenderer
 	//[ Public static methods                                 ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] static inline MaterialPropertyValue materialPropertyValueFromReference(ValueType valueType, uint32_t reference)
+		[[nodiscard]] static inline MaterialPropertyValue materialPropertyValueFromReference(ValueType valueType, RECore::uint32 reference)
 		{
 			MaterialPropertyValue materialPropertyValue;
 			materialPropertyValue.mValueType	 = valueType;
@@ -228,10 +228,10 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Value getter                                          ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] inline uint32_t getReferenceValue() const
+		[[nodiscard]] inline RECore::uint32 getReferenceValue() const
 		{
 			ASSERT(isReferenceUsage(), "Must be reference usage")
-			return static_cast<uint32_t>(mValue.Integer);
+			return static_cast<RECore::uint32>(mValue.Integer);
 		}
 
 

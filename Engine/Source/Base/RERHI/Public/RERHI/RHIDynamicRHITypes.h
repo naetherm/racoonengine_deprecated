@@ -164,8 +164,8 @@ struct ColorWriteEnableFlag final
 struct MappedSubresource final
 {
   void*	 data;
-  uint32_t rowPitch;
-  uint32_t depthPitch;
+  RECore::uint32 rowPitch;
+  RECore::uint32 depthPitch;
 };
 
 /**

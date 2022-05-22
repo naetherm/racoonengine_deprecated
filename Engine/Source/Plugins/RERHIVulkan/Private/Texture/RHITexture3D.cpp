@@ -33,8 +33,8 @@
 //[-------------------------------------------------------]
 namespace RERHIVulkan {
 
-Texture3D::Texture3D(RHIDynamicRHI &vulkanRhi, uint32_t width, uint32_t height, uint32_t depth,
-                     RERHI::TextureFormat::Enum textureFormat, const void *data, uint32_t textureFlags
+Texture3D::Texture3D(RHIDynamicRHI &vulkanRhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth,
+                     RERHI::TextureFormat::Enum textureFormat, const void *data, RECore::uint32 textureFlags
                      RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHITexture3D(vulkanRhi, width, height, depth RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mVkImage(VK_NULL_HANDLE),
@@ -50,9 +50,9 @@ Texture3D::Texture3D(RHIDynamicRHI &vulkanRhi, uint32_t width, uint32_t height, 
         {
           RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "3D texture", 13)	// 13 = "3D texture: " including terminating zero
           const VkDevice vkDevice = vulkanRhi.getVulkanContext().getVkDevice();
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT, (uint64_t)mVkImage, detailedDebugName);
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT, (uint64_t)mVkDeviceMemory, detailedDebugName);
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT, (uint64_t)mVkImageView, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT, (RECore::uint64)mVkImage, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT, (RECore::uint64)mVkDeviceMemory, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT, (RECore::uint64)mVkImageView, detailedDebugName);
         }
 #endif
 }

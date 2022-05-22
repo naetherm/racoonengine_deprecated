@@ -117,7 +117,7 @@ namespace RERenderer
 		*  @return
 		*    Start instance location, used for draw ID (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
 		*/
-		[[nodiscard]] uint32_t fillBuffer(const MaterialBlueprintResource& materialBlueprintResource, PassBufferManager* passBufferManager, const MaterialBlueprintResource::UniformBuffer& instanceUniformBuffer, const Renderable& renderable, MaterialTechnique& materialTechnique, RERHI::RHICommandBuffer& commandBuffer);
+		[[nodiscard]] RECore::uint32 fillBuffer(const MaterialBlueprintResource& materialBlueprintResource, PassBufferManager* passBufferManager, const MaterialBlueprintResource::UniformBuffer& instanceUniformBuffer, const Renderable& renderable, MaterialTechnique& materialTechnique, RERHI::RHICommandBuffer& commandBuffer);
 
 		/**
 		*  @brief
@@ -163,14 +163,14 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
 		IRenderer&		mRenderer;						///< Renderer instance to use
-		const uint32_t	mMaximumUniformBufferSize;		///< Maximum uniform buffer size in bytes
+		const RECore::uint32	mMaximumUniformBufferSize;		///< Maximum uniform buffer size in bytes
 		InstanceBuffers	mInstanceBuffers;				///< Instance buffers
 		// Current instance buffer related data
 		size_t			mCurrentInstanceBufferIndex;	///< Current instance buffer index, can be invalid if there's currently no current instance buffer
 		InstanceBuffer* mCurrentInstanceBuffer;			///< Current instance buffer, can be a null pointer, don't destroy the instance since this is just a reference
-		uint8_t*		mStartUniformBufferPointer;
-		uint8_t*		mCurrentUniformBufferPointer;
-		uint32_t		mStartInstanceLocation;			///< Start instance location, used for draw ID (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
+		RECore::uint8*		mStartUniformBufferPointer;
+		RECore::uint8*		mCurrentUniformBufferPointer;
+		RECore::uint32		mStartInstanceLocation;			///< Start instance location, used for draw ID (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
 
 
 	};

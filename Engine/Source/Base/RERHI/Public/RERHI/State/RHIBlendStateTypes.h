@@ -113,7 +113,7 @@ namespace RERHI
 		Blend	srcBlendAlpha;			///< Default: "Rhi::Blend::ONE"
 		Blend	destBlendAlpha;			///< Default: "Rhi::Blend::ZERO"
 		BlendOp	blendOpAlpha;			///< Default: "Rhi::BlendOp::ADD"
-		uint8_t	renderTargetWriteMask;	///< Combination of "Rhi::ColorWriteEnableFlag"-flags. Default: "Rhi::ColorWriteEnableFlag::ALL"
+		RECore::uint8	renderTargetWriteMask;	///< Combination of "Rhi::ColorWriteEnableFlag"-flags. Default: "Rhi::ColorWriteEnableFlag::ALL"
 	};
 
 	/**
@@ -169,7 +169,7 @@ namespace RERHI
 						Blend::ONE,					// srcBlendAlpha (Rhi::Blend)															"ONE"			"ONE"
 						Blend::ZERO,				// destBlendAlpha (Rhi::Blend)															"ZERO"			"ZERO"
 						BlendOp::ADD,				// blendOpAlpha (Rhi::BlendOp)															"ADD"			"ADD"
-						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (uint8_t), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
+						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (RECore::uint8), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
 					},
 					// renderTarget[1]
 					{
@@ -180,7 +180,7 @@ namespace RERHI
 						Blend::ONE,					// srcBlendAlpha (Rhi::Blend)															"ONE"			"ONE"
 						Blend::ZERO,				// destBlendAlpha (Rhi::Blend)															"ZERO"			"ZERO"
 						BlendOp::ADD,				// blendOpAlpha (Rhi::BlendOp)															"ADD"			"ADD"
-						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (uint8_t), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
+						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (RECore::uint8), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
 					},
 					// renderTarget[2]
 					{
@@ -191,7 +191,7 @@ namespace RERHI
 						Blend::ONE,					// srcBlendAlpha (Rhi::Blend)															"ONE"			"ONE"
 						Blend::ZERO,				// destBlendAlpha (Rhi::Blend)															"ZERO"			"ZERO"
 						BlendOp::ADD,				// blendOpAlpha (Rhi::BlendOp)															"ADD"			"ADD"
-						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (uint8_t), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
+						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (RECore::uint8), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
 					},
 					// renderTarget[3]
 					{
@@ -202,7 +202,7 @@ namespace RERHI
 						Blend::ONE,					// srcBlendAlpha (Rhi::Blend)															"ONE"			"ONE"
 						Blend::ZERO,				// destBlendAlpha (Rhi::Blend)															"ZERO"			"ZERO"
 						BlendOp::ADD,				// blendOpAlpha (Rhi::BlendOp)															"ADD"			"ADD"
-						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (uint8_t), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
+						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (RECore::uint8), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
 					},
 					// renderTarget[4]
 					{
@@ -213,7 +213,7 @@ namespace RERHI
 						Blend::ONE,					// srcBlendAlpha (Rhi::Blend)															"ONE"			"ONE"
 						Blend::ZERO,				// destBlendAlpha (Rhi::Blend)															"ZERO"			"ZERO"
 						BlendOp::ADD,				// blendOpAlpha (Rhi::BlendOp)															"ADD"			"ADD"
-						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (uint8_t), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
+						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (RECore::uint8), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
 					},
 					// renderTarget[5]
 					{
@@ -224,7 +224,7 @@ namespace RERHI
 						Blend::ONE,					// srcBlendAlpha (Rhi::Blend)															"ONE"			"ONE"
 						Blend::ZERO,				// destBlendAlpha (Rhi::Blend)															"ZERO"			"ZERO"
 						BlendOp::ADD,				// blendOpAlpha (Rhi::BlendOp)															"ADD"			"ADD"
-						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (uint8_t), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
+						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (RECore::uint8), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
 					},
 					// renderTarget[6]
 					{
@@ -235,7 +235,7 @@ namespace RERHI
 						Blend::ONE,					// srcBlendAlpha (Rhi::Blend)															"ONE"			"ONE"
 						Blend::ZERO,				// destBlendAlpha (Rhi::Blend)															"ZERO"			"ZERO"
 						BlendOp::ADD,				// blendOpAlpha (Rhi::BlendOp)															"ADD"			"ADD"
-						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (uint8_t), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
+						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (RECore::uint8), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
 					},
 					// renderTarget[7]
 					{
@@ -246,7 +246,7 @@ namespace RERHI
 						Blend::ONE,					// srcBlendAlpha (Rhi::Blend)															"ONE"			"ONE"
 						Blend::ZERO,				// destBlendAlpha (Rhi::Blend)															"ZERO"			"ZERO"
 						BlendOp::ADD,				// blendOpAlpha (Rhi::BlendOp)															"ADD"			"ADD"
-						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (uint8_t), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
+						ColorWriteEnableFlag::ALL	// renderTargetWriteMask (RECore::uint8), combination of "Rhi::ColorWriteEnableFlag"-flags	"ALL"			"ALL"
 					}
 				}
 			};

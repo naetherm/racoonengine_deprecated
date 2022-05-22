@@ -97,7 +97,7 @@ public:
   *  @return
   *    The number of color render target textures
   */
-  [[nodiscard]] inline uint32_t getNumberOfColorTextures() const
+  [[nodiscard]] inline RECore::uint32 getNumberOfColorTextures() const
   {
     return mNumberOfColorTextures;
   }
@@ -117,7 +117,7 @@ public:
   //[ Public virtual RERHI::RHIRenderTarget methods             ]
   //[-------------------------------------------------------]
 public:
-  inline virtual void getWidthAndHeight(uint32_t& width, uint32_t& height) const override
+  inline virtual void getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const override
   {
     // No fancy implementation in here, just copy over the internal information
     width  = mWidth;
@@ -149,11 +149,11 @@ private:
 private:
   GLuint			mOpenGLES3Framebuffer;	///< OpenGL ES 3 framebuffer, can be zero if no resource is allocated
   GLuint			mDepthRenderbuffer;		///< OpenGL ES render buffer for the depth component, can be zero if no resource is allocated
-  uint32_t		mNumberOfColorTextures;	///< Number of color render target textures
+  RECore::uint32		mNumberOfColorTextures;	///< Number of color render target textures
   RERHI::RHITexture** mColorTextures;			///< The color render target textures (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "mNumberOfColorTextures" textures in the provided C-array of pointers
   RERHI::RHITexture*  mDepthStencilTexture;	///< The depth stencil render target texture (we keep a reference to it), can be a null pointer
-  uint32_t		mWidth;					///< The framebuffer width
-  uint32_t		mHeight;				///< The framebuffer height
+  RECore::uint32		mWidth;					///< The framebuffer width
+  RECore::uint32		mHeight;				///< The framebuffer height
 
 
 };

@@ -41,7 +41,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t GraphicsProgramCacheId;	///< Graphics program cache identifier, result of hashing the shader cache IDs of the referenced shaders
+	typedef RECore::uint32 GraphicsProgramCacheId;	///< Graphics program cache identifier, result of hashing the shader cache IDs of the referenced shaders
 
 
 	//[-------------------------------------------------------]

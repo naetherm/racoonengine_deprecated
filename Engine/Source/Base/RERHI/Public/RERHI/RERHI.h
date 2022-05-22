@@ -40,7 +40,7 @@ PRAGMA_WARNING_DISABLE_MSVC(4987)	// warning C4987: nonstandard extension used: 
 #include <new>			// For placement new
 #include <cmath>
 #include <string.h>		// For "strcpy()"
-#include <inttypes.h>	// For uint32_t, uint64_t etc.
+#include <inttypes.h>	// For RECore::uint32, uint64_t etc.
 PRAGMA_WARNING_POP
 #ifdef _WIN32
 #include <intrin.h>	// For "__nop()"

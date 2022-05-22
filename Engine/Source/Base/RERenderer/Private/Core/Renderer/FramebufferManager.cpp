@@ -135,7 +135,7 @@ namespace RERenderer
 		return framebuffer;
 	}
 
-	RERHI::RHIFramebuffer* FramebufferManager::getFramebufferByCompositorFramebufferId(CompositorFramebufferId compositorFramebufferId, const RERHI::RHIRenderTarget& renderTarget, uint8_t numberOfMultisamples, float resolutionScale)
+	RERHI::RHIFramebuffer* FramebufferManager::getFramebufferByCompositorFramebufferId(CompositorFramebufferId compositorFramebufferId, const RERHI::RHIRenderTarget& renderTarget, RECore::uint8 numberOfMultisamples, float resolutionScale)
 	{
 		RERHI::RHIFramebuffer* framebuffer = nullptr;
 
@@ -155,11 +155,11 @@ namespace RERenderer
 					{
 						// Get the color texture instances
 						RERHI::TextureFormat::Enum colorTextureFormats[8] = { RERHI::TextureFormat::Enum::UNKNOWN, RERHI::TextureFormat::Enum::UNKNOWN, RERHI::TextureFormat::Enum::UNKNOWN, RERHI::TextureFormat::Enum::UNKNOWN, RERHI::TextureFormat::Enum::UNKNOWN, RERHI::TextureFormat::Enum::UNKNOWN, RERHI::TextureFormat::Enum::UNKNOWN, RERHI::TextureFormat::Enum::UNKNOWN };
-						const uint8_t numberOfColorAttachments = framebufferSignature.getNumberOfColorAttachments();
+						const RECore::uint8 numberOfColorAttachments = framebufferSignature.getNumberOfColorAttachments();
 						ASSERT(numberOfColorAttachments < 8, "Invalid number of color attachments")
 						RERHI::FramebufferAttachment colorFramebufferAttachments[8];
-						uint8_t usedNumberOfMultisamples = 0;
-						for (uint8_t i = 0; i < numberOfColorAttachments; ++i)
+						RECore::uint8 usedNumberOfMultisamples = 0;
+						for (RECore::uint8 i = 0; i < numberOfColorAttachments; ++i)
 						{
 							const FramebufferSignatureAttachment& framebufferSignatureAttachment = framebufferSignature.getColorFramebufferSignatureAttachment(i);
 							const AssetId colorTextureAssetId = framebufferSignatureAttachment.textureAssetId;

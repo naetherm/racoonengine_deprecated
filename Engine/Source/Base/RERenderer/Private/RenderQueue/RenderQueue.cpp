@@ -60,9 +60,9 @@ namespace
 		//[-------------------------------------------------------]
 		// Flip the float to deal with negative & positive numbers
 		// - See "Rough sorting by depth" - http://aras-p.info/blog/2014/01/16/rough-sorting-by-depth/
-		[[nodiscard]] inline uint32_t floatFlip(uint32_t f)
+		[[nodiscard]] inline RECore::uint32 floatFlip(RECore::uint32 f)
 		{
-			const uint32_t mask = static_cast<uint32_t>(-int(f >> 31) | 0x80000000);
+			const RECore::uint32 mask = static_cast<RECore::uint32>(-int(f >> 31) | 0x80000000);
 			return (f ^ mask);
 		}
 
@@ -70,9 +70,9 @@ namespace
 		// - 0.01 maps to 752; 0.1 to 759; 1.0 to 766; 10.0 to 772;
 		// - 100.0 to 779 etc. Negative numbers go similarly in 0..511 range.
 		// - See "Rough sorting by depth" - http://aras-p.info/blog/2014/01/16/rough-sorting-by-depth/
-		[[nodiscard]] inline uint32_t depthToBits(float depth, uint32_t depthBits)
+		[[nodiscard]] inline RECore::uint32 depthToBits(float depth, RECore::uint32 depthBits)
 		{
-			union { float f; uint32_t i; } f2i;
+			union { float f; RECore::uint32 i; } f2i;
 			f2i.f = depth;
 			f2i.i = floatFlip(f2i.i);			// Flip bits to be sortable
 			return (f2i.i >> (32 - depthBits));	// Take highest n-bits
@@ -196,7 +196,7 @@ namespace
 			// Automatic "UseGpuSkinning"-property setting
 			if (RECore::isValid(renderable.getSkeletonResourceId()))
 			{
-				static constexpr uint32_t USE_GPU_SKINNING = STRING_ID("UseGpuSkinning");
+				static constexpr RECore::uint32 USE_GPU_SKINNING = STRING_ID("UseGpuSkinning");
 				if (nullptr != materialBlueprintResource.getMaterialProperties().getPropertyById(USE_GPU_SKINNING))
 				{
 					shaderProperties.setPropertyValue(USE_GPU_SKINNING, 1);
@@ -208,7 +208,7 @@ namespace
 			// Automatic build-in "SinglePassStereoInstancing"-property setting
 			if (singlePassStereoInstancing)
 			{
-				static constexpr uint32_t SINGLE_PASS_STEREO_INSTANCING = STRING_ID("SinglePassStereoInstancing");
+				static constexpr RECore::uint32 SINGLE_PASS_STEREO_INSTANCING = STRING_ID("SinglePassStereoInstancing");
 				scratchOptimizedShaderProperties.setPropertyValue(SINGLE_PASS_STEREO_INSTANCING, 1);
 			}
 		}
@@ -231,7 +231,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	RenderQueue::RenderQueue(IndirectBufferManager& indirectBufferManager, uint8_t minimumRenderQueueIndex, uint8_t maximumRenderQueueIndex, bool positionOnlyPass, bool transparentPass, bool doSort) :
+	RenderQueue::RenderQueue(IndirectBufferManager& indirectBufferManager, RECore::uint8 minimumRenderQueueIndex, RECore::uint8 maximumRenderQueueIndex, bool positionOnlyPass, bool transparentPass, bool doSort) :
 		mRenderer(indirectBufferManager.getRenderer()),
 		mIndirectBufferManager(indirectBufferManager),
 		mNumberOfNullDrawCalls(0),
@@ -266,36 +266,36 @@ namespace RERenderer
 		RHI_ASSERT(renderableManager.isVisible(), "Invalid renderable manager visibility")
 
 		// Sorting key bits
-		static constexpr uint32_t PIPELINE_STATE_NUMBER_OF_BITS	= 16;
-		static constexpr uint32_t VERTEX_ARRAY_NUMBER_OF_BITS	= 16;
-		static constexpr uint32_t RESOURCE_GROUP_NUMBER_OF_BITS	= 11;	// TODO(naetherm) Add resource group sorting
-		static constexpr uint32_t DEPTH_NUMBER_OF_BITS			= 21;
+		static constexpr RECore::uint32 PIPELINE_STATE_NUMBER_OF_BITS	= 16;
+		static constexpr RECore::uint32 VERTEX_ARRAY_NUMBER_OF_BITS	= 16;
+		static constexpr RECore::uint32 RESOURCE_GROUP_NUMBER_OF_BITS	= 11;	// TODO(naetherm) Add resource group sorting
+		static constexpr RECore::uint32 DEPTH_NUMBER_OF_BITS			= 21;
 
 		// Sorting key bit shift: Opaque renderables are first sorted by pipeline state, then by vertex array, then by depth front to back
-		static constexpr uint32_t PIPELINE_STATE_SHIFT_OPAQUE	= 64							- PIPELINE_STATE_NUMBER_OF_BITS;	// = 48
-		static constexpr uint32_t VERTEX_ARRAY_SHIFT_OPAQUE		= PIPELINE_STATE_SHIFT_OPAQUE	- VERTEX_ARRAY_NUMBER_OF_BITS;		// = 32
-		static constexpr uint32_t RESOURCE_GROUP_SHIFT_OPAQUE	= VERTEX_ARRAY_SHIFT_OPAQUE		- RESOURCE_GROUP_NUMBER_OF_BITS;	// = 21
-		static constexpr uint32_t DEPTH_SHIFT_OPAQUE			= RESOURCE_GROUP_SHIFT_OPAQUE	- DEPTH_NUMBER_OF_BITS;				// = 0
+		static constexpr RECore::uint32 PIPELINE_STATE_SHIFT_OPAQUE	= 64							- PIPELINE_STATE_NUMBER_OF_BITS;	// = 48
+		static constexpr RECore::uint32 VERTEX_ARRAY_SHIFT_OPAQUE		= PIPELINE_STATE_SHIFT_OPAQUE	- VERTEX_ARRAY_NUMBER_OF_BITS;		// = 32
+		static constexpr RECore::uint32 RESOURCE_GROUP_SHIFT_OPAQUE	= VERTEX_ARRAY_SHIFT_OPAQUE		- RESOURCE_GROUP_NUMBER_OF_BITS;	// = 21
+		static constexpr RECore::uint32 DEPTH_SHIFT_OPAQUE			= RESOURCE_GROUP_SHIFT_OPAQUE	- DEPTH_NUMBER_OF_BITS;				// = 0
 
 		// Sorting key transparent bit shift: Transparent renderables are sorted by depth back to front, then by pipeline state, then by vertex array
-		static constexpr uint32_t DEPTH_SHIFT_TRANSPARENT			= 64								- DEPTH_NUMBER_OF_BITS;				// = 43
-		static constexpr uint32_t PIPELINE_STATE_SHIFT_TRANSPARENT	= DEPTH_SHIFT_TRANSPARENT			- PIPELINE_STATE_NUMBER_OF_BITS;	// = 27
-		static constexpr uint32_t VERTEX_ARRAY_SHIFT_TRANSPARENT	= PIPELINE_STATE_SHIFT_TRANSPARENT	- VERTEX_ARRAY_NUMBER_OF_BITS;		// = 11
-		static constexpr uint32_t RESOURCE_GROUP_SHIFT_TRANSPARENT	= VERTEX_ARRAY_SHIFT_TRANSPARENT	- RESOURCE_GROUP_NUMBER_OF_BITS;	// = 0
+		static constexpr RECore::uint32 DEPTH_SHIFT_TRANSPARENT			= 64								- DEPTH_NUMBER_OF_BITS;				// = 43
+		static constexpr RECore::uint32 PIPELINE_STATE_SHIFT_TRANSPARENT	= DEPTH_SHIFT_TRANSPARENT			- PIPELINE_STATE_NUMBER_OF_BITS;	// = 27
+		static constexpr RECore::uint32 VERTEX_ARRAY_SHIFT_TRANSPARENT	= PIPELINE_STATE_SHIFT_TRANSPARENT	- VERTEX_ARRAY_NUMBER_OF_BITS;		// = 11
+		static constexpr RECore::uint32 RESOURCE_GROUP_SHIFT_TRANSPARENT	= VERTEX_ARRAY_SHIFT_TRANSPARENT	- RESOURCE_GROUP_NUMBER_OF_BITS;	// = 0
 
 		// Quantize the cached distance to camera
 		// -> Solid: Sort from front to back to benefit from early z rejection
 		// -> Transparent: Sort from back to front to have correct alpha blending
-		const uint32_t quantizedDepth = ::detail::depthToBits(mTransparentPass ? -renderableManager.getCachedDistanceToCamera() : renderableManager.getCachedDistanceToCamera(), DEPTH_NUMBER_OF_BITS);
+		const RECore::uint32 quantizedDepth = ::detail::depthToBits(mTransparentPass ? -renderableManager.getCachedDistanceToCamera() : renderableManager.getCachedDistanceToCamera(), DEPTH_NUMBER_OF_BITS);
 
 		// Optionally adjust and check the LOD index
-		uint8_t lodIndex = mRenderer.getMeshResourceManager().getNumberOfTopMeshLodsToRemove();
+		RECore::uint8 lodIndex = mRenderer.getMeshResourceManager().getNumberOfTopMeshLodsToRemove();
 		RHI_ASSERT(0 != renderableManager.getNumberOfLods(), "Invalid renderable manager which has no LODs: There must always be at least one LOD, namely the original none reduced version")
-		const uint8_t numberOfLods = renderableManager.getNumberOfLods();
+		const RECore::uint8 numberOfLods = renderableManager.getNumberOfLods();
 		if (lodIndex >= numberOfLods)
 		{
 			// Silently clamp to maximum LOD
-			lodIndex = static_cast<uint8_t>(static_cast<int>(numberOfLods) - 1);
+			lodIndex = static_cast<RECore::uint8>(static_cast<int>(numberOfLods) - 1);
 		}
 
 		// Register the renderables inside our renderables queue
@@ -304,9 +304,9 @@ namespace RERenderer
 		const MaterialProperties& globalMaterialProperties = materialBlueprintResourceManager.getGlobalMaterialProperties();
 		const bool singlePassStereoInstancing = compositorContextData.getSinglePassStereoInstancing();
 		const RenderableManager::Renderables& renderables = renderableManager.getRenderables();
-		const uint32_t numberOfRenderablesPerLod = static_cast<uint32_t>(renderables.size()) / numberOfLods;	// Each LOD has the same number of renderables
-		uint32_t renderableIndex = numberOfRenderablesPerLod * lodIndex;
-		uint32_t renderableEndIndex = renderableIndex + numberOfRenderablesPerLod;
+		const RECore::uint32 numberOfRenderablesPerLod = static_cast<RECore::uint32>(renderables.size()) / numberOfLods;	// Each LOD has the same number of renderables
+		RECore::uint32 renderableIndex = numberOfRenderablesPerLod * lodIndex;
+		RECore::uint32 renderableEndIndex = renderableIndex + numberOfRenderablesPerLod;
 		for (; renderableIndex < renderableEndIndex; ++renderableIndex)
 		{
 			const Renderable& renderable = renderables[renderableIndex];
@@ -314,7 +314,7 @@ namespace RERenderer
 			{
 				// It's valid if one or more renderables inside a renderable manager don't fall into the range processed by this render queue
 				// -> At least one renderable should fall into the range processed by this render queue or the render queue is used wrong
-				const uint8_t renderQueueIndex = renderable.getRenderQueueIndex();
+				const RECore::uint8 renderQueueIndex = renderable.getRenderQueueIndex();
 				if (renderQueueIndex >= mMinimumRenderQueueIndex && renderQueueIndex <= mMaximumRenderQueueIndex)
 				{
 					// Material resource
@@ -334,7 +334,7 @@ namespace RERenderer
 									// Compute material blueprint resource
 
 									// Get a simple conservative combined generation counter to detect whether or not the renderable pipeline state cache is still considered to be valid
-									const uint32_t generationCounter = materialResource->getMaterialProperties().getShaderCombinationGenerationCounter() + globalMaterialProperties.getShaderCombinationGenerationCounter() + materialBlueprintResource->getMaterialProperties().getShaderCombinationGenerationCounter();
+									const RECore::uint32 generationCounter = materialResource->getMaterialProperties().getShaderCombinationGenerationCounter() + globalMaterialProperties.getShaderCombinationGenerationCounter() + materialBlueprintResource->getMaterialProperties().getShaderCombinationGenerationCounter();
 
 									// Get the pipeline state object (PSO) to use, preferably by using cached information
 									Renderable::PipelineStateCaches& pipelineStateCaches = const_cast<Renderable::PipelineStateCaches&>(renderable.mPipelineStateCaches);
@@ -383,7 +383,7 @@ namespace RERenderer
 									// Graphics material blueprint resource
 
 									// Get a simple conservative combined generation counter to detect whether or not the renderable pipeline state cache is still considered to be valid
-									const uint32_t generationCounter = materialResource->getMaterialProperties().getShaderCombinationGenerationCounter() + globalMaterialProperties.getShaderCombinationGenerationCounter() + materialBlueprintResource->getMaterialProperties().getShaderCombinationGenerationCounter() + materialTechnique->getSerializedGraphicsPipelineStateHash();
+									const RECore::uint32 generationCounter = materialResource->getMaterialProperties().getShaderCombinationGenerationCounter() + globalMaterialProperties.getShaderCombinationGenerationCounter() + materialBlueprintResource->getMaterialProperties().getShaderCombinationGenerationCounter() + materialTechnique->getSerializedGraphicsPipelineStateHash();
 
 									// Get the pipeline state object (PSO) to use, preferably by using cached information
 									Renderable::PipelineStateCaches& pipelineStateCaches = const_cast<Renderable::PipelineStateCaches&>(renderable.mPipelineStateCaches);
@@ -429,16 +429,16 @@ namespace RERenderer
 								}
 								if (nullptr != foundPipelineState)
 								{
-									const uint16_t pipelineStateId = foundPipelineState->getId();
-									const uint16_t resourceGroupId = 0;	// TODO(naetherm) Add resource group sorting
-									const uint32_t vertexArrayId = mPositionOnlyPass ? ((nullptr != renderable.getPositionOnlyVertexArrayPtrWithFallback()) ? renderable.getPositionOnlyVertexArrayPtrWithFallback()->getId() : 0u) : ((nullptr != renderable.getVertexArrayPtr()) ? renderable.getVertexArrayPtr()->getId() : 0u);
+									const RECore::uint16 pipelineStateId = foundPipelineState->getId();
+									const RECore::uint16 resourceGroupId = 0;	// TODO(naetherm) Add resource group sorting
+									const RECore::uint32 vertexArrayId = mPositionOnlyPass ? ((nullptr != renderable.getPositionOnlyVertexArrayPtrWithFallback()) ? renderable.getPositionOnlyVertexArrayPtrWithFallback()->getId() : 0u) : ((nullptr != renderable.getVertexArrayPtr()) ? renderable.getVertexArrayPtr()->getId() : 0u);
 
 									// Define helper macros
 									#define RENDER_QUEUE_MAKE_MASK(x) ((1u << (x)) - 1u)
-									#define RENDER_QUEUE_HASH(x, bits, shift) (uint64_t((x) & RENDER_QUEUE_MAKE_MASK((bits))) << (shift))
+									#define RENDER_QUEUE_HASH(x, bits, shift) (RECore::uint64((x) & RENDER_QUEUE_MAKE_MASK((bits))) << (shift))
 
 									// Generate the sorting key
-									uint64_t sortingKey;	// Guaranteed to be initialized below
+									RECore::uint64 sortingKey;	// Guaranteed to be initialized below
 									if (mTransparentPass)
 									{
 										// Transparent renderables are sorted by depth back to front, then by pipeline state, then by vertex array
@@ -504,7 +504,7 @@ namespace RERenderer
 		UniformInstanceBufferManager& uniformInstanceBufferManager = materialBlueprintResourceManager.getUniformInstanceBufferManager();
 		TextureInstanceBufferManager& textureInstanceBufferManager = materialBlueprintResourceManager.getTextureInstanceBufferManager();
 		LightBufferManager& lightBufferManager = materialBlueprintResourceManager.getLightBufferManager();
-		const uint32_t instanceCount = (compositorContextData.getSinglePassStereoInstancing() ? 2u : 1u);
+		const RECore::uint32 instanceCount = (compositorContextData.getSinglePassStereoInstancing() ? 2u : 1u);
 
 		// Process all render queues
 		// -> When adding renderables from renderable manager we could build up a minimum/maximum used render queue index to sometimes reduce
@@ -551,7 +551,7 @@ namespace RERenderer
 			lightBufferManager.fillGraphicsCommandBuffer(materialBlueprintResource, commandBuffer);
 
 			{ // Cheap state change: Bind the material technique to the used RHI
-				uint32_t resourceGroupRootParameterIndex = RECore::getInvalid<uint32_t>();
+				RECore::uint32 resourceGroupRootParameterIndex = RECore::getInvalid<RECore::uint32>();
 				RERHI::RHIResourceGroup* resourceGroup = nullptr;
 				materialTechnique.fillGraphicsCommandBuffer(mRenderer, commandBuffer, resourceGroupRootParameterIndex, &resourceGroup);
 				if (RECore::isValid(resourceGroupRootParameterIndex) && nullptr != resourceGroup)
@@ -561,7 +561,7 @@ namespace RERenderer
 			}
 
 			// Fill the instance buffer manager
-			uint32_t startInstanceLocation = 0;
+			RECore::uint32 startInstanceLocation = 0;
 			if (nullptr != instanceTextureBuffer)
 			{
 				RHI_ASSERT(nullptr != instanceUniformBuffer, "Invalid instance uniform buffer")
@@ -600,8 +600,8 @@ namespace RERenderer
 
 			// Get indirect buffer
 			RERHI::RHIIndirectBuffer* indirectBuffer = nullptr;
-			uint32_t indirectBufferOffset = 0;
-			uint8_t* indirectBufferData = nullptr;
+			RECore::uint32 indirectBufferOffset = 0;
+			RECore::uint8* indirectBufferData = nullptr;
 			if (mNumberOfDrawIndexedCalls > 0 || mNumberOfDrawCalls > 0 )
 			{
 				IndirectBufferManager::IndirectBuffer* managedIndirectBuffer = mIndirectBufferManager.getIndirectBuffer(sizeof(RERHI::DrawIndexedArguments) * mNumberOfDrawIndexedCalls + sizeof(RERHI::DrawArguments) * mNumberOfDrawCalls);
@@ -613,8 +613,8 @@ namespace RERenderer
 
 			// For gathering multi-draw-indirect data
 			std::array<RERHI::RHIResourceGroup*, 16> currentSetGraphicsResourceGroup;	// TODO(naetherm) Use maximum number of graphics resource groups here, 16 is considered a save number of root parameters
-			uint32_t currentDrawIndirectBufferOffset = indirectBufferOffset;
-			uint32_t currentNumberOfDraws = 0;
+			RECore::uint32 currentDrawIndirectBufferOffset = indirectBufferOffset;
+			RECore::uint32 currentNumberOfDraws = 0;
 			bool currentDrawIndexed = false;
 
 			// Process queues
@@ -711,7 +711,7 @@ namespace RERenderer
 						}
 
 						{ // Cheap state change: Bind the material technique to the used RHI
-							uint32_t resourceGroupRootParameterIndex = RECore::getInvalid<uint32_t>();
+							RECore::uint32 resourceGroupRootParameterIndex = RECore::getInvalid<RECore::uint32>();
 							RERHI::RHIResourceGroup* resourceGroup = nullptr;
 							materialTechnique.fillGraphicsCommandBuffer(mRenderer, mScratchCommandBuffer, resourceGroupRootParameterIndex, &resourceGroup);
 							if (RECore::isValid(resourceGroupRootParameterIndex) && nullptr != resourceGroup && currentSetGraphicsResourceGroup[resourceGroupRootParameterIndex] != resourceGroup)
@@ -722,7 +722,7 @@ namespace RERenderer
 						}
 
 						// Fill the instance buffer manager
-						uint32_t startInstanceLocation = 0;
+						RECore::uint32 startInstanceLocation = 0;
 						if (nullptr != instanceTextureBuffer)
 						{
 							RHI_ASSERT(nullptr != instanceUniformBuffer, "Invalid instance uniform buffer")
@@ -857,9 +857,9 @@ namespace RERenderer
 			compositorContextData.mCurrentlyBoundMaterialBlueprintResource = &materialBlueprintResource;
 
 			// Determine group count for dispatch compute
-			uint32_t groupCountX = 0;
-			uint32_t groupCountY = 0;
-			uint32_t groupCountZ = 0;
+			RECore::uint32 groupCountX = 0;
+			RECore::uint32 groupCountY = 0;
+			RECore::uint32 groupCountZ = 0;
 			{
 				// Use mandatory fixed build in material property "LocalComputeSize" for the compute shader local size (also known as number of threads)
 				const MaterialProperty* materialProperty = materialResource.getPropertyById(MaterialResource::LOCAL_COMPUTE_SIZE_PROPERTY_ID);
@@ -878,9 +878,9 @@ namespace RERenderer
 				{
 					// Static value
 					const int* globalComputeSizeInteger3Value = materialProperty->getInteger3Value();
-					compositorContextData.mGlobalComputeSize[0] = static_cast<uint32_t>(globalComputeSizeInteger3Value[0]);
-					compositorContextData.mGlobalComputeSize[1] = static_cast<uint32_t>(globalComputeSizeInteger3Value[1]);
-					compositorContextData.mGlobalComputeSize[2] = static_cast<uint32_t>(globalComputeSizeInteger3Value[2]);
+					compositorContextData.mGlobalComputeSize[0] = static_cast<RECore::uint32>(globalComputeSizeInteger3Value[0]);
+					compositorContextData.mGlobalComputeSize[1] = static_cast<RECore::uint32>(globalComputeSizeInteger3Value[1]);
+					compositorContextData.mGlobalComputeSize[2] = static_cast<RECore::uint32>(globalComputeSizeInteger3Value[2]);
 				}
 				else
 				{
@@ -979,9 +979,9 @@ namespace RERenderer
 				}
 
 				// Determine group count
-				groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(compositorContextData.mGlobalComputeSize[0]) / static_cast<float>(localComputeSizeInteger3Value[0])));
-				groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(compositorContextData.mGlobalComputeSize[1]) / static_cast<float>(localComputeSizeInteger3Value[1])));
-				groupCountZ = static_cast<uint32_t>(std::ceil(static_cast<float>(compositorContextData.mGlobalComputeSize[2]) / static_cast<float>(localComputeSizeInteger3Value[2])));
+				groupCountX = static_cast<RECore::uint32>(std::ceil(static_cast<float>(compositorContextData.mGlobalComputeSize[0]) / static_cast<float>(localComputeSizeInteger3Value[0])));
+				groupCountY = static_cast<RECore::uint32>(std::ceil(static_cast<float>(compositorContextData.mGlobalComputeSize[1]) / static_cast<float>(localComputeSizeInteger3Value[1])));
+				groupCountZ = static_cast<RECore::uint32>(std::ceil(static_cast<float>(compositorContextData.mGlobalComputeSize[2]) / static_cast<float>(localComputeSizeInteger3Value[2])));
 			}
 
 			// Set the used compute pipeline state object (PSO)
@@ -1007,7 +1007,7 @@ namespace RERenderer
 			lightBufferManager.fillComputeCommandBuffer(materialBlueprintResource, commandBuffer);
 
 			{ // Cheap state change: Bind the material technique to the used RHI
-				uint32_t resourceGroupRootParameterIndex = RECore::getInvalid<uint32_t>();
+				RECore::uint32 resourceGroupRootParameterIndex = RECore::getInvalid<RECore::uint32>();
 				RERHI::RHIResourceGroup* resourceGroup = nullptr;
 				queuedRenderable.materialTechnique->fillComputeCommandBuffer(mRenderer, commandBuffer, resourceGroupRootParameterIndex, &resourceGroup);
 				if (RECore::isValid(resourceGroupRootParameterIndex) && nullptr != resourceGroup)
@@ -1018,7 +1018,7 @@ namespace RERenderer
 
 			// Fill the instance buffer manager
 			// TODO(naetherm) Think about compute instance buffer support
-			// [[maybe_unused]] const uint32_t startInstanceLocation = (nullptr != instanceUniformBuffer) ? textureInstanceBufferManager.fillBuffer(materialBlueprintResource, materialBlueprintResource.getPassBufferManager(), *instanceUniformBuffer, renderable, *materialTechnique, commandBuffer) : 0;
+			// [[maybe_unused]] const RECore::uint32 startInstanceLocation = (nullptr != instanceUniformBuffer) ? textureInstanceBufferManager.fillBuffer(materialBlueprintResource, materialBlueprintResource.getPassBufferManager(), *instanceUniformBuffer, renderable, *materialTechnique, commandBuffer) : 0;
 
 			// Dispatch compute
 			RERHI::Command::DispatchCompute::create(commandBuffer, groupCountX, groupCountY, groupCountZ);

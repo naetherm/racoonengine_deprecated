@@ -80,19 +80,19 @@ public:
   //[ Public virtual RERHI::RHITextureManager methods           ]
   //[-------------------------------------------------------]
 public:
-  [[nodiscard]] virtual RERHI::RHITexture1D* createTexture1D(uint32_t width, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHITexture1D* createTexture1D(RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
-  [[nodiscard]] virtual RERHI::RHITexture1DArray* createTexture1DArray(uint32_t width, uint32_t numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHITexture1DArray* createTexture1DArray(RECore::uint32 width, RECore::uint32 numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
-  [[nodiscard]] virtual RERHI::RHITexture2D* createTexture2D(uint32_t width, uint32_t height, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT, uint8_t numberOfMultisamples = 1, [[maybe_unused]] const RERHI::OptimizedTextureClearValue* optimizedTextureClearValue = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHITexture2D* createTexture2D(RECore::uint32 width, RECore::uint32 height, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT, RECore::uint8 numberOfMultisamples = 1, [[maybe_unused]] const RERHI::OptimizedTextureClearValue* optimizedTextureClearValue = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
-  [[nodiscard]] virtual RERHI::RHITexture2DArray* createTexture2DArray(uint32_t width, uint32_t height, uint32_t numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHITexture2DArray* createTexture2DArray(RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
-  [[nodiscard]] virtual RERHI::RHITexture3D* createTexture3D(uint32_t width, uint32_t height, uint32_t depth, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHITexture3D* createTexture3D(RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
-  [[nodiscard]] virtual RERHI::RHITextureCube* createTextureCube(uint32_t width, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHITextureCube* createTextureCube(RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
-  [[nodiscard]] virtual RERHI::RHITextureCubeArray* createTextureCubeArray([[maybe_unused]] uint32_t width, [[maybe_unused]] uint32_t numberOfSlices, [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHITextureCubeArray* createTextureCubeArray([[maybe_unused]] RECore::uint32 width, [[maybe_unused]] RECore::uint32 numberOfSlices, [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
 
   //[-------------------------------------------------------]

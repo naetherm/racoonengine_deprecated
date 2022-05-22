@@ -35,7 +35,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public static methods                                 ]
 	//[-------------------------------------------------------]
-	uint32_t MaterialPropertyValue::getValueTypeNumberOfBytes(ValueType valueType)
+	RECore::uint32 MaterialPropertyValue::getValueTypeNumberOfBytes(ValueType valueType)
 	{
 		switch (valueType)
 		{

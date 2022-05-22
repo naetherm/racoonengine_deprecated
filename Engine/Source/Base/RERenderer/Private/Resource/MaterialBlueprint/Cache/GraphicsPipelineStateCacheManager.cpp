@@ -41,7 +41,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	const GraphicsPipelineStateCache* GraphicsPipelineStateCacheManager::getGraphicsPipelineStateCacheByCombination(uint32_t serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties, bool allowEmergencySynchronousCompilation)
+	const GraphicsPipelineStateCache* GraphicsPipelineStateCacheManager::getGraphicsPipelineStateCacheByCombination(RECore::uint32 serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties, bool allowEmergencySynchronousCompilation)
 	{
 		// TODO(naetherm) Asserts whether or not e.g. the material resource is using the owning material resource blueprint
 		RHI_ASSERT(IResource::LoadingState::LOADED == mMaterialBlueprintResource.getLoadingState(), "Invalid loading state")
@@ -76,7 +76,7 @@ namespace RERenderer
 			//    might not involve our first born.
 			if (!allowEmergencySynchronousCompilation && nullptr == fallbackGraphicsPipelineStateCache && !mGraphicsPipelineStateCacheByGraphicsPipelineStateSignatureId.empty())
 			{
-				fallbackGraphicsPipelineStateCache = getFallbackGraphicsPipelineStateCache(RECore::getInvalid<uint32_t>(), shaderProperties);
+				fallbackGraphicsPipelineStateCache = getFallbackGraphicsPipelineStateCache(RECore::getInvalid<RECore::uint32>(), shaderProperties);
 			}
 		}
 		else
@@ -129,7 +129,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
-	GraphicsPipelineStateCache* GraphicsPipelineStateCacheManager::getFallbackGraphicsPipelineStateCache(uint32_t serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties)
+	GraphicsPipelineStateCache* GraphicsPipelineStateCacheManager::getFallbackGraphicsPipelineStateCache(RECore::uint32 serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties)
 	{
 		// Look for a suitable already available pipeline state cache which content we can use as fallback while the pipeline state compiler is working. We
 		// do this by reducing the shader properties set until we find something, hopefully. In case no fallback can be found we have to switch to synchronous processing.
@@ -142,12 +142,12 @@ namespace RERenderer
 			{ // Remove a fallback shader property
 				// Find the most useless shader property, we're going to sacrifice it
 				ShaderProperties::SortedPropertyVector::iterator worstHitShaderPropertyIterator = sortedFallbackPropertyVector.end();
-				int32_t worstHitVisualImportanceOfShaderProperty = RECore::getInvalid<int32_t>();
+				RECore::int32 worstHitVisualImportanceOfShaderProperty = RECore::getInvalid<RECore::int32>();
 				ShaderProperties::SortedPropertyVector::iterator iterator = sortedFallbackPropertyVector.begin();
 				while (iterator != sortedFallbackPropertyVector.end())
 				{
 					// Do not remove mandatory shader combination shader properties, at least not inside this pass
-					const int32_t visualImportanceOfShaderProperty = mMaterialBlueprintResource.getVisualImportanceOfShaderProperty(iterator->shaderPropertyId);
+					const RECore::int32 visualImportanceOfShaderProperty = mMaterialBlueprintResource.getVisualImportanceOfShaderProperty(iterator->shaderPropertyId);
 					if (MaterialBlueprintResource::MANDATORY_SHADER_PROPERTY != visualImportanceOfShaderProperty)
 					{
 						if (RECore::isValid(worstHitVisualImportanceOfShaderProperty))
@@ -197,26 +197,26 @@ namespace RERenderer
 	{
 		// Material blueprint resource ID, all graphics pipeline state cache share the same material blueprint resource ID
 		MaterialBlueprintResourceId materialBlueprintResourceId = RECore::getInvalid<MaterialBlueprintResourceId>();
-		file.read(&materialBlueprintResourceId, sizeof(uint32_t));
+		file.read(&materialBlueprintResourceId, sizeof(RECore::uint32));
 		RHI_ASSERT(mMaterialBlueprintResource.getId() == materialBlueprintResourceId, "Invalid material blueprint resource ID")
 
 		// TODO(naetherm) Currently only the graphics pipeline state signature ID is loaded, not the resulting binary pipeline state cache
-		uint32_t numberOfGraphicsPipelineStateCaches = RECore::getInvalid<uint32_t>();
-		file.read(&numberOfGraphicsPipelineStateCaches, sizeof(uint32_t));
+		RECore::uint32 numberOfGraphicsPipelineStateCaches = RECore::getInvalid<RECore::uint32>();
+		file.read(&numberOfGraphicsPipelineStateCaches, sizeof(RECore::uint32));
 		mGraphicsPipelineStateCacheByGraphicsPipelineStateSignatureId.reserve(numberOfGraphicsPipelineStateCaches);
 		ShaderProperties shaderProperties;
 		ShaderProperties::SortedPropertyVector& sortedPropertyVector = shaderProperties.getSortedPropertyVector();
 		sortedPropertyVector.reserve(10);
 		GraphicsPipelineStateCompiler& graphicsPipelineStateCompiler = mMaterialBlueprintResource.getResourceManager<MaterialBlueprintResourceManager>().getRenderer().getGraphicsPipelineStateCompiler();
-		for (uint32_t graphicsPipelineStateCacheIndex = 0; graphicsPipelineStateCacheIndex < numberOfGraphicsPipelineStateCaches; ++graphicsPipelineStateCacheIndex)
+		for (RECore::uint32 graphicsPipelineStateCacheIndex = 0; graphicsPipelineStateCacheIndex < numberOfGraphicsPipelineStateCaches; ++graphicsPipelineStateCacheIndex)
 		{
 			// Read serialized graphics pipeline state hash
-			uint32_t serializedGraphicsPipelineStateHash = RECore::getInvalid<uint32_t>();
-			file.read(&serializedGraphicsPipelineStateHash, sizeof(uint32_t));
+			RECore::uint32 serializedGraphicsPipelineStateHash = RECore::getInvalid<RECore::uint32>();
+			file.read(&serializedGraphicsPipelineStateHash, sizeof(RECore::uint32));
 
 			// Read shader properties
-			uint32_t numberOfShaderProperties = RECore::getInvalid<uint32_t>();
-			file.read(&numberOfShaderProperties, sizeof(uint32_t));
+			RECore::uint32 numberOfShaderProperties = RECore::getInvalid<RECore::uint32>();
+			file.read(&numberOfShaderProperties, sizeof(RECore::uint32));
 			sortedPropertyVector.resize(numberOfShaderProperties);
 			if (numberOfShaderProperties > 0)
 			{
@@ -238,11 +238,11 @@ namespace RERenderer
 	{
 		// Material blueprint resource ID, all graphics pipeline state cache share the same material blueprint resource ID
 		const MaterialBlueprintResourceId materialBlueprintResourceId = mMaterialBlueprintResource.getId();
-		file.write(&materialBlueprintResourceId, sizeof(uint32_t));
+		file.write(&materialBlueprintResourceId, sizeof(RECore::uint32));
 
 		// TODO(naetherm) Currently only the graphics pipeline state signature ID is saved, not the resulting binary pipeline state cache
-		const uint32_t numberOfGraphicsPipelineStateCaches = static_cast<uint32_t>(mGraphicsPipelineStateCacheByGraphicsPipelineStateSignatureId.size());
-		file.write(&numberOfGraphicsPipelineStateCaches, sizeof(uint32_t));
+		const RECore::uint32 numberOfGraphicsPipelineStateCaches = static_cast<RECore::uint32>(mGraphicsPipelineStateCacheByGraphicsPipelineStateSignatureId.size());
+		file.write(&numberOfGraphicsPipelineStateCaches, sizeof(RECore::uint32));
 		for (const auto& elementPair : mGraphicsPipelineStateCacheByGraphicsPipelineStateSignatureId)
 		{
 			const GraphicsPipelineStateSignature& graphicsPipelineStateSignature = elementPair.second->getGraphicsPipelineStateSignature();
@@ -251,14 +251,14 @@ namespace RERenderer
 			RHI_ASSERT(graphicsPipelineStateSignature.getMaterialBlueprintResourceId() == materialBlueprintResourceId, "Invalid material blueprint resource ID")
 
 			{ // Write serialized graphics pipeline state hash
-				const uint32_t serializedGraphicsPipelineStateHash = graphicsPipelineStateSignature.getSerializedGraphicsPipelineStateHash();
-				file.write(&serializedGraphicsPipelineStateHash, sizeof(uint32_t));
+				const RECore::uint32 serializedGraphicsPipelineStateHash = graphicsPipelineStateSignature.getSerializedGraphicsPipelineStateHash();
+				file.write(&serializedGraphicsPipelineStateHash, sizeof(RECore::uint32));
 			}
 
 			{ // Write shader properties
 				const ShaderProperties::SortedPropertyVector& sortedPropertyVector = graphicsPipelineStateSignature.getShaderProperties().getSortedPropertyVector();
-				const uint32_t numberOfShaderProperties = static_cast<uint32_t>(sortedPropertyVector.size());
-				file.write(&numberOfShaderProperties, sizeof(uint32_t));
+				const RECore::uint32 numberOfShaderProperties = static_cast<RECore::uint32>(sortedPropertyVector.size());
+				file.write(&numberOfShaderProperties, sizeof(RECore::uint32));
 				if (numberOfShaderProperties > 0)
 				{
 					file.write(sortedPropertyVector.data(), sizeof(ShaderProperties::Property) * numberOfShaderProperties);

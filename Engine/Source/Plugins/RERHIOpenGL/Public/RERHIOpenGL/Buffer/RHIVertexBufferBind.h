@@ -72,7 +72,7 @@ public:
   *  @param[in] bufferUsage
   *    Indication of the buffer usage
   */
-  VertexBufferBind(RHIDynamicRHI& openGLRhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  VertexBufferBind(RHIDynamicRHI& openGLRhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

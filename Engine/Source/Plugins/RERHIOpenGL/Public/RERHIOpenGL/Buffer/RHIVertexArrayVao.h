@@ -98,7 +98,7 @@ protected:
   *  @param[in] id
   *    The unique compact vertex array ID
   */
-  VertexArrayVao(RHIDynamicRHI& openGLRhi, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  VertexArrayVao(RHIDynamicRHI& openGLRhi, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
 
   //[-------------------------------------------------------]
@@ -106,7 +106,7 @@ protected:
   //[-------------------------------------------------------]
 protected:
   GLuint		   mOpenGLVertexArray;		///< OpenGL vertex array ("container" object, not shared between OpenGL contexts), can be zero if no resource is allocated
-  uint32_t	   mNumberOfVertexBuffers;	///< Number of vertex buffers
+  RECore::uint32	   mNumberOfVertexBuffers;	///< Number of vertex buffers
   VertexBuffer** mVertexBuffers;			///< Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer
 
 

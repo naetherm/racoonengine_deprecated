@@ -73,7 +73,7 @@ public:
   *  @return
   *    The width of the texture
   */
-  [[nodiscard]] inline uint32_t getWidth() const
+  [[nodiscard]] inline RECore::uint32 getWidth() const
   {
     return mWidth;
   }
@@ -85,7 +85,7 @@ public:
   *  @return
   *    The height of the texture
   */
-  [[nodiscard]] inline uint32_t getHeight() const
+  [[nodiscard]] inline RECore::uint32 getHeight() const
   {
     return mHeight;
   }
@@ -103,7 +103,7 @@ protected:
   *  @param[in] height
   *    The height of the texture
   */
-  inline RHITexture2D(RHIDynamicRHI& rhi, uint32_t width, uint32_t height RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+  inline RHITexture2D(RHIDynamicRHI& rhi, RECore::uint32 width, RECore::uint32 height RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
     RHITexture(ResourceType::TEXTURE_2D, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
     mWidth(width),
     mHeight(height)
@@ -120,8 +120,8 @@ protected:
 
   // Private data
 private:
-  uint32_t mWidth;	///< The width of the texture
-  uint32_t mHeight;	///< The height of the texture
+  RECore::uint32 mWidth;	///< The width of the texture
+  RECore::uint32 mHeight;	///< The height of the texture
 
 };
 

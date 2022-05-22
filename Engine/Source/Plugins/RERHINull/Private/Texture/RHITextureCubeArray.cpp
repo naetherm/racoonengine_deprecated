@@ -42,7 +42,7 @@ namespace RERHINull {
 *  @param[in] numberOfSlices
 *    The number of slices
 */
-TextureCubeArray::TextureCubeArray(RHIDynamicRHI& nullRhi, uint32_t width, uint32_t numberOfSlices RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+TextureCubeArray::TextureCubeArray(RHIDynamicRHI& nullRhi, RECore::uint32 width, RECore::uint32 numberOfSlices RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 RHITextureCubeArray(nullRhi, width, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 {}
 

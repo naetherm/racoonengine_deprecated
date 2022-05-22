@@ -56,7 +56,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("crn_array");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("crn_array");
 
 
 	//[-------------------------------------------------------]
@@ -106,10 +106,10 @@ namespace RERenderer
 		struct SliceFileMetadata final
 		{
 			const RECore::Asset& asset;
-			uint32_t	 offset;
-			uint32_t	 numberOfBytes;
+			RECore::uint32	 offset;
+			RECore::uint32	 numberOfBytes;
 
-			inline SliceFileMetadata(const RECore::Asset& _asset, uint32_t _offset, uint32_t _numberOfBytes) :
+			inline SliceFileMetadata(const RECore::Asset& _asset, RECore::uint32 _offset, RECore::uint32 _numberOfBytes) :
 				asset(_asset),
 				offset(_offset),
 				numberOfBytes(_numberOfBytes)
@@ -123,7 +123,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
 		// Temporary data
-		uint32_t mNumberOfSlices;
+		RECore::uint32 mNumberOfSlices;
 
 		// Temporary file data
 		RECore::MemoryFile					   mMemoryFile;

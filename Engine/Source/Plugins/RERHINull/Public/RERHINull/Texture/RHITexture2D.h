@@ -70,7 +70,7 @@ public:
   *  @param[in] height
   *    The height of the texture
   */
-  Texture2D(RHIDynamicRHI& nullRhi, uint32_t width, uint32_t height RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  Texture2D(RHIDynamicRHI& nullRhi, RECore::uint32 width, RECore::uint32 height RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief

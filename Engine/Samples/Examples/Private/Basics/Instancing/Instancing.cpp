@@ -81,27 +81,27 @@ void Instancing::onInitialization()
 						RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 						"Position",								// name[32] (char)
 						"POSITION",								// semanticName[32] (char)
-						0,										// semanticIndex (uint32_t)
+						0,										// semanticIndex (RECore::uint32)
 						// Data source
-						0,										// inputSlot (uint32_t)
-						0,										// alignedByteOffset (uint32_t)
-						sizeof(float) * 2,						// strideInBytes (uint32_t)
-						0										// instancesPerElement (uint32_t)
+						0,										// inputSlot (RECore::uint32)
+						0,										// alignedByteOffset (RECore::uint32)
+						sizeof(float) * 2,						// strideInBytes (RECore::uint32)
+						0										// instancesPerElement (RECore::uint32)
 					},
 					{ // Attribute 1
 						// Data destination
 						RERHI::VertexAttributeFormat::FLOAT_1,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 						"InstanceID",							// name[32] (char)
 						"TEXCOORD",								// semanticName[32] (char)
-						0,										// semanticIndex (uint32_t)
+						0,										// semanticIndex (RECore::uint32)
 						// Data source
-						1,										// inputSlot (uint32_t)
-						0,										// alignedByteOffset (uint32_t)
-						sizeof(float),							// strideInBytes (uint32_t)
-						1										// instancesPerElement (uint32_t)
+						1,										// inputSlot (RECore::uint32)
+						0,										// alignedByteOffset (RECore::uint32)
+						sizeof(float),							// strideInBytes (RECore::uint32)
+						1										// instancesPerElement (RECore::uint32)
 					}
 				};
-				const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+				const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
 				{ // Create vertex array object (VAO)
 					// Create the vertex buffer object (VBO)
@@ -126,7 +126,7 @@ void Instancing::onInitialization()
 					// -> In this example, we only draw a simple triangle and therefore usually do not need an index buffer
 					// -> In Direct3D 9, instanced arrays with hardware support is only possible when drawing indexed primitives, see
 					//    "Efficiently Drawing Multiple Instances of Geometry (Direct3D 9)"-article at MSDN: http://msdn.microsoft.com/en-us/library/windows/desktop/bb173349%28v=vs.85%29.aspx#Drawing_Non_Indexed_Geometry
-					static constexpr uint16_t INDICES[] =
+					static constexpr RECore::uint16 INDICES[] =
 					{
 						0, 1, 2
 					};
@@ -139,7 +139,7 @@ void Instancing::onInitialization()
 					//    reference of the used vertex buffer objects (VBO). If the reference counter of a
 					//    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
 					const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBufferPosition, vertexBufferInstanceId, };
-					mVertexArrayInstancedArrays = mBufferManager->createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBufferInstancedArrays);
+					mVertexArrayInstancedArrays = mBufferManager->createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBufferInstancedArrays);
 				}
 
 				// Create the graphics program
@@ -180,15 +180,15 @@ void Instancing::onInitialization()
 						RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 						"Position",								// name[32] (char)
 						"POSITION",								// semanticName[32] (char)
-						0,										// semanticIndex (uint32_t)
+						0,										// semanticIndex (RECore::uint32)
 						// Data source
-						0,										// inputSlot (uint32_t)
-						0,										// alignedByteOffset (uint32_t)
-						sizeof(float) * 2,						// strideInBytes (uint32_t)
-						0										// instancesPerElement (uint32_t)
+						0,										// inputSlot (RECore::uint32)
+						0,										// alignedByteOffset (RECore::uint32)
+						sizeof(float) * 2,						// strideInBytes (RECore::uint32)
+						0										// instancesPerElement (RECore::uint32)
 					}
 				};
-				const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+				const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
 				{ // Create vertex array object (VAO)
 					// Create the vertex buffer object (VBO)
@@ -208,7 +208,7 @@ void Instancing::onInitialization()
 					//    reference of the used vertex buffer objects (VBO). If the reference counter of a
 					//    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
 					const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-					mVertexArrayDrawInstanced = mBufferManager->createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
+					mVertexArrayDrawInstanced = mBufferManager->createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
 				}
 
 				// Create the graphics program

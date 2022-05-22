@@ -73,7 +73,7 @@ namespace RERenderer
 		getSceneResource().getRenderer().getMeshResourceManager().loadMeshResourceByAssetId(meshAssetId, mMeshResourceId, this);
 	}
 
-	void MeshSceneItem::setMaterialResourceIdOfSubMeshLod(uint32_t subMeshIndex, uint8_t lodIndex, MaterialResourceId materialResourceId)
+	void MeshSceneItem::setMaterialResourceIdOfSubMeshLod(RECore::uint32 subMeshIndex, RECore::uint8 lodIndex, MaterialResourceId materialResourceId)
 	{
 		RHI_ASSERT(subMeshIndex < getNumberOfSubMeshes(), "Invalid sub mesh index")
 		RHI_ASSERT(lodIndex < mRenderableManager.getNumberOfLods(), "Invalid LOD index")
@@ -94,7 +94,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RERenderer::ISceneItem methods           ]
 	//[-------------------------------------------------------]
-	void MeshSceneItem::deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
+	void MeshSceneItem::deserialize([[maybe_unused]] RECore::uint32 numberOfBytes, const RECore::uint8* data)
 	{
 		// Sanity checks
 		RHI_ASSERT(sizeof(v1Scene::MeshItem) <= numberOfBytes, "Invalid number of bytes")
@@ -211,7 +211,7 @@ namespace RERenderer
 				// -> In case there are more overwritten sub-meshes as there are sub-meshes, be error tolerant here (mesh assets might have been changed, but not updated scene assets in use)
 				if (!mSubMeshMaterialAssetIds.empty())
 				{
-					const uint32_t numberOfMaterials = static_cast<uint32_t>(std::min(mSubMeshMaterialAssetIds.size(), mRenderableManager.getRenderables().size()));
+					const RECore::uint32 numberOfMaterials = static_cast<RECore::uint32>(std::min(mSubMeshMaterialAssetIds.size(), mRenderableManager.getRenderables().size()));
 					for (size_t i = 0; i < numberOfMaterials; ++i)
 					{
 						if (RECore::isValid(mSubMeshMaterialAssetIds[i]))
@@ -229,9 +229,9 @@ namespace RERenderer
 			{
 				// Overwritten sub-mesh material loaded now?
 				// -> In case there are more overwritten sub-meshes as there are sub-meshes, be error tolerant here (mesh assets might have been changed, but not updated scene assets in use)
-				const uint32_t numberOfMaterials = static_cast<uint32_t>(std::min(mSubMeshMaterialAssetIds.size(), mRenderableManager.getRenderables().size()));
+				const RECore::uint32 numberOfMaterials = static_cast<RECore::uint32>(std::min(mSubMeshMaterialAssetIds.size(), mRenderableManager.getRenderables().size()));
 				bool updateCachedRenderablesDataRequired = false;
-				for (uint32_t i = 0; i < numberOfMaterials; ++i)
+				for (RECore::uint32 i = 0; i < numberOfMaterials; ++i)
 				{
 					if (resource.getAssetId() == mSubMeshMaterialAssetIds[i])
 					{

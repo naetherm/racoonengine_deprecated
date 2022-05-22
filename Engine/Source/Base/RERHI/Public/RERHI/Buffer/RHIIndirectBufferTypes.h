@@ -58,11 +58,11 @@ namespace RERHI
 	*/
 	struct DrawArguments final
 	{
-		uint32_t vertexCountPerInstance;
-		uint32_t instanceCount;
-		uint32_t startVertexLocation;
-		uint32_t startInstanceLocation;
-		inline DrawArguments(uint32_t _vertexCountPerInstance, uint32_t _instanceCount = 1, uint32_t _startVertexLocation = 0, uint32_t _startInstanceLocation = 0) :
+		RECore::uint32 vertexCountPerInstance;
+		RECore::uint32 instanceCount;
+		RECore::uint32 startVertexLocation;
+		RECore::uint32 startInstanceLocation;
+		inline DrawArguments(RECore::uint32 _vertexCountPerInstance, RECore::uint32 _instanceCount = 1, RECore::uint32 _startVertexLocation = 0, RECore::uint32 _startInstanceLocation = 0) :
 			vertexCountPerInstance(_vertexCountPerInstance),
 			instanceCount(_instanceCount),
 			startVertexLocation(_startVertexLocation),
@@ -87,12 +87,12 @@ namespace RERHI
 	*/
 	struct DrawIndexedArguments final
 	{
-		uint32_t indexCountPerInstance;
-		uint32_t instanceCount;
-		uint32_t startIndexLocation;
-		int32_t  baseVertexLocation;
-		uint32_t startInstanceLocation;
-		inline DrawIndexedArguments(uint32_t _indexCountPerInstance, uint32_t _instanceCount = 1, uint32_t _startIndexLocation = 0, int32_t _baseVertexLocation = 0, uint32_t _startInstanceLocation = 0) :
+		RECore::uint32 indexCountPerInstance;
+		RECore::uint32 instanceCount;
+		RECore::uint32 startIndexLocation;
+		RECore::int32  baseVertexLocation;
+		RECore::uint32 startInstanceLocation;
+		inline DrawIndexedArguments(RECore::uint32 _indexCountPerInstance, RECore::uint32 _instanceCount = 1, RECore::uint32 _startIndexLocation = 0, RECore::int32 _baseVertexLocation = 0, RECore::uint32 _startInstanceLocation = 0) :
 			indexCountPerInstance(_indexCountPerInstance),
 			instanceCount(_instanceCount),
 			startIndexLocation(_startIndexLocation),
@@ -116,9 +116,9 @@ namespace RERHI
 	*/
 	struct DrawMeshTasksArguments final
 	{
-		uint32_t numberOfTasks;
-		uint32_t firstTask;
-		inline DrawMeshTasksArguments(uint32_t _numberOfTasks, uint32_t _firstTask = 0) :
+		RECore::uint32 numberOfTasks;
+		RECore::uint32 firstTask;
+		inline DrawMeshTasksArguments(RECore::uint32 _numberOfTasks, RECore::uint32 _firstTask = 0) :
 			numberOfTasks(_numberOfTasks),
 			firstTask(_firstTask)
 		{}

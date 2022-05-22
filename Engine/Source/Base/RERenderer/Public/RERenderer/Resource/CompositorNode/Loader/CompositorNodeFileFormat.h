@@ -42,12 +42,12 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;					///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
-	typedef RECore::StringId CompositorChannelId;		///< Compositor channel identifier, internally just a POD "uint32_t"
-	typedef RECore::StringId CompositorFramebufferId;	///< Compositor framebuffer identifier, internally just a POD "uint32_t"
-	typedef RECore::StringId CompositorPassTypeId;		///< Compositor pass type identifier, internally just a POD "uint32_t"
-	typedef uint32_t MaterialTechniqueId;		///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
-	typedef RECore::StringId MaterialPropertyId;		///< Material property identifier, internally just a POD "uint32_t", result of hashing the property name
+	typedef RECore::StringId AssetId;					///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::StringId CompositorChannelId;		///< Compositor channel identifier, internally just a POD "RECore::uint32"
+	typedef RECore::StringId CompositorFramebufferId;	///< Compositor framebuffer identifier, internally just a POD "RECore::uint32"
+	typedef RECore::StringId CompositorPassTypeId;		///< Compositor pass type identifier, internally just a POD "RECore::uint32"
+	typedef RECore::uint32 MaterialTechniqueId;		///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
+	typedef RECore::StringId MaterialPropertyId;		///< Material property identifier, internally just a POD "RECore::uint32", result of hashing the property name
 
 
 	// Compositor node file format content:
@@ -60,18 +60,18 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("CompositorNode");
-		static constexpr uint32_t FORMAT_VERSION = 9;
+		static constexpr RECore::uint32 FORMAT_TYPE	 = STRING_ID("CompositorNode");
+		static constexpr RECore::uint32 FORMAT_VERSION = 9;
 
 		#pragma pack(push)
 		#pragma pack(1)
 			struct CompositorNodeHeader final
 			{
-				uint32_t numberOfInputChannels;
-				uint32_t numberOfRenderTargetTextures;
-				uint32_t numberOfFramebuffers;
-				uint32_t numberOfTargets;
-				uint32_t numberOfOutputChannels;
+				RECore::uint32 numberOfInputChannels;
+				RECore::uint32 numberOfRenderTargetTextures;
+				RECore::uint32 numberOfFramebuffers;
+				RECore::uint32 numberOfTargets;
+				RECore::uint32 numberOfOutputChannels;
 			};
 
 			struct Channel final
@@ -95,45 +95,45 @@ namespace RERenderer
 			{
 				CompositorChannelId		compositorChannelId;
 				CompositorFramebufferId compositorFramebufferId;
-				uint32_t				numberOfPasses;
+				RECore::uint32				numberOfPasses;
 			};
 
 			struct PassHeader final
 			{
 				CompositorPassTypeId compositorPassTypeId;
-				uint32_t			 numberOfBytes;
+				RECore::uint32			 numberOfBytes;
 			};
 
 			// Keep this in sync with "Renderer::ICompositorResourcePass::deserialize() -> PassData"
 			struct Pass
 			{
-				static constexpr uint32_t MAXIMUM_PASS_NAME_LENGTH = 63 + 1;	// +1 for the terminating zero
+				static constexpr RECore::uint32 MAXIMUM_PASS_NAME_LENGTH = 63 + 1;	// +1 for the terminating zero
 
 				char	 name[MAXIMUM_PASS_NAME_LENGTH] = { "Compositor pass" };	///< Human readable ASCII pass name for debugging and profiling, contains terminating zero
 				float	 minimumDepth					= 0.0f;
 				float	 maximumDepth					= 1.0f;
-				uint32_t numberOfExecutions				= RECore::getInvalid<uint32_t>();
+				RECore::uint32 numberOfExecutions				= RECore::getInvalid<RECore::uint32>();
 				bool	 skipFirstExecution				= false;
 			};
 
 			struct PassClear final : public Pass
 			{
-				uint32_t flags	  = 0;		///< Combination of "RERHI::ClearFlag"
+				RECore::uint32 flags	  = 0;		///< Combination of "RERHI::ClearFlag"
 				float	 color[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 				float	 z		  = 0.0f;	///< 0 instead of 1 due to usage of Reversed-Z (see e.g. https://developer.nvidia.com/content/depth-precision-visualized and https://nlguillemot.wordpress.com/2016/12/07/reversed-z-in-opengl/)
-				uint32_t stencil  = 0;
+				RECore::uint32 stencil  = 0;
 			};
 
 			struct PassVrHiddenAreaMesh final : public Pass
 			{
-				uint32_t flags	 = 0;	///< Combination of "RERHI::ClearFlag", except for color-flag
-				uint32_t stencil = 0;
+				RECore::uint32 flags	 = 0;	///< Combination of "RERHI::ClearFlag", except for color-flag
+				RECore::uint32 stencil = 0;
 			};
 
 			struct PassScene : public Pass
 			{
-				uint8_t				minimumRenderQueueIndex = 0;	///< Inclusive
-				uint8_t				maximumRenderQueueIndex = 255;	///< Inclusive
+				RECore::uint8				minimumRenderQueueIndex = 0;	///< Inclusive
+				RECore::uint8				maximumRenderQueueIndex = 255;	///< Inclusive
 				bool				transparentPass			= false;
 				MaterialTechniqueId	materialTechniqueId		= RECore::getInvalid<MaterialTechniqueId>();
 			};
@@ -168,7 +168,7 @@ namespace RERenderer
 				AssetId				materialAssetId;												///< If material blueprint asset ID is set, material asset ID must be invalid
 				MaterialTechniqueId	materialTechniqueId		   = RECore::getInvalid<MaterialTechniqueId>();	///< Must always be valid
 				AssetId				materialBlueprintAssetId;										///< If material asset ID is set, material blueprint asset ID must be invalid
-				uint32_t			numberOfMaterialProperties = 0;
+				RECore::uint32			numberOfMaterialProperties = 0;
 			};
 
 			// The material definition is not mandatory for the debug GUI, if nothing is defined the fixed build in RHI configuration resources will be used instead

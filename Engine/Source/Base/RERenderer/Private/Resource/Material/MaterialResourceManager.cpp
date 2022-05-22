@@ -154,12 +154,12 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
-	uint32_t MaterialResourceManager::getNumberOfResources() const
+	RECore::uint32 MaterialResourceManager::getNumberOfResources() const
 	{
 		return mInternalResourceManager->getResources().getNumberOfElements();
 	}
 
-RECore::IResource& MaterialResourceManager::getResourceByIndex(uint32_t index) const
+RECore::IResource& MaterialResourceManager::getResourceByIndex(RECore::uint32 index) const
 	{
 		return mInternalResourceManager->getResources().getElementByIndex(index);
 	}

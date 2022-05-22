@@ -77,7 +77,7 @@ public:
   *  @return
   *    The unique compact vertex array ID
   */
-  inline uint16_t getId() const {
+  inline RECore::uint16 getId() const {
     return mId;
   }
 
@@ -92,7 +92,7 @@ protected:
   *  @param[in] id
   *    The unique compact vertex array ID
   */
-  inline RHIVertexArray(RHIDynamicRHI &rhi, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+  inline RHIVertexArray(RHIDynamicRHI &rhi, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
     RHIResource(ResourceType::VERTEX_ARRAY, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
     mId(id) {
 #ifdef RHI_STATISTICS
@@ -108,7 +108,7 @@ protected:
 
   // Private data
 private:
-  uint16_t mId;
+  RECore::uint16 mId;
 };
 
 typedef RECore::SmartRefCount<RHIVertexArray> RHIVertexArrayPtr;

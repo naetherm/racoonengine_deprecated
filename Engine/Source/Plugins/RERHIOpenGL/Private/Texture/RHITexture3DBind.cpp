@@ -43,8 +43,8 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-Texture3DBind::Texture3DBind(RHIDynamicRHI &openGLRhi, uint32_t width, uint32_t height, uint32_t depth,
-                             RERHI::TextureFormat::Enum textureFormat, const void *data, uint32_t textureFlags,
+Texture3DBind::Texture3DBind(RHIDynamicRHI &openGLRhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth,
+                             RERHI::TextureFormat::Enum textureFormat, const void *data, RECore::uint32 textureFlags,
                              RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   Texture3D(openGLRhi, width, height, depth, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER) {
 // Sanity checks
@@ -82,7 +82,7 @@ Texture3DBind::Texture3DBind(RHIDynamicRHI &openGLRhi, uint32_t width, uint32_t 
 
 // Bind this OpenGL pixel unpack buffer, the OpenGL pixel unpack buffer must be able to hold the top-level mipmap
 // TODO(naetherm) Or must the OpenGL pixel unpack buffer able to hold the entire texture including all mipmaps? Depends on the later usage I assume.
-    const uint32_t numberOfBytes = RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height) * depth;
+    const RECore::uint32 numberOfBytes = RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height) * depth;
     glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, mOpenGLPixelUnpackBuffer);
     glBufferDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, static_cast<GLsizeiptrARB>(numberOfBytes), nullptr,
                     static_cast<GLenum>(GL_STREAM_DRAW));
@@ -100,7 +100,7 @@ Texture3DBind::Texture3DBind(RHIDynamicRHI &openGLRhi, uint32_t width, uint32_t 
   const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & RERHI::TextureFlag::GENERATE_MIPMAPS));
   RHI_ASSERT(RERHI::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps,
              "OpenGL immutable texture usage can't be combined with automatic mipmap generation")
-  const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height, depth)
+  const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height, depth)
                                                                             : 1;
 
 // Make this OpenGL texture instance to the currently used one
@@ -116,7 +116,7 @@ Texture3DBind::Texture3DBind(RHIDynamicRHI &openGLRhi, uint32_t width, uint32_t 
 //   etc.
 
 // Upload all mipmaps
-      for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
+      for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
 // Upload the current mipmap
         const GLsizei numberOfBytesPerMipmap = static_cast<GLsizei>(
           RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height) * depth);
@@ -125,7 +125,7 @@ Texture3DBind::Texture3DBind(RHIDynamicRHI &openGLRhi, uint32_t width, uint32_t 
                                   static_cast<GLsizei>(depth), 0, numberOfBytesPerMipmap, data);
 
 // Move on to the next mipmap and ensure the size is always at least 1x1x1
-        data = static_cast<const uint8_t *>(data) + numberOfBytesPerMipmap;
+        data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerMipmap;
         width = getHalfSize(width);
         height = getHalfSize(height);
         depth = getHalfSize(depth);
@@ -149,9 +149,9 @@ Texture3DBind::Texture3DBind(RHIDynamicRHI &openGLRhi, uint32_t width, uint32_t 
 //   etc.
 
 // Upload all mipmaps
-      const uint32_t format = Mapping::getOpenGLFormat(textureFormat);
-      const uint32_t type = Mapping::getOpenGLType(textureFormat);
-      for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
+      const RECore::uint32 format = Mapping::getOpenGLFormat(textureFormat);
+      const RECore::uint32 type = Mapping::getOpenGLType(textureFormat);
+      for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
 // Upload the current mipmap
         const GLsizei numberOfBytesPerMipmap = static_cast<GLsizei>(
           RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height) * depth);
@@ -159,7 +159,7 @@ Texture3DBind::Texture3DBind(RHIDynamicRHI &openGLRhi, uint32_t width, uint32_t 
                         static_cast<GLsizei>(height), static_cast<GLsizei>(depth), 0, format, type, data);
 
 // Move on to the next mipmap and ensure the size is always at least 1x1x1
-        data = static_cast<const uint8_t *>(data) + numberOfBytesPerMipmap;
+        data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerMipmap;
         width = getHalfSize(width);
         height = getHalfSize(height);
         depth = getHalfSize(depth);

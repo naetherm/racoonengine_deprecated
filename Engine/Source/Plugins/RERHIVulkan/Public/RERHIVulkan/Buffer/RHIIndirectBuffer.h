@@ -70,7 +70,7 @@ public:
   *  @param[in] bufferUsage
   *    Indication of the buffer usage
   */
-  IndirectBuffer(RHIDynamicRHI& vulkanRhi, uint32_t numberOfBytes, const void* data, uint32_t indirectBufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  IndirectBuffer(RHIDynamicRHI& vulkanRhi, RECore::uint32 numberOfBytes, const void* data, RECore::uint32 indirectBufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief
@@ -107,7 +107,7 @@ public:
   //[ Public virtual RERHI::RHIIndirectBuffer methods           ]
   //[-------------------------------------------------------]
 public:
-  [[nodiscard]] inline virtual const uint8_t* getEmulationData() const override
+  [[nodiscard]] inline virtual const RECore::uint8* getEmulationData() const override
   {
     return nullptr;
   }

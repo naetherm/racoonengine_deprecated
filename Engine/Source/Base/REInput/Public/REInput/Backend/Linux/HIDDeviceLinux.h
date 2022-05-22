@@ -78,7 +78,7 @@ public:
   //[ Public virtual ConnectionDevice functions             ]
   //[-------------------------------------------------------]
 public:
-  virtual bool open(uint16_t nOutputPort = 0, uint16_t nInputPort = 0) override
+  virtual bool open(RECore::uint16 nOutputPort = 0, RECore::uint16 nInputPort = 0) override
   {
     // Close first
     if (isOpen())
@@ -130,7 +130,7 @@ public:
     return false;
   }
 
-  virtual bool read(uint8_t *pBuffer, uint32_t nSize) override
+  virtual bool read(RECore::uint8 *pBuffer, RECore::uint32 nSize) override
   {
     // TODO(naetherm)
 
@@ -138,7 +138,7 @@ public:
     return false;
   }
 
-  virtual bool write(const uint8_t *pBuffer, uint32_t nSize) override
+  virtual bool write(const RECore::uint8 *pBuffer, RECore::uint32 nSize) override
   {
     // TODO(naetherm)
 

@@ -57,19 +57,19 @@ BufferManager::~BufferManager()
 {}
 
 
-RERHI::RHIVertexBuffer* BufferManager::createVertexBuffer([[maybe_unused]] uint32_t numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] uint32_t bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIVertexBuffer* BufferManager::createVertexBuffer([[maybe_unused]] RECore::uint32 numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& nullRhi = static_cast<RHIDynamicRHI&>(getRhi());
   return RHI_NEW(nullRhi.getContext(), VertexBuffer)(nullRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIIndexBuffer* BufferManager::createIndexBuffer([[maybe_unused]] uint32_t numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] uint32_t bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, [[maybe_unused]] RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIIndexBuffer* BufferManager::createIndexBuffer([[maybe_unused]] RECore::uint32 numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, [[maybe_unused]] RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& nullRhi = static_cast<RHIDynamicRHI&>(getRhi());
   return RHI_NEW(nullRhi.getContext(), IndexBuffer)(nullRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIVertexArray* BufferManager::createVertexArray([[maybe_unused]] const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, RERHI::RHIIndexBuffer* indexBuffer RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIVertexArray* BufferManager::createVertexArray([[maybe_unused]] const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, RERHI::RHIIndexBuffer* indexBuffer RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& nullRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -103,11 +103,11 @@ RERHI::RHIVertexArray* BufferManager::createVertexArray([[maybe_unused]] const R
   }
 
   // Create the vertex array instance
-  uint16_t id;
+  RECore::uint16 id;
   return nullRhi.VertexArrayMakeId.createID(id) ? RHI_NEW(nullRhi.getContext(), VertexArray)(nullRhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER) : nullptr;
 }
 
-RERHI::RHITextureBuffer* BufferManager::createTextureBuffer([[maybe_unused]] uint32_t numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] uint32_t bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHITextureBuffer* BufferManager::createTextureBuffer([[maybe_unused]] RECore::uint32 numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& nullRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -118,7 +118,7 @@ RERHI::RHITextureBuffer* BufferManager::createTextureBuffer([[maybe_unused]] uin
   return RHI_NEW(nullRhi.getContext(), TextureBuffer)(nullRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIStructuredBuffer* BufferManager::createStructuredBuffer([[maybe_unused]] uint32_t numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] uint32_t bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, [[maybe_unused]] uint32_t numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIStructuredBuffer* BufferManager::createStructuredBuffer([[maybe_unused]] RECore::uint32 numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, [[maybe_unused]] RECore::uint32 numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& nullRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -130,7 +130,7 @@ RERHI::RHIStructuredBuffer* BufferManager::createStructuredBuffer([[maybe_unused
   return RHI_NEW(nullRhi.getContext(), StructuredBuffer)(nullRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIIndirectBuffer* BufferManager::createIndirectBuffer([[maybe_unused]] uint32_t numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] uint32_t indirectBufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIIndirectBuffer* BufferManager::createIndirectBuffer([[maybe_unused]] RECore::uint32 numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] RECore::uint32 indirectBufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& nullRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -144,7 +144,7 @@ RERHI::RHIIndirectBuffer* BufferManager::createIndirectBuffer([[maybe_unused]] u
   return RHI_NEW(nullRhi.getContext(), IndirectBuffer)(nullRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIUniformBuffer* BufferManager::createUniformBuffer([[maybe_unused]] uint32_t numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIUniformBuffer* BufferManager::createUniformBuffer([[maybe_unused]] RECore::uint32 numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& nullRhi = static_cast<RHIDynamicRHI&>(getRhi());
 

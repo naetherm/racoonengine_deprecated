@@ -134,7 +134,7 @@ void Joystick::updateOutputControl(Control*)
   if (m_pHIDDevice) {
     // Get output values
     std::vector<HIDCapability> &lstOutputValues = m_pHIDDevice->getOutputValues();
-    for (uint32_t i=0; i<lstOutputValues.size(); i++) {
+    for (RECore::uint32 i=0; i<lstOutputValues.size(); i++) {
       // Get capability
       HIDCapability *pCapability = &lstOutputValues[i];
       Effect *pEffect = nullptr;
@@ -161,7 +161,7 @@ void Joystick::updateOutputControl(Control*)
             fValue = 1.0f;
 
           // Scale from 0..1 to logical range and set value
-          pCapability->m_nValue = static_cast<uint32_t>(static_cast<float>(pCapability->m_nLogicalMin) + fValue * static_cast<float>(pCapability->m_nLogicalMax - pCapability->m_nLogicalMin));
+          pCapability->m_nValue = static_cast<RECore::uint32>(static_cast<float>(pCapability->m_nLogicalMin) + fValue * static_cast<float>(pCapability->m_nLogicalMax - pCapability->m_nLogicalMin));
         }
       }
     }
@@ -178,21 +178,21 @@ void Joystick::updateOutputControl(Control*)
 void Joystick::onDeviceRead()
 {
   // Get input buffer
-  uint8_t *pInputBuffer = m_pHIDDevice->getInputBuffer();
+  RECore::uint8 *pInputBuffer = m_pHIDDevice->getInputBuffer();
   if (pInputBuffer) {
     // Parse input report
     m_pHIDDevice->parseInputReport(pInputBuffer, m_pHIDDevice->getInputReportSize());
 
     // Update axes
     const std::vector<HIDCapability> &lstInputValues = m_pHIDDevice->getInputValues();
-    for (uint32_t i=0; i<lstInputValues.size(); i++) {
+    for (RECore::uint32 i=0; i<lstInputValues.size(); i++) {
       // Get raw value and compute logical value
-      uint32_t nValue = lstInputValues[i].m_nValue;
+      RECore::uint32 nValue = lstInputValues[i].m_nValue;
       float fValue = static_cast<float>(nValue);
       if (lstInputValues[i].m_nUsage != UsageHat) {
-        uint32_t nMin	= static_cast<uint32_t>(lstInputValues[i].m_nLogicalMin);
-        uint32_t nMax	= static_cast<uint32_t>(lstInputValues[i].m_nLogicalMax);
-        uint32_t nMid	=  nMin/2 + nMax/2;
+        RECore::uint32 nMin	= static_cast<RECore::uint32>(lstInputValues[i].m_nLogicalMin);
+        RECore::uint32 nMax	= static_cast<RECore::uint32>(lstInputValues[i].m_nLogicalMax);
+        RECore::uint32 nMid	=  nMin/2 + nMax/2;
         fValue			= (static_cast<float>(nValue) - static_cast<float>(nMid)) / (static_cast<float>(nMax) - static_cast<float>(nMin)) * 2.0f;
       }
 
@@ -237,12 +237,12 @@ void Joystick::onDeviceRead()
 
     // Update buttons
     const std::vector<HIDCapability> &lstButtons = m_pHIDDevice->getInputButtons();
-    for (uint32_t i=0; i<lstButtons.size(); i++) {
+    for (RECore::uint32 i=0; i<lstButtons.size(); i++) {
       // Get state of buttons
-      uint32_t nValue = lstButtons[i].m_nValue;
+      RECore::uint32 nValue = lstButtons[i].m_nValue;
 
       // Go through usage range
-      for (uint32_t nUsage = lstButtons[i].m_nUsageMin; nUsage <= lstButtons[i].m_nUsageMax; nUsage++) {
+      for (RECore::uint32 nUsage = lstButtons[i].m_nUsageMin; nUsage <= lstButtons[i].m_nUsageMax; nUsage++) {
         // Check if button is pressed
         bool bPressed = ((nValue & 1) != 0);
         nValue = nValue >> 1;

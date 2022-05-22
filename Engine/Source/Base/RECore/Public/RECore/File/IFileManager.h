@@ -237,7 +237,7 @@ public:
   *    information for a particular archiver, or there was some sort of error,
   *    this function returns (-1).
   */
-  [[nodiscard]] virtual int64_t getLastModificationTime(VirtualFilename virtualFilename) const = 0;
+  [[nodiscard]] virtual RECore::int64 getLastModificationTime(VirtualFilename virtualFilename) const = 0;
 
   /**
   *  @brief
@@ -249,7 +249,7 @@ public:
   *  @return
   *    File size, -1 if it can't be determined
   */
-  [[nodiscard]] virtual int64_t getFileSize(VirtualFilename virtualFilename) const = 0;
+  [[nodiscard]] virtual RECore::int64 getFileSize(VirtualFilename virtualFilename) const = 0;
 
   /**
   *  @brief

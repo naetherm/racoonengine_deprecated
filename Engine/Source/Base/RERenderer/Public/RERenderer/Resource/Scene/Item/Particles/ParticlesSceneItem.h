@@ -62,7 +62,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("ParticlesSceneItem");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("ParticlesSceneItem");
 		struct ParticleDataStruct final
 		{
 			float PositionSize[4];	// Object space particle xyz-position, w = particle size
@@ -116,7 +116,7 @@ namespace RERenderer
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t				  mMaximumNumberOfParticles;	///< Maximum number of particles
+		RECore::uint32				  mMaximumNumberOfParticles;	///< Maximum number of particles
 		RERHI::RHIStructuredBufferPtr mStructuredBufferPtr;			///< Structured buffer the data of the individual particles ("RERenderer::ParticlesSceneItem::ParticleDataStruct")
 
 

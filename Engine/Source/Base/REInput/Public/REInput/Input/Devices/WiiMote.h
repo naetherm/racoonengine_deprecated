@@ -248,7 +248,7 @@ public:
   *  @return
   *    Battery state
   */
-  [[nodiscard]] inline uint8_t getBattery() const
+  [[nodiscard]] inline RECore::uint8 getBattery() const
   {
     return m_nBattery;
   }
@@ -293,12 +293,12 @@ private:
     float fPitch;		///< Angle:        Pitch
 
     // Calibration
-    uint8_t nX0;	///< Calibration: X0
-    uint8_t nY0;	///< Calibration: Y0
-    uint8_t nZ0;	///< Calibration: Z0
-    uint8_t nXG;	///< Calibration: XG
-    uint8_t nYG;	///< Calibration: YG
-    uint8_t nZG;	///< Calibration: ZG
+    RECore::uint8 nX0;	///< Calibration: X0
+    RECore::uint8 nY0;	///< Calibration: Y0
+    RECore::uint8 nZ0;	///< Calibration: Z0
+    RECore::uint8 nXG;	///< Calibration: XG
+    RECore::uint8 nYG;	///< Calibration: YG
+    RECore::uint8 nZG;	///< Calibration: ZG
 
     // Calculate orientation from acceleration data
     void calculateOrientation();
@@ -314,12 +314,12 @@ private:
     float fY;	///< Y position
 
     // Calibration
-    uint8_t nMinX;	///< Calibration: Minimum X
-    uint8_t nMidX;	///< Calibration: Middle  X
-    uint8_t nMaxX;	///< Calibration: Maximum X
-    uint8_t nMinY;	///< Calibration: Minimum Y
-    uint8_t nMidY;	///< Calibration: Middle  Y
-    uint8_t nMaxY;	///< Calibration: Maximum Y
+    RECore::uint8 nMinX;	///< Calibration: Minimum X
+    RECore::uint8 nMidX;	///< Calibration: Middle  X
+    RECore::uint8 nMaxX;	///< Calibration: Maximum X
+    RECore::uint8 nMinY;	///< Calibration: Minimum Y
+    RECore::uint8 nMidY;	///< Calibration: Middle  Y
+    RECore::uint8 nMaxY;	///< Calibration: Maximum Y
   };
 
   /**
@@ -441,19 +441,19 @@ private:
   *  @brief
   *    Extension status received
   */
-  void onReadExtension(uint32_t nOffset);
+  void onReadExtension(RECore::uint32 nOffset);
 
   /**
   *  @brief
   *    Nunchuk status received
   */
-  void onReadNunchuk(uint32_t nOffset);
+  void onReadNunchuk(RECore::uint32 nOffset);
 
   /**
   *  @brief
   *    Classic-controller status received
   */
-  void onReadClassic(uint32_t nOffset);
+  void onReadClassic(RECore::uint32 nOffset);
 
   /**
   *  @brief
@@ -464,7 +464,7 @@ private:
   *  @param[in] nSize
   *    Size to read
   */
-  void readMemory(int nAddress, uint8_t nSize);
+  void readMemory(int nAddress, RECore::uint8 nSize);
 
   /**
   *  @brief
@@ -477,7 +477,7 @@ private:
   *  @param[in] nSize
   *    Size to write
   */
-  void writeMemory(int nAddress, const uint8_t* pBuffer, uint8_t nSize);
+  void writeMemory(int nAddress, const RECore::uint8* pBuffer, RECore::uint8 nSize);
 
   /**
   *  @brief
@@ -488,7 +488,7 @@ private:
   *  @param[in] nData
   *    Byte to write
   */
-  inline void writeMemory(int nAddress, uint8_t nData)
+  inline void writeMemory(int nAddress, RECore::uint8 nData)
   {
     // Write one byte
     writeMemory(nAddress, &nData, 1);
@@ -512,7 +512,7 @@ private:
   *  @param[in] nSize
   *    Size of buffer
   */
-  void send(uint8_t *pBuffer, uint32_t nSize);
+  void send(RECore::uint8 *pBuffer, RECore::uint32 nSize);
 
   /**
   *  @brief
@@ -523,7 +523,7 @@ private:
   *  @param[in] nSize
   *    Size inside m_nWriteBuffer
   */
-  void decryptBuffer(uint32_t nOffset, uint32_t nSize);
+  void decryptBuffer(RECore::uint32 nOffset, RECore::uint32 nSize);
 
   /**
   *  @brief
@@ -549,8 +549,8 @@ private:
 
   // HID connection
   ConnectionDevice *m_pConnectionDevice;	///< Connection device, always valid
-  uint8_t			 *m_pInputBuffer;		///< Input buffer
-  uint8_t			 *m_pOutputBuffer;		///< Output buffer
+  RECore::uint8			 *m_pInputBuffer;		///< Input buffer
+  RECore::uint8			 *m_pOutputBuffer;		///< Output buffer
 
   // WiiMote options
   EReport	   m_nReportMode;	///< Report mode
@@ -558,16 +558,16 @@ private:
   EExtension m_nExtension;	///< Extension type
 
   // WiiMote status
-  uint8_t			m_nBattery;		///< Battery (percent)
-  uint8_t			m_nLEDs;		///< LEDs status
-  uint8_t			m_nRumble;		///< Rumble state (1=on, 0=off)
-  uint16_t		m_nButtons;		///< WiiMote Buttons
+  RECore::uint8			m_nBattery;		///< Battery (percent)
+  RECore::uint8			m_nLEDs;		///< LEDs status
+  RECore::uint8			m_nRumble;		///< Rumble state (1=on, 0=off)
+  RECore::uint16		m_nButtons;		///< WiiMote Buttons
   SAcceleration	m_sAcc;			///< Acceleration sensor
   SDot			m_sDots[2];		///< IR dots
   float			m_vIRPos[2];	///< IR position (X, Y between 0..1)
 
   // Nunchuk status
-  uint16_t	  m_nNunchukButtons;	///< Nunchuk buttons
+  RECore::uint16	  m_nNunchukButtons;	///< Nunchuk buttons
   SAcceleration m_sNunchukAcc;		///< Nunchuk acceleration sensor
   SJoystick	  m_sNunchukJoy;		///< Nunchuk joystick
 

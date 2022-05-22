@@ -291,7 +291,7 @@ void EndDebugEvent(const void*, RERHI::RHIDynamicRHI&)
 //[-------------------------------------------------------]
 //[ Global definitions                                    ]
 //[-------------------------------------------------------]
-static constexpr RERHI::ImplementationDispatchFunction DISPATCH_FUNCTIONS[static_cast<uint8_t>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
+static constexpr RERHI::ImplementationDispatchFunction DISPATCH_FUNCTIONS[static_cast<RECore::uint8>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
   {
     // Command buffer
     &ImplementationDispatch::DispatchCommandBuffer,
@@ -387,7 +387,7 @@ RHIDynamicRHI::~RHIDynamicRHI()
 #ifdef RHI_STATISTICS
   { // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
-			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
+			const RECore::uint32 numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
 			if (numberOfCurrentResources > 0)
 			{
 				// Error!
@@ -416,18 +416,18 @@ RHIDynamicRHI::~RHIDynamicRHI()
 void RHIDynamicRHI::dispatchCommandBufferInternal(const RERHI::RHICommandBuffer& commandBuffer)
 {
   // Loop through all commands
-  const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
+  const RECore::uint8* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
   RERHI::ConstCommandPacket constCommandPacket = commandPacketBuffer;
   while (nullptr != constCommandPacket)
   {
     { // Dispatch command packet
       const RERHI::CommandDispatchFunctionIndex commandDispatchFunctionIndex = RERHI::CommandPacketHelper::loadCommandDispatchFunctionIndex(constCommandPacket);
       const void* command = RERHI::CommandPacketHelper::loadCommand(constCommandPacket);
-      detail::DISPATCH_FUNCTIONS[static_cast<uint32_t>(commandDispatchFunctionIndex)](command, *this);
+      detail::DISPATCH_FUNCTIONS[static_cast<RECore::uint32>(commandDispatchFunctionIndex)](command, *this);
     }
 
     { // Next command
-      const uint32_t nextCommandPacketByteIndex = RERHI::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
+      const RECore::uint32 nextCommandPacketByteIndex = RERHI::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
       constCommandPacket = (~0u != nextCommandPacketByteIndex) ? &commandPacketBuffer[nextCommandPacketByteIndex] : nullptr;
     }
   }
@@ -466,7 +466,7 @@ void RHIDynamicRHI::setGraphicsPipelineState(RERHI::RHIGraphicsPipelineState* gr
   }
 }
 
-void RHIDynamicRHI::setGraphicsResourceGroup([[maybe_unused]] uint32_t rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
+void RHIDynamicRHI::setGraphicsResourceGroup([[maybe_unused]] RECore::uint32 rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
 {
   // Security checks
 #ifdef DEBUG
@@ -505,7 +505,7 @@ void RHIDynamicRHI::setGraphicsVertexArray(RERHI::RHIVertexArray* vertexArray)
   }
 }
 
-void RHIDynamicRHI::setGraphicsViewports([[maybe_unused]] uint32_t numberOfViewports, [[maybe_unused]] const RERHI::Viewport* viewports)
+void RHIDynamicRHI::setGraphicsViewports([[maybe_unused]] RECore::uint32 numberOfViewports, [[maybe_unused]] const RERHI::Viewport* viewports)
 {
   // Rasterizer (RS) stage
 
@@ -513,7 +513,7 @@ void RHIDynamicRHI::setGraphicsViewports([[maybe_unused]] uint32_t numberOfViewp
   RHI_ASSERT(numberOfViewports > 0 && nullptr != viewports, "Invalid null rasterizer state viewports")
 }
 
-void RHIDynamicRHI::setGraphicsScissorRectangles([[maybe_unused]] uint32_t numberOfScissorRectangles, [[maybe_unused]] const RERHI::ScissorRectangle* scissorRectangles)
+void RHIDynamicRHI::setGraphicsScissorRectangles([[maybe_unused]] RECore::uint32 numberOfScissorRectangles, [[maybe_unused]] const RERHI::ScissorRectangle* scissorRectangles)
 {
   // Rasterizer (RS) stage
 
@@ -560,27 +560,27 @@ void RHIDynamicRHI::setGraphicsRenderTarget(RERHI::RHIRenderTarget* renderTarget
   }
 }
 
-void RHIDynamicRHI::clearGraphics(uint32_t, const float [4], [[maybe_unused]] float z, uint32_t)
+void RHIDynamicRHI::clearGraphics(RECore::uint32, const float [4], [[maybe_unused]] float z, RECore::uint32)
 {
   // Sanity check
   RHI_ASSERT(z >= 0.0f && z <= 1.0f, "The null clear graphics z value must be between [0, 1] (inclusive)")
 }
 
-void RHIDynamicRHI::drawGraphicsEmulated([[maybe_unused]] const uint8_t* emulationData, uint32_t, [[maybe_unused]] uint32_t numberOfDraws)
+void RHIDynamicRHI::drawGraphicsEmulated([[maybe_unused]] const RECore::uint8* emulationData, RECore::uint32, [[maybe_unused]] RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_ASSERT(nullptr != emulationData, "The null emulation data must be valid")
   RHI_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
 }
 
-void RHIDynamicRHI::drawIndexedGraphicsEmulated([[maybe_unused]] const uint8_t* emulationData, uint32_t, [[maybe_unused]] uint32_t numberOfDraws)
+void RHIDynamicRHI::drawIndexedGraphicsEmulated([[maybe_unused]] const RECore::uint8* emulationData, RECore::uint32, [[maybe_unused]] RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_ASSERT(nullptr != emulationData, "The null emulation data must be valid")
   RHI_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
 }
 
-void RHIDynamicRHI::drawMeshTasksEmulated([[maybe_unused]] const uint8_t* emulationData, uint32_t, [[maybe_unused]] uint32_t numberOfDraws)
+void RHIDynamicRHI::drawMeshTasksEmulated([[maybe_unused]] const RECore::uint8* emulationData, RECore::uint32, [[maybe_unused]] RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_ASSERT(nullptr != emulationData, "The null emulation data must be valid")
@@ -620,7 +620,7 @@ void RHIDynamicRHI::setComputePipelineState(RERHI::RHIComputePipelineState* comp
   }
 }
 
-void RHIDynamicRHI::setComputeResourceGroup([[maybe_unused]] uint32_t rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
+void RHIDynamicRHI::setComputeResourceGroup([[maybe_unused]] RECore::uint32 rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
 {
   // Security checks
 #ifdef DEBUG
@@ -647,7 +647,7 @@ void RHIDynamicRHI::setComputeResourceGroup([[maybe_unused]] uint32_t rootParame
   }
 }
 
-void RHIDynamicRHI::dispatchCompute(uint32_t, uint32_t, uint32_t)
+void RHIDynamicRHI::dispatchCompute(RECore::uint32, RECore::uint32, RECore::uint32)
 {}
 
 
@@ -667,16 +667,16 @@ void RHIDynamicRHI::generateMipmaps(RERHI::RHIResource&)
 //[-------------------------------------------------------]
 //[ Query                                                 ]
 //[-------------------------------------------------------]
-void RHIDynamicRHI::resetQueryPool(RERHI::RHIQueryPool&, uint32_t, uint32_t)
+void RHIDynamicRHI::resetQueryPool(RERHI::RHIQueryPool&, RECore::uint32, RECore::uint32)
 {}
 
-void RHIDynamicRHI::beginQuery(RERHI::RHIQueryPool&, uint32_t, uint32_t)
+void RHIDynamicRHI::beginQuery(RERHI::RHIQueryPool&, RECore::uint32, RECore::uint32)
 {}
 
-void RHIDynamicRHI::endQuery(RERHI::RHIQueryPool&, uint32_t)
+void RHIDynamicRHI::endQuery(RERHI::RHIQueryPool&, RECore::uint32)
 {}
 
-void RHIDynamicRHI::writeTimestampQuery(RERHI::RHIQueryPool&, uint32_t)
+void RHIDynamicRHI::writeTimestampQuery(RERHI::RHIQueryPool&, RECore::uint32)
 {}
 
 //[-------------------------------------------------------]
@@ -719,13 +719,13 @@ bool RHIDynamicRHI::isDebugEnabled()
 //[-------------------------------------------------------]
 //[ Shader language                                       ]
 //[-------------------------------------------------------]
-uint32_t RHIDynamicRHI::getNumberOfShaderLanguages() const
+RECore::uint32 RHIDynamicRHI::getNumberOfShaderLanguages() const
 {
   // Only one shader language supported in here
   return 1;
 }
 
-const char* RHIDynamicRHI::getShaderLanguageName([[maybe_unused]] uint32_t index) const
+const char* RHIDynamicRHI::getShaderLanguageName([[maybe_unused]] RECore::uint32 index) const
 {
   RHI_ASSERT(index < getNumberOfShaderLanguages(), "Null: Shader language index is out-of-bounds")
   return ::detail::NULL_NAME;
@@ -763,12 +763,12 @@ RERHI::RHIShaderLanguage* RHIDynamicRHI::getShaderLanguage(const char* shaderLan
 //[-------------------------------------------------------]
 //[ Resource creation                                     ]
 //[-------------------------------------------------------]
-RERHI::RHIRenderPass* RHIDynamicRHI::createRenderPass(uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
+RERHI::RHIRenderPass* RHIDynamicRHI::createRenderPass(RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 {
   return RHI_NEW(mContext, RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIQueryPool* RHIDynamicRHI::createQueryPool([[maybe_unused]] RERHI::QueryType queryType, [[maybe_unused]] uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER_NO_DEFAULT)
+RERHI::RHIQueryPool* RHIDynamicRHI::createQueryPool([[maybe_unused]] RERHI::QueryType queryType, [[maybe_unused]] RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER_NO_DEFAULT)
 {
   // TODO(naetherm) Implement me
   return nullptr;
@@ -793,7 +793,7 @@ RERHI::RHIFramebuffer* RHIDynamicRHI::createFramebuffer(RERHI::RHIRenderPass& re
   // -> Ensure a correct reference counter behaviour
 
   // Are there any color textures?
-  const uint32_t numberOfColorAttachments = static_cast<RenderPass&>(renderPass).getNumberOfColorAttachments();
+  const RECore::uint32 numberOfColorAttachments = static_cast<RenderPass&>(renderPass).getNumberOfColorAttachments();
   if (numberOfColorAttachments > 0)
   {
     // Loop through all color textures
@@ -844,7 +844,7 @@ RERHI::RHIGraphicsPipelineState* RHIDynamicRHI::createGraphicsPipelineState(cons
   RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "Null: Invalid graphics pipeline state render pass")
 
   // Create graphics pipeline state
-  uint16_t id = 0;
+  RECore::uint16 id = 0;
   if (GraphicsPipelineStateMakeId.createID(id))
   {
     return RHI_NEW(mContext, GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -867,7 +867,7 @@ RERHI::RHIComputePipelineState* RHIDynamicRHI::createComputePipelineState(RERHI:
   RHI_MATCH_CHECK(*this, computeShader)
 
   // Create the compute pipeline state
-  uint16_t id = 0;
+  RECore::uint16 id = 0;
   if (ComputePipelineStateMakeId.createID(id))
   {
     return RHI_NEW(mContext, ComputePipelineState)(*this, rootSignature, computeShader, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -890,16 +890,16 @@ RERHI::RHISamplerState* RHIDynamicRHI::createSamplerState(const RERHI::SamplerSt
 //[-------------------------------------------------------]
 //[ Resource handling                                     ]
 //[-------------------------------------------------------]
-bool RHIDynamicRHI::map(RERHI::RHIResource&, uint32_t, RERHI::MapType, uint32_t, RERHI::MappedSubresource&)
+bool RHIDynamicRHI::map(RERHI::RHIResource&, RECore::uint32, RERHI::MapType, RECore::uint32, RERHI::MappedSubresource&)
 {
   // Not supported by the null RHI
   return false;
 }
 
-void RHIDynamicRHI::unmap(RERHI::RHIResource&, uint32_t)
+void RHIDynamicRHI::unmap(RERHI::RHIResource&, RECore::uint32)
 {}
 
-bool RHIDynamicRHI::getQueryPoolResults(RERHI::RHIQueryPool&, uint32_t, uint8_t*, uint32_t, uint32_t, uint32_t, uint32_t)
+bool RHIDynamicRHI::getQueryPoolResults(RERHI::RHIQueryPool&, RECore::uint32, RECore::uint8*, RECore::uint32, RECore::uint32, RECore::uint32, RECore::uint32)
 {
   return true;
 }

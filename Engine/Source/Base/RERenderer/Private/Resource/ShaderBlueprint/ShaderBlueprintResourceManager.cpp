@@ -63,12 +63,12 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
-	uint32_t ShaderBlueprintResourceManager::getNumberOfResources() const
+	RECore::uint32 ShaderBlueprintResourceManager::getNumberOfResources() const
 	{
 		return mInternalResourceManager->getResources().getNumberOfElements();
 	}
 
-RECore::IResource& ShaderBlueprintResourceManager::getResourceByIndex(uint32_t index) const
+RECore::IResource& ShaderBlueprintResourceManager::getResourceByIndex(RECore::uint32 index) const
 	{
 		return mInternalResourceManager->getResources().getElementByIndex(index);
 	}
@@ -112,7 +112,7 @@ RECore::IResource* ShaderBlueprintResourceManager::tryGetResourceByResourceId(RE
 		// -> We really need both, usually shader language name is sufficient, but if more fine granular information is required it's accessible
 		RERHI::RHIDynamicRHI& rhi = mRenderer.getRhi();
 		const RERHI::Capabilities& capabilities = rhi.getCapabilities();
-		mRhiShaderProperties.setPropertyValue(static_cast<uint32_t>(rhi.getNameId()), 1);
+		mRhiShaderProperties.setPropertyValue(static_cast<RECore::uint32>(rhi.getNameId()), 1);
 		mRhiShaderProperties.setPropertyValue(STRING_ID("ZeroToOneClipZ"), capabilities.zeroToOneClipZ ? 1 : 0);
 		mRhiShaderProperties.setPropertyValue(STRING_ID("UpperLeftOrigin"), capabilities.upperLeftOrigin ? 1 : 0);
 		mRhiShaderProperties.setPropertyValue(RECore::StringId(rhi.getDefaultShaderLanguage().getShaderLanguageName()), 1);

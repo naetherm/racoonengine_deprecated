@@ -55,7 +55,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("ktx");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("ktx");
 
 
 	//[-------------------------------------------------------]
@@ -114,16 +114,16 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
 		// Temporary data
-		uint32_t mWidth;
-		uint32_t mHeight;
-		uint8_t  mTextureFormat;	// "RERHI::TextureFormat", don't want to include the header in here
+		RECore::uint32 mWidth;
+		RECore::uint32 mHeight;
+		RECore::uint8  mTextureFormat;	// "RERHI::TextureFormat", don't want to include the header in here
 		bool	 mCubeMap;
 		bool	 mDataContainsMipmaps;
 
 		// Temporary image data
-		uint32_t mNumberOfImageDataBytes;
-		uint32_t mNumberOfUsedImageDataBytes;
-		uint8_t* mImageData;
+		RECore::uint32 mNumberOfImageDataBytes;
+		RECore::uint32 mNumberOfUsedImageDataBytes;
+		RECore::uint8* mImageData;
 
 
 	};

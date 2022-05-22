@@ -79,7 +79,7 @@ public:
   //[ Public virtual RERHI::RHIIndirectBuffer methods           ]
   //[-------------------------------------------------------]
 public:
-  [[nodiscard]] virtual const uint8_t* getEmulationData() const override;
+  [[nodiscard]] virtual const RECore::uint8* getEmulationData() const override;
 
 
   //[-------------------------------------------------------]

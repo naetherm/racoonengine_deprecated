@@ -70,14 +70,14 @@ namespace RERenderer
 		mShaderCombinationId				= RECore::getInvalid<ShaderCombinationId>();
 
 		// Incorporate primitive hashes
-		mComputePipelineStateSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&mMaterialBlueprintResourceId), sizeof(uint32_t), mComputePipelineStateSignatureId);
+		mComputePipelineStateSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&mMaterialBlueprintResourceId), sizeof(RECore::uint32), mComputePipelineStateSignatureId);
 
 		// Incorporate shader related hash
 		const ShaderBlueprintResource* shaderBlueprintResource = materialBlueprintResource.getResourceManager<MaterialBlueprintResourceManager>().getRenderer().getShaderBlueprintResourceManager().tryGetById(materialBlueprintResource.getComputeShaderBlueprintResourceId());
 		if (nullptr != shaderBlueprintResource)
 		{
-			const uint32_t hash = mShaderCombinationId = GraphicsPipelineStateSignature::generateShaderCombinationId(*shaderBlueprintResource, mShaderProperties);
-			mComputePipelineStateSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&hash), sizeof(uint32_t), mComputePipelineStateSignatureId);
+			const RECore::uint32 hash = mShaderCombinationId = GraphicsPipelineStateSignature::generateShaderCombinationId(*shaderBlueprintResource, mShaderProperties);
+			mComputePipelineStateSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&hash), sizeof(RECore::uint32), mComputePipelineStateSignatureId);
 		}
 	}
 

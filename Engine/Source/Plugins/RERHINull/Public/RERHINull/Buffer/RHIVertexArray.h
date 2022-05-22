@@ -68,7 +68,7 @@ public:
   *  @param[in] id
   *    The unique compact vertex array ID
   */
-  explicit VertexArray(RHIDynamicRHI& nullRhi, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  explicit VertexArray(RHIDynamicRHI& nullRhi, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief

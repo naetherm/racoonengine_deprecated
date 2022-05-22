@@ -74,7 +74,7 @@ public:
   *  @param[in] textureFlags
   *    Texture flags, see "RERHI::TextureFlag::Enum"
   */
-  TextureCubeBind(RHIDynamicRHI& openGLRhi, uint32_t width, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  TextureCubeBind(RHIDynamicRHI& openGLRhi, RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

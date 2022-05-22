@@ -72,7 +72,7 @@ public:
   *  @param[in] textureFormat
   *    Texture buffer data format
   */
-  TextureBuffer(RHIDynamicRHI& vulkanRhi, uint32_t numberOfBytes, const void* data, uint32_t bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  TextureBuffer(RHIDynamicRHI& vulkanRhi, RECore::uint32 numberOfBytes, const void* data, RECore::uint32 bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

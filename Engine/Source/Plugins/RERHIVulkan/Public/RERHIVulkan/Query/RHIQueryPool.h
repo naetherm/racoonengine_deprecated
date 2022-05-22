@@ -66,7 +66,7 @@ public:
   *  @param[in] numberOfQueries
   *    Number of queries
   */
-  QueryPool(RHIDynamicRHI& vulkanRhi, RERHI::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  QueryPool(RHIDynamicRHI& vulkanRhi, RERHI::QueryType queryType, RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

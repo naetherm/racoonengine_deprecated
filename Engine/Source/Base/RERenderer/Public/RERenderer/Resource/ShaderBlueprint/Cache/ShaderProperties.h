@@ -51,7 +51,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId ShaderPropertyId;	///< Shader property identifier, internally just a POD "uint32_t", result of hashing the property name
+	typedef RECore::StringId ShaderPropertyId;	///< Shader property identifier, internally just a POD "RECore::uint32", result of hashing the property name
 
 
 	//[-------------------------------------------------------]
@@ -72,16 +72,16 @@ namespace RERenderer
 		struct Property final
 		{
 			ShaderPropertyId shaderPropertyId;
-			int32_t			 value;
+			RECore::int32			 value;
 
 			inline Property() :
 				shaderPropertyId(RECore::getInvalid<ShaderPropertyId>()),
-				value(RECore::getInvalid<int32_t>())
+				value(RECore::getInvalid<RECore::int32>())
 			{
 				// Nothing here
 			}
 
-			inline Property(ShaderPropertyId _shaderPropertyId, int32_t _value) :
+			inline Property(ShaderPropertyId _shaderPropertyId, RECore::int32 _value) :
 				shaderPropertyId(_shaderPropertyId),
 				value(_value)
 			{
@@ -183,7 +183,7 @@ namespace RERenderer
 		*  @return
 		*    "true" if the requested shader property exists, else "false" if the requested shader property doesn't exist and the default value was returned instead
 		*/
-		bool getPropertyValue(ShaderPropertyId shaderPropertyId, int32_t& value, int32_t defaultValue = 0) const;
+		bool getPropertyValue(ShaderPropertyId shaderPropertyId, RECore::int32& value, RECore::int32 defaultValue = 0) const;
 
 		/**
 		*  @brief
@@ -200,7 +200,7 @@ namespace RERenderer
 		*  @note
 		*    - Unsafe because one can't figure out by the return value whether or not the property exists or if it's just the default value
 		*/
-		[[nodiscard]] int32_t getPropertyValueUnsafe(ShaderPropertyId shaderPropertyId, int32_t defaultValue = 0) const;
+		[[nodiscard]] RECore::int32 getPropertyValueUnsafe(ShaderPropertyId shaderPropertyId, RECore::int32 defaultValue = 0) const;
 
 		/**
 		*  @brief
@@ -211,7 +211,7 @@ namespace RERenderer
 		*  @param[in] value
 		*    The shader property value to set
 		*/
-		void setPropertyValue(ShaderPropertyId shaderPropertyId, int32_t value);
+		void setPropertyValue(ShaderPropertyId shaderPropertyId, RECore::int32 value);
 
 		/**
 		*  @brief

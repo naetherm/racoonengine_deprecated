@@ -70,9 +70,9 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId						AssetId;				///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::StringId						AssetId;				///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
 	typedef std::vector<AssetId>			AssetIds;
-	typedef std::map<uint32_t, std::string> DynamicShaderPieces;	///< Key is "RERenderer::StringId"	// TODO(naetherm) Visual Studio 2017: "std::unordered_map" appears to have an inefficient assignment operator which does memory handling even if containers are empty all the time, "std::map" isn't the most effective structure either but currently still better
+	typedef std::map<RECore::uint32, std::string> DynamicShaderPieces;	///< Key is "RERenderer::StringId"	// TODO(naetherm) Visual Studio 2017: "std::unordered_map" appears to have an inefficient assignment operator which does memory handling even if containers are empty all the time, "std::map" isn't the most effective structure either but currently still better
 
 
 	//[-------------------------------------------------------]
@@ -97,7 +97,7 @@ namespace RERenderer
 		{
 			std::string sourceCode;
 			AssetIds	assetIds;						///< List of IDs of the assets (shader blueprint, shader piece) which took part in the shader cache creation
-			uint64_t	combinedAssetFileHashes = 0;	///< Combination of the file hash of all assets (shader blueprint, shader piece) which took part in the shader cache creation
+			RECore::uint64	combinedAssetFileHashes = 0;	///< Combination of the file hash of all assets (shader blueprint, shader piece) which took part in the shader cache creation
 		};
 
 

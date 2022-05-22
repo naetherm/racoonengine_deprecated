@@ -43,7 +43,7 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-Texture2DBind::Texture2DBind(RHIDynamicRHI& openGLRhi, uint32_t width, uint32_t height, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+Texture2DBind::Texture2DBind(RHIDynamicRHI& openGLRhi, RECore::uint32 width, RECore::uint32 height, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 Texture2D(openGLRhi, width, height, textureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 {
 // Sanity checks
@@ -96,7 +96,7 @@ glPixelStorei(GL_UNPACK_ALIGNMENT, (RERHI::TextureFormat::getNumberOfBytesPerEle
 // Calculate the number of mipmaps
 const bool dataContainsMipmaps = (textureFlags & RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS);
 const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & RERHI::TextureFlag::GENERATE_MIPMAPS));
-const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
+const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
 
 // Make this OpenGL texture instance to the currently used one
 glBindTexture(GL_TEXTURE_2D, mOpenGLTexture);
@@ -108,14 +108,14 @@ if (RERHI::TextureFormat::isCompressed(textureFormat))
 if (dataContainsMipmaps)
 {
 // Upload all mipmaps
-for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 {
 // Upload the current mipmap
 const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height));
 glCompressedTexImage2DARB(GL_TEXTURE_2D, static_cast<GLint>(mipmap), mOpenGLInternalFormat, static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0, numberOfBytesPerSlice, data);
 
 // Move on to the next mipmap and ensure the size is always at least 1x1
-data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 width = getHalfSize(width);
 height = getHalfSize(height);
 }
@@ -134,16 +134,16 @@ else
 if (dataContainsMipmaps)
 {
 // Upload all mipmaps
-const uint32_t format = Mapping::getOpenGLFormat(textureFormat);
-const uint32_t type = Mapping::getOpenGLType(textureFormat);
-for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+const RECore::uint32 format = Mapping::getOpenGLFormat(textureFormat);
+const RECore::uint32 type = Mapping::getOpenGLType(textureFormat);
+for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 {
 // Upload the current mipmap
 const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height));
 glTexImage2D(GL_TEXTURE_2D, static_cast<GLint>(mipmap), static_cast<GLint>(mOpenGLInternalFormat), static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0, format, type, data);
 
 // Move on to the next mipmap and ensure the size is always at least 1x1
-data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 width = getHalfSize(width);
 height = getHalfSize(height);
 }
@@ -186,7 +186,7 @@ if (openGLRhi.getExtensions().isGL_KHR_debug())
 #endif
 }
 
-void Texture2DBind::setMinimumMaximumMipmapIndex(uint32_t minimumMipmapIndex, uint32_t maximumMipmapIndex)
+void Texture2DBind::setMinimumMaximumMipmapIndex(RECore::uint32 minimumMipmapIndex, RECore::uint32 maximumMipmapIndex)
 {
 #ifdef RHI_OPENGL_STATE_CLEANUP
   // Backup the currently bound OpenGL texture

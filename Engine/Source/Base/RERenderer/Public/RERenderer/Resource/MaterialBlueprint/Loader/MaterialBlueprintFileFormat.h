@@ -62,70 +62,70 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("MaterialBlueprint");
-		static constexpr uint32_t FORMAT_VERSION = 11;
+		static constexpr RECore::uint32 FORMAT_TYPE	 = STRING_ID("MaterialBlueprint");
+		static constexpr RECore::uint32 FORMAT_VERSION = 11;
 
 		#pragma pack(push)
 		#pragma pack(1)
 			struct MaterialBlueprintHeader final
 			{
-				uint32_t numberOfProperties;
-				uint32_t numberOfShaderCombinationProperties;
-				uint32_t numberOfIntegerShaderCombinationProperties;
-				uint32_t numberOfUniformBuffers;
-				uint32_t numberOfTextureBuffers;
-				uint32_t numberOfStructuredBuffers;
-				uint32_t numberOfSamplerStates;
-				uint32_t numberOfTextures;
+				RECore::uint32 numberOfProperties;
+				RECore::uint32 numberOfShaderCombinationProperties;
+				RECore::uint32 numberOfIntegerShaderCombinationProperties;
+				RECore::uint32 numberOfUniformBuffers;
+				RECore::uint32 numberOfTextureBuffers;
+				RECore::uint32 numberOfStructuredBuffers;
+				RECore::uint32 numberOfSamplerStates;
+				RECore::uint32 numberOfTextures;
 			};
 
 			struct RootSignatureHeader final
 			{
-				uint32_t numberOfRootParameters;
-				uint32_t numberOfDescriptorRanges;
-				uint32_t numberOfStaticSamplers;
-				uint32_t flags;
+				RECore::uint32 numberOfRootParameters;
+				RECore::uint32 numberOfDescriptorRanges;
+				RECore::uint32 numberOfStaticSamplers;
+				RECore::uint32 flags;
 			};
 
 			struct UniformBufferHeader final
 			{
-				uint32_t							   rootParameterIndex;			///< Root parameter index = resource group index
+				RECore::uint32							   rootParameterIndex;			///< Root parameter index = resource group index
 				MaterialBlueprintResource::BufferUsage bufferUsage;
-				uint32_t							   numberOfElements;
-				uint32_t							   numberOfElementProperties;
-				uint32_t							   uniformBufferNumberOfBytes;	///< Includes handling of packing rules for uniform variables (see "Reference for HLSL - Shader Models vs Shader Profiles - Shader Model 4 - Packing Rules for Constant Variables" at https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632%28v=vs.85%29.aspx )
+				RECore::uint32							   numberOfElements;
+				RECore::uint32							   numberOfElementProperties;
+				RECore::uint32							   uniformBufferNumberOfBytes;	///< Includes handling of packing rules for uniform variables (see "Reference for HLSL - Shader Models vs Shader Profiles - Shader Model 4 - Packing Rules for Constant Variables" at https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632%28v=vs.85%29.aspx )
 			};
 
 			struct TextureBufferHeader final
 			{
 				MaterialPropertyValue				   materialPropertyValue = MaterialPropertyValue::fromUnknown();
-				uint32_t							   rootParameterIndex	 = RECore::getInvalid<uint32_t>();	///< Root parameter index = resource group index
+				RECore::uint32							   rootParameterIndex	 = RECore::getInvalid<RECore::uint32>();	///< Root parameter index = resource group index
 				MaterialBlueprintResource::BufferUsage bufferUsage			 = MaterialBlueprintResource::BufferUsage::UNKNOWN;
 			};
 
 			struct SamplerState final
 			{
 				RERHI::SamplerState samplerState;
-				uint32_t		  rootParameterIndex;	///< Root parameter index = resource group index
+				RECore::uint32		  rootParameterIndex;	///< Root parameter index = resource group index
 			};
 
 			struct Texture final
 			{
-				uint32_t		 rootParameterIndex;	///< Root parameter index = resource group index
+				RECore::uint32		 rootParameterIndex;	///< Root parameter index = resource group index
 				MaterialProperty materialProperty;
 				AssetId			 fallbackTextureAssetId;
 				bool			 rgbHardwareGammaCorrection;
-				uint32_t		 samplerStateIndex;		///< Index of the material blueprint sampler state resource to use, can be invalid (e.g. texel fetch instead of sampling might be used)
+				RECore::uint32		 samplerStateIndex;		///< Index of the material blueprint sampler state resource to use, can be invalid (e.g. texel fetch instead of sampling might be used)
 
 				Texture() :
-					rootParameterIndex(RECore::getInvalid<uint32_t>()),
+					rootParameterIndex(RECore::getInvalid<RECore::uint32>()),
 					rgbHardwareGammaCorrection(false),
-					samplerStateIndex(RECore::getInvalid<uint32_t>())
+					samplerStateIndex(RECore::getInvalid<RECore::uint32>())
 				{
 					// Nothing here
 				}
 
-				Texture(uint32_t _rootParameterIndex, MaterialProperty _materialProperty, AssetId _fallbackTextureAssetId, bool _rgbHardwareGammaCorrection, uint32_t _samplerStateIndex) :
+				Texture(RECore::uint32 _rootParameterIndex, MaterialProperty _materialProperty, AssetId _fallbackTextureAssetId, bool _rgbHardwareGammaCorrection, RECore::uint32 _samplerStateIndex) :
 					rootParameterIndex(_rootParameterIndex),
 					materialProperty(_materialProperty),
 					fallbackTextureAssetId(_fallbackTextureAssetId),

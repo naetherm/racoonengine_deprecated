@@ -61,7 +61,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;	///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::StringId AssetId;	///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
 
 
 	//[-------------------------------------------------------]
@@ -80,7 +80,7 @@ namespace RERenderer
 			AssetId						 assetId;
 			RenderTargetTextureSignature renderTargetTextureSignature;
 			RERHI::RHITexture*				 texture;				///< Can be a null pointer, no "RERHI::RHITexturePtr" to not have overhead when internally reallocating
-			uint32_t					 numberOfReferences;	///< Number of texture references (don't misuse the RHI texture reference counter for this)
+			RECore::uint32					 numberOfReferences;	///< Number of texture references (don't misuse the RHI texture reference counter for this)
 
 			inline RenderTargetTextureElement() :
 				assetId(RECore::getInvalid<AssetId>()),
@@ -145,7 +145,7 @@ namespace RERenderer
 		void clear();
 		void clearRhiResources();
 		void addRenderTargetTexture(AssetId assetId, const RenderTargetTextureSignature& renderTargetTextureSignature);
-		[[nodiscard]] RERHI::RHITexture* getTextureByAssetId(AssetId assetId, const RERHI::RHIRenderTarget& renderTarget, uint8_t numberOfMultisamples, float resolutionScale, const RenderTargetTextureSignature** outRenderTargetTextureSignature);
+		[[nodiscard]] RERHI::RHITexture* getTextureByAssetId(AssetId assetId, const RERHI::RHIRenderTarget& renderTarget, RECore::uint8 numberOfMultisamples, float resolutionScale, const RenderTargetTextureSignature** outRenderTargetTextureSignature);
 		void releaseRenderTargetTextureBySignature(const RenderTargetTextureSignature& renderTargetTextureSignature);
 
 
@@ -154,8 +154,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
 		typedef std::vector<RenderTargetTextureElement>						 SortedRenderTargetTextureVector;
-		typedef std::unordered_map<uint32_t, RenderTargetTextureSignatureId> AssetIdToRenderTargetTextureSignatureId;	///< Key = "RECore::AssetId"
-		typedef std::unordered_map<uint32_t, uint32_t>						 AssetIdToIndex;							///< Key = "RECore::AssetId"
+		typedef std::unordered_map<RECore::uint32, RenderTargetTextureSignatureId> AssetIdToRenderTargetTextureSignatureId;	///< Key = "RECore::AssetId"
+		typedef std::unordered_map<RECore::uint32, RECore::uint32>						 AssetIdToIndex;							///< Key = "RECore::AssetId"
 
 
 	//[-------------------------------------------------------]

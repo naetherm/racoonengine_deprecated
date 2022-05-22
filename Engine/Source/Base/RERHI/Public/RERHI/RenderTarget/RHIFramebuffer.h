@@ -46,14 +46,14 @@ class RHITexture;
 //[-------------------------------------------------------]
 struct FramebufferAttachment final {
   RHITexture *texture;
-  uint32_t mipmapIndex;
-  uint32_t layerIndex;  ///< "slice" in Direct3D terminology, depending on the texture type it's a 2D texture array layer, 3D texture slice or cube map face
+  RECore::uint32 mipmapIndex;
+  RECore::uint32 layerIndex;  ///< "slice" in Direct3D terminology, depending on the texture type it's a 2D texture array layer, 3D texture slice or cube map face
   inline FramebufferAttachment() :
     texture(nullptr),
     mipmapIndex(0),
     layerIndex(0) {}
 
-  inline FramebufferAttachment(RHITexture *_texture, uint32_t _mipmapIndex = 0, uint32_t _layerIndex = 0) :
+  inline FramebufferAttachment(RHITexture *_texture, RECore::uint32 _mipmapIndex = 0, RECore::uint32 _layerIndex = 0) :
     texture(_texture),
     mipmapIndex(_mipmapIndex),
     layerIndex(_layerIndex) {}

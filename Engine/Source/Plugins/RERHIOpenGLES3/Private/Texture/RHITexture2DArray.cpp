@@ -33,8 +33,8 @@
 namespace RERHIOpenGLES3 {
 
 
-Texture2DArray::Texture2DArray(RHIDynamicRHI &openGLES3Rhi, uint32_t width, uint32_t height, uint32_t numberOfSlices,
-                               RERHI::TextureFormat::Enum textureFormat, const void *data, uint32_t textureFlags
+Texture2DArray::Texture2DArray(RHIDynamicRHI &openGLES3Rhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices,
+                               RERHI::TextureFormat::Enum textureFormat, const void *data, RECore::uint32 textureFlags
                                RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHITexture2DArray(openGLES3Rhi, width, height, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mOpenGLES3Texture(0) {

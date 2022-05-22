@@ -79,7 +79,7 @@ public:
   //[ Public virtual RERHI::RHIRenderTarget methods             ]
   //[-------------------------------------------------------]
 public:
-  virtual void getWidthAndHeight(uint32_t& width, uint32_t& height) const override;
+  virtual void getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const override;
 
 
   //[-------------------------------------------------------]

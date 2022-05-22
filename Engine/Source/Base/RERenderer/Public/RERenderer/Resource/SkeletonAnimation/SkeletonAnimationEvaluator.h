@@ -67,7 +67,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t SkeletonAnimationResourceId;	///< POD skeleton animation resource identifier
+	typedef RECore::uint32 SkeletonAnimationResourceId;	///< POD skeleton animation resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -85,7 +85,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		typedef std::vector<uint32_t>  BoneIds;
+		typedef std::vector<RECore::uint32>  BoneIds;
 		typedef std::vector<glm::mat4> TransformMatrices;
 
 

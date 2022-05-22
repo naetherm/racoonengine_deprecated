@@ -344,11 +344,11 @@ void EndDebugEvent(const void*, RERHI::RHIDynamicRHI&)
 
 }
 
-void beginVulkanRenderPass(const RERHI::RHIRenderTarget& renderTarget, VkRenderPass vkRenderPass, VkFramebuffer vkFramebuffer, uint32_t numberOfAttachments, const RERHIVulkan::RHIDynamicRHI::VkClearValues& vkClearValues, VkCommandBuffer vkCommandBuffer)
+void beginVulkanRenderPass(const RERHI::RHIRenderTarget& renderTarget, VkRenderPass vkRenderPass, VkFramebuffer vkFramebuffer, RECore::uint32 numberOfAttachments, const RERHIVulkan::RHIDynamicRHI::VkClearValues& vkClearValues, VkCommandBuffer vkCommandBuffer)
 {
   // Get render target dimension
-  uint32_t width = 1;
-  uint32_t height = 1;
+  RECore::uint32 width = 1;
+  RECore::uint32 height = 1;
   renderTarget.getWidthAndHeight(width, height);
 
   // Begin Vulkan render pass
@@ -362,7 +362,7 @@ void beginVulkanRenderPass(const RERHI::RHIRenderTarget& renderTarget, VkRenderP
         { 0, 0 },								// offset (VkOffset2D)
         { width, height }						// extent (VkExtent2D)
       },
-      numberOfAttachments,						// clearValueCount (uint32_t)
+      numberOfAttachments,						// clearValueCount (RECore::uint32)
       vkClearValues.data()						// pClearValues (const VkClearValue*)
     };
   vkCmdBeginRenderPass(vkCommandBuffer, &vkRenderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
@@ -372,7 +372,7 @@ void beginVulkanRenderPass(const RERHI::RHIRenderTarget& renderTarget, VkRenderP
 //[-------------------------------------------------------]
 //[ Global definitions                                    ]
 //[-------------------------------------------------------]
-static constexpr RERHI::ImplementationDispatchFunction DISPATCH_FUNCTIONS[static_cast<uint8_t>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
+static constexpr RERHI::ImplementationDispatchFunction DISPATCH_FUNCTIONS[static_cast<RECore::uint8>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
   {
     // Command buffer
     &ImplementationDispatch::DispatchCommandBuffer,
@@ -507,7 +507,7 @@ RHIDynamicRHI::~RHIDynamicRHI()
 #ifdef RHI_STATISTICS
   { // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
-			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
+			const RECore::uint32 numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
 			if (numberOfCurrentResources > 0)
 			{
 				// Error!
@@ -542,18 +542,18 @@ RHIDynamicRHI::~RHIDynamicRHI()
 void RHIDynamicRHI::dispatchCommandBufferInternal(const RERHI::RHICommandBuffer& commandBuffer)
 {
   // Loop through all commands
-  const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
+  const RECore::uint8* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
   RERHI::ConstCommandPacket constCommandPacket = commandPacketBuffer;
   while (nullptr != constCommandPacket)
   {
     { // Dispatch command packet
       const RERHI::CommandDispatchFunctionIndex commandDispatchFunctionIndex = RERHI::CommandPacketHelper::loadCommandDispatchFunctionIndex(constCommandPacket);
       const void* command = RERHI::CommandPacketHelper::loadCommand(constCommandPacket);
-      detail::DISPATCH_FUNCTIONS[static_cast<uint32_t>(commandDispatchFunctionIndex)](command, *this);
+      detail::DISPATCH_FUNCTIONS[static_cast<RECore::uint32>(commandDispatchFunctionIndex)](command, *this);
     }
 
     { // Next command
-      const uint32_t nextCommandPacketByteIndex = RERHI::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
+      const RECore::uint32 nextCommandPacketByteIndex = RERHI::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
       constCommandPacket = (~0u != nextCommandPacketByteIndex) ? &commandPacketBuffer[nextCommandPacketByteIndex] : nullptr;
     }
   }
@@ -595,7 +595,7 @@ void RHIDynamicRHI::setGraphicsPipelineState(RERHI::RHIGraphicsPipelineState* gr
   }
 }
 
-void RHIDynamicRHI::setGraphicsResourceGroup(uint32_t rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
+void RHIDynamicRHI::setGraphicsResourceGroup(RECore::uint32 rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
 {
   // Security checks
 #ifdef DEBUG
@@ -658,7 +658,7 @@ void RHIDynamicRHI::setGraphicsVertexArray(RERHI::RHIVertexArray* vertexArray)
   }
 }
 
-void RHIDynamicRHI::setGraphicsViewports([[maybe_unused]] uint32_t numberOfViewports, const RERHI::Viewport* viewports)
+void RHIDynamicRHI::setGraphicsViewports([[maybe_unused]] RECore::uint32 numberOfViewports, const RERHI::Viewport* viewports)
 {
   // Rasterizer (RS) stage
 
@@ -675,7 +675,7 @@ void RHIDynamicRHI::setGraphicsViewports([[maybe_unused]] uint32_t numberOfViewp
   vkCmdSetViewport(getVulkanContext().getVkCommandBuffer(), 0, 1, &vkViewport);
 }
 
-void RHIDynamicRHI::setGraphicsScissorRectangles([[maybe_unused]] uint32_t numberOfScissorRectangles, const RERHI::ScissorRectangle* scissorRectangles)
+void RHIDynamicRHI::setGraphicsScissorRectangles([[maybe_unused]] RECore::uint32 numberOfScissorRectangles, const RERHI::ScissorRectangle* scissorRectangles)
 {
   // Rasterizer (RS) stage
 
@@ -686,8 +686,8 @@ void RHIDynamicRHI::setGraphicsScissorRectangles([[maybe_unused]] uint32_t numbe
   // TODO(naetherm) Add support for multiple scissor rectangles. Change "RERHI::ScissorRectangle" to Vulkan style to make it the primary API on the long run?
   const VkRect2D vkRect2D =
     {
-      { static_cast<int32_t>(scissorRectangles[0].topLeftX), static_cast<int32_t>(scissorRectangles[0].topLeftY) },
-      { static_cast<uint32_t>(scissorRectangles[0].bottomRightX - scissorRectangles[0].topLeftX), static_cast<uint32_t>(scissorRectangles[0].bottomRightY - scissorRectangles[0].topLeftY) }
+      { static_cast<RECore::int32>(scissorRectangles[0].topLeftX), static_cast<RECore::int32>(scissorRectangles[0].topLeftY) },
+      { static_cast<RECore::uint32>(scissorRectangles[0].bottomRightX - scissorRectangles[0].topLeftX), static_cast<RECore::uint32>(scissorRectangles[0].bottomRightY - scissorRectangles[0].topLeftY) }
     };
   vkCmdSetScissor(getVulkanContext().getVkCommandBuffer(), 0, 1, &vkRect2D);
 }
@@ -731,9 +731,9 @@ void RHIDynamicRHI::setGraphicsRenderTarget(RERHI::RHIRenderTarget* renderTarget
       mRenderTarget->AddReference();
 
       // Set clear color and clear depth stencil values
-      const uint32_t numberOfColorAttachments = static_cast<const RenderPass&>(mRenderTarget->getRenderPass()).getNumberOfColorAttachments();
+      const RECore::uint32 numberOfColorAttachments = static_cast<const RenderPass&>(mRenderTarget->getRenderPass()).getNumberOfColorAttachments();
       RHI_ASSERT(numberOfColorAttachments < 8, "Vulkan only supports 7 render pass color attachments")
-      for (uint32_t i = 0; i < numberOfColorAttachments; ++i)
+      for (RECore::uint32 i = 0; i < numberOfColorAttachments; ++i)
       {
         mVkClearValues[i] = VkClearValue{0.0f, 0.0f, 0.0f, 1.0f};
       }
@@ -742,7 +742,7 @@ void RHIDynamicRHI::setGraphicsRenderTarget(RERHI::RHIRenderTarget* renderTarget
   }
 }
 
-void RHIDynamicRHI::clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil)
+void RHIDynamicRHI::clearGraphics(RECore::uint32 clearFlags, const float color[4], float z, RECore::uint32 stencil)
 {
   // Sanity checks
   RHI_ASSERT(nullptr != mRenderTarget, "Can't execute Vulkan clear command without a render target set")
@@ -750,11 +750,11 @@ void RHIDynamicRHI::clearGraphics(uint32_t clearFlags, const float color[4], flo
   RHI_ASSERT(z >= 0.0f && z <= 1.0f, "The Vulkan clear graphics z value must be between [0, 1] (inclusive)")
 
   // Clear color
-  const uint32_t numberOfColorAttachments = static_cast<const RenderPass&>(mRenderTarget->getRenderPass()).getNumberOfColorAttachments();
+  const RECore::uint32 numberOfColorAttachments = static_cast<const RenderPass&>(mRenderTarget->getRenderPass()).getNumberOfColorAttachments();
   RHI_ASSERT(numberOfColorAttachments < 8, "Vulkan only supports 7 render pass color attachments")
   if (clearFlags & RERHI::ClearFlag::COLOR)
   {
-    for (uint32_t i = 0; i < numberOfColorAttachments; ++i)
+    for (RECore::uint32 i = 0; i < numberOfColorAttachments; ++i)
     {
       memcpy(mVkClearValues[i].color.float32, &color[0], sizeof(float) * 4);
     }
@@ -768,7 +768,7 @@ void RHIDynamicRHI::clearGraphics(uint32_t clearFlags, const float color[4], flo
   }
 }
 
-void RHIDynamicRHI::drawGraphics(const RERHI::RHIIndirectBuffer& indirectBuffer, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+void RHIDynamicRHI::drawGraphics(const RERHI::RHIIndirectBuffer& indirectBuffer, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_MATCH_CHECK(*this, indirectBuffer)
@@ -785,7 +785,7 @@ void RHIDynamicRHI::drawGraphics(const RERHI::RHIIndirectBuffer& indirectBuffer,
   vkCmdDrawIndirect(getVulkanContext().getVkCommandBuffer(), static_cast<const IndirectBuffer&>(indirectBuffer).getVkBuffer(), indirectBufferOffset, numberOfDraws, sizeof(VkDrawIndirectCommand));
 }
 
-void RHIDynamicRHI::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+void RHIDynamicRHI::drawGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_ASSERT(nullptr != emulationData, "The Vulkan emulation data must be valid")
@@ -809,7 +809,7 @@ void RHIDynamicRHI::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t 
 			}
 #endif
   const VkCommandBuffer vkCommandBuffer = getVulkanContext().getVkCommandBuffer();
-  for (uint32_t i = 0; i < numberOfDraws; ++i)
+  for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
   {
     // Draw and advance
     const RERHI::DrawArguments& drawArguments = *reinterpret_cast<const RERHI::DrawArguments*>(emulationData);
@@ -824,7 +824,7 @@ void RHIDynamicRHI::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t 
 #endif
 }
 
-void RHIDynamicRHI::drawIndexedGraphics(const RERHI::RHIIndirectBuffer& indirectBuffer, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+void RHIDynamicRHI::drawIndexedGraphics(const RERHI::RHIIndirectBuffer& indirectBuffer, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_MATCH_CHECK(*this, indirectBuffer)
@@ -842,7 +842,7 @@ void RHIDynamicRHI::drawIndexedGraphics(const RERHI::RHIIndirectBuffer& indirect
   vkCmdDrawIndexedIndirect(getVulkanContext().getVkCommandBuffer(), static_cast<const IndirectBuffer&>(indirectBuffer).getVkBuffer(), indirectBufferOffset, numberOfDraws, sizeof(VkDrawIndexedIndirectCommand));
 }
 
-void RHIDynamicRHI::drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+void RHIDynamicRHI::drawIndexedGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_ASSERT(nullptr != emulationData, "The Vulkan emulation data must be valid")
@@ -867,7 +867,7 @@ void RHIDynamicRHI::drawIndexedGraphicsEmulated(const uint8_t* emulationData, ui
 			}
 #endif
   const VkCommandBuffer vkCommandBuffer = getVulkanContext().getVkCommandBuffer();
-  for (uint32_t i = 0; i < numberOfDraws; ++i)
+  for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
   {
     // Draw and advance
     const RERHI::DrawIndexedArguments& drawIndexedArguments = *reinterpret_cast<const RERHI::DrawIndexedArguments*>(emulationData);
@@ -882,7 +882,7 @@ void RHIDynamicRHI::drawIndexedGraphicsEmulated(const uint8_t* emulationData, ui
 #endif
 }
 
-void RHIDynamicRHI::drawMeshTasks([[maybe_unused]] const RERHI::RHIIndirectBuffer& indirectBuffer, [[maybe_unused]] uint32_t indirectBufferOffset, [[maybe_unused]] uint32_t numberOfDraws)
+void RHIDynamicRHI::drawMeshTasks([[maybe_unused]] const RERHI::RHIIndirectBuffer& indirectBuffer, [[maybe_unused]] RECore::uint32 indirectBufferOffset, [[maybe_unused]] RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
@@ -892,7 +892,7 @@ void RHIDynamicRHI::drawMeshTasks([[maybe_unused]] const RERHI::RHIIndirectBuffe
   // vkCmdDrawMeshTasksIndirectCountNV
 }
 
-void RHIDynamicRHI::drawMeshTasksEmulated([[maybe_unused]] const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+void RHIDynamicRHI::drawMeshTasksEmulated([[maybe_unused]] const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_ASSERT(nullptr != emulationData, "The Vulkan emulation data must be valid")
@@ -909,7 +909,7 @@ void RHIDynamicRHI::drawMeshTasksEmulated([[maybe_unused]] const uint8_t* emulat
 			}
 #endif
   const VkCommandBuffer vkCommandBuffer = getVulkanContext().getVkCommandBuffer();
-  for (uint32_t i = 0; i < numberOfDraws; ++i)
+  for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
   {
     const RERHI::DrawMeshTasksArguments& drawMeshTasksArguments = *reinterpret_cast<const RERHI::DrawMeshTasksArguments*>(emulationData);
 
@@ -961,7 +961,7 @@ void RHIDynamicRHI::setComputePipelineState(RERHI::RHIComputePipelineState* comp
   }
 }
 
-void RHIDynamicRHI::setComputeResourceGroup(uint32_t rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
+void RHIDynamicRHI::setComputeResourceGroup(RECore::uint32 rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
 {
   // Security checks
 #ifdef DEBUG
@@ -1016,7 +1016,7 @@ void RHIDynamicRHI::generateMipmaps(RERHI::RHIResource&)
 //[-------------------------------------------------------]
 //[ Query                                                 ]
 //[-------------------------------------------------------]
-void RHIDynamicRHI::resetQueryPool(RERHI::RHIQueryPool& queryPool, uint32_t firstQueryIndex, uint32_t numberOfQueries)
+void RHIDynamicRHI::resetQueryPool(RERHI::RHIQueryPool& queryPool, RECore::uint32 firstQueryIndex, RECore::uint32 numberOfQueries)
 {
   // Sanity check
   RHI_MATCH_CHECK(*this, queryPool)
@@ -1025,7 +1025,7 @@ void RHIDynamicRHI::resetQueryPool(RERHI::RHIQueryPool& queryPool, uint32_t firs
   vkCmdResetQueryPool(getVulkanContext().getVkCommandBuffer(), static_cast<const QueryPool&>(queryPool).getVkQueryPool(), firstQueryIndex, numberOfQueries);
 }
 
-void RHIDynamicRHI::beginQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryIndex, uint32_t queryControlFlags)
+void RHIDynamicRHI::beginQuery(RERHI::RHIQueryPool& queryPool, RECore::uint32 queryIndex, RECore::uint32 queryControlFlags)
 {
   // Sanity check
   RHI_MATCH_CHECK(*this, queryPool)
@@ -1034,7 +1034,7 @@ void RHIDynamicRHI::beginQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryInd
   vkCmdBeginQuery(getVulkanContext().getVkCommandBuffer(), static_cast<const QueryPool&>(queryPool).getVkQueryPool(), queryIndex, ((queryControlFlags & RERHI::QueryControlFlags::PRECISE) != 0) ? VK_QUERY_CONTROL_PRECISE_BIT : 0u);
 }
 
-void RHIDynamicRHI::endQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryIndex)
+void RHIDynamicRHI::endQuery(RERHI::RHIQueryPool& queryPool, RECore::uint32 queryIndex)
 {
   // Sanity check
   RHI_MATCH_CHECK(*this, queryPool)
@@ -1043,7 +1043,7 @@ void RHIDynamicRHI::endQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryIndex
   vkCmdEndQuery(getVulkanContext().getVkCommandBuffer(), static_cast<const QueryPool&>(queryPool).getVkQueryPool(), queryIndex);
 }
 
-void RHIDynamicRHI::writeTimestampQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryIndex)
+void RHIDynamicRHI::writeTimestampQuery(RERHI::RHIQueryPool& queryPool, RECore::uint32 queryIndex)
 {
   // Sanity check
   RHI_MATCH_CHECK(*this, queryPool)
@@ -1133,13 +1133,13 @@ bool RHIDynamicRHI::isDebugEnabled()
 //[-------------------------------------------------------]
 //[ Shader language                                       ]
 //[-------------------------------------------------------]
-uint32_t RHIDynamicRHI::getNumberOfShaderLanguages() const
+RECore::uint32 RHIDynamicRHI::getNumberOfShaderLanguages() const
 {
   // Done, return the number of supported shader languages
   return 1;
 }
 
-const char* RHIDynamicRHI::getShaderLanguageName([[maybe_unused]] uint32_t index) const
+const char* RHIDynamicRHI::getShaderLanguageName([[maybe_unused]] RECore::uint32 index) const
 {
   RHI_ASSERT(index < getNumberOfShaderLanguages(), "Vulkan: Shader language index is out-of-bounds")
   return ::detail::GLSL_NAME;
@@ -1177,12 +1177,12 @@ RERHI::RHIShaderLanguage* RHIDynamicRHI::getShaderLanguage(const char* shaderLan
 //[-------------------------------------------------------]
 //[ Resource creation                                     ]
 //[-------------------------------------------------------]
-RERHI::RHIRenderPass* RHIDynamicRHI::createRenderPass(uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
+RERHI::RHIRenderPass* RHIDynamicRHI::createRenderPass(RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 {
   return RHI_NEW(mContext, RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIQueryPool* RHIDynamicRHI::createQueryPool(RERHI::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
+RERHI::RHIQueryPool* RHIDynamicRHI::createQueryPool(RERHI::QueryType queryType, RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 {
   RHI_ASSERT(numberOfQueries > 0, "Vulkan: Number of queries mustn't be zero")
   return RHI_NEW(mContext, QueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1230,7 +1230,7 @@ RERHI::RHIGraphicsPipelineState* RHIDynamicRHI::createGraphicsPipelineState(cons
   RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "Vulkan: Invalid graphics pipeline state render pass")
 
   // Create graphics pipeline state
-  uint16_t id = 0;
+  RECore::uint16 id = 0;
   if (GraphicsPipelineStateMakeId.createID(id))
   {
     return RHI_NEW(mContext, GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1253,7 +1253,7 @@ RERHI::RHIComputePipelineState* RHIDynamicRHI::createComputePipelineState(RERHI:
   RHI_MATCH_CHECK(*this, computeShader)
 
   // Create the compute pipeline state
-  uint16_t id = 0;
+  RECore::uint16 id = 0;
   if (ComputePipelineStateMakeId.createID(id))
   {
     return RHI_NEW(mContext, ComputePipelineState)(*this, rootSignature, computeShader, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1276,7 +1276,7 @@ RERHI::RHISamplerState* RHIDynamicRHI::createSamplerState(const RERHI::SamplerSt
 //[-------------------------------------------------------]
 //[ Resource handling                                     ]
 //[-------------------------------------------------------]
-bool RHIDynamicRHI::map(RERHI::RHIResource& resource, uint32_t, RERHI::MapType, uint32_t, RERHI::MappedSubresource& mappedSubresource)
+bool RHIDynamicRHI::map(RERHI::RHIResource& resource, RECore::uint32, RERHI::MapType, RECore::uint32, RERHI::MappedSubresource& mappedSubresource)
 {
   // Evaluate the resource type
   switch (resource.getResourceType())
@@ -1395,7 +1395,7 @@ bool RHIDynamicRHI::map(RERHI::RHIResource& resource, uint32_t, RERHI::MapType, 
   }
 }
 
-void RHIDynamicRHI::unmap(RERHI::RHIResource& resource, uint32_t)
+void RHIDynamicRHI::unmap(RERHI::RHIResource& resource, RECore::uint32)
 {
   // Evaluate the resource type
   switch (resource.getResourceType())
@@ -1529,7 +1529,7 @@ void RHIDynamicRHI::unmap(RERHI::RHIResource& resource, uint32_t)
   }
 }
 
-bool RHIDynamicRHI::getQueryPoolResults(RERHI::RHIQueryPool& queryPool, uint32_t numberOfDataBytes, uint8_t* data, uint32_t firstQueryIndex, uint32_t numberOfQueries, uint32_t strideInBytes, [[maybe_unused]] uint32_t queryResultFlags)
+bool RHIDynamicRHI::getQueryPoolResults(RERHI::RHIQueryPool& queryPool, RECore::uint32 numberOfDataBytes, RECore::uint8* data, RECore::uint32 firstQueryIndex, RECore::uint32 numberOfQueries, RECore::uint32 strideInBytes, [[maybe_unused]] RECore::uint32 queryResultFlags)
 {
   // Sanity check
   RHI_MATCH_CHECK(*this, queryPool)
@@ -1737,7 +1737,7 @@ void RHIDynamicRHI::beginVulkanRenderPass()
   RHI_ASSERT(nullptr != mRenderTarget, "Can't begin a Vulkan render pass without a render target set")
 
   // Start Vulkan render pass
-  const uint32_t numberOfAttachments = static_cast<const RenderPass&>(mRenderTarget->getRenderPass()).getNumberOfAttachments();
+  const RECore::uint32 numberOfAttachments = static_cast<const RenderPass&>(mRenderTarget->getRenderPass()).getNumberOfAttachments();
   RHI_ASSERT(numberOfAttachments < 9, "Vulkan only supports 8 render pass attachments")
   switch (mRenderTarget->getResourceType())
   {

@@ -51,7 +51,7 @@ mOpenGLTextureAddressModeS(Mapping::getOpenGLTextureAddressMode(samplerState.add
 mOpenGLTextureAddressModeT(Mapping::getOpenGLTextureAddressMode(samplerState.addressV)),
 mOpenGLTextureAddressModeR(Mapping::getOpenGLTextureAddressMode(samplerState.addressW)),
 mMipLodBias(samplerState.mipLodBias),
-mMaxAnisotropy(static_cast<float>(samplerState.maxAnisotropy)),	// Maximum anisotropy is "uint32_t" in Direct3D 10 & 11
+mMaxAnisotropy(static_cast<float>(samplerState.maxAnisotropy)),	// Maximum anisotropy is "RECore::uint32" in Direct3D 10 & 11
 mOpenGLCompareMode(Mapping::getOpenGLCompareMode(openGLRhi.getContext(), samplerState.filter)),
 mOpenGLComparisonFunc(Mapping::getOpenGLComparisonFunc(samplerState.comparisonFunc)),
 mMinLod(samplerState.minLod),

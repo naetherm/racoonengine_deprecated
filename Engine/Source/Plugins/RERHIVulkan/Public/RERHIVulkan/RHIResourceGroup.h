@@ -73,7 +73,7 @@ public:
   *  @param[in] samplerStates
   *    If not a null pointer at least "numberOfResources" sampler state pointers, must be valid if there's at least one texture resource, the resource group will keep a reference to the sampler states
   */
-  ResourceGroup(RootSignature& rootSignature, uint32_t rootParameterIndex, VkDescriptorSet vkDescriptorSet, uint32_t numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  ResourceGroup(RootSignature& rootSignature, RECore::uint32 rootParameterIndex, VkDescriptorSet vkDescriptorSet, RECore::uint32 numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief
@@ -118,7 +118,7 @@ private:
 private:
   RootSignature&		 mRootSignature;		///< Root signature
   VkDescriptorSet		 mVkDescriptorSet;		///< "mVkDescriptorPool" of the root signature is the owner which manages the memory, can be a null handle (e.g. for a sampler resource group)
-  uint32_t			 mNumberOfResources;	///< Number of resources this resource group groups together
+  RECore::uint32			 mNumberOfResources;	///< Number of resources this resource group groups together
   RERHI::RHIResource**	 mResources;			///< RHI resource, we keep a reference to it
   RERHI::RHISamplerState** mSamplerStates;		///< Sampler states, we keep a reference to it
 

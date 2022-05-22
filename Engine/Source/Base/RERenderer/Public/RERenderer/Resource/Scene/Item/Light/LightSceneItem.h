@@ -70,7 +70,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("LightSceneItem");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("LightSceneItem");
 		enum class LightType
 		{
 			DIRECTIONAL = 0,
@@ -211,11 +211,11 @@ namespace RERenderer
 			return TYPE_ID;
 		}
 
-		virtual void deserialize(uint32_t numberOfBytes, const uint8_t* data) override;
+		virtual void deserialize(RECore::uint32 numberOfBytes, const RECore::uint8* data) override;
 
 		inline virtual void setVisible(bool visible) override
 		{
-			mPackedShaderData.visible = static_cast<uint32_t>(visible);
+			mPackedShaderData.visible = static_cast<RECore::uint32>(visible);
 		}
 
 
@@ -263,7 +263,7 @@ namespace RERenderer
 			float iesLightProfileIndex = -1.0f;	///< Illuminating Engineering Society (IES) light profile index (<0 = no IES)
 			// float4 3: Only used for spot-light: xyz = normalized view space light direction, w = unused
 			glm::vec3 direction{0.0f, 0.0f, 1.0f};	///< Derived from the parent scene node world space rotation
-			uint32_t  visible = 1;					///< Boolean, not used inside the shader but well, there's currently space left in here so we're using it
+			RECore::uint32  visible = 1;					///< Boolean, not used inside the shader but well, there's currently space left in here so we're using it
 		};
 
 

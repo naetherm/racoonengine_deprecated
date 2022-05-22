@@ -56,7 +56,7 @@ public:
   //[-------------------------------------------------------]
   //[ Ease-of-use access templates                          ]
   //[-------------------------------------------------------]
-  [[nodiscard]] inline TYPE &getByIndex(uint32_t index) const {
+  [[nodiscard]] inline TYPE &getByIndex(uint32 index) const {
     return static_cast<TYPE &>(getResourceByIndex(index));
   }
 

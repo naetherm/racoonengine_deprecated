@@ -99,15 +99,15 @@ private:
 
     // Get list of HID-devices
     const std::vector<HIDDevice*> &lstDevices = mHid->getDevices();
-    for (uint32_t i=0; i<lstDevices.size(); i++) {
+    for (RECore::uint32 i=0; i<lstDevices.size(); i++) {
       // Get device
       HIDDevice *pDevice = lstDevices[i];
 
       // Get vendor and product ID
-      const uint32_t nVendor	  = pDevice->getVendor();
-      const uint32_t nProduct	  = pDevice->getProduct();
-      const uint32_t nUsage	  = pDevice->getUsage();
-      const uint32_t nUsagePage = pDevice->getUsagePage();
+      const RECore::uint32 nVendor	  = pDevice->getVendor();
+      const RECore::uint32 nProduct	  = pDevice->getProduct();
+      const RECore::uint32 nUsage	  = pDevice->getUsage();
+      const RECore::uint32 nUsagePage = pDevice->getUsagePage();
 
       // Check device type
 

@@ -120,12 +120,12 @@ namespace RERenderer
 			return mRenderables;
 		}
 
-		[[nodiscard]] inline uint8_t getNumberOfLods() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfLods() const
 		{
 			return mNumberOfLods;
 		}
 
-		inline void setNumberOfLods(uint8_t numberOfLods)
+		inline void setNumberOfLods(RECore::uint8 numberOfLods)
 		{
 			mNumberOfLods = numberOfLods;
 		}
@@ -172,7 +172,7 @@ namespace RERenderer
 		*  @see
 		*    - "RERenderer::RenderableManager::updateCachedRenderablesData()"
 		*/
-		[[nodiscard]] inline uint8_t getMinimumRenderQueueIndex() const
+		[[nodiscard]] inline RECore::uint8 getMinimumRenderQueueIndex() const
 		{
 			return mMinimumRenderQueueIndex;
 		}
@@ -187,7 +187,7 @@ namespace RERenderer
 		*  @see
 		*    - "RERenderer::RenderableManager::updateCachedRenderablesData()"
 		*/
-		[[nodiscard]] inline uint8_t getMaximumRenderQueueIndex() const
+		[[nodiscard]] inline RECore::uint8 getMaximumRenderQueueIndex() const
 		{
 			return mMaximumRenderQueueIndex;
 		}
@@ -237,13 +237,13 @@ namespace RERenderer
 		#endif
 		// Data
 		Renderables		 mRenderables;				///< Renderables, directly containing also the renderables of all LODs, each LOD has the same number of renderables
-		uint8_t			 mNumberOfLods;				///< Number of LODs, there's always at least one LOD, namely the original none reduced version
+		RECore::uint8			 mNumberOfLods;				///< Number of LODs, there's always at least one LOD, namely the original none reduced version
 		const RECore::Transform* mTransform;				///< Transform instance, always valid, just shared meaning doesn't own the instance so don't delete it
 		bool			 mVisible;
 		// Cached data
 		float			 mCachedDistanceToCamera;	///< Cached distance to camera is updated during the culling phase
-		uint8_t			 mMinimumRenderQueueIndex;	///< The minimum renderables render queue index (inclusive, set inside "RERenderer::RenderableManager::updateCachedRenderablesData()")
-		uint8_t			 mMaximumRenderQueueIndex;	///< The maximum renderables render queue index (inclusive, set inside "RERenderer::RenderableManager::updateCachedRenderablesData()")
+		RECore::uint8			 mMinimumRenderQueueIndex;	///< The minimum renderables render queue index (inclusive, set inside "RERenderer::RenderableManager::updateCachedRenderablesData()")
+		RECore::uint8			 mMaximumRenderQueueIndex;	///< The maximum renderables render queue index (inclusive, set inside "RERenderer::RenderableManager::updateCachedRenderablesData()")
 		bool			 mCastShadows;				///< "true" if at least one of the renderables is casting shadows, else "false" (set inside "RERenderer::RenderableManager::updateCachedRenderablesData()")
 
 

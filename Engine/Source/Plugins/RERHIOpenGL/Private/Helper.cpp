@@ -164,8 +164,8 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-void Helper::updateWidthHeight(uint32_t mipmapIndex, uint32_t textureWidth, uint32_t textureHeight, uint32_t &width,
-                               uint32_t &height) {
+void Helper::updateWidthHeight(RECore::uint32 mipmapIndex, RECore::uint32 textureWidth, RECore::uint32 textureHeight, RECore::uint32 &width,
+                               RECore::uint32 &height) {
   RERHI::RHITexture::getMipmapSize(mipmapIndex, textureWidth, textureHeight);
   if (width > textureWidth)
   {
@@ -212,7 +212,7 @@ void Helper::printOpenGLShaderInformationIntoLog(const RERHI::RHIContext &contex
 
     // Output the debug string
     RE_LOG(Critical, std::string(sourceCode))
-    //if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
+    //if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), informationLog))
     {
       //	DEBUG_BREAK;
     }
@@ -257,7 +257,7 @@ void Helper::printOpenGLProgramInformationIntoLog(const RERHI::RHIContext &conte
 
     // Output the debug string
     RE_LOG(Critical, std::string(sourceCode))
-    //if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
+    //if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), informationLog))
     {
       //	DEBUG_BREAK;
     }
@@ -279,7 +279,7 @@ GLuint Helper::loadShaderFromBytecode(const RERHI::RHIContext &context, GLenum s
     // -> https://github.com/aras-p/smol-v
     // -> http://aras-p.info/blog/2016/09/01/SPIR-V-Compression/
     const size_t spirvOutputBufferSize = smolv::GetDecodedBufferSize(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes());
-    uint8_t* spirvOutputBuffer = RHI_MALLOC_TYPED(context, uint8_t, spirvOutputBufferSize);
+    RECore::uint8* spirvOutputBuffer = RHI_MALLOC_TYPED(context, RECore::uint8, spirvOutputBufferSize);
     smolv::Decode(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes(), spirvOutputBuffer, spirvOutputBufferSize);
     glShaderBinary(1, &openGLShader, GL_SHADER_BINARY_FORMAT_SPIR_V_ARB, spirvOutputBuffer, static_cast<GLsizei>(spirvOutputBufferSize));
     RHI_FREE(context, spirvOutputBuffer);
@@ -380,8 +380,8 @@ GLuint Helper::createShaderProgramObject(const RERHI::RHIContext &context, GLuin
       // Define the vertex array attribute binding locations ("vertex declaration" in Direct3D 9 terminology, "input layout" in Direct3D 10 & 11 & 12 terminology)
       // -> Crucial code that glCreateShaderProgram doesn't do
       {
-        const uint32_t numberOfVertexAttributes = vertexAttributes.numberOfAttributes;
-        for (uint32_t vertexAttribute = 0; vertexAttribute < numberOfVertexAttributes; ++vertexAttribute)
+        const RECore::uint32 numberOfVertexAttributes = vertexAttributes.numberOfAttributes;
+        for (RECore::uint32 vertexAttribute = 0; vertexAttribute < numberOfVertexAttributes; ++vertexAttribute)
         {
           glBindAttribLocation(openGLProgram, vertexAttribute, vertexAttributes.attributes[vertexAttribute].name);
         }
@@ -486,7 +486,7 @@ GLuint Helper::loadShaderFromSourcecode(const RERHI::RHIContext &context, GLenum
 
         // Output the debug string
         RE_LOG(Critical, std::string(sourceCode))
-        //if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
+        //if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), informationLog))
         {
           //	DEBUG_BREAK;
         }
@@ -586,14 +586,14 @@ Helper::shaderSourceCodeToShaderBytecode(const RERHI::RHIContext &context, GLenu
 							smolv::Encode(spirv.data(), sizeof(unsigned int) * spirv.size(), byteArray, smolv::kEncodeFlagStripDebugInfo);
 
 							// Done
-							shaderBytecode.setBytecodeCopy(static_cast<uint32_t>(byteArray.size()), reinterpret_cast<uint8_t*>(byteArray.data()));
+							shaderBytecode.setBytecodeCopy(static_cast<RECore::uint32>(byteArray.size()), reinterpret_cast<RECore::uint8*>(byteArray.data()));
 						}
 					}
 					else
 					{
 						// Failed to link the program
             RE_LOG(Critical, std::string(sourceCode))
-						//if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to link the GLSL program: %s", program.getInfoLog()))
+						//if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), "Failed to link the GLSL program: %s", program.getInfoLog()))
 						{
 						//	DEBUG_BREAK;
 						}
@@ -603,7 +603,7 @@ Helper::shaderSourceCodeToShaderBytecode(const RERHI::RHIContext &context, GLenu
 				{
 					// Failed to parse the shader source code
           RE_LOG(Critical, std::string(sourceCode))
-					//if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to parse the GLSL shader source code: %s", shader.getInfoLog()))
+					//if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), "Failed to parse the GLSL shader source code: %s", shader.getInfoLog()))
 					{
 					//	DEBUG_BREAK;
 					}
@@ -614,8 +614,8 @@ Helper::shaderSourceCodeToShaderBytecode(const RERHI::RHIContext &context, GLenu
 #pragma optimize("", on)
 #endif
 
-void Helper::bindUniformBlock(const RERHI::DescriptorRange &descriptorRange, uint32_t openGLProgram,
-                              uint32_t uniformBlockBindingIndex) {
+void Helper::bindUniformBlock(const RERHI::DescriptorRange &descriptorRange, RECore::uint32 openGLProgram,
+                              RECore::uint32 uniformBlockBindingIndex) {
   // Explicit binding points ("layout(binding = 0)" in GLSL shader) requires OpenGL 4.2 or the "GL_ARB_explicit_uniform_location"-extension,
   // for backward compatibility, ask for the uniform block index
   const GLuint uniformBlockIndex = glGetUniformBlockIndex(openGLProgram, descriptorRange.baseShaderRegisterName);
@@ -626,8 +626,8 @@ void Helper::bindUniformBlock(const RERHI::DescriptorRange &descriptorRange, uin
   }
 }
 
-void Helper::bindUniformLocation(const RERHI::DescriptorRange &descriptorRange, uint32_t openGLProgramPipeline,
-                                 uint32_t openGLProgram) {
+void Helper::bindUniformLocation(const RERHI::DescriptorRange &descriptorRange, RECore::uint32 openGLProgramPipeline,
+                                 RECore::uint32 openGLProgram) {
   const GLint uniformLocation = glGetUniformLocation(openGLProgram, descriptorRange.baseShaderRegisterName);
   if (uniformLocation >= 0)
   {
@@ -653,7 +653,7 @@ void Helper::bindUniformLocation(const RERHI::DescriptorRange &descriptorRange, 
       // Backup the currently used OpenGL program
 						GLint openGLProgramBackup = 0;
 						glGetProgramPipelineiv(openGLProgramPipeline, GL_ACTIVE_PROGRAM, &openGLProgramBackup);
-						if (static_cast<uint32_t>(openGLProgramBackup) == openGLProgram)
+						if (static_cast<RECore::uint32>(openGLProgramBackup) == openGLProgram)
 						{
 							// Set uniform, please note that for this our program must be the currently used one
 							glUniform1i(uniformLocation, static_cast<GLint>(descriptorRange.baseShaderRegister));

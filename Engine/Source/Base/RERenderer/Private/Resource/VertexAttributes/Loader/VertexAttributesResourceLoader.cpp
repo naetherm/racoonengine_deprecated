@@ -82,15 +82,15 @@ namespace RERenderer
 					RERHI::VertexAttributeFormat::FLOAT_3,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 					"Position",								// name[32] (char)
 					"POSITION",								// semanticName[32] (char)
-					0,										// semanticIndex (uint32_t)
+					0,										// semanticIndex (RECore::uint32)
 					// Data source
-					0,										// inputSlot (uint32_t)
-					0,										// alignedByteOffset (uint32_t)
-					sizeof(float) * 3,						// strideInBytes (uint32_t)
-					0										// instancesPerElement (uint32_t)
+					0,										// inputSlot (RECore::uint32)
+					0,										// alignedByteOffset (RECore::uint32)
+					sizeof(float) * 3,						// strideInBytes (RECore::uint32)
+					0										// instancesPerElement (RECore::uint32)
 				}
 			};
-			vertexAttributes.numberOfAttributes = static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout));
+			vertexAttributes.numberOfAttributes = static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout));
 			vertexAttributes.attributes = vertexAttributesLayout;
 		}
 		else if (ASSET_ID("Example/Blueprint/Volume/VA_Volume") == getAsset().assetId)
@@ -103,27 +103,27 @@ namespace RERenderer
 					RERHI::VertexAttributeFormat::FLOAT_3,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 					"Position",								// name[32] (char)
 					"POSITION",								// semanticName[32] (char)
-					0,										// semanticIndex (uint32_t)
+					0,										// semanticIndex (RECore::uint32)
 					// Data source
-					0,										// inputSlot (uint32_t)
-					0,										// alignedByteOffset (uint32_t)
-					sizeof(float) * 3,						// strideInBytes (uint32_t)
-					0										// instancesPerElement (uint32_t)
+					0,										// inputSlot (RECore::uint32)
+					0,										// alignedByteOffset (RECore::uint32)
+					sizeof(float) * 3,						// strideInBytes (RECore::uint32)
+					0										// instancesPerElement (RECore::uint32)
 				},
 				{ // Attribute 1, see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html
 					// Data destination
 					RERHI::VertexAttributeFormat::UINT_1,		// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 					"drawId",								// name[32] (char)
 					"DRAWID",								// semanticName[32] (char)
-					0,										// semanticIndex (uint32_t)
+					0,										// semanticIndex (RECore::uint32)
 					// Data source
-					1,										// inputSlot (uint32_t)
-					0,										// alignedByteOffset (uint32_t)
-					sizeof(uint32_t),						// strideInBytes (uint32_t)
-					1										// instancesPerElement (uint32_t)
+					1,										// inputSlot (RECore::uint32)
+					0,										// alignedByteOffset (RECore::uint32)
+					sizeof(RECore::uint32),						// strideInBytes (RECore::uint32)
+					1										// instancesPerElement (RECore::uint32)
 				}
 			};
-			vertexAttributes.numberOfAttributes = static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout));
+			vertexAttributes.numberOfAttributes = static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout));
 			vertexAttributes.attributes = vertexAttributesLayout;
 		}
 		else if (ASSET_ID("Example/Blueprint/DebugGui/VA_DebugGui") == getAsset().assetId)
@@ -136,27 +136,27 @@ namespace RERenderer
 					RERHI::VertexAttributeFormat::FLOAT_4,		// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 					"Position",									// name[32] (char)
 					"POSITION",									// semanticName[32] (char)
-					0,											// semanticIndex (uint32_t)
+					0,											// semanticIndex (RECore::uint32)
 					// Data source
-					0,											// inputSlot (uint32_t)
-					0,											// alignedByteOffset (uint32_t)
-					sizeof(float) * 4 + sizeof(uint8_t) * 4,	// strideInBytes (uint32_t)
-					0											// instancesPerElement (uint32_t)
+					0,											// inputSlot (RECore::uint32)
+					0,											// alignedByteOffset (RECore::uint32)
+					sizeof(float) * 4 + sizeof(RECore::uint8) * 4,	// strideInBytes (RECore::uint32)
+					0											// instancesPerElement (RECore::uint32)
 				},
 				{ // Attribute 1
 					// Data destination
 					RERHI::VertexAttributeFormat::R8G8B8A8_UNORM,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 					"Color",									// name[32] (char)
 					"COLOR",									// semanticName[32] (char)
-					0,											// semanticIndex (uint32_t)
+					0,											// semanticIndex (RECore::uint32)
 					// Data source
-					0,											// inputSlot (uint32_t)
-					sizeof(float) * 4,							// alignedByteOffset (uint32_t)
-					sizeof(float) * 4 + sizeof(uint8_t) * 4,	// strideInBytes (uint32_t)
-					0											// instancesPerElement (uint32_t)
+					0,											// inputSlot (RECore::uint32)
+					sizeof(float) * 4,							// alignedByteOffset (RECore::uint32)
+					sizeof(float) * 4 + sizeof(RECore::uint8) * 4,	// strideInBytes (RECore::uint32)
+					0											// instancesPerElement (RECore::uint32)
 				}
 			};
-			vertexAttributes.numberOfAttributes = static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout));
+			vertexAttributes.numberOfAttributes = static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout));
 			vertexAttributes.attributes = vertexAttributesLayout;
 		}
 		else if (ASSET_ID("Example/Blueprint/DebugDraw/VA_DebugDrawLineList") == getAsset().assetId)
@@ -169,27 +169,27 @@ namespace RERenderer
 					RERHI::VertexAttributeFormat::FLOAT_4,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 					"Position",								// name[32] (char)
 					"POSITION",								// semanticName[32] (char)
-					0,										// semanticIndex (uint32_t)
+					0,										// semanticIndex (RECore::uint32)
 					// Data source
-					0,										// inputSlot (uint32_t)
-					0,										// alignedByteOffset (uint32_t)
-					sizeof(float) * 4 + sizeof(float) * 4,	// strideInBytes (uint32_t)
-					0										// instancesPerElement (uint32_t)
+					0,										// inputSlot (RECore::uint32)
+					0,										// alignedByteOffset (RECore::uint32)
+					sizeof(float) * 4 + sizeof(float) * 4,	// strideInBytes (RECore::uint32)
+					0										// instancesPerElement (RECore::uint32)
 				},
 				{ // Attribute 1
 					// Data destination
 					RERHI::VertexAttributeFormat::FLOAT_4,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 					"Color",								// name[32] (char)
 					"COLOR",								// semanticName[32] (char)
-					0,										// semanticIndex (uint32_t)
+					0,										// semanticIndex (RECore::uint32)
 					// Data source
-					0,										// inputSlot (uint32_t)
-					sizeof(float) * 4,						// alignedByteOffset (uint32_t)
-					sizeof(float) * 4 + sizeof(float) * 4,	// strideInBytes (uint32_t)
-					0										// instancesPerElement (uint32_t)
+					0,										// inputSlot (RECore::uint32)
+					sizeof(float) * 4,						// alignedByteOffset (RECore::uint32)
+					sizeof(float) * 4 + sizeof(float) * 4,	// strideInBytes (RECore::uint32)
+					0										// instancesPerElement (RECore::uint32)
 				}
 			};
-			vertexAttributes.numberOfAttributes = static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout));
+			vertexAttributes.numberOfAttributes = static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout));
 			vertexAttributes.attributes = vertexAttributesLayout;
 		}
 		else if (ASSET_ID("Example/Blueprint/DebugDraw/VA_DebugDrawGlyphList") == getAsset().assetId)
@@ -202,27 +202,27 @@ namespace RERenderer
 					RERHI::VertexAttributeFormat::FLOAT_4,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 					"Position",								// name[32] (char)
 					"POSITION",								// semanticName[32] (char)
-					0,										// semanticIndex (uint32_t)
+					0,										// semanticIndex (RECore::uint32)
 					// Data source
-					0,										// inputSlot (uint32_t)
-					0,										// alignedByteOffset (uint32_t)
-					sizeof(float) * 4 + sizeof(float) * 4,	// strideInBytes (uint32_t)
-					0										// instancesPerElement (uint32_t)
+					0,										// inputSlot (RECore::uint32)
+					0,										// alignedByteOffset (RECore::uint32)
+					sizeof(float) * 4 + sizeof(float) * 4,	// strideInBytes (RECore::uint32)
+					0										// instancesPerElement (RECore::uint32)
 				},
 				{ // Attribute 1
 					// Data destination
 					RERHI::VertexAttributeFormat::FLOAT_4,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 					"Color",								// name[32] (char)
 					"COLOR",								// semanticName[32] (char)
-					0,										// semanticIndex (uint32_t)
+					0,										// semanticIndex (RECore::uint32)
 					// Data source
-					0,										// inputSlot (uint32_t)
-					sizeof(float) * 4,						// alignedByteOffset (uint32_t)
-					sizeof(float) * 4 + sizeof(float) * 4,	// strideInBytes (uint32_t)
-					0										// instancesPerElement (uint32_t)
+					0,										// inputSlot (RECore::uint32)
+					sizeof(float) * 4,						// alignedByteOffset (RECore::uint32)
+					sizeof(float) * 4 + sizeof(float) * 4,	// strideInBytes (RECore::uint32)
+					0										// instancesPerElement (RECore::uint32)
 				}
 			};
-			vertexAttributes.numberOfAttributes = static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout));
+			vertexAttributes.numberOfAttributes = static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout));
 			vertexAttributes.attributes = vertexAttributesLayout;
 		}
 		else if (ASSET_ID("Example/Blueprint/Mesh/VA_Mesh") == getAsset().assetId)

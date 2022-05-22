@@ -232,7 +232,7 @@ void WiiMote::setReportMode(EReport nReportMode, bool bContinuous)
   clearReport();
   m_pOutputBuffer[0] = CmdType;
   m_pOutputBuffer[1] = (bContinuous ? 0x04u : 0x00u) | m_nRumble;
-  m_pOutputBuffer[2] = static_cast<uint8_t>(nReportMode);
+  m_pOutputBuffer[2] = static_cast<RECore::uint8>(nReportMode);
   send(m_pOutputBuffer, 3);
 }
 
@@ -251,13 +251,13 @@ void WiiMote::setIRMode(EIRMode nIRMode)
     m_pOutputBuffer[1] = 0x04u | m_nRumble;
     send(m_pOutputBuffer, 2);
 
-    static constexpr uint8_t ir_sens1[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x90, 0x00, 0xc0};
-    static constexpr uint8_t ir_sens2[] = {0x40, 0x00};
+    static constexpr RECore::uint8 ir_sens1[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x90, 0x00, 0xc0};
+    static constexpr RECore::uint8 ir_sens2[] = {0x40, 0x00};
 
     writeMemory(RegIR, 0x08);
     writeMemory(RegIRSensitivity1, ir_sens1, sizeof(ir_sens1));
     writeMemory(RegIRSensitivity2, ir_sens2, sizeof(ir_sens2));
-    writeMemory(RegIRMode, static_cast<uint8_t>(nIRMode));
+    writeMemory(RegIRMode, static_cast<RECore::uint8>(nIRMode));
   } else {
     clearReport();
     m_pOutputBuffer[0] = CmdIR;
@@ -278,12 +278,12 @@ void WiiMote::updateOutputControl(Control *pControl)
   // Update LEDs
   if (pControl == &LEDs) {
     // Set LEDs
-    m_nLEDs = static_cast<uint8_t>(LEDs.getLedStates()) & 0x0fu;
+    m_nLEDs = static_cast<RECore::uint8>(LEDs.getLedStates()) & 0x0fu;
 
     // Send command
     clearReport();
     m_pOutputBuffer[0] = CmdLEDs;
-    m_pOutputBuffer[1] = static_cast<uint8_t>((m_nLEDs << 4) | m_nRumble);
+    m_pOutputBuffer[1] = static_cast<RECore::uint8>((m_nLEDs << 4) | m_nRumble);
     send(m_pOutputBuffer, 2);
 
     // Update rumble
@@ -431,7 +431,7 @@ void WiiMote::onReadCalibration()
 void WiiMote::onReadExtensionType()
 {
   // Get extension type
-  uint16_t nExtension = *reinterpret_cast<uint16_t*>(&m_pInputBuffer[6]);
+  RECore::uint16 nExtension = *reinterpret_cast<RECore::uint16*>(&m_pInputBuffer[6]);
 
   // If new extension, get calibration info
   if (nExtension == ExtNunchuk && m_nExtension != ExtNunchuk) {
@@ -509,7 +509,7 @@ void WiiMote::onReadStatus()
   m_nBattery = m_pInputBuffer[6] / 2u;
 
   // Get LEDs
-  m_nLEDs = static_cast<uint8_t>(m_pInputBuffer[3] >> 4);
+  m_nLEDs = static_cast<RECore::uint8>(m_pInputBuffer[3] >> 4);
 
   // Get extension
   bool bExtension = ((m_pInputBuffer[3] & 0x02) != 0);
@@ -523,7 +523,7 @@ void WiiMote::onReadStatus()
 void WiiMote::onReadButtons()
 {
   // Get state of buttons
-  m_nButtons = *reinterpret_cast<uint16_t*>(&m_pInputBuffer[1]);
+  m_nButtons = *reinterpret_cast<RECore::uint16*>(&m_pInputBuffer[1]);
 
   // Button '1'
   bool bPressed = ((m_nButtons & Btn1) != 0);
@@ -606,9 +606,9 @@ void WiiMote::onReadButtons()
 void WiiMote::onReadAccel()
 {
   // Get raw acceleration data
-  uint8_t nRawX = m_pInputBuffer[3];
-  uint8_t nRawY = m_pInputBuffer[4];
-  uint8_t nRawZ = m_pInputBuffer[5];
+  RECore::uint8 nRawX = m_pInputBuffer[3];
+  RECore::uint8 nRawY = m_pInputBuffer[4];
+  RECore::uint8 nRawZ = m_pInputBuffer[5];
 
   // Compute acceleration
   m_sAcc.fAccX = static_cast<float>(nRawX - m_sAcc.nX0) / static_cast<float>(m_sAcc.nXG - m_sAcc.nX0);
@@ -718,7 +718,7 @@ void WiiMote::onReadIR()
     PointerY.setValue(m_vIRPos[1], false);
 }
 
-void WiiMote::onReadExtension(uint32_t nOffset)
+void WiiMote::onReadExtension(RECore::uint32 nOffset)
 {
   // Check extension type
   switch (m_nExtension) {
@@ -740,7 +740,7 @@ void WiiMote::onReadExtension(uint32_t nOffset)
   }
 }
 
-void WiiMote::onReadNunchuk(uint32_t nOffset)
+void WiiMote::onReadNunchuk(RECore::uint32 nOffset)
 {
   // Get buttons
   m_nNunchukButtons = 0;
@@ -764,9 +764,9 @@ void WiiMote::onReadNunchuk(uint32_t nOffset)
   }
 
   // Get raw acceleration data
-  uint8_t nRawX = m_pInputBuffer[nOffset+2];
-  uint8_t nRawY = m_pInputBuffer[nOffset+3];
-  uint8_t nRawZ = m_pInputBuffer[nOffset+4];
+  RECore::uint8 nRawX = m_pInputBuffer[nOffset+2];
+  RECore::uint8 nRawY = m_pInputBuffer[nOffset+3];
+  RECore::uint8 nRawZ = m_pInputBuffer[nOffset+4];
 
   // Compute acceleration
   m_sNunchukAcc.fAccX = (static_cast<float>(nRawX) - static_cast<float>(m_sNunchukAcc.nX0)) / (static_cast<float>(m_sNunchukAcc.nXG) - static_cast<float>(m_sNunchukAcc.nX0));
@@ -809,8 +809,8 @@ void WiiMote::onReadNunchuk(uint32_t nOffset)
     NunchukPitch.setValue(m_sNunchukAcc.fPitch, false);
 
   // Get raw joystick position
-  uint8_t nJoyRawX = m_pInputBuffer[nOffset+0];
-  uint8_t nJoyRawY = m_pInputBuffer[nOffset+1];
+  RECore::uint8 nJoyRawX = m_pInputBuffer[nOffset+0];
+  RECore::uint8 nJoyRawY = m_pInputBuffer[nOffset+1];
 
   // Compute joystick position
   if (m_sNunchukJoy.nMaxX != 0x00) {
@@ -832,12 +832,12 @@ void WiiMote::onReadNunchuk(uint32_t nOffset)
     NunchukY.setValue(m_sNunchukJoy.fY, false);
 }
 
-void WiiMote::onReadClassic(uint32_t)
+void WiiMote::onReadClassic(RECore::uint32)
 {
   // TODO(naetherm)
   /*
   // buttons:
-  uint16_t bits = *(uint16_t*)(m_pInputBuffer+4);
+  RECore::uint16 bits = *(RECore::uint16*)(m_pInputBuffer+4);
 
   // joysticks:
   wiimote_state::joystick &joyL = Internal.ClassicController.JoystickL;
@@ -890,9 +890,9 @@ void WiiMote::onReadClassic(uint32_t)
     changed |= CLASSIC_JOYSTICK_R_CHANGED;
 
   // triggers
-  uint8_t raw_trigger_l = ((m_pInputBuffer[nOffset+2] & 0x60) >> 2) |
+  RECore::uint8 raw_trigger_l = ((m_pInputBuffer[nOffset+2] & 0x60) >> 2) |
               (m_pInputBuffer[nOffset+3]		  >> 5);
-  uint8_t raw_trigger_r =   m_pInputBuffer[nOffset+3] & 0x1f;
+  RECore::uint8 raw_trigger_r =   m_pInputBuffer[nOffset+3] & 0x1f;
 
   if ((raw_trigger_l != Internal.ClassicController.RawTriggerL) ||
     (raw_trigger_r != Internal.ClassicController.RawTriggerR))
@@ -915,21 +915,21 @@ void WiiMote::onReadClassic(uint32_t)
   */
 }
 
-void WiiMote::readMemory(int nAddress, uint8_t nSize)
+void WiiMote::readMemory(int nAddress, RECore::uint8 nSize)
 {
   // Send command
   clearReport();
   m_pOutputBuffer[0] = CmdReadMemory;
-  m_pOutputBuffer[1] = static_cast<uint8_t>(((nAddress & 0xff000000) >> 24) | m_nRumble);
-  m_pOutputBuffer[2] = static_cast<uint8_t>((nAddress	 & 0x00ff0000) >> 16);
-  m_pOutputBuffer[3] = static_cast<uint8_t>((nAddress	 & 0x0000ff00) >>  8);
-  m_pOutputBuffer[4] = static_cast<uint8_t>((nAddress	 & 0x000000ff));
-  m_pOutputBuffer[5] = static_cast<uint8_t>((nSize	 & 0xff00	 ) >>  8);
-  m_pOutputBuffer[6] = static_cast<uint8_t>((nSize	 & 0xff));
+  m_pOutputBuffer[1] = static_cast<RECore::uint8>(((nAddress & 0xff000000) >> 24) | m_nRumble);
+  m_pOutputBuffer[2] = static_cast<RECore::uint8>((nAddress	 & 0x00ff0000) >> 16);
+  m_pOutputBuffer[3] = static_cast<RECore::uint8>((nAddress	 & 0x0000ff00) >>  8);
+  m_pOutputBuffer[4] = static_cast<RECore::uint8>((nAddress	 & 0x000000ff));
+  m_pOutputBuffer[5] = static_cast<RECore::uint8>((nSize	 & 0xff00	 ) >>  8);
+  m_pOutputBuffer[6] = static_cast<RECore::uint8>((nSize	 & 0xff));
   send(m_pOutputBuffer, 7);
 }
 
-void WiiMote::writeMemory(int nAddress, const uint8_t* pBuffer, uint8_t nSize)
+void WiiMote::writeMemory(int nAddress, const RECore::uint8* pBuffer, RECore::uint8 nSize)
 {
   // Check buffer
   if (pBuffer && nSize <= 16) {
@@ -939,10 +939,10 @@ void WiiMote::writeMemory(int nAddress, const uint8_t* pBuffer, uint8_t nSize)
     // Set command
     clearReport();
     m_pOutputBuffer[0] = CmdWriteMemory;
-    m_pOutputBuffer[1] = static_cast<uint8_t>(((nAddress & 0xff000000) >> 24) | m_nRumble);
-    m_pOutputBuffer[2] = static_cast<uint8_t>( (nAddress & 0x00ff0000) >> 16);
-    m_pOutputBuffer[3] = static_cast<uint8_t>( (nAddress & 0x0000ff00) >>  8);
-    m_pOutputBuffer[4] = static_cast<uint8_t>( (nAddress & 0x000000ff));
+    m_pOutputBuffer[1] = static_cast<RECore::uint8>(((nAddress & 0xff000000) >> 24) | m_nRumble);
+    m_pOutputBuffer[2] = static_cast<RECore::uint8>( (nAddress & 0x00ff0000) >> 16);
+    m_pOutputBuffer[3] = static_cast<RECore::uint8>( (nAddress & 0x0000ff00) >>  8);
+    m_pOutputBuffer[4] = static_cast<RECore::uint8>( (nAddress & 0x000000ff));
     m_pOutputBuffer[5] = nSize;
     memcpy(m_pOutputBuffer+6, pBuffer, nSize);
 
@@ -951,14 +951,14 @@ void WiiMote::writeMemory(int nAddress, const uint8_t* pBuffer, uint8_t nSize)
   }
 }
 
-void WiiMote::decryptBuffer(uint32_t nOffset, uint32_t nSize)
+void WiiMote::decryptBuffer(RECore::uint32 nOffset, RECore::uint32 nSize)
 {
   // Decrypt buffer
   for (unsigned i=0; i<nSize; i++)
     m_pInputBuffer[nOffset+i] = (((m_pInputBuffer[nOffset+i] ^ 0x17u) + 0x17u) & 0xffu);
 }
 
-void WiiMote::send(uint8_t *pBuffer, uint32_t nSize)
+void WiiMote::send(RECore::uint8 *pBuffer, RECore::uint32 nSize)
 {
   // This is kinda strange. On Windows, using the HID API, a whole output report of size 22 has to be sent to the device,
   // otherwise strange things happen. On Linux, using the BlueZ API, only as many data as needed has to be sent, otherwise

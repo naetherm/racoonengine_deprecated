@@ -74,7 +74,7 @@ public:
   *  @return
   *    The width of the texture
   */
-  [[nodiscard]] inline uint32_t getWidth() const {
+  [[nodiscard]] inline RECore::uint32 getWidth() const {
     return mWidth;
   }
 
@@ -85,7 +85,7 @@ public:
   *  @return
   *    The height of the texture
   */
-  [[nodiscard]] inline uint32_t getHeight() const {
+  [[nodiscard]] inline RECore::uint32 getHeight() const {
     return mHeight;
   }
 
@@ -96,7 +96,7 @@ public:
   *  @return
   *    The depth of the texture
   */
-  [[nodiscard]] inline uint32_t getDepth() const {
+  [[nodiscard]] inline RECore::uint32 getDepth() const {
     return mDepth;
   }
 
@@ -115,7 +115,7 @@ protected:
   *  @param[in] depth
   *    The depth of the texture
   */
-  inline RHITexture3D(RHIDynamicRHI &rhi, uint32_t width, uint32_t height, uint32_t depth
+  inline RHITexture3D(RHIDynamicRHI &rhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth
                       RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
     RHITexture(ResourceType::TEXTURE_3D, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
     mWidth(width),
@@ -134,9 +134,9 @@ protected:
 
   // Private data
 private:
-  uint32_t mWidth;  ///< The width of the texture
-  uint32_t mHeight;  ///< The height of the texture
-  uint32_t mDepth;  ///< The depth of the texture
+  RECore::uint32 mWidth;  ///< The width of the texture
+  RECore::uint32 mHeight;  ///< The height of the texture
+  RECore::uint32 mDepth;  ///< The depth of the texture
 
 };
 

@@ -123,7 +123,7 @@ private:
   //[ Public virtual ConnectionDevice functions             ]
   //[-------------------------------------------------------]
 public:
-  virtual bool open(uint16_t nOutputPort = 0, uint16_t nInputPort = 0) override
+  virtual bool open(RECore::uint16 nOutputPort = 0, RECore::uint16 nInputPort = 0) override
   {
     // Create socket address for control socket
     struct sockaddr_l2 sCtrlAddr;
@@ -192,11 +192,11 @@ public:
     return (m_nCtrlSocket != 0 && m_nIntSocket != 0);
   }
 
-  virtual bool read(uint8_t *pBuffer, uint32_t nSize) override
+  virtual bool read(RECore::uint8 *pBuffer, RECore::uint32 nSize) override
   {
     // Read data
     lockCriticalSection();
-    uint8_t nTemp[BufferSize];
+    RECore::uint8 nTemp[BufferSize];
     int nRes = ::read(m_nIntSocket, nTemp, nSize+1);
     if (nRes > 0) {
       if (nTemp[0] == (TransData | ParamInput)) {
@@ -212,18 +212,18 @@ public:
     return false;
   }
 
-  virtual bool write(const uint8_t *pBuffer, uint32_t nSize) override
+  virtual bool write(const RECore::uint8 *pBuffer, RECore::uint32 nSize) override
   {
     // Write data
     lockCriticalSection();
-    uint8_t nTemp[BufferSize];
+    RECore::uint8 nTemp[BufferSize];
     nTemp[0] = TransSetReport | ParamOutput;
     memcpy(nTemp+1, pBuffer, nSize);
     int nRes = ::write(m_nCtrlSocket, nTemp, nSize+1);
     readHandshake();
     unlockCriticalSection();
     if (nRes > 0)
-      return (static_cast<uint32_t>(nRes) - 1 == nSize);
+      return (static_cast<RECore::uint32>(nRes) - 1 == nSize);
     else
       return false;
   }

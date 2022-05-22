@@ -51,7 +51,7 @@ void ComputeShader::onInitialization()
 
 		{ // Create the graphics root signature
 			// TODO(naetherm) Compute shader: Get rid of the OpenGL/Direct3D 11 variation here
-			const uint32_t offset = (rhi->getNameId() == RERHI::NameId::VULKAN || rhi->getNameId() == RERHI::NameId::OPENGL) ? 1u : 0u;
+			const RECore::uint32 offset = (rhi->getNameId() == RERHI::NameId::VULKAN || rhi->getNameId() == RERHI::NameId::OPENGL) ? 1u : 0u;
 			RERHI::DescriptorRangeBuilder ranges[5];
 			ranges[0].initialize(RERHI::ResourceType::UNIFORM_BUFFER,	   0,			"UniformBuffer",		 RERHI::ShaderVisibility::FRAGMENT);
 			ranges[1].initialize(RERHI::ResourceType::TEXTURE_BUFFER,	   0,			"InputTextureBuffer",	 RERHI::ShaderVisibility::VERTEX);
@@ -65,7 +65,7 @@ void ComputeShader::onInitialization()
 
 			// Setup
 			RERHI::RootSignatureBuilder rootSignatureBuilder;
-			rootSignatureBuilder.initialize(static_cast<uint32_t>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+			rootSignatureBuilder.initialize(static_cast<RECore::uint32>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
 			// Create the instance
 			mGraphicsRootSignature = rhi->createRootSignature(rootSignatureBuilder);
@@ -80,7 +80,7 @@ void ComputeShader::onInitialization()
 			ranges[3].initialize(RERHI::ResourceType::UNIFORM_BUFFER,  0,	"InputUniformBuffer", RERHI::ShaderVisibility::COMPUTE);
 			// Output
 			// TODO(naetherm) Compute shader: Get rid of the OpenGL/Direct3D 11 variation here
-			const uint32_t offset = (rhi->getNameId() == RERHI::NameId::VULKAN || rhi->getNameId() == RERHI::NameId::OPENGL) ? 4u : 0u;
+			const RECore::uint32 offset = (rhi->getNameId() == RERHI::NameId::VULKAN || rhi->getNameId() == RERHI::NameId::OPENGL) ? 4u : 0u;
 			ranges[4].initialize(RERHI::ResourceType::TEXTURE_2D,		 0u + offset, "OutputTexture2D",	 RERHI::ShaderVisibility::COMPUTE, RERHI::DescriptorRangeType::UAV);
 			ranges[5].initialize(RERHI::ResourceType::VERTEX_BUFFER,   1u + offset, "OutputVertexBuffer",  RERHI::ShaderVisibility::COMPUTE, RERHI::DescriptorRangeType::UAV);
 			ranges[6].initialize(RERHI::ResourceType::INDEX_BUFFER,    2u + offset, "OutputIndexBuffer",	 RERHI::ShaderVisibility::COMPUTE, RERHI::DescriptorRangeType::UAV);
@@ -90,7 +90,7 @@ void ComputeShader::onInitialization()
 
 			// Setup
 			RERHI::RootSignatureBuilder rootSignatureBuilder;
-			rootSignatureBuilder.initialize(static_cast<uint32_t>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::NONE);
+			rootSignatureBuilder.initialize(static_cast<RECore::uint32>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::NONE);
 
 			// Create the instance
 			mComputeRootSignature1 = rhi->createRootSignature(rootSignatureBuilder);
@@ -104,7 +104,7 @@ void ComputeShader::onInitialization()
 			ranges[2].initialize(RERHI::ResourceType::INDIRECT_BUFFER,   2, "InputIndirectBuffer",	RERHI::ShaderVisibility::COMPUTE);
 			// Output
 			// TODO(naetherm) Compute shader: Get rid of the OpenGL/Direct3D 11 variation here
-			const uint32_t offset = (rhi->getNameId() == RERHI::NameId::VULKAN || rhi->getNameId() == RERHI::NameId::OPENGL) ? 3u : 0u;
+			const RECore::uint32 offset = (rhi->getNameId() == RERHI::NameId::VULKAN || rhi->getNameId() == RERHI::NameId::OPENGL) ? 3u : 0u;
 			ranges[3].initialize(RERHI::ResourceType::TEXTURE_BUFFER,	   0u + offset, "OutputTextureBuffer",	  RERHI::ShaderVisibility::COMPUTE, RERHI::DescriptorRangeType::UAV);
 			ranges[4].initialize(RERHI::ResourceType::STRUCTURED_BUFFER, 1u + offset, "OutputStructuredBuffer", RERHI::ShaderVisibility::COMPUTE, RERHI::DescriptorRangeType::UAV);
 			ranges[5].initialize(RERHI::ResourceType::INDIRECT_BUFFER,   2u + offset, "OutputIndirectBuffer",   RERHI::ShaderVisibility::COMPUTE, RERHI::DescriptorRangeType::UAV);
@@ -114,7 +114,7 @@ void ComputeShader::onInitialization()
 
 			// Setup
 			RERHI::RootSignatureBuilder rootSignatureBuilder;
-			rootSignatureBuilder.initialize(static_cast<uint32_t>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::NONE);
+			rootSignatureBuilder.initialize(static_cast<RECore::uint32>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::NONE);
 
 			// Create the instance
 			mComputeRootSignature2 = rhi->createRootSignature(rootSignatureBuilder);
@@ -168,11 +168,11 @@ void ComputeShader::onInitialization()
 			{ // Create the indirect buffer which will be read by a compute shader
 				const RERHI::DrawIndexedArguments drawIndexedArguments =
 				{
-					0, // indexCountPerInstance (uint32_t)	- Filled by compute shader via atomics counting
-					1, // instanceCount (uint32_t)
-					0, // startIndexLocation (uint32_t)
-					0, // baseVertexLocation (int32_t)
-					0  // startInstanceLocation (uint32_t)
+					0, // indexCountPerInstance (RECore::uint32)	- Filled by compute shader via atomics counting
+					1, // instanceCount (RECore::uint32)
+					0, // startIndexLocation (RECore::uint32)
+					0, // baseVertexLocation (RECore::int32)
+					0  // startInstanceLocation (RECore::uint32)
 				};
 				mComputeInputIndirectBuffer = mBufferManager->createIndirectBuffer(sizeof(RERHI::DrawIndexedArguments), &drawIndexedArguments, RERHI::IndirectBufferFlag::SHADER_RESOURCE | RERHI::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS);
 			}
@@ -189,18 +189,18 @@ void ComputeShader::onInitialization()
 				RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Position",								// name[32] (char)
 				"POSITION",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				0,										// alignedByteOffset (uint32_t)
-				sizeof(float) * 2,						// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				0,										// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 2,						// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			}
 		};
-		const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+		const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
 		{ // Create the index buffer object (IBO)
-			static constexpr uint16_t INDICES[] =
+			static constexpr RECore::uint16 INDICES[] =
 			{
 				0, 1, 2
 			};
@@ -228,7 +228,7 @@ void ComputeShader::onInitialization()
 		  //    reference of the used vertex buffer objects (VBO). If the reference counter of a
 		  //    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
 			const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { mComputeOutputVertexBuffer };
-			mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, mComputeOutputIndexBuffer);
+			mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, mComputeOutputIndexBuffer);
 		}
 
 		{ // Create the uniform buffer which will be read by a compute shader
@@ -264,7 +264,7 @@ void ComputeShader::onInitialization()
 					// Output
 					nullptr, nullptr, nullptr
 				};
-				mComputeResourceGroup1 = mComputeRootSignature1->createResourceGroup(0, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, samplerStates);
+				mComputeResourceGroup1 = mComputeRootSignature1->createResourceGroup(0, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, samplerStates);
 			}
 
 			{ // Create second compute resource group
@@ -274,13 +274,13 @@ void ComputeShader::onInitialization()
 					// Output
 					mComputeOutputTextureBuffer, mComputeOutputStructuredBuffer, mComputeOutputIndirectBuffer
 				};
-				mComputeResourceGroup2 = mComputeRootSignature2->createResourceGroup(0, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, nullptr);
+				mComputeResourceGroup2 = mComputeRootSignature2->createResourceGroup(0, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, nullptr);
 			}
 
 			{ // Create graphics resource group
 				RERHI::RHIResource* resources[4] = { mComputeInputUniformBuffer, mComputeOutputTextureBuffer, mComputeOutputStructuredBuffer, computeOutputTexture2D };
 				RERHI::RHISamplerState* samplerStates[4] = { nullptr, nullptr, nullptr, static_cast<RERHI::RHISamplerState*>(samplerStateResource) };
-				mGraphicsResourceGroup = mGraphicsRootSignature->createResourceGroup(0, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, samplerStates);
+				mGraphicsResourceGroup = mGraphicsRootSignature->createResourceGroup(0, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, samplerStates);
 			}
 		}
 

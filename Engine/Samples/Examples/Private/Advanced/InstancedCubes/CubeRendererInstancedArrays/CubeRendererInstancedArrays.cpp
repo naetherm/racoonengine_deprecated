@@ -62,36 +62,36 @@ namespace
 				RERHI::VertexAttributeFormat::FLOAT_3,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Position",								// name[32] (char)
 				"POSITION",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				0,										// alignedByteOffset (uint32_t)
-				sizeof(float) * 8,						// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				0,										// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 8,						// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 1
 				// Data destination
 				RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"TexCoord",								// name[32] (char)
 				"TEXCOORD",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				sizeof(float) * 3,						// alignedByteOffset (uint32_t)
-				sizeof(float) * 8,						// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				sizeof(float) * 3,						// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 8,						// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 2
 				// Data destination
 				RERHI::VertexAttributeFormat::FLOAT_3,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Normal",								// name[32] (char)
 				"NORMAL",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				sizeof(float) * 5,						// alignedByteOffset (uint32_t)
-				sizeof(float) * 8,						// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				sizeof(float) * 5,						// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 8,						// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			},
 
 			// Per-instance data
@@ -100,27 +100,27 @@ namespace
 				RERHI::VertexAttributeFormat::FLOAT_4,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"PerInstancePositionTexture",			// name[32] (char)
 				"TEXCOORD",								// semanticName[32] (char)
-				1,										// semanticIndex (uint32_t)
+				1,										// semanticIndex (RECore::uint32)
 				// Data source
-				1,										// inputSlot (uint32_t)
-				0,										// alignedByteOffset (uint32_t)
-				sizeof(float) * 8,						// strideInBytes (uint32_t)
-				1										// instancesPerElement (uint32_t)
+				1,										// inputSlot (RECore::uint32)
+				0,										// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 8,						// strideInBytes (RECore::uint32)
+				1										// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 4
 				// Data destination
 				RERHI::VertexAttributeFormat::FLOAT_4,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"PerInstanceRotationScale",				// name[32] (char)
 				"TEXCOORD",								// semanticName[32] (char)
-				2,										// semanticIndex (uint32_t)
+				2,										// semanticIndex (RECore::uint32)
 				// Data source
-				1,										// inputSlot (uint32_t)
-				sizeof(float) * 4,						// alignedByteOffset (uint32_t)
-				sizeof(float) * 8,						// strideInBytes (uint32_t)
-				1										// instancesPerElement (uint32_t)
+				1,										// inputSlot (RECore::uint32)
+				sizeof(float) * 4,						// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 8,						// strideInBytes (RECore::uint32)
+				1										// instancesPerElement (RECore::uint32)
 			}
 		};
-		const RERHI::VertexAttributes CubeRendererInstancedArraysVertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(CubeRendererInstancedArraysVertexAttributesLayout)), CubeRendererInstancedArraysVertexAttributesLayout);
+		const RERHI::VertexAttributes CubeRendererInstancedArraysVertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(CubeRendererInstancedArraysVertexAttributesLayout)), CubeRendererInstancedArraysVertexAttributesLayout);
 
 
 //[-------------------------------------------------------]
@@ -133,7 +133,7 @@ namespace
 //[-------------------------------------------------------]
 //[ Public methods                                        ]
 //[-------------------------------------------------------]
-CubeRendererInstancedArrays::CubeRendererInstancedArrays(RERHI::RHIDynamicRHI& rhi, RERHI::RHIRenderPass& renderPass, uint32_t numberOfTextures, uint32_t sceneRadius) :
+CubeRendererInstancedArrays::CubeRendererInstancedArrays(RERHI::RHIDynamicRHI& rhi, RERHI::RHIRenderPass& renderPass, RECore::uint32 numberOfTextures, RECore::uint32 sceneRadius) :
 	mRhi(&rhi),
 	mRenderPass(renderPass),
 	mNumberOfTextures(numberOfTextures),
@@ -172,23 +172,23 @@ CubeRendererInstancedArrays::CubeRendererInstancedArrays(RERHI::RHIDynamicRHI& r
 
 		// Setup
 		RERHI::RootSignatureBuilder rootSignatureBuilder;
-		rootSignatureBuilder.initialize(static_cast<uint32_t>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+		rootSignatureBuilder.initialize(static_cast<RECore::uint32>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
 		// Create the instance
 		mRootSignature = mRhi->createRootSignature(rootSignatureBuilder);
 	}
 
 	{ // Create the textures
-		static constexpr uint32_t TEXTURE_WIDTH   = 128;
-		static constexpr uint32_t TEXTURE_HEIGHT  = 128;
-		static constexpr uint32_t NUMBER_OF_BYTES = TEXTURE_WIDTH * TEXTURE_HEIGHT * 4;
+		static constexpr RECore::uint32 TEXTURE_WIDTH   = 128;
+		static constexpr RECore::uint32 TEXTURE_HEIGHT  = 128;
+		static constexpr RECore::uint32 NUMBER_OF_BYTES = TEXTURE_WIDTH * TEXTURE_HEIGHT * 4;
 
 		// Allocate memory for the 2D texture
-		uint8_t* data = new uint8_t[NUMBER_OF_BYTES * mNumberOfTextures];
+		RECore::uint8* data = new RECore::uint8[NUMBER_OF_BYTES * mNumberOfTextures];
 
 		{ // Fill the texture content
 			// TODO(naetherm) Be a little bit more creative while filling the texture data
-			uint8_t* RESTRICT dataCurrent = data;
+			RECore::uint8* RESTRICT dataCurrent = data;
 			const float colors[][MAXIMUM_NUMBER_OF_TEXTURES] =
 			{
 				{ 1.0f, 0.0f, 0.0f},
@@ -200,16 +200,16 @@ CubeRendererInstancedArrays::CubeRendererInstancedArrays(RERHI::RHIDynamicRHI& r
 				{ 0.2f, 0.5f, 0.5f},
 				{ 0.1f, 0.8f, 0.2f}
 			};
-			for (uint32_t j = 0; j < mNumberOfTextures; ++j)
+			for (RECore::uint32 j = 0; j < mNumberOfTextures; ++j)
 			{
 				// Random content
-				for (uint32_t i = 0; i < TEXTURE_WIDTH * TEXTURE_HEIGHT; ++i)
+				for (RECore::uint32 i = 0; i < TEXTURE_WIDTH * TEXTURE_HEIGHT; ++i)
 				{
-					*dataCurrent = static_cast<uint8_t>(static_cast<float>(rand() % 255) * colors[j][0]);
+					*dataCurrent = static_cast<RECore::uint8>(static_cast<float>(rand() % 255) * colors[j][0]);
 					++dataCurrent;
-					*dataCurrent = static_cast<uint8_t>(static_cast<float>(rand() % 255) * colors[j][1]);
+					*dataCurrent = static_cast<RECore::uint8>(static_cast<float>(rand() % 255) * colors[j][1]);
 					++dataCurrent;
-					*dataCurrent = static_cast<uint8_t>(static_cast<float>(rand() % 255) * colors[j][2]);
+					*dataCurrent = static_cast<RECore::uint8>(static_cast<float>(rand() % 255) * colors[j][2]);
 					++dataCurrent;
 					*dataCurrent = 255;
 					++dataCurrent;
@@ -254,13 +254,13 @@ CubeRendererInstancedArrays::CubeRendererInstancedArrays(RERHI::RHIDynamicRHI& r
 
 	{ // Create resource group with vertex shader visibility
 		RERHI::RHIResource* resources[2] = { mUniformBufferStaticVs, mUniformBufferDynamicVs };
-		mResourceGroupVs = mRootSignature->createResourceGroup(0, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources);
+		mResourceGroupVs = mRootSignature->createResourceGroup(0, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources);
 	}
 
 	{ // Create resource group with fragment shader visibility
 		RERHI::RHIResource* resources[2] = { mTexture2D, mUniformBufferDynamicFs };
 		RERHI::RHISamplerState* samplerStates[2] = { static_cast<RERHI::RHISamplerState*>(samplerStateResource), nullptr };
-		mResourceGroupFs = mRootSignature->createResourceGroup(1, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, samplerStates);
+		mResourceGroupFs = mRootSignature->createResourceGroup(1, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, samplerStates);
 	}
 
 	{
@@ -323,7 +323,7 @@ CubeRendererInstancedArrays::CubeRendererInstancedArrays(RERHI::RHIDynamicRHI& r
 	}
 
 	{ // Create the index buffer object (IBO)
-		static constexpr uint16_t INDICES[] =
+		static constexpr RECore::uint16 INDICES[] =
 		{
 			// Front face	Triangle ID
 			 1,  0,  2,		// 0
@@ -360,7 +360,7 @@ CubeRendererInstancedArrays::~CubeRendererInstancedArrays()
 //[-------------------------------------------------------]
 //[ Public virtual ICubeRenderer methods                  ]
 //[-------------------------------------------------------]
-void CubeRendererInstancedArrays::setNumberOfCubes(uint32_t numberOfCubes)
+void CubeRendererInstancedArrays::setNumberOfCubes(RECore::uint32 numberOfCubes)
 {
 	// Destroy previous batches, in case there are any
 	if (nullptr != mBatches)
@@ -371,13 +371,13 @@ void CubeRendererInstancedArrays::setNumberOfCubes(uint32_t numberOfCubes)
 	}
 
 	// A third of the cubes should be rendered using alpha blending
-	const uint32_t numberOfTransparentCubes = numberOfCubes / 3;
-	const uint32_t numberOfSolidCubes       = numberOfCubes - numberOfTransparentCubes;
+	const RECore::uint32 numberOfTransparentCubes = numberOfCubes / 3;
+	const RECore::uint32 numberOfSolidCubes       = numberOfCubes - numberOfTransparentCubes;
 
 	// There's a limitation how many instances can be created per draw call
 	// -> If required, create multiple batches
-	const uint32_t numberOfSolidBatches       = static_cast<uint32_t>(ceil(static_cast<float>(numberOfSolidCubes)       / static_cast<float>(mMaximumNumberOfInstancesPerBatch)));
-	const uint32_t numberOfTransparentBatches = static_cast<uint32_t>(ceil(static_cast<float>(numberOfTransparentCubes) / static_cast<float>(mMaximumNumberOfInstancesPerBatch)));
+	const RECore::uint32 numberOfSolidBatches       = static_cast<RECore::uint32>(ceil(static_cast<float>(numberOfSolidCubes)       / static_cast<float>(mMaximumNumberOfInstancesPerBatch)));
+	const RECore::uint32 numberOfTransparentBatches = static_cast<RECore::uint32>(ceil(static_cast<float>(numberOfTransparentCubes) / static_cast<float>(mMaximumNumberOfInstancesPerBatch)));
 
 	// Create a batch instances
 	mNumberOfBatches = numberOfSolidBatches + numberOfTransparentBatches;
@@ -388,7 +388,7 @@ void CubeRendererInstancedArrays::setNumberOfCubes(uint32_t numberOfCubes)
 	BatchInstancedArrays* lastBatch = mBatches + numberOfSolidBatches;
 	for (int remaningNumberOfCubes = static_cast<int>(numberOfSolidCubes); batch < lastBatch; ++batch, remaningNumberOfCubes -= mMaximumNumberOfInstancesPerBatch)
 	{
-		const uint32_t currentNumberOfCubes = (remaningNumberOfCubes > static_cast<int>(mMaximumNumberOfInstancesPerBatch)) ? mMaximumNumberOfInstancesPerBatch : remaningNumberOfCubes;
+		const RECore::uint32 currentNumberOfCubes = (remaningNumberOfCubes > static_cast<int>(mMaximumNumberOfInstancesPerBatch)) ? mMaximumNumberOfInstancesPerBatch : remaningNumberOfCubes;
 		batch->initialize(*mBufferManager, *mRootSignature, detail::CubeRendererInstancedArraysVertexAttributes, *mVertexBuffer, *mIndexBuffer, *mGraphicsProgram, mRenderPass, currentNumberOfCubes, false, mNumberOfTextures, mSceneRadius);
 	}
 
@@ -397,7 +397,7 @@ void CubeRendererInstancedArrays::setNumberOfCubes(uint32_t numberOfCubes)
 	lastBatch = batch + numberOfTransparentBatches;
 	for (int remaningNumberOfCubes = static_cast<int>(numberOfTransparentCubes); batch < lastBatch; ++batch, remaningNumberOfCubes -= mMaximumNumberOfInstancesPerBatch)
 	{
-		const uint32_t currentNumberOfCubes = (remaningNumberOfCubes > static_cast<int>(mMaximumNumberOfInstancesPerBatch)) ? mMaximumNumberOfInstancesPerBatch : remaningNumberOfCubes;
+		const RECore::uint32 currentNumberOfCubes = (remaningNumberOfCubes > static_cast<int>(mMaximumNumberOfInstancesPerBatch)) ? mMaximumNumberOfInstancesPerBatch : remaningNumberOfCubes;
 		batch->initialize(*mBufferManager, *mRootSignature, detail::CubeRendererInstancedArraysVertexAttributes, *mVertexBuffer, *mIndexBuffer, *mGraphicsProgram, mRenderPass, currentNumberOfCubes, true, mNumberOfTextures, mSceneRadius);
 	}
 

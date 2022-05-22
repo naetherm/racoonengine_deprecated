@@ -46,7 +46,7 @@ class IRenderer;
 class ITextureResourceLoader;
 }
 namespace RECore {
-	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
+	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
 }
 
 
@@ -60,8 +60,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t			 TextureResourceId;	///< POD texture resource identifier
-	typedef RECore::StringId			 AssetId;			///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::uint32			 TextureResourceId;	///< POD texture resource identifier
+	typedef RECore::StringId			 AssetId;			///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
 	typedef std::vector<AssetId> AssetIds;
 
 
@@ -119,12 +119,12 @@ namespace RERenderer
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline uint8_t getNumberOfTopMipmapsToRemove() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfTopMipmapsToRemove() const
 		{
 			return mNumberOfTopMipmapsToRemove;
 		}
 
-		void setNumberOfTopMipmapsToRemove(uint8_t numberOfTopMipmapsToRemove);
+		void setNumberOfTopMipmapsToRemove(RECore::uint8 numberOfTopMipmapsToRemove);
 		[[nodiscard]] TextureResource* getTextureResourceByAssetId(AssetId assetId) const;		// Considered to be inefficient, avoid method whenever possible
 		[[nodiscard]] TextureResourceId getTextureResourceIdByAssetId(AssetId assetId) const;	// Considered to be inefficient, avoid method whenever possible
 		void loadTextureResourceByAssetId(AssetId assetId, AssetId fallbackTextureAssetId, TextureResourceId& textureResourceId, RECore::IResourceListener* resourceListener = nullptr, bool rgbHardwareGammaCorrection = false, bool reload = false, RECore::ResourceLoaderTypeId resourceLoaderTypeId = RECore::getInvalid<RECore::ResourceLoaderTypeId>());	// Asynchronous
@@ -137,8 +137,8 @@ namespace RERenderer
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] virtual uint32_t getNumberOfResources() const override;
-		[[nodiscard]] virtual RECore::IResource& getResourceByIndex(uint32_t index) const override;
+		[[nodiscard]] virtual RECore::uint32 getNumberOfResources() const override;
+		[[nodiscard]] virtual RECore::IResource& getResourceByIndex(RECore::uint32 index) const override;
 		[[nodiscard]] virtual RECore::IResource& getResourceByResourceId(RECore::ResourceId resourceId) const override;
 		[[nodiscard]] virtual RECore::IResource* tryGetResourceByResourceId(RECore::ResourceId resourceId) const override;
 		virtual void reloadResourceByAssetId(AssetId assetId) override;
@@ -171,7 +171,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
     IRenderer& mRenderer;
-		uint8_t mNumberOfTopMipmapsToRemove;	///< The number of top mipmaps to remove while loading textures for efficient texture quality reduction. By setting this to e.g. two a 4096x4096 texture will become 1024x1024.
+		RECore::uint8 mNumberOfTopMipmapsToRemove;	///< The number of top mipmaps to remove while loading textures for efficient texture quality reduction. By setting this to e.g. two a 4096x4096 texture will become 1024x1024.
 
 		// Internal resource manager implementation
     RECore::ResourceManagerTemplate<TextureResource, ITextureResourceLoader, TextureResourceId, 2048>* mInternalResourceManager;

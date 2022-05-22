@@ -136,10 +136,10 @@ namespace RERenderer
 			{ // Create the indirect buffer: Twelve vertices per grass (two quads), grass index = instance index
 				const RERHI::DrawArguments drawArguments =
 				{
-					12,						// vertexCountPerInstance (uint32_t)
-					mMaximumNumberOfGrass,	// instanceCount (uint32_t)
-					0,						// startVertexLocation (uint32_t)
-					0						// startInstanceLocation (uint32_t)
+					12,						// vertexCountPerInstance (RECore::uint32)
+					mMaximumNumberOfGrass,	// instanceCount (RECore::uint32)
+					0,						// startVertexLocation (RECore::uint32)
+					0						// startInstanceLocation (RECore::uint32)
 				};
 				mIndirectBufferPtr = bufferManager.createIndirectBuffer(sizeof(RERHI::DrawArguments), &drawArguments, RERHI::IndirectBufferFlag::UNORDERED_ACCESS | RERHI::IndirectBufferFlag::DRAW_ARGUMENTS, RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME("Grass"));
 			}

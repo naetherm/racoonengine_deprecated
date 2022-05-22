@@ -42,7 +42,7 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-UniformBufferBind::UniformBufferBind(RHIDynamicRHI& openGLRhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+UniformBufferBind::UniformBufferBind(RHIDynamicRHI& openGLRhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 UniformBuffer(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
   {
     // TODO(naetherm) Review OpenGL uniform buffer alignment topic

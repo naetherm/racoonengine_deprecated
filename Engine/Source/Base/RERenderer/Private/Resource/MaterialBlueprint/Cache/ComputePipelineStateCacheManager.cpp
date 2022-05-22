@@ -133,12 +133,12 @@ namespace RERenderer
 			{ // Remove a fallback shader property
 				// Find the most useless shader property, we're going to sacrifice it
 				ShaderProperties::SortedPropertyVector::iterator worstHitShaderPropertyIterator = sortedFallbackPropertyVector.end();
-				int32_t worstHitVisualImportanceOfShaderProperty = RECore::getInvalid<int32_t>();
+				RECore::int32 worstHitVisualImportanceOfShaderProperty = RECore::getInvalid<RECore::int32>();
 				ShaderProperties::SortedPropertyVector::iterator iterator = sortedFallbackPropertyVector.begin();
 				while (iterator != sortedFallbackPropertyVector.end())
 				{
 					// Do not remove mandatory shader combination shader properties, at least not inside this pass
-					const int32_t visualImportanceOfShaderProperty = mMaterialBlueprintResource.getVisualImportanceOfShaderProperty(iterator->shaderPropertyId);
+					const RECore::int32 visualImportanceOfShaderProperty = mMaterialBlueprintResource.getVisualImportanceOfShaderProperty(iterator->shaderPropertyId);
 					if (MaterialBlueprintResource::MANDATORY_SHADER_PROPERTY != visualImportanceOfShaderProperty)
 					{
 						if (RECore::isValid(worstHitVisualImportanceOfShaderProperty))
@@ -188,22 +188,22 @@ namespace RERenderer
 	{
 		// Material blueprint resource ID, all compute pipeline state cache share the same material blueprint resource ID
 		MaterialBlueprintResourceId materialBlueprintResourceId = RECore::getInvalid<MaterialBlueprintResourceId>();
-		file.read(&materialBlueprintResourceId, sizeof(uint32_t));
+		file.read(&materialBlueprintResourceId, sizeof(RECore::uint32));
 		RHI_ASSERT(mMaterialBlueprintResource.getId() == materialBlueprintResourceId, "Invalid material blueprint resource ID")
 
 		// TODO(naetherm) Currently only the compute pipeline state signature ID is loaded, not the resulting binary pipeline state cache
-		uint32_t numberOfComputePipelineStateCaches = RECore::getInvalid<uint32_t>();
-		file.read(&numberOfComputePipelineStateCaches, sizeof(uint32_t));
+		RECore::uint32 numberOfComputePipelineStateCaches = RECore::getInvalid<RECore::uint32>();
+		file.read(&numberOfComputePipelineStateCaches, sizeof(RECore::uint32));
 		mComputePipelineStateCacheByComputePipelineStateSignatureId.reserve(numberOfComputePipelineStateCaches);
 		ShaderProperties shaderProperties;
 		ShaderProperties::SortedPropertyVector& sortedPropertyVector = shaderProperties.getSortedPropertyVector();
 		sortedPropertyVector.reserve(10);
 		ComputePipelineStateCompiler& computePipelineStateCompiler = mMaterialBlueprintResource.getResourceManager<MaterialBlueprintResourceManager>().getRenderer().getComputePipelineStateCompiler();
-		for (uint32_t computePipelineStateCacheIndex = 0; computePipelineStateCacheIndex < numberOfComputePipelineStateCaches; ++computePipelineStateCacheIndex)
+		for (RECore::uint32 computePipelineStateCacheIndex = 0; computePipelineStateCacheIndex < numberOfComputePipelineStateCaches; ++computePipelineStateCacheIndex)
 		{
 			// Read shader properties
-			uint32_t numberOfShaderProperties = RECore::getInvalid<uint32_t>();
-			file.read(&numberOfShaderProperties, sizeof(uint32_t));
+			RECore::uint32 numberOfShaderProperties = RECore::getInvalid<RECore::uint32>();
+			file.read(&numberOfShaderProperties, sizeof(RECore::uint32));
 			sortedPropertyVector.resize(numberOfShaderProperties);
 			if (numberOfShaderProperties > 0)
 			{
@@ -225,11 +225,11 @@ namespace RERenderer
 	{
 		// Material blueprint resource ID, all compute pipeline state cache share the same material blueprint resource ID
 		const MaterialBlueprintResourceId materialBlueprintResourceId = mMaterialBlueprintResource.getId();
-		file.write(&materialBlueprintResourceId, sizeof(uint32_t));
+		file.write(&materialBlueprintResourceId, sizeof(RECore::uint32));
 
 		// TODO(naetherm) Currently only the compute pipeline state signature ID is saved, not the resulting binary pipeline state cache
-		const uint32_t numberOfComputePipelineStateCaches = static_cast<uint32_t>(mComputePipelineStateCacheByComputePipelineStateSignatureId.size());
-		file.write(&numberOfComputePipelineStateCaches, sizeof(uint32_t));
+		const RECore::uint32 numberOfComputePipelineStateCaches = static_cast<RECore::uint32>(mComputePipelineStateCacheByComputePipelineStateSignatureId.size());
+		file.write(&numberOfComputePipelineStateCaches, sizeof(RECore::uint32));
 		for (const auto& elementPair : mComputePipelineStateCacheByComputePipelineStateSignatureId)
 		{
 			const ComputePipelineStateSignature& computePipelineStateSignature = elementPair.second->getComputePipelineStateSignature();
@@ -239,8 +239,8 @@ namespace RERenderer
 
 			{ // Write shader properties
 				const ShaderProperties::SortedPropertyVector& sortedPropertyVector = computePipelineStateSignature.getShaderProperties().getSortedPropertyVector();
-				const uint32_t numberOfShaderProperties = static_cast<uint32_t>(sortedPropertyVector.size());
-				file.write(&numberOfShaderProperties, sizeof(uint32_t));
+				const RECore::uint32 numberOfShaderProperties = static_cast<RECore::uint32>(sortedPropertyVector.size());
+				file.write(&numberOfShaderProperties, sizeof(RECore::uint32));
 				if (numberOfShaderProperties > 0)
 				{
 					file.write(sortedPropertyVector.data(), sizeof(ShaderProperties::Property) * numberOfShaderProperties);

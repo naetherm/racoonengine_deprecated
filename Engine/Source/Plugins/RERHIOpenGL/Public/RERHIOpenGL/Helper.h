@@ -53,7 +53,7 @@ class RHIDynamicRHI;
 class Helper {
 public:
 
-  static void updateWidthHeight(uint32_t mipmapIndex, uint32_t textureWidth, uint32_t textureHeight, uint32_t& width, uint32_t& height);
+  static void updateWidthHeight(RECore::uint32 mipmapIndex, RECore::uint32 textureWidth, RECore::uint32 textureHeight, RECore::uint32& width, RECore::uint32& height);
 
   static void printOpenGLShaderInformationIntoLog(const RERHI::RHIContext& context, GLuint openGLShader);
 
@@ -149,9 +149,9 @@ public:
   // TODO(naetherm) Visual Studio 2017 compile settings: For some reasons I need to disable optimization for the following method or else "glslang::TShader::parse()" will output the error "ERROR: 0:1: '�' : unexpected token" (glslang (latest commit c325f4364666eedb94c20a13670df058a38a14ab - April 20, 2018), Visual Studio 2017 15.7.1)
   static void shaderSourceCodeToShaderBytecode(const RERHI::RHIContext& context, GLenum shaderType, const GLchar* sourceCode, RERHI::ShaderBytecode& shaderBytecode);
 
-  static void bindUniformBlock(const RERHI::DescriptorRange& descriptorRange, uint32_t openGLProgram, uint32_t uniformBlockBindingIndex);
+  static void bindUniformBlock(const RERHI::DescriptorRange& descriptorRange, RECore::uint32 openGLProgram, RECore::uint32 uniformBlockBindingIndex);
 
-  static void bindUniformLocation(const RERHI::DescriptorRange& descriptorRange, uint32_t openGLProgramPipeline, uint32_t openGLProgram);
+  static void bindUniformLocation(const RERHI::DescriptorRange& descriptorRange, RECore::uint32 openGLProgramPipeline, RECore::uint32 openGLProgram);
 };
 
 

@@ -35,7 +35,7 @@
 namespace RERHIOpenGLES3 {
 
 
-VertexArray::VertexArray(RHIDynamicRHI& openGLES3Rhi, const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+VertexArray::VertexArray(RHIDynamicRHI& openGLES3Rhi, const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHIVertexArray(openGLES3Rhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mOpenGLES3VertexArray(0),
   mNumberOfVertexBuffers(numberOfVertexBuffers),

@@ -479,17 +479,17 @@ public:
     return mapVirtualToAbsoluteFilenameAndMountPoint(fileMode, virtualFilename, mountPoint);
   }
 
-  [[nodiscard]] inline virtual int64_t getLastModificationTime(VirtualFilename virtualFilename) const override
+  [[nodiscard]] inline virtual RECore::int64 getLastModificationTime(VirtualFilename virtualFilename) const override
   {
     const std::string absoluteFilename = mapVirtualToAbsoluteFilename(FileMode::READ, virtualFilename);
-    return absoluteFilename.empty() ? -1 : static_cast<int64_t>(std_filesystem::last_write_time(
+    return absoluteFilename.empty() ? -1 : static_cast<RECore::int64>(std_filesystem::last_write_time(
       std_filesystem::u8path(absoluteFilename)).time_since_epoch().count());
   }
 
-  [[nodiscard]] inline virtual int64_t getFileSize(VirtualFilename virtualFilename) const override
+  [[nodiscard]] inline virtual RECore::int64 getFileSize(VirtualFilename virtualFilename) const override
   {
     const std::string absoluteFilename = mapVirtualToAbsoluteFilename(FileMode::READ, virtualFilename);
-    return absoluteFilename.empty() ? -1 : static_cast<int64_t>(std_filesystem::file_size(
+    return absoluteFilename.empty() ? -1 : static_cast<RECore::int64>(std_filesystem::file_size(
       std_filesystem::u8path(absoluteFilename)));
   }
 
@@ -530,7 +530,7 @@ public:
       }
       if (file->isInvalid()) {
         RE_LOG(Critical, std::string("Failed to open file ") + virtualFilename)
-        //if (mLog.print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to open file %s", virtualFilename))
+        //if (mLog.print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32>(__LINE__), "Failed to open file %s", virtualFilename))
         {
           //	DEBUG_BREAK;
         }

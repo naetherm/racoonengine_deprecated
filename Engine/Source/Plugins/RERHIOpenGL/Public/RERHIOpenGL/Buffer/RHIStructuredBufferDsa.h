@@ -72,7 +72,7 @@ public:
   *  @param[in] bufferUsage
   *    Indication of the buffer usage
   */
-  StructuredBufferDsa(RHIDynamicRHI& openGLRhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  StructuredBufferDsa(RHIDynamicRHI& openGLRhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

@@ -58,18 +58,18 @@ public:
   char				deviceName[128];								///< UTF-8 device name of the used graphics card (e.g. "AMD Radeon R9 200 Series")
   TextureFormat::Enum preferredSwapChainColorTextureFormat;			///< Preferred swap chain color texture format
   TextureFormat::Enum preferredSwapChainDepthStencilTextureFormat;	///< Preferred swap chain depth stencil texture format
-  uint32_t			maximumNumberOfViewports;						///< Maximum number of viewports (always at least 1)
-  uint32_t			maximumNumberOfSimultaneousRenderTargets;		///< Maximum number of simultaneous render targets (if <1 render to texture is not supported)
-  uint32_t			maximumTextureDimension;						///< Maximum texture dimension (usually 2048, 4096, 8192 or 16384)
-  uint32_t			maximumNumberOf1DTextureArraySlices;			///< Maximum number of 1D texture array slices (usually 512 up to 8192, in case there's no support for 1D texture arrays it's 0)
-  uint32_t			maximumNumberOf2DTextureArraySlices;			///< Maximum number of 2D texture array slices (usually 512 up to 8192, in case there's no support for 2D texture arrays it's 0)
-  uint32_t			maximumNumberOfCubeTextureArraySlices;			///< Maximum number of cube texture array slices (usually 512 up to 8192, in case there's no support for cube texture arrays it's 0)
-  uint32_t			maximumTextureBufferSize;						///< Maximum texture buffer (TBO) size in texel (>65536, typically much larger than that of one-dimensional texture, in case there's no support for texture buffer it's 0)
-  uint32_t			maximumStructuredBufferSize;					///< Maximum structured buffer size in bytes (>65536, typically much larger than that of one-dimensional texture, in case there's no support for structured buffer it's 0)
-  uint32_t			maximumIndirectBufferSize;						///< Maximum indirect buffer size in bytes
-  uint32_t			maximumUniformBufferSize;						///< Maximum uniform buffer (UBO) size in bytes (usually at least 4096 *16 bytes, in case there's no support for uniform buffer it's 0)
-  uint8_t				maximumNumberOfMultisamples;					///< Maximum number of multisamples (always at least 1, usually 8)
-  uint8_t				maximumAnisotropy;								///< Maximum anisotropy (always at least 1, usually 16)
+  RECore::uint32			maximumNumberOfViewports;						///< Maximum number of viewports (always at least 1)
+  RECore::uint32			maximumNumberOfSimultaneousRenderTargets;		///< Maximum number of simultaneous render targets (if <1 render to texture is not supported)
+  RECore::uint32			maximumTextureDimension;						///< Maximum texture dimension (usually 2048, 4096, 8192 or 16384)
+  RECore::uint32			maximumNumberOf1DTextureArraySlices;			///< Maximum number of 1D texture array slices (usually 512 up to 8192, in case there's no support for 1D texture arrays it's 0)
+  RECore::uint32			maximumNumberOf2DTextureArraySlices;			///< Maximum number of 2D texture array slices (usually 512 up to 8192, in case there's no support for 2D texture arrays it's 0)
+  RECore::uint32			maximumNumberOfCubeTextureArraySlices;			///< Maximum number of cube texture array slices (usually 512 up to 8192, in case there's no support for cube texture arrays it's 0)
+  RECore::uint32			maximumTextureBufferSize;						///< Maximum texture buffer (TBO) size in texel (>65536, typically much larger than that of one-dimensional texture, in case there's no support for texture buffer it's 0)
+  RECore::uint32			maximumStructuredBufferSize;					///< Maximum structured buffer size in bytes (>65536, typically much larger than that of one-dimensional texture, in case there's no support for structured buffer it's 0)
+  RECore::uint32			maximumIndirectBufferSize;						///< Maximum indirect buffer size in bytes
+  RECore::uint32			maximumUniformBufferSize;						///< Maximum uniform buffer (UBO) size in bytes (usually at least 4096 *16 bytes, in case there's no support for uniform buffer it's 0)
+  RECore::uint8				maximumNumberOfMultisamples;					///< Maximum number of multisamples (always at least 1, usually 8)
+  RECore::uint8				maximumAnisotropy;								///< Maximum anisotropy (always at least 1, usually 16)
   bool				upperLeftOrigin;								///< Upper left origin (true for Vulkan, Direct3D, OpenGL with "GL_ARB_clip_control"-extension)
   bool				zeroToOneClipZ;									///< Zero-to-one clip Z (true for Vulkan, Direct3D, OpenGL with "GL_ARB_clip_control"-extension)
   bool				individualUniforms;								///< Individual uniforms ("constants" in Direct3D terminology) supported? If not, only uniform buffer objects are supported.
@@ -80,8 +80,8 @@ public:
   bool				shaderBytecode;									///< Shader bytecode supported?
   // Graphics
   bool				vertexShader;									///< Is there support for vertex shaders (VS)?
-  uint32_t			maximumNumberOfPatchVertices;					///< Tessellation-control-shader (TCS) stage and tessellation-evaluation-shader (TES) stage: Maximum number of vertices per patch (usually 0 for no tessellation support or 32 which is the maximum number of supported vertices per patch)
-  uint32_t			maximumNumberOfGsOutputVertices;				///< Geometry-shader (GS) stage: Maximum number of vertices a geometry shader (GS) can emit (usually 0 for no geometry shader support or 1024)
+  RECore::uint32			maximumNumberOfPatchVertices;					///< Tessellation-control-shader (TCS) stage and tessellation-evaluation-shader (TES) stage: Maximum number of vertices per patch (usually 0 for no tessellation support or 32 which is the maximum number of supported vertices per patch)
+  RECore::uint32			maximumNumberOfGsOutputVertices;				///< Geometry-shader (GS) stage: Maximum number of vertices a geometry shader (GS) can emit (usually 0 for no geometry shader support or 1024)
   bool				fragmentShader;									///< Is there support for fragment shaders (FS)?
   bool				meshShader;										///< Is there support for task shaders (TS) and mesh shaders (MS)?
   // Compute

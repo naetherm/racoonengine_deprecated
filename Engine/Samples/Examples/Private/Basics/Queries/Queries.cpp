@@ -75,8 +75,8 @@ void Queries::onDraw(RERHI::RHICommandBuffer& commandBuffer)
 		RHI_ASSERT(rhi->getContext(), nullptr != mTimestampQueryPool, "Invalid timestamp query pool")
 
 		{ // Occlusion query pool
-			uint64_t numberOfSamples = 0;
-			if (rhi->getQueryPoolResults(*mOcclusionQueryPool, sizeof(uint64_t), reinterpret_cast<uint8_t*>(&numberOfSamples)))
+			RECore::uint64 numberOfSamples = 0;
+			if (rhi->getQueryPoolResults(*mOcclusionQueryPool, sizeof(RECore::uint64), reinterpret_cast<RECore::uint8*>(&numberOfSamples)))
 			{
 				NOP;	// TODO(naetherm) Process result
 			}
@@ -84,15 +84,15 @@ void Queries::onDraw(RERHI::RHICommandBuffer& commandBuffer)
 
 		{ // Pipeline statistics query pool
 			RERHI::PipelineStatisticsQueryResult pipelineStatisticsQueryResult = {};
-			if (rhi->getQueryPoolResults(*mPipelineStatisticsQueryPool, sizeof(RERHI::PipelineStatisticsQueryResult), reinterpret_cast<uint8_t*>(&pipelineStatisticsQueryResult)))
+			if (rhi->getQueryPoolResults(*mPipelineStatisticsQueryPool, sizeof(RERHI::PipelineStatisticsQueryResult), reinterpret_cast<RECore::uint8*>(&pipelineStatisticsQueryResult)))
 			{
 				NOP;	// TODO(naetherm) Process result
 			}
 		}
 
 		{ // Timestamp query pool
-			uint64_t timestamp[2] = {};
-			if (rhi->getQueryPoolResults(*mTimestampQueryPool, sizeof(uint64_t) * 2, reinterpret_cast<uint8_t*>(&timestamp), 0, 2, sizeof(uint64_t)))
+			RECore::uint64 timestamp[2] = {};
+			if (rhi->getQueryPoolResults(*mTimestampQueryPool, sizeof(RECore::uint64) * 2, reinterpret_cast<RECore::uint8*>(&timestamp), 0, 2, sizeof(RECore::uint64)))
 			{
 				NOP;	// TODO(naetherm) Process result
 			}

@@ -131,7 +131,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RERenderer::ISceneItem methods           ]
 	//[-------------------------------------------------------]
-	void SunlightSceneItem::deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
+	void SunlightSceneItem::deserialize([[maybe_unused]] RECore::uint32 numberOfBytes, const RECore::uint8* data)
 	{
 		RHI_ASSERT(sizeof(v1Scene::SunlightItem) == numberOfBytes, "Invalid number of bytes")
 

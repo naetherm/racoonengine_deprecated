@@ -51,7 +51,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId SceneItemTypeId;	///< Scene item type identifier, internally just a POD "uint32_t"
+	typedef RECore::StringId SceneItemTypeId;	///< Scene item type identifier, internally just a POD "RECore::uint32"
 
 
 	//[-------------------------------------------------------]

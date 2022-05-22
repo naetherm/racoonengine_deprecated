@@ -51,7 +51,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialResourceId;	///< POD material resource identifier
+	typedef RECore::uint32 MaterialResourceId;	///< POD material resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -137,7 +137,7 @@ namespace RERenderer
 		*  @return
 		*    The assigned material slot
 		*/
-		[[nodiscard]] inline uint32_t getAssignedMaterialSlot() const
+		[[nodiscard]] inline RECore::uint32 getAssignedMaterialSlot() const
 		{
 			return mAssignedMaterialSlot;
 		}
@@ -158,7 +158,7 @@ namespace RERenderer
 		MaterialResourceManager* mMaterialResourceManager;	///< Owner material resource manager, always valid
 		MaterialResourceId		 mMaterialResourceId;		///< Owner material resource ID, always valid
 		void*					 mAssignedMaterialPool;		///< "Renderer::MaterialBufferManager::BufferPool*", it's a private inner class which we can't forward declare, but we also don't want to expose too much details, so void* it is in here
-		uint32_t				 mAssignedMaterialSlot;
+		RECore::uint32				 mAssignedMaterialSlot;
 		int						 mGlobalIndex;
 		bool					 mDirty;
 

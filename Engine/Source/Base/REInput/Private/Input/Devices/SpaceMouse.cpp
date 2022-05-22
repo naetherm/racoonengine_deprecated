@@ -87,16 +87,16 @@ SpaceMouse::~SpaceMouse()
 void SpaceMouse::onDeviceRead()
 {
   // Get input buffer
-  uint8_t *pInputBuffer = m_pHIDDevice->getInputBuffer();
+  RECore::uint8 *pInputBuffer = m_pHIDDevice->getInputBuffer();
   if (pInputBuffer) {
     // Read data
     switch (pInputBuffer[0]) {
       // Translation
       case 0x01:
       {
-        float fTransX = static_cast<float>(static_cast<int16_t>((pInputBuffer[1] & 0x000000ff) | (static_cast<int>(pInputBuffer[2])<<8 & 0xffffff00)));
-        float fTransY = static_cast<float>(static_cast<int16_t>((pInputBuffer[3] & 0x000000ff) | (static_cast<int>(pInputBuffer[4])<<8 & 0xffffff00)));
-        float fTransZ = static_cast<float>(static_cast<int16_t>((pInputBuffer[5] & 0x000000ff) | (static_cast<int>(pInputBuffer[6])<<8 & 0xffffff00)));
+        float fTransX = static_cast<float>(static_cast<RECore::int16>((pInputBuffer[1] & 0x000000ff) | (static_cast<int>(pInputBuffer[2])<<8 & 0xffffff00)));
+        float fTransY = static_cast<float>(static_cast<RECore::int16>((pInputBuffer[3] & 0x000000ff) | (static_cast<int>(pInputBuffer[4])<<8 & 0xffffff00)));
+        float fTransZ = static_cast<float>(static_cast<RECore::int16>((pInputBuffer[5] & 0x000000ff) | (static_cast<int>(pInputBuffer[6])<<8 & 0xffffff00)));
         if (TransX.getValue() != fTransX)
           TransX.setValue(fTransX, false);
         if (TransY.getValue() != fTransY)
@@ -109,9 +109,9 @@ void SpaceMouse::onDeviceRead()
         // Rotation
       case 0x02:
       {
-        float fRotX = static_cast<float>(static_cast<int16_t>((pInputBuffer[1] & 0x000000ff) | (static_cast<int>(pInputBuffer[2])<<8 & 0xffffff00)));
-        float fRotY = static_cast<float>(static_cast<int16_t>((pInputBuffer[3] & 0x000000ff) | (static_cast<int>(pInputBuffer[4])<<8 & 0xffffff00)));
-        float fRotZ = static_cast<float>(static_cast<int16_t>((pInputBuffer[5] & 0x000000ff) | (static_cast<int>(pInputBuffer[6])<<8 & 0xffffff00)));
+        float fRotX = static_cast<float>(static_cast<RECore::int16>((pInputBuffer[1] & 0x000000ff) | (static_cast<int>(pInputBuffer[2])<<8 & 0xffffff00)));
+        float fRotY = static_cast<float>(static_cast<RECore::int16>((pInputBuffer[3] & 0x000000ff) | (static_cast<int>(pInputBuffer[4])<<8 & 0xffffff00)));
+        float fRotZ = static_cast<float>(static_cast<RECore::int16>((pInputBuffer[5] & 0x000000ff) | (static_cast<int>(pInputBuffer[6])<<8 & 0xffffff00)));
         if (RotX.getValue() != fRotX)
           RotX.setValue(fRotX, false);
         if (RotY.getValue() != fRotY)

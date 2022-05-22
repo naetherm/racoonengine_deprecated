@@ -43,7 +43,7 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-ComputePipelineState::ComputePipelineState(RHIDynamicRHI& openGLRhi, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+ComputePipelineState::ComputePipelineState(RHIDynamicRHI& openGLRhi, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 RHIComputePipelineState(openGLRhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 {}
 

@@ -41,7 +41,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	enum class GraphicsShaderType : uint8_t
+	enum class GraphicsShaderType : RECore::uint8
 	{
 		Vertex,					///< VS
 		TessellationControl,	///< TCS, "hull shader" in Direct3D terminology
@@ -49,7 +49,7 @@ namespace RERenderer
 		Geometry,				///< GS
 		Fragment				///< FS, "pixel shader" in Direct3D terminology
 	};
-	static constexpr uint8_t NUMBER_OF_GRAPHICS_SHADER_TYPES = static_cast<uint8_t>(GraphicsShaderType::Fragment) + 1;	///< Total number of graphics shader types
+	static constexpr RECore::uint8 NUMBER_OF_GRAPHICS_SHADER_TYPES = static_cast<RECore::uint8>(GraphicsShaderType::Fragment) + 1;	///< Total number of graphics shader types
 
 
 //[-------------------------------------------------------]

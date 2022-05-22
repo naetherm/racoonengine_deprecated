@@ -182,7 +182,7 @@ namespace
 		typedef std::vector<Expression> ExpressionVec;
 		typedef std::vector<std::string> StringVector;
 
-		template<uint32_t _N, typename _internalDataType, uint32_t _bits, uint32_t _mask> class cbitsetN
+		template<RECore::uint32 _N, typename _internalDataType, RECore::uint32 _bits, RECore::uint32 _mask> class cbitsetN
 		{
 			_internalDataType mValues[_N >> _bits];
 		public:
@@ -196,11 +196,11 @@ namespace
 				memset(mValues, 0, sizeof(mValues));
 			}
 
-			void setValue(uint32_t position, bool bValue)
+			void setValue(RECore::uint32 position, bool bValue)
 			{
 				ASSERT(position < _N, "Invalid position")
-				const uint32_t idx  = (position >> _bits);
-				const uint32_t mask = (1u << (position & _mask));
+				const RECore::uint32 idx  = (position >> _bits);
+				const RECore::uint32 mask = (1u << (position & _mask));
 				if (bValue)
 				{
 					mValues[idx] |= mask;
@@ -211,33 +211,33 @@ namespace
 				}
 			}
 
-			void set(uint32_t position)
+			void set(RECore::uint32 position)
 			{
 				ASSERT(position < _N, "Invalid position")
-				const uint32_t idx  = (position >> _bits);
-				const uint32_t mask = (1u << (position & _mask));
+				const RECore::uint32 idx  = (position >> _bits);
+				const RECore::uint32 mask = (1u << (position & _mask));
 				mValues[idx] |= mask;
 			}
 
-			void unset(uint32_t position)
+			void unset(RECore::uint32 position)
 			{
 				ASSERT(position < _N, "Invalid position")
-				const uint32_t idx  = (position >> _bits);
-				const uint32_t mask = (1u << (position & _mask));
+				const RECore::uint32 idx  = (position >> _bits);
+				const RECore::uint32 mask = (1u << (position & _mask));
 				mValues[idx] &= ~mask;
 			}
 
-			bool test(uint32_t position) const
+			bool test(RECore::uint32 position) const
 			{
 				ASSERT(position < _N, "Invalid position")
-				const uint32_t idx  = (position >> _bits);
-				const uint32_t mask = (1u << (position & _mask));
+				const RECore::uint32 idx  = (position >> _bits);
+				const RECore::uint32 mask = (1u << (position & _mask));
 				return (mValues[idx] & mask) != 0u;
 			}
 		};
 
 		// This is similar to "std::bitset", except way less bloat. cbitset32 stands for constant/compile-time bitset with an internal representation of 32-bits.
-		template<uint32_t _N> class cbitset32 : public cbitsetN<_N, uint32_t, 5u, 0x1Fu>
+		template<RECore::uint32 _N> class cbitset32 : public cbitsetN<_N, RECore::uint32, 5u, 0x1Fu>
 		{ };
 
 		class SubStringRef
@@ -468,7 +468,7 @@ namespace
 								const size_t idxBlock = subString.find(blockNames[i]);
 								if (0 == idxBlock)
 								{
-									it = subString.begin() + static_cast<int64_t>(strlen(blockNames[i]));
+									it = subString.begin() + static_cast<RECore::int64>(strlen(blockNames[i]));
 									if (3 == i)
 									{
 										// Do not increase "nesting" for "@else"
@@ -592,7 +592,7 @@ namespace
 				}
 				else if (EXPR_VAR == exp.type)
 				{
-					int32_t propertyValue = 0;
+					RECore::int32 propertyValue = 0;
 					shaderProperties.getPropertyValue(RECore::StringId(exp.value.c_str()), propertyValue);
 					exp.result = (propertyValue != 0);
 					lastExpWasOperator = false;
@@ -889,7 +889,7 @@ namespace RERenderer
 		mDynamicShaderPieces.clear();
 		buildShader.assetIds.push_back(shaderBlueprintResource.getAssetId());
 		const RECore::AssetManager& assetManager = shaderPieceResourceManager.getRenderer().getAssetManager();
-		uint64_t combinedAssetFileHashes = RECore::Math::calculateFNV1a64(reinterpret_cast<const uint8_t*>(&assetManager.getAssetByAssetId(shaderBlueprintResource.getAssetId()).fileHash), sizeof(uint64_t), RECore::Math::FNV1a_INITIAL_HASH_64);
+		RECore::uint64 combinedAssetFileHashes = RECore::Math::calculateFNV1a64(reinterpret_cast<const RECore::uint8*>(&assetManager.getAssetByAssetId(shaderBlueprintResource.getAssetId()).fileHash), sizeof(RECore::uint64), RECore::Math::FNV1a_INITIAL_HASH_64);
 
 		{ // Process the shader piece resources to include
 			const ShaderBlueprintResource::IncludeShaderPieceResourceIds& includeShaderPieceResourceIds = shaderBlueprintResource.getIncludeShaderPieceResourceIds();
@@ -900,7 +900,7 @@ namespace RERenderer
 				if (nullptr != shaderPieceResource)
 				{
 					buildShader.assetIds.push_back(shaderPieceResource->getAssetId());
-					combinedAssetFileHashes = RECore::Math::calculateFNV1a64(reinterpret_cast<const uint8_t*>(&assetManager.getAssetByAssetId(shaderPieceResource->getAssetId()).fileHash), sizeof(uint64_t), combinedAssetFileHashes);
+					combinedAssetFileHashes = RECore::Math::calculateFNV1a64(reinterpret_cast<const RECore::uint8*>(&assetManager.getAssetByAssetId(shaderPieceResource->getAssetId()).fileHash), sizeof(RECore::uint64), combinedAssetFileHashes);
 
 					// Initialize
 					mInString = shaderPieceResource->getShaderSourceCode();

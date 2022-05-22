@@ -52,19 +52,19 @@ BufferManager::~BufferManager()
 {}
 
 
-RERHI::RHIVertexBuffer* BufferManager::createVertexBuffer(uint32_t numberOfBytes, const void* data, uint32_t bufferFlags, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIVertexBuffer* BufferManager::createVertexBuffer(RECore::uint32 numberOfBytes, const void* data, RECore::uint32 bufferFlags, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& vulkanRhi = static_cast<RHIDynamicRHI&>(getRhi());
   return RHI_NEW(vulkanRhi.getContext(), VertexBuffer)(vulkanRhi, numberOfBytes, data, bufferFlags, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIIndexBuffer* BufferManager::createIndexBuffer(uint32_t numberOfBytes, const void* data, uint32_t bufferFlags, RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIIndexBuffer* BufferManager::createIndexBuffer(RECore::uint32 numberOfBytes, const void* data, RECore::uint32 bufferFlags, RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& vulkanRhi = static_cast<RHIDynamicRHI&>(getRhi());
   return RHI_NEW(vulkanRhi.getContext(), IndexBuffer)(vulkanRhi, numberOfBytes, data, bufferFlags, bufferUsage, indexBufferFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIVertexArray* BufferManager::createVertexArray(const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, RERHI::RHIIndexBuffer* indexBuffer RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIVertexArray* BufferManager::createVertexArray(const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, RERHI::RHIIndexBuffer* indexBuffer RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& vulkanRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -81,7 +81,7 @@ RERHI::RHIVertexArray* BufferManager::createVertexArray(const RERHI::VertexAttri
   RHI_ASSERT(nullptr == indexBuffer || &vulkanRhi == &indexBuffer->getRhi(), "Vulkan error: The given index buffer resource is owned by another RHI instance")
 
   // Create vertex array
-  uint16_t id;
+  RECore::uint16 id;
   if (vulkanRhi.VertexArrayMakeId.createID(id))
   {
     return RHI_NEW(vulkanRhi.getContext(), VertexArray)(vulkanRhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -102,25 +102,25 @@ RERHI::RHIVertexArray* BufferManager::createVertexArray(const RERHI::VertexAttri
   return nullptr;
 }
 
-RERHI::RHITextureBuffer* BufferManager::createTextureBuffer(uint32_t numberOfBytes, const void* data, uint32_t bufferFlags, RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHITextureBuffer* BufferManager::createTextureBuffer(RECore::uint32 numberOfBytes, const void* data, RECore::uint32 bufferFlags, RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& vulkanRhi = static_cast<RHIDynamicRHI&>(getRhi());
   return RHI_NEW(vulkanRhi.getContext(), TextureBuffer)(vulkanRhi, numberOfBytes, data, bufferFlags, bufferUsage, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIStructuredBuffer* BufferManager::createStructuredBuffer(uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t bufferFlags, RERHI::BufferUsage bufferUsage, uint32_t numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIStructuredBuffer* BufferManager::createStructuredBuffer(RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, RERHI::BufferUsage bufferUsage, RECore::uint32 numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& vulkanRhi = static_cast<RHIDynamicRHI&>(getRhi());
   return RHI_NEW(vulkanRhi.getContext(), StructuredBuffer)(vulkanRhi, numberOfBytes, data, bufferUsage, numberOfStructureBytes RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIIndirectBuffer* BufferManager::createIndirectBuffer(uint32_t numberOfBytes, const void* data, uint32_t indirectBufferFlags, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIIndirectBuffer* BufferManager::createIndirectBuffer(RECore::uint32 numberOfBytes, const void* data, RECore::uint32 indirectBufferFlags, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& vulkanRhi = static_cast<RHIDynamicRHI&>(getRhi());
   return RHI_NEW(vulkanRhi.getContext(), IndirectBuffer)(vulkanRhi, numberOfBytes, data, indirectBufferFlags, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIUniformBuffer* BufferManager::createUniformBuffer(uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIUniformBuffer* BufferManager::createUniformBuffer(RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& vulkanRhi = static_cast<RHIDynamicRHI&>(getRhi());
 

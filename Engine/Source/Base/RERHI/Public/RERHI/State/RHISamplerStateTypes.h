@@ -123,7 +123,7 @@ struct SamplerState final
   TextureAddressMode addressV;		///< (also known as "T"), Default: "Rhi::TextureAddressMode::CLAMP"
   TextureAddressMode addressW;		///< (also known as "R"), Default: "Rhi::TextureAddressMode::CLAMP"
   float			   mipLodBias;		///< Default: "0.0f"
-  uint32_t		   maxAnisotropy;	///< Default: "16"
+  RECore::uint32		   maxAnisotropy;	///< Default: "16"
   ComparisonFunc	   comparisonFunc;	///< Default: "Rhi::ComparisonFunc::NEVER"
   float			   borderColor[4];	///< Default: 0.0f, 0.0f, 0.0f, 0.0f
   float			   minLod;			///< Default: -3.402823466e+38f (-FLT_MAX)

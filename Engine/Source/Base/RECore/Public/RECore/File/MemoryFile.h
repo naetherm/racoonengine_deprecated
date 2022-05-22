@@ -90,7 +90,7 @@ class MemoryFile final : public IFile {
   //[ Public definitions                                    ]
   //[-------------------------------------------------------]
 public:
-  typedef std::vector<uint8_t> ByteVector;
+  typedef std::vector<RECore::uint8> ByteVector;
 
 
   //[-------------------------------------------------------]
@@ -124,17 +124,17 @@ public:
   }
 
   [[nodiscard]] bool
-  loadLz4CompressedDataByVirtualFilename(uint32_t formatType, uint32_t formatVersion, const IFileManager &fileManager,
+  loadLz4CompressedDataByVirtualFilename(uint32 formatType, uint32 formatVersion, const IFileManager &fileManager,
                                          VirtualFilename virtualFilename);
 
-  [[nodiscard]] bool loadLz4CompressedDataFromFile(uint32_t formatType, uint32_t formatVersion, IFile &file);
+  [[nodiscard]] bool loadLz4CompressedDataFromFile(uint32 formatType, uint32 formatVersion, IFile &file);
 
-  void setLz4CompressedDataByFile(IFile &file, uint32_t numberOfCompressedBytes, uint32_t numberOfDecompressedBytes);
+  void setLz4CompressedDataByFile(IFile &file, uint32 numberOfCompressedBytes, uint32 numberOfDecompressedBytes);
 
   void decompress();
 
   [[nodiscard]] bool
-  writeLz4CompressedDataByVirtualFilename(uint32_t formatType, uint32_t formatVersion, const IFileManager &fileManager,
+  writeLz4CompressedDataByVirtualFilename(uint32 formatType, uint32 formatVersion, const IFileManager &fileManager,
                                           VirtualFilename virtualFilename) const;
 
 
@@ -169,7 +169,7 @@ public:
   {
     ASSERT(nullptr != sourceBuffer, "Letting a file write from a null source buffer is not allowed")
     ASSERT(0 != numberOfBytes, "Letting a file write zero bytes is not allowed")
-    std::copy(static_cast<const uint8_t *>(sourceBuffer), static_cast<const uint8_t *>(sourceBuffer) + numberOfBytes,
+    std::copy(static_cast<const RECore::uint8 *>(sourceBuffer), static_cast<const RECore::uint8 *>(sourceBuffer) + numberOfBytes,
               std::back_inserter(mDecompressedData));
   }
 
@@ -196,8 +196,8 @@ protected:
 private:
   ByteVector mCompressedData;    ///< Owns the data
   ByteVector mDecompressedData;  ///< Owns the data
-  uint32_t mNumberOfDecompressedBytes;
-  uint8_t *mCurrentDataPointer;  ///< Pointer to the current uncompressed data position, doesn't own the data
+  uint32 mNumberOfDecompressedBytes;
+  RECore::uint8 *mCurrentDataPointer;  ///< Pointer to the current uncompressed data position, doesn't own the data
 #ifdef DEBUG
   std::string mDebugName;	///< Debug name for easier file identification when debugging
 #endif

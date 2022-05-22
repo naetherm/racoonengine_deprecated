@@ -137,7 +137,7 @@ protected:
   *  @param[in] id
   *    The unique compact vertex array ID
   */
-  VertexArray(RHIDynamicRHI& openGLRhi, IndexBuffer* indexBuffer, InternalResourceType::Enum internalResourceType, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  VertexArray(RHIDynamicRHI& openGLRhi, IndexBuffer* indexBuffer, InternalResourceType::Enum internalResourceType, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
 
   //[-------------------------------------------------------]

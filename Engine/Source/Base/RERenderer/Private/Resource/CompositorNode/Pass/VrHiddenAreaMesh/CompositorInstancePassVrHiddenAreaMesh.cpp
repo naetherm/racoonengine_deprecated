@@ -79,22 +79,22 @@
 							RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 							"Position",								// name[32] (char)
 							"POSITION",								// semanticName[32] (char)
-							0,										// semanticIndex (uint32_t)
+							0,										// semanticIndex (RECore::uint32)
 							// Data source
-							0,										// inputSlot (uint32_t)
-							0,										// alignedByteOffset (uint32_t)
-							sizeof(float) * 2,						// strideInBytes (uint32_t)
-							0										// instancesPerElement (uint32_t)
+							0,										// inputSlot (RECore::uint32)
+							0,										// alignedByteOffset (RECore::uint32)
+							sizeof(float) * 2,						// strideInBytes (RECore::uint32)
+							0										// instancesPerElement (RECore::uint32)
 						}
 					};
-					const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+					const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
 					{ // Create vertex array and merge both meshes into a single mesh since we're using single pass stereo rendering via instancing as described in "High Performance Stereo Rendering For VR", Timothy Wilson, San Diego, Virtual Reality Meetup
 						RERHI::RHIBufferManager& bufferManager = renderer.getBufferManager();
 						vr::IVRSystem* vrSystem = static_cast<RERenderer::VrManagerOpenVR&>(renderer.getVrManager()).getVrSystem();
 
 						// Get the combined number of vertex buffer bytes and triangles
-						uint32_t numberOfBytes = 0;
+						RECore::uint32 numberOfBytes = 0;
 						for (int vrEyeIndex = 0; vrEyeIndex < 2; ++vrEyeIndex)
 						{
 							const vr::HiddenAreaMesh_t vrHiddenAreaMesh = vrSystem->GetHiddenAreaMesh(static_cast<vr::EVREye>(vrEyeIndex));
@@ -104,9 +104,9 @@
 
 						// Allocate temporary vertex buffer memory, if necessary
 						// -> For HTC Vive there are tiny 1248 bytes which can be easily put onto the C-runtime-stack to avoid a memory allocation
-						static constexpr uint32_t STACK_NUMBER_OF_BYTES = 1248;
-						uint8_t stackMemory[STACK_NUMBER_OF_BYTES];
-						uint8_t* temporaryMemory = (numberOfBytes <= STACK_NUMBER_OF_BYTES) ? stackMemory : new uint8_t[numberOfBytes];
+						static constexpr RECore::uint32 STACK_NUMBER_OF_BYTES = 1248;
+						RECore::uint8 stackMemory[STACK_NUMBER_OF_BYTES];
+						RECore::uint8* temporaryMemory = (numberOfBytes <= STACK_NUMBER_OF_BYTES) ? stackMemory : new RECore::uint8[numberOfBytes];
 
 						{ // Fill temporary vertex buffer memory
 							float* currentTemporaryMemory = reinterpret_cast<float*>(temporaryMemory);
@@ -129,7 +129,7 @@
 
 						{ // Create vertex array object (VAO)
 							const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-							mVertexArrayPtr = bufferManager.createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, nullptr RHI_RESOURCE_DEBUG_NAME("Compositor instance pass VR hidden area mesh"));
+							mVertexArrayPtr = bufferManager.createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, nullptr RHI_RESOURCE_DEBUG_NAME("Compositor instance pass VR hidden area mesh"));
 						}
 
 						// Free allocated temporary vertex buffer memory, if necessary
@@ -222,7 +222,7 @@
 			private:
 				RERHI::RHIRootSignaturePtr			mRootSignature;
 				RERHI::RHIVertexArrayPtr			mVertexArrayPtr;
-				uint32_t						mNumberOfTriangles;
+				RECore::uint32						mNumberOfTriangles;
 				RERHI::RHIGraphicsPipelineStatePtr	mGraphicsPipelineState;	// TODO(naetherm) As soon as we support stencil in here, instance might need different graphics pipeline states
 
 

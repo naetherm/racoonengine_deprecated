@@ -69,7 +69,7 @@ public:
   *  @param[in] numberOfQueries
   *    Number of queries
   */
-  QueryPool(RHIDynamicRHI& openGLRhi, RERHI::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  QueryPool(RHIDynamicRHI& openGLRhi, RERHI::QueryType queryType, RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief
@@ -96,7 +96,7 @@ public:
   *  @return
   *    The number of queries
   */
-  [[nodiscard]] inline uint32_t getNumberOfQueries() const
+  [[nodiscard]] inline RECore::uint32 getNumberOfQueries() const
   {
     return mNumberOfQueries;
   }
@@ -115,7 +115,7 @@ private:
   //[-------------------------------------------------------]
 protected:
   RERHI::QueryType mQueryType;
-  uint32_t	   mNumberOfQueries;
+  RECore::uint32	   mNumberOfQueries;
 
 
 };

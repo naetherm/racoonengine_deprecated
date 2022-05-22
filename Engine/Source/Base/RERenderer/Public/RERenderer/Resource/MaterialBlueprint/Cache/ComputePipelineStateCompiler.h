@@ -109,14 +109,14 @@ namespace RERenderer
 
 		void setAsynchronousCompilationEnabled(bool enabled);
 
-		[[nodiscard]] inline uint32_t getNumberOfCompilerThreads() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfCompilerThreads() const
 		{
 			return mNumberOfCompilerThreads;
 		}
 
-		void setNumberOfCompilerThreads(uint32_t numberOfCompilerThreads);
+		void setNumberOfCompilerThreads(RECore::uint32 numberOfCompilerThreads);
 
-		[[nodiscard]] inline uint32_t getNumberOfInFlightCompilerRequests() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfInFlightCompilerRequests() const
 		{
 			return mNumberOfInFlightCompilerRequests;
 		}
@@ -197,8 +197,8 @@ namespace RERenderer
 	private:
 		IRenderer&			  mRenderer;	///< Renderer instance, do not destroy the instance
 		bool				  mAsynchronousCompilationEnabled;
-		uint32_t			  mNumberOfCompilerThreads;
-		std::atomic<uint32_t> mNumberOfInFlightCompilerRequests;
+		RECore::uint32			  mNumberOfCompilerThreads;
+		std::atomic<RECore::uint32> mNumberOfInFlightCompilerRequests;
 
 		// Asynchronous building (moderate cost)
 		std::atomic<bool>		mShutdownBuilderThread;

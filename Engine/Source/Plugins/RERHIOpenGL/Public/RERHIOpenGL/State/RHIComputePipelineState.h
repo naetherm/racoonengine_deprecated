@@ -67,7 +67,7 @@ public:
   *  @param[in] id
   *    The unique compact compute pipeline state ID
   */
-  explicit ComputePipelineState(RHIDynamicRHI& openGLRhi, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  explicit ComputePipelineState(RHIDynamicRHI& openGLRhi, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief

@@ -64,12 +64,12 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		#define DEFINE_CONSTANT(name) static constexpr uint32_t name = STRING_ID(#name);
+		#define DEFINE_CONSTANT(name) static constexpr RECore::uint32 name = STRING_ID(#name);
 			// Pass
 			DEFINE_CONSTANT(IMGUI_OBJECT_SPACE_TO_CLIP_SPACE_MATRIX)
 		#undef DEFINE_CONSTANT
-		static constexpr uint32_t FIRST_CONTROLLER_INDEX  = 0;
-		static constexpr uint32_t SECOND_CONTROLLER_INDEX = 1;
+		static constexpr RECore::uint32 FIRST_CONTROLLER_INDEX  = 0;
+		static constexpr RECore::uint32 SECOND_CONTROLLER_INDEX = 1;
 
 
 		//[-------------------------------------------------------]
@@ -95,7 +95,7 @@ namespace
 				mVrController(nullptr),
 				mNumberOfVrControllers(0)
 			{
-				for (uint32_t i = 0; i < vr::k_unMaxTrackedDeviceCount; ++i)
+				for (RECore::uint32 i = 0; i < vr::k_unMaxTrackedDeviceCount; ++i)
 				{
 					mVrControllerTrackedDeviceIndices[i] = RECore::getInvalid<vr::TrackedDeviceIndex_t>();
 				}
@@ -112,12 +112,12 @@ namespace
 				mVrController = &vrController;
 			}
 
-			[[nodiscard]] inline uint32_t getNumberOfVrControllers() const
+			[[nodiscard]] inline RECore::uint32 getNumberOfVrControllers() const
 			{
 				return mNumberOfVrControllers;
 			}
 
-			[[nodiscard]] inline vr::TrackedDeviceIndex_t getVrControllerTrackedDeviceIndices(uint32_t vrControllerIndex) const
+			[[nodiscard]] inline vr::TrackedDeviceIndex_t getVrControllerTrackedDeviceIndices(RECore::uint32 vrControllerIndex) const
 			{
 				ASSERT(vrControllerIndex < vr::k_unMaxTrackedDeviceCount, "Invalid VR controller index")
 				return mVrControllerTrackedDeviceIndices[vrControllerIndex];
@@ -189,7 +189,7 @@ namespace
 		private:
 			const RERenderer::VrManagerOpenVR* mVrManagerOpenVR;
 			VrController*					 mVrController;
-			uint32_t						 mNumberOfVrControllers;
+			RECore::uint32						 mNumberOfVrControllers;
 			vr::TrackedDeviceIndex_t		 mVrControllerTrackedDeviceIndices[vr::k_unMaxTrackedDeviceCount];
 
 
@@ -228,7 +228,7 @@ namespace
 		//[ Private virtual RERenderer::IMaterialBlueprintResourceListener methods ]
 		//[-------------------------------------------------------]
 		private:
-			[[nodiscard]] virtual bool fillPassValue(uint32_t referenceValue, uint8_t* buffer, uint32_t numberOfBytes) override
+			[[nodiscard]] virtual bool fillPassValue(RECore::uint32 referenceValue, RECore::uint8* buffer, RECore::uint32 numberOfBytes) override
 			{
 				// The GUI is placed over the second VR controller
 				#ifdef RENDERER_IMGUI

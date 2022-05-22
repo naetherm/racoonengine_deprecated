@@ -40,7 +40,7 @@ namespace RERHINull {
 *  @param[in] width
 *    The width of the texture
 */
-TextureCube::TextureCube(RHIDynamicRHI& nullRhi, uint32_t width RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+TextureCube::TextureCube(RHIDynamicRHI& nullRhi, RECore::uint32 width RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 RHITextureCube(nullRhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 {}
 

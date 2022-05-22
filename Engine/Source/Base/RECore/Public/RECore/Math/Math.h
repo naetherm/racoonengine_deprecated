@@ -67,8 +67,8 @@ class Math final {
   //[ Public definitions                                    ]
   //[-------------------------------------------------------]
 public:
-  static constexpr uint32_t FNV1a_INITIAL_HASH_32 = 0xcbf29ce4u;
-  static constexpr uint64_t FNV1a_INITIAL_HASH_64 = 0xcbf29ce484222325u;
+  static constexpr uint32 FNV1a_INITIAL_HASH_32 = 0xcbf29ce4u;
+  static constexpr RECore::uint64 FNV1a_INITIAL_HASH_64 = 0xcbf29ce484222325u;
   // "glm::vec3" constants
   static constexpr glm::vec3 VEC3_ZERO = glm::vec3(0.0f, 0.0f, 0.0f);  ///< 0 0 0
   static constexpr glm::vec3 VEC3_ONE = glm::vec3(1.0f, 1.0f, 1.0f);  ///< 1 1 1
@@ -187,7 +187,7 @@ public:
 
   [[nodiscard]] static double makeMultipleOf(double value, float primaryValue);
 
-  [[nodiscard]] static uint32_t makeMultipleOf(uint32_t value, uint32_t primaryValue);
+  [[nodiscard]] static uint32 makeMultipleOf(uint32 value, uint32 primaryValue);
 
   /**
   *  @brief
@@ -204,13 +204,13 @@ public:
   //[-------------------------------------------------------]
   //[ Hash                                                  ]
   //[-------------------------------------------------------]
-  [[nodiscard]] static uint32_t
-  calculateFNV1a32(const uint8_t *content, uint32_t numberOfBytes, uint32_t hash = FNV1a_INITIAL_HASH_32);
+  [[nodiscard]] static uint32
+  calculateFNV1a32(const RECore::uint8 *content, uint32 numberOfBytes, uint32 hash = FNV1a_INITIAL_HASH_32);
 
-  [[nodiscard]] static uint64_t
-  calculateFNV1a64(const uint8_t *content, uint32_t numberOfBytes, uint64_t hash = FNV1a_INITIAL_HASH_64);
+  [[nodiscard]] static RECore::uint64
+  calculateFNV1a64(const RECore::uint8 *content, uint32 numberOfBytes, RECore::uint64 hash = FNV1a_INITIAL_HASH_64);
 
-  [[nodiscard]] static uint64_t
+  [[nodiscard]] static RECore::uint64
   calculateFileFNV1a64ByVirtualFilename(const IFileManager &fileManager, VirtualFilename virtualFilename);
 
 

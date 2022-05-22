@@ -263,8 +263,8 @@ void ExampleRunner::switchExample(const char* exampleName, const char* rhiName)
 //[-------------------------------------------------------]
 bool ExampleRunner::parseCommandLineArguments(const RECore::CommandLineArguments& commandLineArguments)
 {
-	const uint32_t numberOfArguments = commandLineArguments.getCount();
-	for (uint32_t argumentIndex = 0; argumentIndex < numberOfArguments; ++argumentIndex)
+	const RECore::uint32 numberOfArguments = commandLineArguments.getCount();
+	for (RECore::uint32 argumentIndex = 0; argumentIndex < numberOfArguments; ++argumentIndex)
 	{
 		const std::string argument = commandLineArguments.getArgumentAtIndex(argumentIndex);
 		if ("-r" != argument)

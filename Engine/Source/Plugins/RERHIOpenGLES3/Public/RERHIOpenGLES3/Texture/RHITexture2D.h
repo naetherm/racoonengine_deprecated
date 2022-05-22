@@ -72,7 +72,7 @@ public:
   *  @param[in] textureFlags
   *    Texture flags, see "RERHI::TextureFlag::Enum"
   */
-  Texture2D(RHIDynamicRHI& openGLES3Rhi, uint32_t width, uint32_t height, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  Texture2D(RHIDynamicRHI& openGLES3Rhi, RECore::uint32 width, RECore::uint32 height, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief
@@ -101,7 +101,7 @@ public:
   *  @param[in] maximumMipmapIndex
   *    Maximum mipmap index, the least detailed mipmap, <number of mipmaps> by default
   */
-  void setMinimumMaximumMipmapIndex(uint32_t minimumMipmapIndex, uint32_t maximumMipmapIndex)
+  void setMinimumMaximumMipmapIndex(RECore::uint32 minimumMipmapIndex, RECore::uint32 maximumMipmapIndex)
   {
 #ifdef RHI_OPENGLES3_STATE_CLEANUP
     // Backup the currently bound OpenGL ES 3 texture

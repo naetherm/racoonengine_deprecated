@@ -70,12 +70,12 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
-	uint32_t VertexAttributesResourceManager::getNumberOfResources() const
+	RECore::uint32 VertexAttributesResourceManager::getNumberOfResources() const
 	{
 		return mInternalResourceManager->getResources().getNumberOfElements();
 	}
 
-RECore::IResource& VertexAttributesResourceManager::getResourceByIndex(uint32_t index) const
+RECore::IResource& VertexAttributesResourceManager::getResourceByIndex(RECore::uint32 index) const
 	{
 		return mInternalResourceManager->getResources().getElementByIndex(index);
 	}

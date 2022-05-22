@@ -48,15 +48,15 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("Skeleton");
-		static constexpr uint32_t FORMAT_VERSION = 1;
+		static constexpr RECore::uint32 FORMAT_TYPE	 = STRING_ID("Skeleton");
+		static constexpr RECore::uint32 FORMAT_VERSION = 1;
 
 		#pragma pack(push)
 		#pragma pack(1)
 			struct Header final
 			{
-				uint32_t formatType;
-				uint32_t formatVersion;
+				RECore::uint32 formatType;
+				RECore::uint32 formatVersion;
 				// TODO(naetherm) Right now, there's no standalone skeleton asset, only the skeleton which is part of a mesh. When there's one, don't forget to use LZ4 compression.
 			};
 		#pragma pack(pop)

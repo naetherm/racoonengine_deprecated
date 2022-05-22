@@ -132,7 +132,7 @@ namespace RERenderer
 			glm::mat4* localBoneMatrices = skeletonResource.getLocalBoneMatrices();
 			for (size_t i = 0; i < boneIds.size(); ++i)
 			{
-				const uint32_t boneIndex = skeletonResource.getBoneIndexByBoneId(boneIds[i]);
+				const RECore::uint32 boneIndex = skeletonResource.getBoneIndexByBoneId(boneIds[i]);
 				if (RECore::isValid(boneIndex))
 				{
 					localBoneMatrices[boneIndex] = transformMatrices[i];

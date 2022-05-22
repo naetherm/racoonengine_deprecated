@@ -48,13 +48,13 @@ namespace v1AssetPackage {
 //[-------------------------------------------------------]
 //[ Definitions                                           ]
 //[-------------------------------------------------------]
-static constexpr uint32_t FORMAT_TYPE = STRING_ID("AssetPackage");
-static constexpr uint32_t FORMAT_VERSION = 3;
+static constexpr uint32 FORMAT_TYPE = STRING_ID("AssetPackage");
+static constexpr uint32 FORMAT_VERSION = 3;
 
 #pragma pack(push)
 #pragma pack(1)
 struct AssetPackageHeader final {
-  uint32_t numberOfAssets;
+  uint32 numberOfAssets;
 };
 #pragma pack(pop)
 

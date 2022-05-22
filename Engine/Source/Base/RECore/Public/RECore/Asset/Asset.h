@@ -56,10 +56,10 @@ namespace RECore {
  * more complex project, you end up in having a 4 MiB asset reference table in memory.
  */
 struct Asset final {
-  static constexpr uint32_t MAXIMUM_ASSET_FILENAME_LENGTH = 127 + 1;  ///< +1 for the terminating zero
+  static constexpr uint32 MAXIMUM_ASSET_FILENAME_LENGTH = 127 + 1;  ///< +1 for the terminating zero
 
   AssetId assetId;                      ///< Asset ID
-  uint64_t fileHash;                      ///< 64-bit FNV-1a hash of the asset file
+  RECore::uint64 fileHash;                      ///< 64-bit FNV-1a hash of the asset file
   char virtualFilename[MAXIMUM_ASSET_FILENAME_LENGTH];  ///< Virtual asset UTF-8 filename inside the asset package, including terminating zero
 };
 

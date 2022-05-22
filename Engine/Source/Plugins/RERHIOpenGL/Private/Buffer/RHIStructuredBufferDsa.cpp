@@ -42,7 +42,7 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-StructuredBufferDsa::StructuredBufferDsa(RHIDynamicRHI& openGLRhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+StructuredBufferDsa::StructuredBufferDsa(RHIDynamicRHI& openGLRhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 StructuredBuffer(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
   {
     if (openGLRhi.getExtensions().isGL_ARB_direct_state_access())

@@ -42,7 +42,7 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-VertexBufferBind::VertexBufferBind(RHIDynamicRHI &openGLRhi, uint32_t numberOfBytes, const void *data,
+VertexBufferBind::VertexBufferBind(RHIDynamicRHI &openGLRhi, RECore::uint32 numberOfBytes, const void *data,
                                    RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   VertexBuffer(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER) {
 #ifdef RHI_OPENGL_STATE_CLEANUP

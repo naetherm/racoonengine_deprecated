@@ -49,9 +49,9 @@ namespace RERHI
 	{
 		enum Enum
 		{
-			UNSIGNED_CHAR  = 0,	///< One byte per element, uint8_t (may not be supported by each RHI implementation, primarily for mobile devices)
-			UNSIGNED_SHORT = 1,	///< Two bytes per element, uint16_t (best support across multiple RHI implementations)
-			UNSIGNED_INT   = 2	///< Four bytes per element, uint32_t (may not be supported by each RHI implementation)
+			UNSIGNED_CHAR  = 0,	///< One byte per element, RECore::uint8 (may not be supported by each RHI implementation, primarily for mobile devices)
+			UNSIGNED_SHORT = 1,	///< Two bytes per element, RECore::uint16 (best support across multiple RHI implementations)
+			UNSIGNED_INT   = 2	///< Four bytes per element, RECore::uint32 (may not be supported by each RHI implementation)
 		};
 
 		/**
@@ -64,13 +64,13 @@ namespace RERHI
 		*  @return
 		*    Number of bytes per element
 		*/
-		[[nodiscard]] static inline uint32_t getNumberOfBytesPerElement(Enum indexFormat)
+		[[nodiscard]] static inline RECore::uint32 getNumberOfBytesPerElement(Enum indexFormat)
 		{
-			static constexpr uint32_t MAPPING[] =
+			static constexpr RECore::uint32 MAPPING[] =
 			{
-				1,	// One byte per element, uint8_t (may not be supported by each RHI implementation, primarily for mobile devices)
-				2,	// Two bytes per element, uint16_t (best support across multiple RHI implementations)
-				4	// Four bytes per element, uint32_t (may not be supported by each RHI implementation)
+				1,	// One byte per element, RECore::uint8 (may not be supported by each RHI implementation, primarily for mobile devices)
+				2,	// Two bytes per element, RECore::uint16 (best support across multiple RHI implementations)
+				4	// Four bytes per element, RECore::uint32 (may not be supported by each RHI implementation)
 			};
 			return MAPPING[indexFormat];
 		}

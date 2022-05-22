@@ -173,7 +173,7 @@ public:
   *  @return
   *    "true" if all went fine, else "false"
   */
-  [[nodiscard]] virtual bool initialize(uint32_t multisampleAntialiasingSamples);
+  [[nodiscard]] virtual bool initialize(RECore::uint32 multisampleAntialiasingSamples);
 
   /**
   *  @brief
@@ -247,7 +247,7 @@ protected:
   *  @note
   *    - Automatically tries to find fallback configurations
   */
-  [[nodiscard]] virtual EGLConfig chooseConfig(uint32_t multisampleAntialiasingSamples) const;
+  [[nodiscard]] virtual EGLConfig chooseConfig(RECore::uint32 multisampleAntialiasingSamples) const;
 
 
   //[-------------------------------------------------------]

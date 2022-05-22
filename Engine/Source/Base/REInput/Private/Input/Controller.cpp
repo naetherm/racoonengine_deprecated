@@ -65,7 +65,7 @@ void Controller::connectAll(Controller *pController, const std::string &sPrefixO
   if (pController) {
     // Get all controls of input controller
     const Controls &lstControls = pController->getControls();
-    for (uint32_t i=0; i<lstControls.size(); i++) {
+    for (RECore::uint32 i=0; i<lstControls.size(); i++) {
       // Get control
       Control *pInput = lstControls[i];
 
@@ -141,7 +141,7 @@ void Controller::informControl(Control *pControl)
     }
 
     // Check connections
-    for (uint32_t i=0; i<m_lstConnections.size(); i++) {
+    for (RECore::uint32 i=0; i<m_lstConnections.size(); i++) {
       // Get connection
       Connection *pConnection = m_lstConnections[i];
 
@@ -183,7 +183,7 @@ void Controller::initControlList(ControlType controlType) const
   }
 
   // Loop over all controls
-  for (uint32_t i=0; i<m_lstControls.size(); i++) {
+  for (RECore::uint32 i=0; i<m_lstControls.size(); i++) {
     // Get control
     Control *pControl = m_lstControls[i];
 

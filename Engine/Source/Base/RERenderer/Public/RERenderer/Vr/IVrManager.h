@@ -66,9 +66,9 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;			///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
-	typedef RECore::StringId VrManagerTypeId;	///< VR manager identifier, internally just a POD "uint32_t"
-	typedef uint32_t SceneResourceId;	///< POD scene resource identifier
+	typedef RECore::StringId AssetId;			///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::StringId VrManagerTypeId;	///< VR manager identifier, internally just a POD "RECore::uint32"
+	typedef RECore::uint32 SceneResourceId;	///< POD scene resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -89,7 +89,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		enum class VrEye : int8_t
+		enum class VrEye : RECore::int8
 		{
 			LEFT  =  0,
 			RIGHT =  1

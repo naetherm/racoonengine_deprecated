@@ -159,8 +159,8 @@ Notes:
 class MakeID final
 {
 private:
-	// Change to uint16_t here for a more compact implementation if 16bit or less IDs work for you.
-	typedef uint16_t uint;
+	// Change to RECore::uint16 here for a more compact implementation if 16bit or less IDs work for you.
+	typedef RECore::uint16 uint;
 
 	struct Range
 	{
@@ -1793,7 +1793,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		void updateWidthHeight(uint32_t mipmapIndex, uint32_t textureWidth, uint32_t textureHeight, uint32_t& width, uint32_t& height)
+		void updateWidthHeight(RECore::uint32 mipmapIndex, RECore::uint32 textureWidth, RECore::uint32 textureHeight, RECore::uint32& width, RECore::uint32& height)
 		{
 			Rhi::ITexture::getMipmapSize(mipmapIndex, textureWidth, textureHeight);
 			if (width > textureWidth)
@@ -1915,14 +1915,14 @@ namespace Direct3D9Rhi
 		//[-------------------------------------------------------]
 		void setGraphicsRootSignature(Rhi::IRootSignature* rootSignature);
 		void setGraphicsPipelineState(Rhi::IGraphicsPipelineState* graphicsPipelineState);
-		void setGraphicsResourceGroup(uint32_t rootParameterIndex, Rhi::IResourceGroup* resourceGroup);
+		void setGraphicsResourceGroup(RECore::uint32 rootParameterIndex, Rhi::IResourceGroup* resourceGroup);
 		void setGraphicsVertexArray(Rhi::IVertexArray* vertexArray);															// Input-assembler (IA) stage
-		void setGraphicsViewports(uint32_t numberOfViewports, const Rhi::Viewport* viewports);									// Rasterizer (RS) stage
-		void setGraphicsScissorRectangles(uint32_t numberOfScissorRectangles, const Rhi::ScissorRectangle* scissorRectangles);	// Rasterizer (RS) stage
+		void setGraphicsViewports(RECore::uint32 numberOfViewports, const Rhi::Viewport* viewports);									// Rasterizer (RS) stage
+		void setGraphicsScissorRectangles(RECore::uint32 numberOfScissorRectangles, const Rhi::ScissorRectangle* scissorRectangles);	// Rasterizer (RS) stage
 		void setGraphicsRenderTarget(Rhi::IRenderTarget* renderTarget);															// Output-merger (OM) stage
-		void clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil);
-		void drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1);
-		void drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1);
+		void clearGraphics(RECore::uint32 clearFlags, const float color[4], float z, RECore::uint32 stencil);
+		void drawGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1);
+		void drawIndexedGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1);
 		//[-------------------------------------------------------]
 		//[ Resource                                              ]
 		//[-------------------------------------------------------]
@@ -1932,10 +1932,10 @@ namespace Direct3D9Rhi
 		//[-------------------------------------------------------]
 		//[ Query                                                 ]
 		//[-------------------------------------------------------]
-		void resetQueryPool(Rhi::IQueryPool& queryPool, uint32_t firstQueryIndex, uint32_t numberOfQueries);
-		void beginQuery(Rhi::IQueryPool& queryPool, uint32_t queryIndex, uint32_t queryControlFlags);
-		void endQuery(Rhi::IQueryPool& queryPool, uint32_t queryIndex);
-		void writeTimestampQuery(Rhi::IQueryPool& queryPool, uint32_t queryIndex);
+		void resetQueryPool(Rhi::IQueryPool& queryPool, RECore::uint32 firstQueryIndex, RECore::uint32 numberOfQueries);
+		void beginQuery(Rhi::IQueryPool& queryPool, RECore::uint32 queryIndex, RECore::uint32 queryControlFlags);
+		void endQuery(Rhi::IQueryPool& queryPool, RECore::uint32 queryIndex);
+		void writeTimestampQuery(Rhi::IQueryPool& queryPool, RECore::uint32 queryIndex);
 		//[-------------------------------------------------------]
 		//[ Debug                                                 ]
 		//[-------------------------------------------------------]
@@ -1965,14 +1965,14 @@ namespace Direct3D9Rhi
 		//[-------------------------------------------------------]
 		//[ Shader language                                       ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] virtual uint32_t getNumberOfShaderLanguages() const override;
-		[[nodiscard]] virtual const char* getShaderLanguageName(uint32_t index) const override;
+		[[nodiscard]] virtual RECore::uint32 getNumberOfShaderLanguages() const override;
+		[[nodiscard]] virtual const char* getShaderLanguageName(RECore::uint32 index) const override;
 		[[nodiscard]] virtual Rhi::IShaderLanguage* getShaderLanguage(const char* shaderLanguageName = nullptr) override;
 		//[-------------------------------------------------------]
 		//[ Resource creation                                     ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] virtual Rhi::IRenderPass* createRenderPass(uint32_t numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat = Rhi::TextureFormat::UNKNOWN, uint8_t numberOfMultisamples = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
-		[[nodiscard]] virtual Rhi::IQueryPool* createQueryPool(Rhi::QueryType queryType, uint32_t numberOfQueries = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+		[[nodiscard]] virtual Rhi::IRenderPass* createRenderPass(RECore::uint32 numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat = Rhi::TextureFormat::UNKNOWN, RECore::uint8 numberOfMultisamples = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+		[[nodiscard]] virtual Rhi::IQueryPool* createQueryPool(Rhi::QueryType queryType, RECore::uint32 numberOfQueries = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 		[[nodiscard]] virtual Rhi::ISwapChain* createSwapChain(Rhi::IRenderPass& renderPass, Rhi::WindowHandle windowHandle, bool useExternalContext = false RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 		[[nodiscard]] virtual Rhi::IFramebuffer* createFramebuffer(Rhi::IRenderPass& renderPass, const Rhi::FramebufferAttachment* colorFramebufferAttachments, const Rhi::FramebufferAttachment* depthStencilFramebufferAttachment = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 		[[nodiscard]] virtual Rhi::IBufferManager* createBufferManager() override;
@@ -1984,9 +1984,9 @@ namespace Direct3D9Rhi
 		//[-------------------------------------------------------]
 		//[ Resource handling                                     ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] virtual bool map(Rhi::IResource& resource, uint32_t subresource, Rhi::MapType mapType, uint32_t mapFlags, Rhi::MappedSubresource& mappedSubresource) override;
-		virtual void unmap(Rhi::IResource& resource, uint32_t subresource) override;
-		[[nodiscard]] virtual bool getQueryPoolResults(Rhi::IQueryPool& queryPool, uint32_t numberOfDataBytes, uint8_t* data, uint32_t firstQueryIndex = 0, uint32_t numberOfQueries = 1, uint32_t strideInBytes = 0, uint32_t queryResultFlags = 0) override;
+		[[nodiscard]] virtual bool map(Rhi::IResource& resource, RECore::uint32 subresource, Rhi::MapType mapType, RECore::uint32 mapFlags, Rhi::MappedSubresource& mappedSubresource) override;
+		virtual void unmap(Rhi::IResource& resource, RECore::uint32 subresource) override;
+		[[nodiscard]] virtual bool getQueryPoolResults(Rhi::IQueryPool& queryPool, RECore::uint32 numberOfDataBytes, RECore::uint8* data, RECore::uint32 firstQueryIndex = 0, RECore::uint32 numberOfQueries = 1, RECore::uint32 strideInBytes = 0, RECore::uint32 queryResultFlags = 0) override;
 		//[-------------------------------------------------------]
 		//[ Operation                                             ]
 		//[-------------------------------------------------------]
@@ -2414,7 +2414,7 @@ namespace Direct3D9Rhi
 		ID3DXBuffer* d3dXBufferErrorMessages = nullptr;
 		if (D3D_OK != D3DXCompileShader(sourceCode, static_cast<UINT>(strlen(sourceCode)), nullptr, nullptr, entryPoint ? entryPoint : "main", shaderModel, compileFlags, &d3dXBuffer, &d3dXBufferErrorMessages, d3dXConstantTable))
 		{
-			if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), static_cast<char*>(d3dXBufferErrorMessages->GetBufferPointer())))
+			if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), static_cast<char*>(d3dXBufferErrorMessages->GetBufferPointer())))
 			{
 				DEBUG_BREAK;
 			}
@@ -2853,7 +2853,7 @@ namespace Direct3D9Rhi
 		*  @return
 		*    Direct3D 9 usage
 		*/
-		[[nodiscard]] static uint32_t getDirect3D9Usage(Rhi::BufferUsage bufferUsage)
+		[[nodiscard]] static RECore::uint32 getDirect3D9Usage(Rhi::BufferUsage bufferUsage)
 		{
 			// Direct3D 9 only supports a subset of the OpenGL usage indications
 			// -> See "D3DUSAGE"-documentation at http://msdn.microsoft.com/en-us/library/windows/desktop/bb172625%28v=vs.85%29.aspx
@@ -2896,9 +2896,9 @@ namespace Direct3D9Rhi
 		{
 			static constexpr D3DFORMAT MAPPING[] =
 			{
-				D3DFMT_INDEX32,	// Rhi::IndexBufferFormat::UNSIGNED_CHAR  - One byte per element, uint8_t (may not be supported by each API) - Not supported by Direct3D 9
-				D3DFMT_INDEX16,	// Rhi::IndexBufferFormat::UNSIGNED_SHORT - Two bytes per element, uint16_t
-				D3DFMT_INDEX32	// Rhi::IndexBufferFormat::UNSIGNED_INT   - Four bytes per element, uint32_t (may not be supported by each API)
+				D3DFMT_INDEX32,	// Rhi::IndexBufferFormat::UNSIGNED_CHAR  - One byte per element, RECore::uint8 (may not be supported by each API) - Not supported by Direct3D 9
+				D3DFMT_INDEX16,	// Rhi::IndexBufferFormat::UNSIGNED_SHORT - Two bytes per element, RECore::uint16
+				D3DFMT_INDEX32	// Rhi::IndexBufferFormat::UNSIGNED_INT   - Four bytes per element, RECore::uint32 (may not be supported by each API)
 			};
 			return MAPPING[indexBufferFormat];
 		}
@@ -2963,10 +2963,10 @@ namespace Direct3D9Rhi
 		*  @return
 		*    Direct3D 9 presentation interval
 		*/
-		[[nodiscard]] static uint32_t getDirect3D9PresentationInterval([[maybe_unused]] const Rhi::Context& context, uint32_t synchronizationInterval)
+		[[nodiscard]] static RECore::uint32 getDirect3D9PresentationInterval([[maybe_unused]] const Rhi::Context& context, RECore::uint32 synchronizationInterval)
 		{
 			RHI_ASSERT(synchronizationInterval <= 4, "Direct3D 9 supports a maximum synchronization interval of four")
-			static constexpr uint32_t MAPPING[] =
+			static constexpr RECore::uint32 MAPPING[] =
 			{
 				D3DPRESENT_INTERVAL_IMMEDIATE,
 				D3DPRESENT_INTERVAL_ONE,
@@ -3037,7 +3037,7 @@ namespace Direct3D9Rhi
 		*/
 		[[nodiscard]] static DWORD getDirect3D9BlendOperation(Rhi::BlendOp blendOp)
 		{
-			static constexpr uint32_t MAPPING[] =
+			static constexpr RECore::uint32 MAPPING[] =
 			{
 				D3DBLENDOP_ADD,			// Rhi::BlendOp::ADD
 				D3DBLENDOP_SUBTRACT,	// Rhi::BlendOp::SUBTRACT
@@ -3082,14 +3082,14 @@ namespace Direct3D9Rhi
 		*  @param[in] samplerStates
 		*    If not a null pointer at least "numberOfResources" sampler state pointers, must be valid if there's at least one texture resource, the resource group will keep a reference to the sampler states
 		*/
-		ResourceGroup(Rhi::IRhi& rhi, uint32_t numberOfResources, Rhi::IResource** resources, Rhi::ISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		ResourceGroup(Rhi::IRhi& rhi, RECore::uint32 numberOfResources, Rhi::IResource** resources, Rhi::ISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IResourceGroup(rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mNumberOfResources(numberOfResources),
 			mResources(RHI_MALLOC_TYPED(rhi.getContext(), Rhi::IResource*, mNumberOfResources)),
 			mSamplerStates(nullptr)
 		{
 			// Process all resources and add our reference to the RHI resource
-			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
+			for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
 			{
 				// Since Direct3D 9 doesn't support e.g. uniform buffer we need to check for null pointers here
 				Rhi::IResource* resource = *resources;
@@ -3102,7 +3102,7 @@ namespace Direct3D9Rhi
 			if (nullptr != samplerStates)
 			{
 				mSamplerStates = RHI_MALLOC_TYPED(rhi.getContext(), Rhi::ISamplerState*, mNumberOfResources);
-				for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+				for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 				{
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
 					if (nullptr != samplerState)
@@ -3123,7 +3123,7 @@ namespace Direct3D9Rhi
 			const Rhi::Context& context = getRhi().getContext();
 			if (nullptr != mSamplerStates)
 			{
-				for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+				for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 				{
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex];
 					if (nullptr != samplerState)
@@ -3133,7 +3133,7 @@ namespace Direct3D9Rhi
 				}
 				RHI_FREE(context, mSamplerStates);
 			}
-			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+			for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 			{
 				// Since Direct3D 9 doesn't support e.g. uniform buffer we need to check for null pointers here
 				if (nullptr != mResources[resourceIndex])
@@ -3151,7 +3151,7 @@ namespace Direct3D9Rhi
 		*  @return
 		*    The number of resources this resource group groups together
 		*/
-		[[nodiscard]] inline uint32_t getNumberOfResources() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfResources() const
 		{
 			return mNumberOfResources;
 		}
@@ -3203,7 +3203,7 @@ namespace Direct3D9Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t			 mNumberOfResources;	///< Number of resources this resource group groups together
+		RECore::uint32			 mNumberOfResources;	///< Number of resources this resource group groups together
 		Rhi::IResource**	 mResources;			///< RHI resources, we keep a reference to it
 		Rhi::ISamplerState** mSamplerStates;		///< Sampler states, we keep a reference to it
 
@@ -3244,7 +3244,7 @@ namespace Direct3D9Rhi
 			const Rhi::Context& context = direct3D9Rhi.getContext();
 
 			{ // Copy the parameter data
-				const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
+				const RECore::uint32 numberOfParameters = mRootSignature.numberOfParameters;
 				if (numberOfParameters > 0)
 				{
 					mRootSignature.parameters = RHI_MALLOC_TYPED(context, Rhi::RootParameter, numberOfParameters);
@@ -3252,13 +3252,13 @@ namespace Direct3D9Rhi
 					memcpy(destinationRootParameters, rootSignature.parameters, sizeof(Rhi::RootParameter) * numberOfParameters);
 
 					// Copy the descriptor table data
-					for (uint32_t i = 0; i < numberOfParameters; ++i)
+					for (RECore::uint32 i = 0; i < numberOfParameters; ++i)
 					{
 						Rhi::RootParameter& destinationRootParameter = destinationRootParameters[i];
 						const Rhi::RootParameter& sourceRootParameter = rootSignature.parameters[i];
 						if (Rhi::RootParameterType::DESCRIPTOR_TABLE == destinationRootParameter.parameterType)
 						{
-							const uint32_t numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
+							const RECore::uint32 numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
 							destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(context, Rhi::DescriptorRange, numberOfDescriptorRanges));
 							memcpy(reinterpret_cast<Rhi::DescriptorRange*>(destinationRootParameter.descriptorTable.descriptorRanges), reinterpret_cast<const Rhi::DescriptorRange*>(sourceRootParameter.descriptorTable.descriptorRanges), sizeof(Rhi::DescriptorRange) * numberOfDescriptorRanges);
 						}
@@ -3267,7 +3267,7 @@ namespace Direct3D9Rhi
 			}
 
 			{ // Copy the static sampler data
-				const uint32_t numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
+				const RECore::uint32 numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
 				if (numberOfStaticSamplers > 0)
 				{
 					mRootSignature.staticSamplers = RHI_MALLOC_TYPED(context, Rhi::StaticSampler, numberOfStaticSamplers);
@@ -3286,7 +3286,7 @@ namespace Direct3D9Rhi
 			const Rhi::Context& context = getRhi().getContext();
 			if (nullptr != mRootSignature.parameters)
 			{
-				for (uint32_t i = 0; i < mRootSignature.numberOfParameters; ++i)
+				for (RECore::uint32 i = 0; i < mRootSignature.numberOfParameters; ++i)
 				{
 					const Rhi::RootParameter& rootParameter = mRootSignature.parameters[i];
 					if (Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
@@ -3316,7 +3316,7 @@ namespace Direct3D9Rhi
 	//[ Public virtual Rhi::IRootSignature methods            ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] virtual Rhi::IResourceGroup* createResourceGroup([[maybe_unused]] uint32_t rootParameterIndex, uint32_t numberOfResources, Rhi::IResource** resources, Rhi::ISamplerState** samplerStates = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual Rhi::IResourceGroup* createResourceGroup([[maybe_unused]] RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources, Rhi::IResource** resources, Rhi::ISamplerState** samplerStates = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Rhi::IRhi& rhi = getRhi();
 
@@ -3388,7 +3388,7 @@ namespace Direct3D9Rhi
 		*  @param[in] bufferUsage
 		*    Indication of the buffer usage
 		*/
-		VertexBuffer(Direct3D9Rhi& direct3D9Rhi, uint32_t numberOfBytes, const void* data, Rhi::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		VertexBuffer(Direct3D9Rhi& direct3D9Rhi, RECore::uint32 numberOfBytes, const void* data, Rhi::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IVertexBuffer(direct3D9Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mDirect3DVertexBuffer9(nullptr)
 		{
@@ -3501,7 +3501,7 @@ namespace Direct3D9Rhi
 		*  @param[in] indexBufferFormat
 		*    Index buffer data format
 		*/
-		IndexBuffer(Direct3D9Rhi& direct3D9Rhi, uint32_t numberOfBytes, const void* data, Rhi::BufferUsage bufferUsage, Rhi::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		IndexBuffer(Direct3D9Rhi& direct3D9Rhi, RECore::uint32 numberOfBytes, const void* data, Rhi::BufferUsage bufferUsage, Rhi::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IIndexBuffer(direct3D9Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mDirect3DIndexBuffer9(nullptr)
 		{
@@ -3619,7 +3619,7 @@ namespace Direct3D9Rhi
 		*  @param[in] id
 		*    The unique compact vertex array ID
 		*/
-		VertexArray(Direct3D9Rhi& direct3D9Rhi, const Rhi::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const Rhi::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		VertexArray(Direct3D9Rhi& direct3D9Rhi, const Rhi::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const Rhi::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IVertexArray(direct3D9Rhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mDirect3DDevice9(direct3D9Rhi.getDirect3DDevice9()),
 			mIndexBuffer(indexBuffer),
@@ -3643,8 +3643,8 @@ namespace Direct3D9Rhi
 			{
 				const Rhi::Context& context = direct3D9Rhi.getContext();
 				mDirect3DVertexBuffer9 = RHI_MALLOC_TYPED(context, IDirect3DVertexBuffer9*, mNumberOfSlots);
-				mStrides = RHI_MALLOC_TYPED(context, uint32_t, mNumberOfSlots);
-				mInstancesPerElement = RHI_MALLOC_TYPED(context, uint32_t, mNumberOfSlots);
+				mStrides = RHI_MALLOC_TYPED(context, RECore::uint32, mNumberOfSlots);
+				mInstancesPerElement = RHI_MALLOC_TYPED(context, RECore::uint32, mNumberOfSlots);
 				mVertexBuffers = RHI_MALLOC_TYPED(context, VertexBuffer*, mNumberOfSlots);
 
 				{ // Loop through all vertex buffers
@@ -3726,9 +3726,9 @@ namespace Direct3D9Rhi
 		{
 			{ // Set the Direct3D 9 stream sources
 				IDirect3DVertexBuffer9 **currentDirect3DVertexBuffer9AtSlot = mDirect3DVertexBuffer9;
-				uint32_t* currentStrideAtSlot = mStrides;
-				uint32_t* currentInstancesPerElementAtSlot = mInstancesPerElement;
-				for (uint32_t slot = 0; slot < mNumberOfSlots; ++slot, ++currentDirect3DVertexBuffer9AtSlot, ++currentStrideAtSlot, ++currentInstancesPerElementAtSlot)
+				RECore::uint32* currentStrideAtSlot = mStrides;
+				RECore::uint32* currentInstancesPerElementAtSlot = mInstancesPerElement;
+				for (RECore::uint32 slot = 0; slot < mNumberOfSlots; ++slot, ++currentDirect3DVertexBuffer9AtSlot, ++currentStrideAtSlot, ++currentInstancesPerElementAtSlot)
 				{
 					// Vertex buffer offset is not supported by OpenGL, so our RHI implementation doesn't support it either
 					FAILED_DEBUG_BREAK(mDirect3DDevice9->SetStreamSource(slot, *currentDirect3DVertexBuffer9AtSlot, 0, *currentStrideAtSlot))
@@ -3773,10 +3773,10 @@ namespace Direct3D9Rhi
 		IDirect3DDevice9*		 mDirect3DDevice9;			///< The Direct3D 9 device instance (we keep a reference to it), null pointer on horrible error (so we don't check)
 		IndexBuffer*			 mIndexBuffer;				///< Optional index buffer to use, can be a null pointer, the vertex array instance keeps a reference to the index buffer
 		// Direct3D 9 input slots
-		uint32_t				 mNumberOfSlots;			///< Number of used Direct3D 9 input slots
+		RECore::uint32				 mNumberOfSlots;			///< Number of used Direct3D 9 input slots
 		IDirect3DVertexBuffer9** mDirect3DVertexBuffer9;	///< Direct3D 9 vertex buffers, if "mDirect3DVertexDeclaration9" is no null pointer this is no null pointer as well
-		uint32_t*				 mStrides;					///< Strides in bytes, if "mDirect3DVertexBuffer9" is no null pointer this is no null pointer as well
-		uint32_t*				 mInstancesPerElement;		///< Instances per element, if "mDirect3DVertexBuffer9" is no null pointer this is no null pointer as well
+		RECore::uint32*				 mStrides;					///< Strides in bytes, if "mDirect3DVertexBuffer9" is no null pointer this is no null pointer as well
+		RECore::uint32*				 mInstancesPerElement;		///< Instances per element, if "mDirect3DVertexBuffer9" is no null pointer this is no null pointer as well
 		// For proper vertex buffer reference counter behaviour
 		VertexBuffer**			 mVertexBuffers;			///< Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer
 
@@ -3814,7 +3814,7 @@ namespace Direct3D9Rhi
 		*  @param[in] indirectBufferFlags
 		*    Indirect buffer flags, see "Rhi::IndirectBufferFlag"
 		*/
-		IndirectBuffer(Direct3D9Rhi& direct3D9Rhi, uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t indirectBufferFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		IndirectBuffer(Direct3D9Rhi& direct3D9Rhi, RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 indirectBufferFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IIndirectBuffer(direct3D9Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mNumberOfBytes(numberOfBytes),
 			mData(nullptr)
@@ -3828,7 +3828,7 @@ namespace Direct3D9Rhi
 			// Copy data
 			if (mNumberOfBytes > 0)
 			{
-				mData = RHI_MALLOC_TYPED(direct3D9Rhi.getContext(), uint8_t, mNumberOfBytes);
+				mData = RHI_MALLOC_TYPED(direct3D9Rhi.getContext(), RECore::uint8, mNumberOfBytes);
 				if (nullptr != data)
 				{
 					memcpy(mData, data, mNumberOfBytes);
@@ -3856,7 +3856,7 @@ namespace Direct3D9Rhi
 		*  @return
 		*    Writable indirect buffer emulation data pointer, can be a null pointer, don't destroy the returned instance
 		*/
-		[[nodiscard]] inline uint8_t* getWritableEmulationData() const
+		[[nodiscard]] inline RECore::uint8* getWritableEmulationData() const
 		{
 			return mData;
 		}
@@ -3866,7 +3866,7 @@ namespace Direct3D9Rhi
 	//[ Public virtual Rhi::IIndirectBuffer methods           ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline virtual const uint8_t* getEmulationData() const override
+		[[nodiscard]] inline virtual const RECore::uint8* getEmulationData() const override
 		{
 			return mData;
 		}
@@ -3894,8 +3894,8 @@ namespace Direct3D9Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t mNumberOfBytes;
-		uint8_t* mData;				///< Indirect buffer data, can be a null pointer
+		RECore::uint32 mNumberOfBytes;
+		RECore::uint8* mData;				///< Indirect buffer data, can be a null pointer
 
 
 	};
@@ -3941,21 +3941,21 @@ namespace Direct3D9Rhi
 	//[ Public virtual Rhi::IBufferManager methods            ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline virtual Rhi::IVertexBuffer* createVertexBuffer(uint32_t numberOfBytes, const void* data = nullptr, [[maybe_unused]] uint32_t bufferFlags = 0, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IVertexBuffer* createVertexBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, [[maybe_unused]] RECore::uint32 bufferFlags = 0, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			// TODO(naetherm) Security checks
 			Direct3D9Rhi& direct3D9Rhi = static_cast<Direct3D9Rhi&>(getRhi());
 			return RHI_NEW(direct3D9Rhi.getContext(), VertexBuffer)(direct3D9Rhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] inline virtual Rhi::IIndexBuffer* createIndexBuffer(uint32_t numberOfBytes, const void* data = nullptr, [[maybe_unused]] uint32_t bufferFlags = 0, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW, Rhi::IndexBufferFormat::Enum indexBufferFormat = Rhi::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IIndexBuffer* createIndexBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, [[maybe_unused]] RECore::uint32 bufferFlags = 0, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW, Rhi::IndexBufferFormat::Enum indexBufferFormat = Rhi::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			// TODO(naetherm) Security checks
 			Direct3D9Rhi& direct3D9Rhi = static_cast<Direct3D9Rhi&>(getRhi());
 			return RHI_NEW(direct3D9Rhi.getContext(), IndexBuffer)(direct3D9Rhi, numberOfBytes, data, bufferUsage, indexBufferFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] inline virtual Rhi::IVertexArray* createVertexArray(const Rhi::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const Rhi::VertexArrayVertexBuffer* vertexBuffers, Rhi::IIndexBuffer* indexBuffer = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IVertexArray* createVertexArray(const Rhi::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const Rhi::VertexArrayVertexBuffer* vertexBuffers, Rhi::IIndexBuffer* indexBuffer = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D9Rhi& direct3D9Rhi = static_cast<Direct3D9Rhi&>(getRhi());
 
@@ -3972,7 +3972,7 @@ namespace Direct3D9Rhi
 			RHI_ASSERT(nullptr == indexBuffer || &direct3D9Rhi == &indexBuffer->getRhi(), "Direct3D 9 error: The given index buffer resource is owned by another RHI instance")
 
 			// Create vertex array
-			uint16_t id = 0;
+			RECore::uint16 id = 0;
 			if (direct3D9Rhi.VertexArrayMakeId.CreateID(id))
 			{
 				return RHI_NEW(direct3D9Rhi.getContext(), VertexArray)(direct3D9Rhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -3993,25 +3993,25 @@ namespace Direct3D9Rhi
 			return nullptr;
 		}
 
-		[[nodiscard]] inline virtual Rhi::ITextureBuffer* createTextureBuffer(uint32_t, const void*, uint32_t, Rhi::BufferUsage, Rhi::TextureFormat::Enum RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::ITextureBuffer* createTextureBuffer(RECore::uint32, const void*, RECore::uint32, Rhi::BufferUsage, Rhi::TextureFormat::Enum RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			RHI_ASSERT(false, "Direct3D 9 doesn't support texture buffer")
 			return nullptr;
 		}
 
-		[[nodiscard]] inline virtual Rhi::IStructuredBuffer* createStructuredBuffer(uint32_t, const void*, uint32_t, Rhi::BufferUsage, uint32_t RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IStructuredBuffer* createStructuredBuffer(RECore::uint32, const void*, RECore::uint32, Rhi::BufferUsage, RECore::uint32 RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			RHI_ASSERT(false, "Direct3D 9 doesn't support structured buffer")
 			return nullptr;
 		}
 
-		[[nodiscard]] inline virtual Rhi::IIndirectBuffer* createIndirectBuffer(uint32_t numberOfBytes, const void* data = nullptr, uint32_t indirectBufferFlags = 0, [[maybe_unused]] Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IIndirectBuffer* createIndirectBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, RECore::uint32 indirectBufferFlags = 0, [[maybe_unused]] Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D9Rhi& direct3D9Rhi = static_cast<Direct3D9Rhi&>(getRhi());
 			return RHI_NEW(direct3D9Rhi.getContext(), IndirectBuffer)(direct3D9Rhi, numberOfBytes, data, indirectBufferFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] inline virtual Rhi::IUniformBuffer* createUniformBuffer(uint32_t, const void*, Rhi::BufferUsage RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IUniformBuffer* createUniformBuffer(RECore::uint32, const void*, Rhi::BufferUsage RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			RHI_ASSERT(false, "Direct3D 9 doesn't support uniform buffer")
 			return nullptr;
@@ -4073,7 +4073,7 @@ namespace Direct3D9Rhi
 		*  @param[in] textureUsage
 		*    Indication of the texture usage
 		*/
-		Texture1D(Direct3D9Rhi& direct3D9Rhi, uint32_t width, Rhi::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		Texture1D(Direct3D9Rhi& direct3D9Rhi, RECore::uint32 width, Rhi::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture1D(direct3D9Rhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mDirect3DTexture9(nullptr)
 		{
@@ -4121,10 +4121,10 @@ namespace Direct3D9Rhi
 					if (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS)
 					{
 						// Calculate the number of mipmaps
-						const uint32_t numberOfMipmaps = getNumberOfMipmaps(width);
+						const RECore::uint32 numberOfMipmaps = getNumberOfMipmaps(width);
 
 						// Upload all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
 							// Upload the current mipmap
 
@@ -4142,7 +4142,7 @@ namespace Direct3D9Rhi
 							}
 
 							// Move on to the next mipmap and ensure the size is always at least 1
-							data = static_cast<const uint8_t*>(data) + Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, 1);
+							data = static_cast<const RECore::uint8*>(data) + Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, 1);
 							width = getHalfSize(width);
 						}
 					}
@@ -4282,7 +4282,7 @@ namespace Direct3D9Rhi
 		*  @param[in] textureUsage
 		*    Indication of the texture usage
 		*/
-		Texture2D(Direct3D9Rhi& direct3D9Rhi, uint32_t width, uint32_t height, Rhi::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		Texture2D(Direct3D9Rhi& direct3D9Rhi, RECore::uint32 width, RECore::uint32 height, Rhi::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture2D(direct3D9Rhi, width, height RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mDirect3DTexture9(nullptr)
 		{
@@ -4330,10 +4330,10 @@ namespace Direct3D9Rhi
 					if (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS)
 					{
 						// Calculate the number of mipmaps
-						const uint32_t numberOfMipmaps = getNumberOfMipmaps(width, height);
+						const RECore::uint32 numberOfMipmaps = getNumberOfMipmaps(width, height);
 
 						// Upload all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
 							// Upload the current mipmap
 
@@ -4351,7 +4351,7 @@ namespace Direct3D9Rhi
 							}
 
 							// Move on to the next mipmap and ensure the size is always at least 1x1
-							data = static_cast<const uint8_t*>(data) + Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
+							data = static_cast<const RECore::uint8*>(data) + Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
 							width = getHalfSize(width);
 							height = getHalfSize(height);
 						}
@@ -4436,7 +4436,7 @@ namespace Direct3D9Rhi
 		*  @param[in] maximumMipmapIndex
 		*    Maximum mipmap index, the least detailed mipmap, <number of mipmaps> by default
 		*/
-		inline void setMinimumMaximumMipmapIndex([[maybe_unused]] uint32_t minimumMipmapIndex, [[maybe_unused]] uint32_t maximumMipmapIndex)
+		inline void setMinimumMaximumMipmapIndex([[maybe_unused]] RECore::uint32 minimumMipmapIndex, [[maybe_unused]] RECore::uint32 maximumMipmapIndex)
 		{
 			// TODO(naetherm) Implement me
 		}
@@ -4508,7 +4508,7 @@ namespace Direct3D9Rhi
 		*  @param[in] textureUsage
 		*    Indication of the texture usage
 		*/
-		Texture3D(Direct3D9Rhi& direct3D9Rhi, uint32_t width, uint32_t height, uint32_t depth, [[maybe_unused]] Rhi::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data, [[maybe_unused]] uint32_t textureFlags, [[maybe_unused]] Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		Texture3D(Direct3D9Rhi& direct3D9Rhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth, [[maybe_unused]] Rhi::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data, [[maybe_unused]] RECore::uint32 textureFlags, [[maybe_unused]] Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture3D(direct3D9Rhi, width, height, depth RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mDirect3DTexture9(nullptr)
 		{
@@ -4558,10 +4558,10 @@ namespace Direct3D9Rhi
 					if (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS)
 					{
 						// Calculate the number of mipmaps
-						const uint32_t numberOfMipmaps = getNumberOfMipmaps(width, height, depth);
+						const RECore::uint32 numberOfMipmaps = getNumberOfMipmaps(width, height, depth);
 
 						// Upload all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
 							// Upload the current mipmap
 
@@ -4579,7 +4579,7 @@ namespace Direct3D9Rhi
 							}
 
 							// Move on to the next mipmap and ensure the size is always at least 1x1
-							data = static_cast<const uint8_t*>(data) + Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
+							data = static_cast<const RECore::uint8*>(data) + Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
 							width = getHalfSize(width);
 							height = getHalfSize(height);
 						}
@@ -4719,11 +4719,11 @@ namespace Direct3D9Rhi
 		*  @param[in] textureUsage
 		*    Indication of the texture usage
 		*/
-		TextureCube(Direct3D9Rhi& direct3D9Rhi, uint32_t width, Rhi::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		TextureCube(Direct3D9Rhi& direct3D9Rhi, RECore::uint32 width, Rhi::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITextureCube(direct3D9Rhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mDirect3DCubeTexture9(nullptr)
 		{
-			static constexpr uint32_t NUMBER_OF_SLICES = 6;
+			static constexpr RECore::uint32 NUMBER_OF_SLICES = 6;
 
 			// Sanity checks
 			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid Direct3D 9 texture parameters")
@@ -4774,15 +4774,15 @@ namespace Direct3D9Rhi
 						//   etc.
 
 						// Calculate the number of mipmaps
-						const uint32_t numberOfMipmaps = getNumberOfMipmaps(width);
+						const RECore::uint32 numberOfMipmaps = getNumberOfMipmaps(width);
 
 						// Upload all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
 							// Upload the current mipmap
-							const uint32_t numberOfBytesPerRow = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-							const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width);
-							for (uint32_t arraySlice = 0; arraySlice < NUMBER_OF_SLICES; ++arraySlice)
+							const RECore::uint32 numberOfBytesPerRow = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+							const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width);
+							for (RECore::uint32 arraySlice = 0; arraySlice < NUMBER_OF_SLICES; ++arraySlice)
 							{
 								// Upload the current mipmap
 								IDirect3DSurface9* direct3DSurface9 = nullptr;
@@ -4799,7 +4799,7 @@ namespace Direct3D9Rhi
 
 								// Move on to the cube map face
 								// -> If the data doesn't contain mipmaps, we don't need to care about this in here
-								data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+								data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 							}
 
 							// Move on to the next mipmap and ensure the size is always at least 1x1
@@ -4809,9 +4809,9 @@ namespace Direct3D9Rhi
 					else
 					{
 						// The user only provided us with the base texture, no mipmaps
-						const uint32_t numberOfBytesPerRow = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-						const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width);
-						for (uint32_t arraySlice = 0; arraySlice < NUMBER_OF_SLICES; ++arraySlice)
+						const RECore::uint32 numberOfBytesPerRow = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+						const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width);
+						for (RECore::uint32 arraySlice = 0; arraySlice < NUMBER_OF_SLICES; ++arraySlice)
 						{
 							// Upload the current mipmap
 							IDirect3DSurface9* direct3DSurface9 = nullptr;
@@ -4828,7 +4828,7 @@ namespace Direct3D9Rhi
 
 							// Move on to the cube map face
 							// -> If the data doesn't contain mipmaps, we don't need to care about this in here
-							data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+							data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 						}
 					}
 				}
@@ -4843,7 +4843,7 @@ namespace Direct3D9Rhi
 					const DWORD levelCount = mDirect3DCubeTexture9->GetLevelCount();
 					for (DWORD level = 0; level < levelCount; ++level)
 					{
-						for (uint32_t arraySlice = 0; arraySlice < NUMBER_OF_SLICES; ++arraySlice)
+						for (RECore::uint32 arraySlice = 0; arraySlice < NUMBER_OF_SLICES; ++arraySlice)
 						{
 							// Get the Direct3D 9 surface
 							IDirect3DSurface9* direct3DSurface9 = nullptr;
@@ -4957,7 +4957,7 @@ namespace Direct3D9Rhi
 	//[ Public virtual Rhi::ITextureManager methods           ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] virtual Rhi::ITexture1D* createTexture1D(uint32_t width, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITexture1D* createTexture1D(RECore::uint32 width, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D9Rhi& direct3D9Rhi = static_cast<Direct3D9Rhi&>(getRhi());
 
@@ -4968,13 +4968,13 @@ namespace Direct3D9Rhi
 			return RHI_NEW(direct3D9Rhi.getContext(), Texture1D)(direct3D9Rhi, width, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual Rhi::ITexture1DArray* createTexture1DArray([[maybe_unused]] uint32_t width, [[maybe_unused]] uint32_t numberOfSlices, [[maybe_unused]] Rhi::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] uint32_t textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITexture1DArray* createTexture1DArray([[maybe_unused]] RECore::uint32 width, [[maybe_unused]] RECore::uint32 numberOfSlices, [[maybe_unused]] Rhi::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] RECore::uint32 textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			RHI_ASSERT(false, "Direct3D 9 has no 1D texture arrays")
 			return nullptr;
 		}
 
-		[[nodiscard]] virtual Rhi::ITexture2D* createTexture2D(uint32_t width, uint32_t height, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT, [[maybe_unused]] uint8_t numberOfMultisamples = 1, [[maybe_unused]] const Rhi::OptimizedTextureClearValue* optimizedTextureClearValue = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITexture2D* createTexture2D(RECore::uint32 width, RECore::uint32 height, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT, [[maybe_unused]] RECore::uint8 numberOfMultisamples = 1, [[maybe_unused]] const Rhi::OptimizedTextureClearValue* optimizedTextureClearValue = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D9Rhi& direct3D9Rhi = static_cast<Direct3D9Rhi&>(getRhi());
 
@@ -4985,13 +4985,13 @@ namespace Direct3D9Rhi
 			return RHI_NEW(direct3D9Rhi.getContext(), Texture2D)(direct3D9Rhi, width, height, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual Rhi::ITexture2DArray* createTexture2DArray([[maybe_unused]] uint32_t width, [[maybe_unused]] uint32_t height, [[maybe_unused]] uint32_t numberOfSlices, [[maybe_unused]] Rhi::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] uint32_t textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITexture2DArray* createTexture2DArray([[maybe_unused]] RECore::uint32 width, [[maybe_unused]] RECore::uint32 height, [[maybe_unused]] RECore::uint32 numberOfSlices, [[maybe_unused]] Rhi::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] RECore::uint32 textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			RHI_ASSERT(false, "Direct3D 9 has no 2D texture arrays")
 			return nullptr;
 		}
 
-		[[nodiscard]] virtual Rhi::ITexture3D* createTexture3D(uint32_t width, uint32_t height, uint32_t depth, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITexture3D* createTexture3D(RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D9Rhi& direct3D9Rhi = static_cast<Direct3D9Rhi&>(getRhi());
 
@@ -5002,7 +5002,7 @@ namespace Direct3D9Rhi
 			return RHI_NEW(direct3D9Rhi.getContext(), Texture3D)(direct3D9Rhi, width, height, depth, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual Rhi::ITextureCube* createTextureCube(uint32_t width, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITextureCube* createTextureCube(RECore::uint32 width, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D9Rhi& direct3D9Rhi = static_cast<Direct3D9Rhi&>(getRhi());
 
@@ -5013,7 +5013,7 @@ namespace Direct3D9Rhi
 			return RHI_NEW(direct3D9Rhi.getContext(), TextureCube)(direct3D9Rhi, width, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual Rhi::ITextureCubeArray* createTextureCubeArray([[maybe_unused]] uint32_t width, [[maybe_unused]] uint32_t numberOfSlices, [[maybe_unused]] Rhi::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] uint32_t textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITextureCubeArray* createTextureCubeArray([[maybe_unused]] RECore::uint32 width, [[maybe_unused]] RECore::uint32 numberOfSlices, [[maybe_unused]] Rhi::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] RECore::uint32 textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			RHI_ASSERT(false, "Direct3D 9 has no texture cube arrays")
 			return nullptr;
@@ -5120,7 +5120,7 @@ namespace Direct3D9Rhi
 		*  @param[in] direct3DDevice9
 		*    Direct3D 9 device instance to use
 		*/
-		void setDirect3D9SamplerStates(uint32_t sampler, IDirect3DDevice9& direct3DDevice9) const
+		void setDirect3D9SamplerStates(RECore::uint32 sampler, IDirect3DDevice9& direct3DDevice9) const
 		{
 			// "IDirect3DDevice9::SetSamplerState()"-documentation: "D3DSAMPLERSTATETYPE Enumerated Type" at MSDN http://msdn.microsoft.com/en-us/library/windows/desktop/bb172602%28v=vs.85%29.aspx
 
@@ -5465,7 +5465,7 @@ namespace Direct3D9Rhi
 			mDirect3D9ColorWriteEnable(0)
 		{
 			// Rhi::RenderTargetBlendDesc::renderTargetWriteMask
-			const uint8_t renderTargetWriteMask = mBlendState.renderTarget[0].renderTargetWriteMask;
+			const RECore::uint8 renderTargetWriteMask = mBlendState.renderTarget[0].renderTargetWriteMask;
 			if ((renderTargetWriteMask & Rhi::ColorWriteEnableFlag::RED) != 0)
 			{
 				mDirect3D9ColorWriteEnable |= D3DCOLORWRITEENABLE_RED;
@@ -5565,7 +5565,7 @@ namespace Direct3D9Rhi
 		*  @param[in] depthStencilAttachmentTextureFormat
 		*    The optional depth stencil render target texture format, can be a "Rhi::TextureFormat::UNKNOWN" if there should be no depth buffer
 		*/
-		RenderPass(Rhi::IRhi& rhi, uint32_t numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		RenderPass(Rhi::IRhi& rhi, RECore::uint32 numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IRenderPass(rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mNumberOfColorAttachments(numberOfColorAttachments),
 			mDepthStencilAttachmentTextureFormat(depthStencilAttachmentTextureFormat)
@@ -5588,7 +5588,7 @@ namespace Direct3D9Rhi
 		*  @return
 		*    The number of color render target textures
 		*/
-		[[nodiscard]] inline uint32_t getNumberOfColorAttachments() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfColorAttachments() const
 		{
 			return mNumberOfColorAttachments;
 		}
@@ -5600,7 +5600,7 @@ namespace Direct3D9Rhi
 		*  @return
 		*    The number of render target textures (color and depth stencil)
 		*/
-		[[nodiscard]] inline uint32_t getNumberOfAttachments() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfAttachments() const
 		{
 			return (mDepthStencilAttachmentTextureFormat != Rhi::TextureFormat::Enum::UNKNOWN) ? (mNumberOfColorAttachments + 1) : mNumberOfColorAttachments;
 		}
@@ -5615,7 +5615,7 @@ namespace Direct3D9Rhi
 		*  @return
 		*    The color attachment texture format
 		*/
-		[[nodiscard]] inline Rhi::TextureFormat::Enum getColorAttachmentTextureFormat(uint32_t colorAttachmentIndex) const
+		[[nodiscard]] inline Rhi::TextureFormat::Enum getColorAttachmentTextureFormat(RECore::uint32 colorAttachmentIndex) const
 		{
 			RHI_ASSERT(colorAttachmentIndex < mNumberOfColorAttachments, "Invalid Direct3D 9 color attachment index")
 			return mColorAttachmentTextureFormats[colorAttachmentIndex];
@@ -5656,7 +5656,7 @@ namespace Direct3D9Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t				 mNumberOfColorAttachments;
+		RECore::uint32				 mNumberOfColorAttachments;
 		Rhi::TextureFormat::Enum mColorAttachmentTextureFormats[8];
 		Rhi::TextureFormat::Enum mDepthStencilAttachmentTextureFormat;
 
@@ -5849,7 +5849,7 @@ namespace Direct3D9Rhi
 	//[ Public virtual Rhi::IRenderTarget methods             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void getWidthAndHeight(uint32_t& width, uint32_t& height) const override
+		virtual void getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const override
 		{
 			// Is there a valid swap chain?
 			if (nullptr != mDirect3DSwapChain9)
@@ -5917,7 +5917,7 @@ namespace Direct3D9Rhi
 			return NULL_HANDLE;
 		}
 
-		virtual void setVerticalSynchronizationInterval(uint32_t synchronizationInterval) override
+		virtual void setVerticalSynchronizationInterval(RECore::uint32 synchronizationInterval) override
 		{
 			// TODO(naetherm) Direct3D 9 supports a maximum synchronization interval of four. Need to add some security checks.
 			if (mVerticalSynchronizationInterval != synchronizationInterval)
@@ -6068,7 +6068,7 @@ namespace Direct3D9Rhi
 		*  @note
 		*    - "mDXGISwapChain" must be valid when calling this method
 		*/
-		void getSafeWidthAndHeight(uint32_t& width, uint32_t& height) const
+		void getSafeWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const
 		{
 			// Get the Direct3D 9 present parameters
 			D3DPRESENT_PARAMETERS d3dPresentParameters;
@@ -6105,7 +6105,7 @@ namespace Direct3D9Rhi
 		IDirect3DSwapChain9* mDirect3DSwapChain9;			///< The Direct3D 9 swap chain instance, null pointer on error
 		IDirect3DSurface9*	 mDirect3DSurface9RenderTarget;	///< The Direct3D 9 render target surface instance, null pointer on error
 		IDirect3DSurface9*	 mDirect3DSurface9DepthStencil;	///< The Direct3D 9 depth stencil surface instance, null pointer on error
-		uint32_t			 mVerticalSynchronizationInterval;
+		RECore::uint32			 mVerticalSynchronizationInterval;
 
 
 	};
@@ -6364,7 +6364,7 @@ namespace Direct3D9Rhi
 		*  @return
 		*    The number of Direct3D 9 render target surfaces
 		*/
-		[[nodiscard]] inline uint32_t getNumberOfDirect3DSurface9Colors() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfDirect3DSurface9Colors() const
 		{
 			return mNumberOfColorTextures;
 		}
@@ -6398,7 +6398,7 @@ namespace Direct3D9Rhi
 	//[ Public virtual Rhi::IRenderTarget methods             ]
 	//[-------------------------------------------------------]
 	public:
-		inline virtual void getWidthAndHeight(uint32_t& width, uint32_t& height) const override
+		inline virtual void getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const override
 		{
 			// No fancy implementation in here, just copy over the internal information
 			width  = mWidth;
@@ -6429,11 +6429,11 @@ namespace Direct3D9Rhi
 	//[-------------------------------------------------------]
 	private:
 		// Generic part
-		uint32_t		mNumberOfColorTextures;	///< Number of color render target textures
+		RECore::uint32		mNumberOfColorTextures;	///< Number of color render target textures
 		Rhi::ITexture** mColorTextures;			///< The color render target textures (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "mNumberOfColorTextures" textures in the provided C-array of pointers
 		Rhi::ITexture*  mDepthStencilTexture;	///< The depth stencil render target texture (we keep a reference to it), can be a null pointer
-		uint32_t		mWidth;					///< The framebuffer width
-		uint32_t		mHeight;				///< The framebuffer height
+		RECore::uint32		mWidth;					///< The framebuffer width
+		RECore::uint32		mHeight;				///< The framebuffer height
 		// Direct3D 9 part
 		IDirect3DSurface9** mDirect3D9ColorSurfaces;		///< The Direct3D 9 color render target surfaces (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "mNumberOfColorTextures" textures in the provided C-array of pointers
 		IDirect3DSurface9*  mDirect3D9DepthStencilSurface;	///< The Direct3D 9 depth stencil render target surface (we keep a reference to it), can be a null pointer
@@ -6502,7 +6502,7 @@ namespace Direct3D9Rhi
 				// Return shader bytecode, if requested do to so
 				if (nullptr != shaderBytecode)
 				{
-					shaderBytecode->setBytecodeCopy(static_cast<uint32_t>(d3dXBuffer->GetBufferSize()), static_cast<uint8_t*>(d3dXBuffer->GetBufferPointer()));
+					shaderBytecode->setBytecodeCopy(static_cast<RECore::uint32>(d3dXBuffer->GetBufferSize()), static_cast<RECore::uint8*>(d3dXBuffer->GetBufferPointer()));
 				}
 
 				// Release the Direct3D 9 shader buffer object
@@ -6653,7 +6653,7 @@ namespace Direct3D9Rhi
 				// Return shader bytecode, if requested do to so
 				if (nullptr != shaderBytecode)
 				{
-					shaderBytecode->setBytecodeCopy(static_cast<uint32_t>(d3dXBuffer->GetBufferSize()), static_cast<uint8_t*>(d3dXBuffer->GetBufferPointer()));
+					shaderBytecode->setBytecodeCopy(static_cast<RECore::uint32>(d3dXBuffer->GetBufferSize()), static_cast<RECore::uint8*>(d3dXBuffer->GetBufferPointer()));
 				}
 
 				// Release the Direct3D 9 shader buffer object
@@ -7236,7 +7236,7 @@ namespace Direct3D9Rhi
 		*  @param[in] id
 		*    The unique compact graphics pipeline state ID
 		*/
-		GraphicsPipelineState(Direct3D9Rhi& direct3D9Rhi, const Rhi::GraphicsPipelineState& graphicsPipelineState, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		GraphicsPipelineState(Direct3D9Rhi& direct3D9Rhi, const Rhi::GraphicsPipelineState& graphicsPipelineState, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IGraphicsPipelineState(direct3D9Rhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mDirect3DDevice9(direct3D9Rhi.getDirect3DDevice9()),
 			mPrimitiveTopology(graphicsPipelineState.primitiveTopology),
@@ -7259,7 +7259,7 @@ namespace Direct3D9Rhi
 			mRenderPass->addReference();
 
 			{ // Create Direct3D 9 vertex elements
-				const uint32_t numberOfAttributes = graphicsPipelineState.vertexAttributes.numberOfAttributes;
+				const RECore::uint32 numberOfAttributes = graphicsPipelineState.vertexAttributes.numberOfAttributes;
 				const Rhi::VertexAttribute* attributes = graphicsPipelineState.vertexAttributes.attributes;
 
 				// TODO(naetherm) We could manage in here without new/delete when using a fixed maximum supported number of elements
@@ -7682,7 +7682,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		static constexpr Rhi::ImplementationDispatchFunction DISPATCH_FUNCTIONS[static_cast<uint8_t>(Rhi::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
+		static constexpr Rhi::ImplementationDispatchFunction DISPATCH_FUNCTIONS[static_cast<RECore::uint8>(Rhi::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
 		{
 			// Command buffer
 			&ImplementationDispatch::DispatchCommandBuffer,
@@ -7839,7 +7839,7 @@ namespace Direct3D9Rhi
 		#ifdef RHI_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
-			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
+			const RECore::uint32 numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
 			if (numberOfCurrentResources > 0)
 			{
 				// Error!
@@ -7889,18 +7889,18 @@ namespace Direct3D9Rhi
 	void Direct3D9Rhi::dispatchCommandBufferInternal(const Rhi::CommandBuffer& commandBuffer)
 	{
 		// Loop through all commands
-		const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
+		const RECore::uint8* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
 		Rhi::ConstCommandPacket constCommandPacket = commandPacketBuffer;
 		while (nullptr != constCommandPacket)
 		{
 			{ // Dispatch command packet
 				const Rhi::CommandDispatchFunctionIndex commandDispatchFunctionIndex = Rhi::CommandPacketHelper::loadCommandDispatchFunctionIndex(constCommandPacket);
 				const void* command = Rhi::CommandPacketHelper::loadCommand(constCommandPacket);
-				detail::DISPATCH_FUNCTIONS[static_cast<uint32_t>(commandDispatchFunctionIndex)](command, *this);
+				detail::DISPATCH_FUNCTIONS[static_cast<RECore::uint32>(commandDispatchFunctionIndex)](command, *this);
 			}
 
 			{ // Next command
-				const uint32_t nextCommandPacketByteIndex = Rhi::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
+				const RECore::uint32 nextCommandPacketByteIndex = Rhi::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
 				constCommandPacket = (~0u != nextCommandPacketByteIndex) ? &commandPacketBuffer[nextCommandPacketByteIndex] : nullptr;
 			}
 		}
@@ -7944,7 +7944,7 @@ namespace Direct3D9Rhi
 		}
 	}
 
-	void Direct3D9Rhi::setGraphicsResourceGroup(uint32_t rootParameterIndex, Rhi::IResourceGroup* resourceGroup)
+	void Direct3D9Rhi::setGraphicsResourceGroup(RECore::uint32 rootParameterIndex, Rhi::IResourceGroup* resourceGroup)
 	{
 		// Security checks
 		#ifdef DEBUG
@@ -7965,10 +7965,10 @@ namespace Direct3D9Rhi
 
 			// Set graphics resource group
 			const ResourceGroup* d3d9ResourceGroup = static_cast<ResourceGroup*>(resourceGroup);
-			const uint32_t numberOfResources = d3d9ResourceGroup->getNumberOfResources();
+			const RECore::uint32 numberOfResources = d3d9ResourceGroup->getNumberOfResources();
 			Rhi::IResource** resources = d3d9ResourceGroup->getResources();
 			const Rhi::RootParameter& rootParameter = mGraphicsRootSignature->getRootSignature().parameters[rootParameterIndex];
-			for (uint32_t resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
+			for (RECore::uint32 resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
 			{
 				// Since Direct3D 9 doesn't support e.g. uniform buffer we need to check for null pointers here
 				Rhi::IResource* resource = *resources;
@@ -8240,7 +8240,7 @@ namespace Direct3D9Rhi
 		}
 	}
 
-	void Direct3D9Rhi::setGraphicsViewports([[maybe_unused]] uint32_t numberOfViewports, const Rhi::Viewport* viewports)
+	void Direct3D9Rhi::setGraphicsViewports([[maybe_unused]] RECore::uint32 numberOfViewports, const Rhi::Viewport* viewports)
 	{
 		// Rasterizer (RS) stage
 
@@ -8262,7 +8262,7 @@ namespace Direct3D9Rhi
 		FAILED_DEBUG_BREAK(mDirect3DDevice9->SetViewport(&direct3D9Viewport))
 	}
 
-	void Direct3D9Rhi::setGraphicsScissorRectangles([[maybe_unused]] uint32_t numberOfScissorRectangles, const Rhi::ScissorRectangle* scissorRectangles)
+	void Direct3D9Rhi::setGraphicsScissorRectangles([[maybe_unused]] RECore::uint32 numberOfScissorRectangles, const Rhi::ScissorRectangle* scissorRectangles)
 	{
 		// Rasterizer (RS) stage
 
@@ -8421,7 +8421,7 @@ namespace Direct3D9Rhi
 		}
 	}
 
-	void Direct3D9Rhi::clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil)
+	void Direct3D9Rhi::clearGraphics(RECore::uint32 clearFlags, const float color[4], float z, RECore::uint32 stencil)
 	{
 		// Sanity check
 		RHI_ASSERT(z >= 0.0f && z <= 1.0f, "The Direct3D 9 clear graphics z value must be between [0, 1] (inclusive)")
@@ -8485,7 +8485,7 @@ namespace Direct3D9Rhi
 		FAILED_DEBUG_BREAK(mDirect3DDevice9->SetRenderState(D3DRS_SCISSORTESTENABLE, 0))
 
 		// Get API flags
-		uint32_t flagsApi = 0;
+		RECore::uint32 flagsApi = 0;
 		if (clearFlags & Rhi::ClearFlag::COLOR)
 		{
 			flagsApi |= D3DCLEAR_TARGET;
@@ -8512,7 +8512,7 @@ namespace Direct3D9Rhi
 		RHI_END_DEBUG_EVENT(this)
 	}
 
-	void Direct3D9Rhi::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+	void Direct3D9Rhi::drawGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 	{
 		// Sanity checks
 		RHI_ASSERT(nullptr != emulationData, "The Direct3D 9 emulation data must be valid")
@@ -8528,7 +8528,7 @@ namespace Direct3D9Rhi
 				beginDebugEvent("Multi-draw-indirect emulation");
 			}
 		#endif
-		for (uint32_t i = 0; i < numberOfDraws; ++i)
+		for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
 		{
 			const Rhi::DrawArguments& drawArguments = *reinterpret_cast<const Rhi::DrawArguments*>(emulationData);
 
@@ -8541,7 +8541,7 @@ namespace Direct3D9Rhi
 
 			{ // Draw
 				// Get number of primitives
-				uint32_t primitiveCount;
+				RECore::uint32 primitiveCount;
 				switch (mPrimitiveTopology)
 				{
 					case Rhi::PrimitiveTopology::POINT_LIST:
@@ -8624,7 +8624,7 @@ namespace Direct3D9Rhi
 		#endif
 	}
 
-	void Direct3D9Rhi::drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+	void Direct3D9Rhi::drawIndexedGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 	{
 		// Sanity checks
 		RHI_ASSERT(nullptr != emulationData, "The Direct3D 9 emulation data must be valid")
@@ -8643,7 +8643,7 @@ namespace Direct3D9Rhi
 					beginDebugEvent("Multi-indexed-draw-indirect emulation");
 				}
 			#endif
-			for (uint32_t i = 0; i < numberOfDraws; ++i)
+			for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
 			{
 				const Rhi::DrawIndexedArguments& drawIndexedArguments = *reinterpret_cast<const Rhi::DrawIndexedArguments*>(emulationData);
 				RHI_ASSERT(0 == drawIndexedArguments.startInstanceLocation, "Start instance location isn't supported by Direct3D 9")	// Not supported by Direct3D 9
@@ -8655,7 +8655,7 @@ namespace Direct3D9Rhi
 
 				{ // Draw
 					// Get number of primitives
-					uint32_t primitiveCount;
+					RECore::uint32 primitiveCount;
 					switch (mPrimitiveTopology)
 					{
 						case Rhi::PrimitiveTopology::POINT_LIST:
@@ -8766,7 +8766,7 @@ namespace Direct3D9Rhi
 	//[-------------------------------------------------------]
 	//[ Query                                                 ]
 	//[-------------------------------------------------------]
-	void Direct3D9Rhi::resetQueryPool([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] uint32_t firstQueryIndex, [[maybe_unused]] uint32_t numberOfQueries)
+	void Direct3D9Rhi::resetQueryPool([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] RECore::uint32 firstQueryIndex, [[maybe_unused]] RECore::uint32 numberOfQueries)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -8775,7 +8775,7 @@ namespace Direct3D9Rhi
 		NOP;
 	}
 
-	void Direct3D9Rhi::beginQuery([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] uint32_t queryIndex, [[maybe_unused]] uint32_t queryControlFlags)
+	void Direct3D9Rhi::beginQuery([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] RECore::uint32 queryIndex, [[maybe_unused]] RECore::uint32 queryControlFlags)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -8784,7 +8784,7 @@ namespace Direct3D9Rhi
 		NOP;
 	}
 
-	void Direct3D9Rhi::endQuery([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] uint32_t queryIndex)
+	void Direct3D9Rhi::endQuery([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] RECore::uint32 queryIndex)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -8793,7 +8793,7 @@ namespace Direct3D9Rhi
 		NOP;
 	}
 
-	void Direct3D9Rhi::writeTimestampQuery([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] uint32_t queryIndex)
+	void Direct3D9Rhi::writeTimestampQuery([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] RECore::uint32 queryIndex)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -8858,15 +8858,15 @@ namespace Direct3D9Rhi
 	//[-------------------------------------------------------]
 	//[ Shader language                                       ]
 	//[-------------------------------------------------------]
-	uint32_t Direct3D9Rhi::getNumberOfShaderLanguages() const
+	RECore::uint32 Direct3D9Rhi::getNumberOfShaderLanguages() const
 	{
-		uint32_t numberOfShaderLanguages = 1;	// HLSL support is always there
+		RECore::uint32 numberOfShaderLanguages = 1;	// HLSL support is always there
 
 		// Done, return the number of supported shader languages
 		return numberOfShaderLanguages;
 	}
 
-	const char* Direct3D9Rhi::getShaderLanguageName([[maybe_unused]] uint32_t index) const
+	const char* Direct3D9Rhi::getShaderLanguageName([[maybe_unused]] RECore::uint32 index) const
 	{
 		RHI_ASSERT(index < getNumberOfShaderLanguages(), "Direct3D 9: Shader language index is out-of-bounds")
 		return ::detail::HLSL_NAME;
@@ -8903,12 +8903,12 @@ namespace Direct3D9Rhi
 	//[-------------------------------------------------------]
 	//[ Resource creation                                     ]
 	//[-------------------------------------------------------]
-	Rhi::IRenderPass* Direct3D9Rhi::createRenderPass(uint32_t numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, [[maybe_unused]] uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
+	Rhi::IRenderPass* Direct3D9Rhi::createRenderPass(RECore::uint32 numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, [[maybe_unused]] RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		return RHI_NEW(mContext, RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
-	Rhi::IQueryPool* Direct3D9Rhi::createQueryPool([[maybe_unused]] Rhi::QueryType queryType, [[maybe_unused]] uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER_NO_DEFAULT)
+	Rhi::IQueryPool* Direct3D9Rhi::createQueryPool([[maybe_unused]] Rhi::QueryType queryType, [[maybe_unused]] RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER_NO_DEFAULT)
 	{
 		// TODO(naetherm) Implement me
 		return nullptr;
@@ -8956,7 +8956,7 @@ namespace Direct3D9Rhi
 		RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "Direct3D 9: Invalid graphics pipeline state render pass")
 
 		// Create graphics pipeline state
-		uint16_t id = 0;
+		RECore::uint16 id = 0;
 		if (GraphicsPipelineStateMakeId.CreateID(id))
 		{
 			// Resource debug name: "IDirect3DVertexDeclaration9" is not derived from "IDirect3DResource9", meaning we can't use the "IDirect3DResource9::SetPrivateData()"-method
@@ -8998,7 +8998,7 @@ namespace Direct3D9Rhi
 	//[-------------------------------------------------------]
 	//[ Resource handling                                     ]
 	//[-------------------------------------------------------]
-	bool Direct3D9Rhi::map(Rhi::IResource& resource, uint32_t subresource, Rhi::MapType mapType, uint32_t, Rhi::MappedSubresource& mappedSubresource)
+	bool Direct3D9Rhi::map(Rhi::IResource& resource, RECore::uint32 subresource, Rhi::MapType mapType, RECore::uint32, Rhi::MappedSubresource& mappedSubresource)
 	{
 		// The "Rhi::MapType" values directly map to Direct3D 10 & 11 constants, do not change them
 		// The "Rhi::MappedSubresource" structure directly maps to Direct3D 11, do not change it
@@ -9178,7 +9178,7 @@ namespace Direct3D9Rhi
 		}
 	}
 
-	void Direct3D9Rhi::unmap(Rhi::IResource& resource, uint32_t subresource)
+	void Direct3D9Rhi::unmap(Rhi::IResource& resource, RECore::uint32 subresource)
 	{
 		// Evaluate the resource type
 		switch (resource.getResourceType())
@@ -9245,7 +9245,7 @@ namespace Direct3D9Rhi
 		}
 	}
 
-	bool Direct3D9Rhi::getQueryPoolResults([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] uint32_t numberOfDataBytes, [[maybe_unused]] uint8_t* data, [[maybe_unused]] uint32_t firstQueryIndex, [[maybe_unused]] uint32_t numberOfQueries, [[maybe_unused]] uint32_t strideInBytes, [[maybe_unused]] uint32_t queryResultFlags)
+	bool Direct3D9Rhi::getQueryPoolResults([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] RECore::uint32 numberOfDataBytes, [[maybe_unused]] RECore::uint8* data, [[maybe_unused]] RECore::uint32 firstQueryIndex, [[maybe_unused]] RECore::uint32 numberOfQueries, [[maybe_unused]] RECore::uint32 strideInBytes, [[maybe_unused]] RECore::uint32 queryResultFlags)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)

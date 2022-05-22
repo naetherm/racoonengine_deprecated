@@ -142,7 +142,7 @@ namespace RERenderer
 			return mCurrentlyBoundMaterialBlueprintResource;
 		}
 
-		[[nodiscard]] inline uint32_t* getGlobalComputeSize() const
+		[[nodiscard]] inline RECore::uint32* getGlobalComputeSize() const
 		{
 			return mGlobalComputeSize;
 		}
@@ -169,7 +169,7 @@ namespace RERenderer
 		glm::dvec3 mWorldSpaceCameraPosition;	///< Cached 64 bit world space position of the camera since often accessed due to camera relative rendering
 		// Cached "Renderer::RenderQueue" data to reduce the number of state changes across different render queue instances (beneficial for complex compositors with e.g. multiple Gaussian blur passes)
 		mutable MaterialBlueprintResource* mCurrentlyBoundMaterialBlueprintResource;
-		mutable uint32_t				   mGlobalComputeSize[3];
+		mutable RECore::uint32				   mGlobalComputeSize[3];
 
 
 	};

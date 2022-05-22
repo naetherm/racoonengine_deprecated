@@ -237,7 +237,7 @@ public:
   *  @return
   *    Vendor ID
   */
-  [[nodiscard]] inline uint32_t getVendor() const
+  [[nodiscard]] inline RECore::uint32 getVendor() const
   {
     return m_nVendor;
   }
@@ -249,7 +249,7 @@ public:
   *  @return
   *    Product ID
   */
-  [[nodiscard]] inline uint32_t getProduct() const
+  [[nodiscard]] inline RECore::uint32 getProduct() const
   {
     return m_nProduct;
   }
@@ -261,7 +261,7 @@ public:
   *  @return
   *    Usage ID
   */
-  [[nodiscard]] inline uint16_t getUsage() const
+  [[nodiscard]] inline RECore::uint16 getUsage() const
   {
     return m_nUsage;
   }
@@ -273,7 +273,7 @@ public:
   *  @return
   *    Usage page ID
   */
-  [[nodiscard]] inline uint16_t getUsagePage() const
+  [[nodiscard]] inline RECore::uint16 getUsagePage() const
   {
     return m_nUsagePage;
   }
@@ -323,7 +323,7 @@ public:
   *  @param[in] nSize
   *    Size of input report (in bytes)
   */
-  inline void parseInputReport(const uint8_t *pInputReport, uint32_t nSize)
+  inline void parseInputReport(const RECore::uint8 *pInputReport, RECore::uint32 nSize)
   {
     // Call system specific backend function to parse input report data
     parseInputReportData(pInputReport, nSize);
@@ -375,7 +375,7 @@ protected:
   *    functions (e.g. Windows HID API). This method will be called automatically
   *    by parseInputReport.
   */
-  inline virtual void parseInputReportData(const uint8_t*, uint32_t)
+  inline virtual void parseInputReportData(const RECore::uint8*, RECore::uint32)
   {
     // To be implemented in derived classes
   }
@@ -401,23 +401,23 @@ protected:
 protected:
   // Device data
   std::string	m_sName;	///< Device name
-  uint32_t	m_nVendor;	///< Vendor ID
-  uint32_t	m_nProduct;	///< Product ID
+  RECore::uint32	m_nVendor;	///< Vendor ID
+  RECore::uint32	m_nProduct;	///< Product ID
 
   // Device capabilities
-  uint16_t m_nUsagePage;					///< Device usage page
-  uint16_t m_nUsage;						///< Device usage
-  uint16_t m_nFeatureReportByteLength;	///< Feature report byte length
-  uint16_t m_nNumberLinkCollectionNodes;	///< Number of link collection nodes
-  uint16_t m_nNumberInputButtonCaps;		///< Number of input buttons
-  uint16_t m_nNumberInputValueCaps;		///< Number of input values
-  uint16_t m_nNumberInputDataIndices;		///< Number of input data indices
-  uint16_t m_nNumberOutputButtonCaps;		///< Number of output buttons
-  uint16_t m_nNumberOutputValueCaps;		///< Number of output values
-  uint16_t m_nNumberOutputDataIndices;	///< Number of output data indices
-  uint16_t m_nNumberFeatureButtonCaps;	///< Number of feature buttons
-  uint16_t m_nNumberFeatureValueCaps;		///< Number of feature values
-  uint16_t m_nNumberFeatureDataIndices;	///< Number of feature data indices
+  RECore::uint16 m_nUsagePage;					///< Device usage page
+  RECore::uint16 m_nUsage;						///< Device usage
+  RECore::uint16 m_nFeatureReportByteLength;	///< Feature report byte length
+  RECore::uint16 m_nNumberLinkCollectionNodes;	///< Number of link collection nodes
+  RECore::uint16 m_nNumberInputButtonCaps;		///< Number of input buttons
+  RECore::uint16 m_nNumberInputValueCaps;		///< Number of input values
+  RECore::uint16 m_nNumberInputDataIndices;		///< Number of input data indices
+  RECore::uint16 m_nNumberOutputButtonCaps;		///< Number of output buttons
+  RECore::uint16 m_nNumberOutputValueCaps;		///< Number of output values
+  RECore::uint16 m_nNumberOutputDataIndices;	///< Number of output data indices
+  RECore::uint16 m_nNumberFeatureButtonCaps;	///< Number of feature buttons
+  RECore::uint16 m_nNumberFeatureValueCaps;		///< Number of feature values
+  RECore::uint16 m_nNumberFeatureDataIndices;	///< Number of feature data indices
 
   // Controls
   std::vector<HIDCapability> m_lstInputButtons;	///< List of input buttons

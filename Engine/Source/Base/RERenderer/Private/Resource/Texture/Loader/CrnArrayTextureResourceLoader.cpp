@@ -79,7 +79,7 @@ namespace RERenderer
 			mMemoryFile.decompress();
 
 			// Read CRN array
-			mMemoryFile.read(&mNumberOfSlices, sizeof(uint32_t));
+			mMemoryFile.read(&mNumberOfSlices, sizeof(RECore::uint32));
 			RHI_ASSERT(mNumberOfSlices > 0, "Invalid number of slices")
 			mAssetIds.resize(mNumberOfSlices);
 			mMemoryFile.read(mAssetIds.data(), sizeof(AssetId) * mNumberOfSlices);
@@ -90,13 +90,13 @@ namespace RERenderer
 			mNumberOfUsedFileDataBytes = 0;
 			mSliceFileMetadata.clear();
 			mSliceFileMetadata.reserve(mNumberOfSlices);
-			for (uint32_t i = 0; i < mNumberOfSlices; ++i)
+			for (RECore::uint32 i = 0; i < mNumberOfSlices; ++i)
 			{
 				const RECore::Asset& asset = assetManager.getAssetByAssetId(mAssetIds[i]);	// TODO(naetherm) Usually considered to be multithreading safe, but better review this
-				const int64_t fileSize = fileManager.getFileSize(asset.virtualFilename);
+				const RECore::int64 fileSize = fileManager.getFileSize(asset.virtualFilename);
 				RHI_ASSERT(fileSize > 0, "Invalid file size")
-				mSliceFileMetadata.emplace_back(asset, mNumberOfUsedFileDataBytes, static_cast<uint32_t>(fileSize));
-				mNumberOfUsedFileDataBytes += static_cast<uint32_t>(fileSize);
+				mSliceFileMetadata.emplace_back(asset, mNumberOfUsedFileDataBytes, static_cast<RECore::uint32>(fileSize));
+				mNumberOfUsedFileDataBytes += static_cast<RECore::uint32>(fileSize);
 			}
 
 			// Load the source image file into memory: Get file size and file data
@@ -104,7 +104,7 @@ namespace RERenderer
 			{
 				mNumberOfFileDataBytes = mNumberOfUsedFileDataBytes;
 				delete [] mFileData;
-				mFileData = new uint8_t[mNumberOfFileDataBytes];
+				mFileData = new RECore::uint8[mNumberOfFileDataBytes];
 			}
 			for (const SliceFileMetadata& sliceFileMetadata : mSliceFileMetadata)
 			{
@@ -145,7 +145,7 @@ namespace RERenderer
 		}
 		mWidth  = masterCrnTextureInfo.m_width;
 		mHeight = masterCrnTextureInfo.m_height;
-		const uint32_t numberOfFaces = masterCrnTextureInfo.m_faces;
+		const RECore::uint32 numberOfFaces = masterCrnTextureInfo.m_faces;
 		mCubeMap = (numberOfFaces > 1);
 
 		// Sanity check
@@ -156,12 +156,12 @@ namespace RERenderer
 		{
 			// DXT1 compression (known as BC1 in DirectX 10, RGB compression: 8:1, 8 bytes per block)
 			case cCRNFmtDXT1:
-				mTextureFormat = static_cast<uint8_t>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC1_SRGB : RERHI::TextureFormat::BC1);
+				mTextureFormat = static_cast<RECore::uint8>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC1_SRGB : RERHI::TextureFormat::BC1);
 				break;
 
 			// DXT3 compression (known as BC2 in DirectX 10, RGBA compression: 4:1, 16 bytes per block)
 			case cCRNFmtDXT3:
-				mTextureFormat = static_cast<uint8_t>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC2_SRGB : RERHI::TextureFormat::BC2);
+				mTextureFormat = static_cast<RECore::uint8>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC2_SRGB : RERHI::TextureFormat::BC2);
 				break;
 
 			// DXT5 compression (known as BC3 in DirectX 10, RGBA compression: 4:1, 16 bytes per block)
@@ -170,7 +170,7 @@ namespace RERenderer
 			case cCRNFmtDXT5_xGxR:
 			case cCRNFmtDXT5_xGBR:
 			case cCRNFmtDXT5_AGBR:
-				mTextureFormat = static_cast<uint8_t>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC3_SRGB : RERHI::TextureFormat::BC3);
+				mTextureFormat = static_cast<RECore::uint8>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC3_SRGB : RERHI::TextureFormat::BC3);
 				break;
 
 			// 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC/ATI2N, known as BC5 in DirectX 10, 16 bytes per block)
@@ -195,7 +195,7 @@ namespace RERenderer
 		}
 
 		// Does the data contain mipmaps?
-		const uint32_t numberOfLevels = masterCrnTextureInfo.m_levels;
+		const RECore::uint32 numberOfLevels = masterCrnTextureInfo.m_levels;
 		mDataContainsMipmaps = (numberOfLevels > 1);
 
 		crnd::crnd_unpack_context crndUnpackContext = crnd::crnd_unpack_begin(mFileData + masterSliceFileMetadata.offset, masterSliceFileMetadata.numberOfBytes);
@@ -245,7 +245,7 @@ namespace RERenderer
 			{
 				mNumberOfImageDataBytes = mNumberOfUsedImageDataBytes;
 				delete [] mImageData;
-				mImageData = new uint8_t[mNumberOfImageDataBytes];
+				mImageData = new RECore::uint8[mNumberOfImageDataBytes];
 			}
 		}
 
@@ -255,7 +255,7 @@ namespace RERenderer
 		//   etc.
 
 		// Now transcode all face and mipmap levels into memory, one mip level at a time
-		for (uint32_t sliceIndex = 0; sliceIndex < mNumberOfSlices; ++sliceIndex)
+		for (RECore::uint32 sliceIndex = 0; sliceIndex < mNumberOfSlices; ++sliceIndex)
 		{
 			// Start CRN unpack context
 			if (sliceIndex > 0)
@@ -286,7 +286,7 @@ namespace RERenderer
 
 			// Transcode slice
 			void* decompressedImages[cCRNMaxFaces];
-			uint8_t* currentImageData = mImageData;
+			RECore::uint8* currentImageData = mImageData;
 			for (crn_uint32 levelIndex = static_cast<crn_uint32>(startLevelIndex); levelIndex < numberOfLevels; ++levelIndex)
 			{
 				// Compute the face's width, height, number of DXT blocks per row/col, etc.
@@ -338,7 +338,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	RERHI::RHITexture* CrnArrayTextureResourceLoader::createRhiTexture()
 	{
-		const uint32_t flags = (mDataContainsMipmaps ? (RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS | RERHI::TextureFlag::SHADER_RESOURCE) : RERHI::TextureFlag::SHADER_RESOURCE);
+		const RECore::uint32 flags = (mDataContainsMipmaps ? (RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS | RERHI::TextureFlag::SHADER_RESOURCE) : RERHI::TextureFlag::SHADER_RESOURCE);
 
     if (mCubeMap)
     {

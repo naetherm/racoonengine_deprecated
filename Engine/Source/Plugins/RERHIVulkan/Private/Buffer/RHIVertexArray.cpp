@@ -36,8 +36,8 @@
 namespace RERHIVulkan {
 
 VertexArray::VertexArray(RHIDynamicRHI &vulkanRhi, const RERHI::VertexAttributes &vertexAttributes,
-                         uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer *vertexBuffers,
-                         IndexBuffer *indexBuffer, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+                         RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer *vertexBuffers,
+                         IndexBuffer *indexBuffer, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
   RHIVertexArray(static_cast<RERHI::RHIDynamicRHI &>(vulkanRhi), id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mIndexBuffer(indexBuffer),
   mNumberOfSlots(numberOfVertexBuffers),
@@ -54,7 +54,7 @@ VertexArray::VertexArray(RHIDynamicRHI &vulkanRhi, const RERHI::VertexAttributes
   if (mNumberOfSlots > 0) {
     const RERHI::RHIContext &context = vulkanRhi.getContext();
     mVertexVkBuffers = RHI_MALLOC_TYPED(context, VkBuffer, mNumberOfSlots);
-    mStrides = RHI_MALLOC_TYPED(context, uint32_t, mNumberOfSlots);
+    mStrides = RHI_MALLOC_TYPED(context, RECore::uint32, mNumberOfSlots);
     mOffsets = RHI_MALLOC_TYPED(context, VkDeviceSize, mNumberOfSlots);
     memset(mOffsets, 0, sizeof(VkDeviceSize) *
                         mNumberOfSlots);  // Vertex buffer offset is not supported by OpenGL, so our RHI implementation doesn't support it either, set everything to zero

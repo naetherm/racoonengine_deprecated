@@ -33,8 +33,8 @@
 namespace RERHIOpenGLES3 {
 
 
-TextureCube::TextureCube(RHIDynamicRHI &openGLES3Rhi, uint32_t width, RERHI::TextureFormat::Enum textureFormat,
-                         const void *data, uint32_t textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+TextureCube::TextureCube(RHIDynamicRHI &openGLES3Rhi, RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat,
+                         const void *data, RECore::uint32 textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHITextureCube(openGLES3Rhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mOpenGLES3Texture(0) {
 // Sanity checks
@@ -61,7 +61,7 @@ TextureCube::TextureCube(RHIDynamicRHI &openGLES3Rhi, uint32_t width, RERHI::Tex
 // Calculate the number of mipmaps
   const bool dataContainsMipmaps = (textureFlags & RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS);
   const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & RERHI::TextureFlag::GENERATE_MIPMAPS));
-  const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
+  const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
 
 // Create the OpenGL ES 3 texture instance
   glGenTextures(1, &mOpenGLES3Texture);
@@ -78,17 +78,17 @@ TextureCube::TextureCube(RHIDynamicRHI &openGLES3Rhi, uint32_t width, RERHI::Tex
 
 // Upload all mipmaps of all faces
       const GLenum internalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
-      for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
+      for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
         const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(
           textureFormat, width, width));
-        for (uint32_t face = 0; face < 6; ++face) {
+        for (RECore::uint32 face = 0; face < 6; ++face) {
 // Upload the current face
           glCompressedTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, static_cast<GLint>(mipmap), internalFormat,
                                  static_cast<GLsizei>(width), static_cast<GLsizei>(width), 0, numberOfBytesPerSlice,
                                  data);
 
 // Move on to the next face
-          data = static_cast<const uint8_t *>(data) + numberOfBytesPerSlice;
+          data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerSlice;
         }
 
 // Move on to the next mipmap and ensure the size is always at least 1x1
@@ -99,11 +99,11 @@ TextureCube::TextureCube(RHIDynamicRHI &openGLES3Rhi, uint32_t width, RERHI::Tex
       const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(
         textureFormat, width, width));
       const GLenum openGLES3InternalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
-      for (uint32_t face = 0; face < 6; ++face) {
+      for (RECore::uint32 face = 0; face < 6; ++face) {
         glCompressedTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, 0, openGLES3InternalFormat,
                                static_cast<GLsizei>(width), static_cast<GLsizei>(width), 0, numberOfBytesPerSlice,
                                data);
-        data = static_cast<const uint8_t *>(data) + numberOfBytesPerSlice;
+        data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerSlice;
       }
     }
   } else {
@@ -120,16 +120,16 @@ TextureCube::TextureCube(RHIDynamicRHI &openGLES3Rhi, uint32_t width, RERHI::Tex
       const GLenum internalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
       const GLenum format = Mapping::getOpenGLES3Format(textureFormat);
       const GLenum type = Mapping::getOpenGLES3Type(textureFormat);
-      for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
+      for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap) {
         const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(
           textureFormat, width, width));
-        for (uint32_t face = 0; face < 6; ++face) {
+        for (RECore::uint32 face = 0; face < 6; ++face) {
 // Upload the current face
           glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, static_cast<GLint>(mipmap), internalFormat,
                        static_cast<GLsizei>(width), static_cast<GLsizei>(width), 0, format, type, data);
 
 // Move on to the next face
-          data = static_cast<const uint8_t *>(data) + numberOfBytesPerSlice;
+          data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerSlice;
         }
 
 // Move on to the next mipmap and ensure the size is always at least 1x1
@@ -137,15 +137,15 @@ TextureCube::TextureCube(RHIDynamicRHI &openGLES3Rhi, uint32_t width, RERHI::Tex
       }
     } else {
 // The user only provided us with the base texture, no mipmaps
-      const uint32_t numberOfBytesPerSlice = RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width,
+      const RECore::uint32 numberOfBytesPerSlice = RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width,
                                                                                             width);
       const GLenum openGLES3InternalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
       const GLenum openGLES3Format = Mapping::getOpenGLES3Format(textureFormat);
       const GLenum openGLES3Type = Mapping::getOpenGLES3Type(textureFormat);
-      for (uint32_t face = 0; face < 6; ++face) {
+      for (RECore::uint32 face = 0; face < 6; ++face) {
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, 0, openGLES3InternalFormat, static_cast<GLsizei>(width),
                      static_cast<GLsizei>(width), 0, openGLES3Format, openGLES3Type, data);
-        data = static_cast<const uint8_t *>(data) + numberOfBytesPerSlice;
+        data = static_cast<const RECore::uint8 *>(data) + numberOfBytesPerSlice;
       }
     }
   }

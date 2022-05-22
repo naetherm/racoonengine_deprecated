@@ -56,7 +56,7 @@ namespace
 				} THREADNAME_INFO;
 			#pragma pack(pop)
 
-			void setThreadName(uint32_t dwThreadID, const char* name)
+			void setThreadName(RECore::uint32 dwThreadID, const char* name)
 			{
 				THREADNAME_INFO info;
 				info.dwType		= 0x1000;

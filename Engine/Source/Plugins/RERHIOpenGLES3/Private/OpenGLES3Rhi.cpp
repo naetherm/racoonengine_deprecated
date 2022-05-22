@@ -175,7 +175,7 @@ Notes:
 	#include <cstdio>  // For printf(). Remove if you don't need the PrintRanges() function (mostly for debugging anyway).
 #endif
 
-#include <cstdint>	// uint32_t
+#include <cstdint>	// RECore::uint32
 #include <limits>	// std::numeric_limits<type>::max()
 #include <cstdlib>
 #include <cstring>
@@ -255,7 +255,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		void updateWidthHeight(uint32_t mipmapIndex, uint32_t textureWidth, uint32_t textureHeight, uint32_t& width, uint32_t& height)
+		void updateWidthHeight(RECore::uint32 mipmapIndex, RECore::uint32 textureWidth, RECore::uint32 textureHeight, RECore::uint32& width, RECore::uint32& height)
 		{
 			RERHI::RHITexture::getMipmapSize(mipmapIndex, textureWidth, textureHeight);
 			if (width > textureWidth)
@@ -908,14 +908,14 @@ namespace OpenGLES3Rhi
 		//[-------------------------------------------------------]
 		void setGraphicsRootSignature(RERHI::RHIRootSignature* rootSignature);
 		void setGraphicsPipelineState(RERHI::RHIGraphicsPipelineState* graphicsPipelineState);
-		void setGraphicsResourceGroup(uint32_t rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup);
+		void setGraphicsResourceGroup(RECore::uint32 rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup);
 		void setGraphicsVertexArray(RERHI::RHIVertexArray* vertexArray);															// Input-assembler (IA) stage
-		void setGraphicsViewports(uint32_t numberOfViewports, const RERHI::Viewport* viewports);									// Rasterizer (RS) stage
-		void setGraphicsScissorRectangles(uint32_t numberOfScissorRectangles, const RERHI::ScissorRectangle* scissorRectangles);	// Rasterizer (RS) stage
+		void setGraphicsViewports(RECore::uint32 numberOfViewports, const RERHI::Viewport* viewports);									// Rasterizer (RS) stage
+		void setGraphicsScissorRectangles(RECore::uint32 numberOfScissorRectangles, const RERHI::ScissorRectangle* scissorRectangles);	// Rasterizer (RS) stage
 		void setGraphicsRenderTarget(RERHI::RHIRenderTarget* renderTarget);															// Output-merger (OM) stage
-		void clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil);
-		void drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1);
-		void drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1);
+		void clearGraphics(RECore::uint32 clearFlags, const float color[4], float z, RECore::uint32 stencil);
+		void drawGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1);
+		void drawIndexedGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1);
 		//[-------------------------------------------------------]
 		//[ Resource                                              ]
 		//[-------------------------------------------------------]
@@ -925,10 +925,10 @@ namespace OpenGLES3Rhi
 		//[-------------------------------------------------------]
 		//[ Query                                                 ]
 		//[-------------------------------------------------------]
-		void resetQueryPool(RERHI::RHIQueryPool& queryPool, uint32_t firstQueryIndex, uint32_t numberOfQueries);
-		void beginQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryIndex, uint32_t queryControlFlags);
-		void endQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryIndex);
-		void writeTimestampQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryIndex);
+		void resetQueryPool(RERHI::RHIQueryPool& queryPool, RECore::uint32 firstQueryIndex, RECore::uint32 numberOfQueries);
+		void beginQuery(RERHI::RHIQueryPool& queryPool, RECore::uint32 queryIndex, RECore::uint32 queryControlFlags);
+		void endQuery(RERHI::RHIQueryPool& queryPool, RECore::uint32 queryIndex);
+		void writeTimestampQuery(RERHI::RHIQueryPool& queryPool, RECore::uint32 queryIndex);
 		//[-------------------------------------------------------]
 		//[ Debug                                                 ]
 		//[-------------------------------------------------------]
@@ -949,14 +949,14 @@ namespace OpenGLES3Rhi
 		//[-------------------------------------------------------]
 		//[ Shader language                                       ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] virtual uint32_t getNumberOfShaderLanguages() const override;
-		[[nodiscard]] virtual const char* getShaderLanguageName(uint32_t index) const override;
+		[[nodiscard]] virtual RECore::uint32 getNumberOfShaderLanguages() const override;
+		[[nodiscard]] virtual const char* getShaderLanguageName(RECore::uint32 index) const override;
 		[[nodiscard]] virtual RERHI::RHIShaderLanguage* getShaderLanguage(const char* shaderLanguageName = nullptr) override;
 		//[-------------------------------------------------------]
 		//[ Resource creation                                     ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] virtual RERHI::RHIRenderPass* createRenderPass(uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat = RERHI::TextureFormat::UNKNOWN, uint8_t numberOfMultisamples = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
-		[[nodiscard]] virtual RERHI::RHIQueryPool* createQueryPool(RERHI::QueryType queryType, uint32_t numberOfQueries = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+		[[nodiscard]] virtual RERHI::RHIRenderPass* createRenderPass(RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat = RERHI::TextureFormat::UNKNOWN, RECore::uint8 numberOfMultisamples = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+		[[nodiscard]] virtual RERHI::RHIQueryPool* createQueryPool(RERHI::QueryType queryType, RECore::uint32 numberOfQueries = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 		[[nodiscard]] virtual RERHI::RHISwapChain* createSwapChain(RERHI::RHIRenderPass& renderPass, RERHI::WindowHandle windowHandle, bool useExternalContext = false RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 		[[nodiscard]] virtual RERHI::RHIFramebuffer* createFramebuffer(RERHI::RHIRenderPass& renderPass, const RERHI::FramebufferAttachment* colorFramebufferAttachments, const RERHI::FramebufferAttachment* depthStencilFramebufferAttachment = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 		[[nodiscard]] virtual RERHI::RHIBufferManager* createBufferManager() override;
@@ -968,9 +968,9 @@ namespace OpenGLES3Rhi
 		//[-------------------------------------------------------]
 		//[ Resource handling                                     ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] virtual bool map(RERHI::RHIResource& resource, uint32_t subresource, RERHI::MapType mapType, uint32_t mapFlags, RERHI::MappedSubresource& mappedSubresource) override;
-		virtual void unmap(RERHI::RHIResource& resource, uint32_t subresource) override;
-		[[nodiscard]] virtual bool getQueryPoolResults(RERHI::RHIQueryPool& queryPool, uint32_t numberOfDataBytes, uint8_t* data, uint32_t firstQueryIndex = 0, uint32_t numberOfQueries = 1, uint32_t strideInBytes = 0, uint32_t queryResultFlags = 0) override;
+		[[nodiscard]] virtual bool map(RERHI::RHIResource& resource, RECore::uint32 subresource, RERHI::MapType mapType, RECore::uint32 mapFlags, RERHI::MappedSubresource& mappedSubresource) override;
+		virtual void unmap(RERHI::RHIResource& resource, RECore::uint32 subresource) override;
+		[[nodiscard]] virtual bool getQueryPoolResults(RERHI::RHIQueryPool& queryPool, RECore::uint32 numberOfDataBytes, RECore::uint8* data, RECore::uint32 firstQueryIndex = 0, RECore::uint32 numberOfQueries = 1, RECore::uint32 strideInBytes = 0, RECore::uint32 queryResultFlags = 0) override;
 		//[-------------------------------------------------------]
 		//[ Operation                                             ]
 		//[-------------------------------------------------------]
@@ -1010,7 +1010,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] userParam
 		*    Additional user parameter of the debug message
 		*/
-		static void GL_APIENTRY debugMessageCallback(uint32_t source, uint32_t type, uint32_t id, uint32_t severity, int length, const char* message, const void* userParam);
+		static void GL_APIENTRY debugMessageCallback(RECore::uint32 source, RECore::uint32 type, RECore::uint32 id, RECore::uint32 severity, int length, const char* message, const void* userParam);
 
 
 	//[-------------------------------------------------------]
@@ -1042,7 +1042,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] startInstanceLocation
 		*    Start instance location
 		*/
-		void updateGL_EXT_base_instanceEmulation(uint32_t startInstanceLocation);
+		void updateGL_EXT_base_instanceEmulation(RECore::uint32 startInstanceLocation);
 
 
 	//[-------------------------------------------------------]
@@ -1067,7 +1067,7 @@ namespace OpenGLES3Rhi
 		GLuint	 mOpenGLES3Program;				///< Currently set OpenGL ES 3 program, can be zero if no resource is set
 		// Draw ID uniform location for "GL_EXT_base_instance"-emulation (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
 		GLint	 mDrawIdUniformLocation;		///< Draw ID uniform location
-		uint32_t mCurrentStartInstanceLocation;	///< Currently set start instance location
+		RECore::uint32 mCurrentStartInstanceLocation;	///< Currently set start instance location
 
 
 	};
@@ -1217,7 +1217,7 @@ namespace OpenGLES3Rhi
 		*  @return
 		*    "true" if all went fine, else "false"
 		*/
-		[[nodiscard]] virtual bool initialize(uint32_t multisampleAntialiasingSamples)
+		[[nodiscard]] virtual bool initialize(RECore::uint32 multisampleAntialiasingSamples)
 		{
 			if (mUseExternalContext)
 			{
@@ -1502,7 +1502,7 @@ namespace OpenGLES3Rhi
 		*  @note
 		*    - Automatically tries to find fallback configurations
 		*/
-		[[nodiscard]] virtual EGLConfig chooseConfig(uint32_t multisampleAntialiasingSamples) const
+		[[nodiscard]] virtual EGLConfig chooseConfig(RECore::uint32 multisampleAntialiasingSamples) const
 		{
 			// Try to find a working EGL configuration
 			EGLConfig eglConfig = nullptr;
@@ -2109,7 +2109,7 @@ namespace OpenGLES3Rhi
 	//[ Public virtual OpenGLES3Rhi::RHIOpenGLES3Context methods ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] virtual bool initialize(uint32_t multisampleAntialiasingSamples) override
+		[[nodiscard]] virtual bool initialize(RECore::uint32 multisampleAntialiasingSamples) override
 		{
 			// Entry points successfully registered?
 			if (mEntryPointsRegistered)
@@ -2139,7 +2139,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual OpenGLES3Rhi::RHIOpenGLES3Context methods ]
 	//[-------------------------------------------------------]
 	protected:
-		[[nodiscard]] virtual EGLConfig chooseConfig(uint32_t multisampleAntialiasingSamples) const override
+		[[nodiscard]] virtual EGLConfig chooseConfig(RECore::uint32 multisampleAntialiasingSamples) const override
 		{
 			// Try to find a working EGL configuration
 			EGLConfig eglConfig = nullptr;
@@ -2731,7 +2731,7 @@ namespace OpenGLES3Rhi
 
 					// Output the debug string
           RE_LOG(Critical, informationLog)
-					//if (openGLES3Rhi.getContext().getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
+					//if (openGLES3Rhi.getContext().getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), informationLog))
 					{
 					//	DEBUG_BREAK;
 					}
@@ -3169,9 +3169,9 @@ namespace OpenGLES3Rhi
 		{
 			static constexpr GLenum MAPPING[] =
 			{
-				GL_UNSIGNED_BYTE,	// RERHI::IndexBufferFormat::UNSIGNED_CHAR  - One byte per element, uint8_t (may not be supported by each API)
-				GL_UNSIGNED_SHORT,	// RERHI::IndexBufferFormat::UNSIGNED_SHORT - Two bytes per element, uint16_t
-				GL_UNSIGNED_INT		// RERHI::IndexBufferFormat::UNSIGNED_INT   - Four bytes per element, uint32_t (may not be supported by each API)
+				GL_UNSIGNED_BYTE,	// RERHI::IndexBufferFormat::UNSIGNED_CHAR  - One byte per element, RECore::uint8 (may not be supported by each API)
+				GL_UNSIGNED_SHORT,	// RERHI::IndexBufferFormat::UNSIGNED_SHORT - Two bytes per element, RECore::uint16
+				GL_UNSIGNED_INT		// RERHI::IndexBufferFormat::UNSIGNED_INT   - Four bytes per element, RECore::uint32 (may not be supported by each API)
 			};
 			return MAPPING[indexBufferFormat];
 		}
@@ -3452,7 +3452,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] samplerStates
 		*    If not a null pointer at least "numberOfResources" sampler state pointers, must be valid if there's at least one texture resource, the resource group will keep a reference to the sampler states
 		*/
-		ResourceGroup(OpenGLES3Rhi& openGLES3Rhi, const RERHI::RootSignature& rootSignature, uint32_t rootParameterIndex, uint32_t numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		ResourceGroup(OpenGLES3Rhi& openGLES3Rhi, const RERHI::RootSignature& rootSignature, RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IResourceGroup(openGLES3Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mRootParameterIndex(rootParameterIndex),
 			mNumberOfResources(numberOfResources),
@@ -3463,15 +3463,15 @@ namespace OpenGLES3Rhi
 			// Get the uniform block binding start index
 			const RERHI::RHIContext& context = openGLES3Rhi.getContext();
 			const bool isGL_EXT_texture_buffer = openGLES3Rhi.getOpenGLES3Context().getExtensions().isGL_EXT_texture_buffer();
-			uint32_t uniformBlockBindingIndex = 0;
-			for (uint32_t currentRootParameterIndex = 0; currentRootParameterIndex < rootParameterIndex; ++currentRootParameterIndex)
+			RECore::uint32 uniformBlockBindingIndex = 0;
+			for (RECore::uint32 currentRootParameterIndex = 0; currentRootParameterIndex < rootParameterIndex; ++currentRootParameterIndex)
 			{
 				const RERHI::RootParameter& rootParameter = rootSignature.parameters[currentRootParameterIndex];
 				if (RERHI::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
 				{
 					RHI_ASSERT(nullptr != reinterpret_cast<const RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL ES 3 descriptor ranges")
-					const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
-					for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
+					const RECore::uint32 numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
+					for (RECore::uint32 descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
 					{
 						const RERHI::DescriptorRange& descriptorRange = reinterpret_cast<const RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges)[descriptorRangeIndex];
 						if (RERHI::DescriptorRangeType::UBV == descriptorRange.rangeType)
@@ -3489,7 +3489,7 @@ namespace OpenGLES3Rhi
 
 			// Process all resources and add our reference to the RHI resource
 			const RERHI::RootParameter& rootParameter = rootSignature.parameters[rootParameterIndex];
-			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
+			for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
 			{
 				RERHI::RHIResource* resource = *resources;
 				RHI_ASSERT(nullptr != resource, "Invalid OpenGL ES 3 resource")
@@ -3512,8 +3512,8 @@ namespace OpenGLES3Rhi
 				{
 					if (nullptr == mResourceIndexToUniformBlockBindingIndex)
 					{
-						mResourceIndexToUniformBlockBindingIndex = RHI_MALLOC_TYPED(context, uint32_t, mNumberOfResources);
-						memset(mResourceIndexToUniformBlockBindingIndex, 0, sizeof(uint32_t) * mNumberOfResources);
+						mResourceIndexToUniformBlockBindingIndex = RHI_MALLOC_TYPED(context, RECore::uint32, mNumberOfResources);
+						memset(mResourceIndexToUniformBlockBindingIndex, 0, sizeof(RECore::uint32) * mNumberOfResources);
 					}
 					mResourceIndexToUniformBlockBindingIndex[resourceIndex] = uniformBlockBindingIndex;
 					++uniformBlockBindingIndex;
@@ -3522,7 +3522,7 @@ namespace OpenGLES3Rhi
 			if (nullptr != samplerStates)
 			{
 				mSamplerStates = RHI_MALLOC_TYPED(context, RERHI::RHISamplerState*, mNumberOfResources);
-				for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+				for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 				{
 					RERHI::RHISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
 					if (nullptr != samplerState)
@@ -3543,7 +3543,7 @@ namespace OpenGLES3Rhi
 			const RERHI::RHIContext& context = getRhi().getContext();
 			if (nullptr != mSamplerStates)
 			{
-				for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+				for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 				{
 					RERHI::RHISamplerState* samplerState = mSamplerStates[resourceIndex];
 					if (nullptr != samplerState)
@@ -3553,7 +3553,7 @@ namespace OpenGLES3Rhi
 				}
 				RHI_FREE(context, mSamplerStates);
 			}
-			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+			for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 			{
 				mResources[resourceIndex]->Release();
 			}
@@ -3568,7 +3568,7 @@ namespace OpenGLES3Rhi
 		*  @return
 		*    The number of resources this resource group groups together
 		*/
-		[[nodiscard]] inline uint32_t getNumberOfResources() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfResources() const
 		{
 			return mNumberOfResources;
 		}
@@ -3604,7 +3604,7 @@ namespace OpenGLES3Rhi
 		*  @return
 		*    The resource index to uniform block binding index mapping, only valid for uniform buffer resources
 		*/
-		[[nodiscard]] inline uint32_t* getResourceIndexToUniformBlockBindingIndex() const
+		[[nodiscard]] inline RECore::uint32* getResourceIndexToUniformBlockBindingIndex() const
 		{
 			return mResourceIndexToUniformBlockBindingIndex;
 		}
@@ -3632,11 +3632,11 @@ namespace OpenGLES3Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t			 mRootParameterIndex;						///< The root parameter index number for binding
-		uint32_t			 mNumberOfResources;						///< Number of resources this resource group groups together
+		RECore::uint32			 mRootParameterIndex;						///< The root parameter index number for binding
+		RECore::uint32			 mNumberOfResources;						///< Number of resources this resource group groups together
 		RERHI::RHIResource**	 mResources;								///< RHI resources, we keep a reference to it
 		RERHI::RHISamplerState** mSamplerStates;							///< Sampler states, we keep a reference to it
-		uint32_t*			 mResourceIndexToUniformBlockBindingIndex;	///< Resource index to uniform block binding index mapping, only valid for uniform buffer resources
+		RECore::uint32*			 mResourceIndexToUniformBlockBindingIndex;	///< Resource index to uniform block binding index mapping, only valid for uniform buffer resources
 
 
 	};
@@ -3675,7 +3675,7 @@ namespace OpenGLES3Rhi
 			const RERHI::RHIContext& context = openGLES3Rhi.getContext();
 
 			{ // Copy the parameter data
-				const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
+				const RECore::uint32 numberOfParameters = mRootSignature.numberOfParameters;
 				if (numberOfParameters > 0)
 				{
 					mRootSignature.parameters = RHI_MALLOC_TYPED(context, RERHI::RootParameter, numberOfParameters);
@@ -3683,13 +3683,13 @@ namespace OpenGLES3Rhi
 					memcpy(destinationRootParameters, rootSignature.parameters, sizeof(RERHI::RootParameter) * numberOfParameters);
 
 					// Copy the descriptor table data
-					for (uint32_t i = 0; i < numberOfParameters; ++i)
+					for (RECore::uint32 i = 0; i < numberOfParameters; ++i)
 					{
 						RERHI::RootParameter& destinationRootParameter = destinationRootParameters[i];
 						const RERHI::RootParameter& sourceRootParameter = rootSignature.parameters[i];
 						if (RERHI::RootParameterType::DESCRIPTOR_TABLE == destinationRootParameter.parameterType)
 						{
-							const uint32_t numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
+							const RECore::uint32 numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
 							destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(context, RERHI::DescriptorRange, numberOfDescriptorRanges));
 							memcpy(reinterpret_cast<RERHI::DescriptorRange*>(destinationRootParameter.descriptorTable.descriptorRanges), reinterpret_cast<const RERHI::DescriptorRange*>(sourceRootParameter.descriptorTable.descriptorRanges), sizeof(RERHI::DescriptorRange) * numberOfDescriptorRanges);
 						}
@@ -3698,7 +3698,7 @@ namespace OpenGLES3Rhi
 			}
 
 			{ // Copy the static sampler data
-				const uint32_t numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
+				const RECore::uint32 numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
 				if (numberOfStaticSamplers > 0)
 				{
 					mRootSignature.staticSamplers = RHI_MALLOC_TYPED(context, RERHI::StaticSampler, numberOfStaticSamplers);
@@ -3717,7 +3717,7 @@ namespace OpenGLES3Rhi
 			const RERHI::RHIContext& context = getRhi().getContext();
 			if (nullptr != mRootSignature.parameters)
 			{
-				for (uint32_t i = 0; i < mRootSignature.numberOfParameters; ++i)
+				for (RECore::uint32 i = 0; i < mRootSignature.numberOfParameters; ++i)
 				{
 					const RERHI::RootParameter& rootParameter = mRootSignature.parameters[i];
 					if (RERHI::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
@@ -3747,7 +3747,7 @@ namespace OpenGLES3Rhi
 	//[ Public virtual RERHI::RHIRootSignature methods            ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline virtual RERHI::RHIResourceGroup* createResourceGroup(uint32_t rootParameterIndex, uint32_t numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual RERHI::RHIResourceGroup* createResourceGroup(RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
@@ -3819,7 +3819,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] bufferUsage
 		*    Indication of the buffer usage
 		*/
-		VertexBuffer(OpenGLES3Rhi& openGLES3Rhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		VertexBuffer(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IVertexBuffer(openGLES3Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLES3ArrayBuffer(0),
 			mBufferSize(numberOfBytes)
@@ -3875,7 +3875,7 @@ namespace OpenGLES3Rhi
 			return mOpenGLES3ArrayBuffer;
 		}
 
-		[[nodiscard]] inline uint32_t getBufferSize() const
+		[[nodiscard]] inline RECore::uint32 getBufferSize() const
 		{
 			return mBufferSize;
 		}
@@ -3904,7 +3904,7 @@ namespace OpenGLES3Rhi
 	//[-------------------------------------------------------]
 	private:
 		GLuint	 mOpenGLES3ArrayBuffer;	///< OpenGL ES 3 array buffer, can be zero if no resource is allocated
-		uint32_t mBufferSize;			///< Holds the size of the buffer
+		RECore::uint32 mBufferSize;			///< Holds the size of the buffer
 
 
 	};
@@ -3942,7 +3942,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] indexBufferFormat
 		*    Index buffer data format
 		*/
-		IndexBuffer(OpenGLES3Rhi& openGLES3Rhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		IndexBuffer(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IIndexBuffer(openGLES3Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLES3ElementArrayBuffer(0),
 			mOpenGLES3Type(GL_UNSIGNED_SHORT),
@@ -4031,12 +4031,12 @@ namespace OpenGLES3Rhi
 		*  @return
 		*    The number of bytes of an index
 		*/
-		[[nodiscard]] inline uint32_t getIndexSizeInBytes() const
+		[[nodiscard]] inline RECore::uint32 getIndexSizeInBytes() const
 		{
 			return mIndexSizeInBytes;
 		}
 
-		[[nodiscard]] inline uint32_t getBufferSize() const
+		[[nodiscard]] inline RECore::uint32 getBufferSize() const
 		{
 			return mBufferSize;
 		}
@@ -4066,8 +4066,8 @@ namespace OpenGLES3Rhi
 	private:
 		GLuint	 mOpenGLES3ElementArrayBuffer;	///< OpenGL ES 3 element array buffer, can be zero if no resource is allocated
 		GLenum   mOpenGLES3Type;				///< OpenGL ES 3 element array buffer data type
-		uint32_t mIndexSizeInBytes;				///< Number of bytes of an index
-		uint32_t mBufferSize;					///< Holds the size of the buffer
+		RECore::uint32 mIndexSizeInBytes;				///< Number of bytes of an index
+		RECore::uint32 mBufferSize;					///< Holds the size of the buffer
 
 
 	};
@@ -4107,7 +4107,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] id
 		*    The unique compact vertex array ID
 		*/
-		VertexArray(OpenGLES3Rhi& openGLES3Rhi, const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		VertexArray(OpenGLES3Rhi& openGLES3Rhi, const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IVertexArray(openGLES3Rhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLES3VertexArray(0),
 			mNumberOfVertexBuffers(numberOfVertexBuffers),
@@ -4303,7 +4303,7 @@ namespace OpenGLES3Rhi
 	//[-------------------------------------------------------]
 	private:
 		GLuint		   mOpenGLES3VertexArray;	///< OpenGL ES 3 vertex array, can be zero if no resource is allocated
-		uint32_t	   mNumberOfVertexBuffers;	///< Number of vertex buffers
+		RECore::uint32	   mNumberOfVertexBuffers;	///< Number of vertex buffers
 		VertexBuffer** mVertexBuffers;			///< Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer
 		IndexBuffer*   mIndexBuffer;			///< Optional index buffer to use, can be a null pointer, the vertex array instance keeps a reference to the index buffer
 
@@ -4367,7 +4367,7 @@ namespace OpenGLES3Rhi
 			return mOpenGLES3Texture;
 		}
 
-		[[nodiscard]] inline uint32_t getBufferSize() const
+		[[nodiscard]] inline RECore::uint32 getBufferSize() const
 		{
 			return mBufferSize;
 		}
@@ -4386,7 +4386,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] numberOfBytes
 		*    Number of bytes within the texture buffer, must be valid
 		*/
-		TextureBuffer(OpenGLES3Rhi& openGLES3Rhi, uint32_t numberOfBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		TextureBuffer(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 numberOfBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			ITextureBuffer(openGLES3Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLES3TextureBuffer(0),
 			mOpenGLES3Texture(0),
@@ -4416,7 +4416,7 @@ namespace OpenGLES3Rhi
 	protected:
 		GLuint	 mOpenGLES3TextureBuffer;	///< OpenGL ES 3 texture buffer, can be zero if no resource is allocated
 		GLuint	 mOpenGLES3Texture;			///< OpenGL ES 3 texture, can be zero if no resource is allocated
-		uint32_t mBufferSize;				///< Holds the size of the buffer
+		RECore::uint32 mBufferSize;				///< Holds the size of the buffer
 
 
 	//[-------------------------------------------------------]
@@ -4462,7 +4462,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] textureFormat
 		*    Texture buffer data format
 		*/
-		TextureBufferBind(OpenGLES3Rhi& openGLES3Rhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		TextureBufferBind(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			TextureBuffer(openGLES3Rhi, numberOfBytes RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
 			{ // Buffer part
@@ -4570,7 +4570,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] textureFormat
 		*    Texture buffer data format
 		*/
-		TextureBufferBindEmulation(OpenGLES3Rhi& openGLES3Rhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage, [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		TextureBufferBindEmulation(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage, [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			TextureBuffer(openGLES3Rhi, numberOfBytes RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
 			#ifdef RHI_OPENGLES3_STATE_CLEANUP
@@ -4650,7 +4650,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] indirectBufferFlags
 		*    Indirect buffer flags, see "RERHI::IndirectBufferFlag"
 		*/
-		IndirectBuffer(OpenGLES3Rhi& openGLES3Rhi, uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t indirectBufferFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		IndirectBuffer(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 indirectBufferFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IIndirectBuffer(openGLES3Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mNumberOfBytes(numberOfBytes),
 			mData(nullptr)
@@ -4664,7 +4664,7 @@ namespace OpenGLES3Rhi
 			// Copy data
 			if (mNumberOfBytes > 0)
 			{
-				mData = RHI_MALLOC_TYPED(openGLES3Rhi.getContext(), uint8_t, mNumberOfBytes);
+				mData = RHI_MALLOC_TYPED(openGLES3Rhi.getContext(), RECore::uint8, mNumberOfBytes);
 				if (nullptr != data)
 				{
 					memcpy(mData, data, mNumberOfBytes);
@@ -4692,7 +4692,7 @@ namespace OpenGLES3Rhi
 		*  @return
 		*    Writable indirect buffer emulation data pointer, can be a null pointer, don't destroy the returned instance
 		*/
-		[[nodiscard]] inline uint8_t* getWritableEmulationData() const
+		[[nodiscard]] inline RECore::uint8* getWritableEmulationData() const
 		{
 			return mData;
 		}
@@ -4702,7 +4702,7 @@ namespace OpenGLES3Rhi
 	//[ Public virtual RERHI::RHIIndirectBuffer methods           ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline virtual const uint8_t* getEmulationData() const override
+		[[nodiscard]] inline virtual const RECore::uint8* getEmulationData() const override
 		{
 			return mData;
 		}
@@ -4730,8 +4730,8 @@ namespace OpenGLES3Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t mNumberOfBytes;
-		uint8_t* mData;				///< Indirect buffer data, can be a null pointer
+		RECore::uint32 mNumberOfBytes;
+		RECore::uint8* mData;				///< Indirect buffer data, can be a null pointer
 
 
 	};
@@ -4767,7 +4767,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] bufferUsage
 		*    Indication of the buffer usage
 		*/
-		UniformBuffer(OpenGLES3Rhi& openGLES3Rhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		UniformBuffer(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IUniformBuffer(openGLES3Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLES3UniformBuffer(0),
 			mBufferSize(numberOfBytes)
@@ -4826,7 +4826,7 @@ namespace OpenGLES3Rhi
 			return mOpenGLES3UniformBuffer;
 		}
 
-		[[nodiscard]] inline uint32_t getBufferSize() const
+		[[nodiscard]] inline RECore::uint32 getBufferSize() const
 		{
 			return mBufferSize;
 		}
@@ -4855,7 +4855,7 @@ namespace OpenGLES3Rhi
 	//[-------------------------------------------------------]
 	private:
 		GLuint	 mOpenGLES3UniformBuffer;	///< OpenGL ES 3 uniform buffer, can be zero if no resource is allocated
-		uint32_t mBufferSize;				///< Holds the size of the buffer
+		RECore::uint32 mBufferSize;				///< Holds the size of the buffer
 
 
 	};
@@ -4902,19 +4902,19 @@ namespace OpenGLES3Rhi
 	//[ Public virtual RERHI::RHIBufferManager methods            ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline virtual RERHI::RHIVertexBuffer* createVertexBuffer(uint32_t numberOfBytes, const void* data = nullptr, [[maybe_unused]] uint32_t bufferFlags = 0, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual RERHI::RHIVertexBuffer* createVertexBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, [[maybe_unused]] RECore::uint32 bufferFlags = 0, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 			return RHI_NEW(openGLES3Rhi.getContext(), VertexBuffer)(openGLES3Rhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] inline virtual RERHI::RHIIndexBuffer* createIndexBuffer(uint32_t numberOfBytes, const void* data = nullptr, [[maybe_unused]] uint32_t bufferFlags = 0, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW, RERHI::IndexBufferFormat::Enum indexBufferFormat = RERHI::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual RERHI::RHIIndexBuffer* createIndexBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, [[maybe_unused]] RECore::uint32 bufferFlags = 0, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW, RERHI::IndexBufferFormat::Enum indexBufferFormat = RERHI::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 			return RHI_NEW(openGLES3Rhi.getContext(), IndexBuffer)(openGLES3Rhi, numberOfBytes, data, bufferUsage, indexBufferFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] inline virtual RERHI::RHIVertexArray* createVertexArray(const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, RERHI::RHIIndexBuffer* indexBuffer = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual RERHI::RHIVertexArray* createVertexArray(const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, RERHI::RHIIndexBuffer* indexBuffer = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
@@ -4931,7 +4931,7 @@ namespace OpenGLES3Rhi
 			RHI_ASSERT(nullptr == indexBuffer || &openGLES3Rhi == &indexBuffer->getRhi(), "OpenGL ES 3 error: The given index buffer resource is owned by another RHI instance")
 
 			// Create vertex array
-			uint16_t id = 0;
+			RECore::uint16 id = 0;
 			if (openGLES3Rhi.VertexArrayMakeId.CreateID(id))
 			{
 				return RHI_NEW(openGLES3Rhi.getContext(), VertexArray)(openGLES3Rhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -4952,7 +4952,7 @@ namespace OpenGLES3Rhi
 			return nullptr;
 		}
 
-		[[nodiscard]] virtual RERHI::RHITextureBuffer* createTextureBuffer(uint32_t numberOfBytes, const void* data = nullptr, uint32_t = RERHI::BufferFlag::SHADER_RESOURCE, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW, RERHI::TextureFormat::Enum textureFormat = RERHI::TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual RERHI::RHITextureBuffer* createTextureBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, RECore::uint32 = RERHI::BufferFlag::SHADER_RESOURCE, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW, RERHI::TextureFormat::Enum textureFormat = RERHI::TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
@@ -4977,7 +4977,7 @@ namespace OpenGLES3Rhi
 			return nullptr;
 		}
 
-		[[nodiscard]] virtual RERHI::RHIStructuredBuffer* createStructuredBuffer([[maybe_unused]] uint32_t numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] uint32_t bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, [[maybe_unused]] uint32_t numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
+		[[nodiscard]] virtual RERHI::RHIStructuredBuffer* createStructuredBuffer([[maybe_unused]] RECore::uint32 numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, [[maybe_unused]] RECore::uint32 numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Sanity checks
 			RHI_ASSERT((numberOfBytes % numberOfStructureBytes) == 0, "The OpenGL ES 3 structured buffer size must be a multiple of the given number of structure bytes")
@@ -4987,13 +4987,13 @@ namespace OpenGLES3Rhi
 			return nullptr;
 		}
 
-		[[nodiscard]] inline virtual RERHI::RHIIndirectBuffer* createIndirectBuffer(uint32_t numberOfBytes, const void* data = nullptr, uint32_t indirectBufferFlags = 0, [[maybe_unused]] RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual RERHI::RHIIndirectBuffer* createIndirectBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, RECore::uint32 indirectBufferFlags = 0, [[maybe_unused]] RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 			return RHI_NEW(openGLES3Rhi.getContext(), IndirectBuffer)(openGLES3Rhi, numberOfBytes, data, indirectBufferFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] inline virtual RERHI::RHIUniformBuffer* createUniformBuffer(uint32_t numberOfBytes, const void* data = nullptr, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual RERHI::RHIUniformBuffer* createUniformBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
@@ -5068,7 +5068,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] textureFlags
 		*    Texture flags, see "RERHI::TextureFlag::Enum"
 		*/
-		Texture1D(OpenGLES3Rhi& openGLES3Rhi, uint32_t width, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		Texture1D(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture1D(openGLES3Rhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLES3Texture(0)
 		{
@@ -5096,7 +5096,7 @@ namespace OpenGLES3Rhi
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & RERHI::TextureFlag::GENERATE_MIPMAPS));
-			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
+			const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
 
 			// Create the OpenGL ES 3 texture instance
 			glGenTextures(1, &mOpenGLES3Texture);
@@ -5110,14 +5110,14 @@ namespace OpenGLES3Rhi
 				{
 					// Upload all mipmaps
 					const GLenum internalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
-					for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+					for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 					{
 						// Upload the current mipmap
 						const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, 1));
 						glCompressedTexImage2D(GL_TEXTURE_2D, static_cast<GLint>(mipmap), internalFormat, static_cast<GLsizei>(width), static_cast<GLsizei>(1), 0, numberOfBytesPerSlice, data);
 
 						// Move on to the next mipmap and ensure the size is always at least 1
-						data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+						data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 						width = getHalfSize(width);
 					}
 				}
@@ -5138,14 +5138,14 @@ namespace OpenGLES3Rhi
 					const GLenum internalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
 					const GLenum format = Mapping::getOpenGLES3Format(textureFormat);
 					const GLenum type = Mapping::getOpenGLES3Type(textureFormat);
-					for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+					for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 					{
 						// Upload the current mipmap
 						const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, 1));
 						glTexImage2D(GL_TEXTURE_2D, static_cast<GLint>(mipmap), internalFormat, static_cast<GLsizei>(width), static_cast<GLsizei>(1), 0, format, type, data);
 
 						// Move on to the next mipmap and ensure the size is always at least 1
-						data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+						data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 						width = getHalfSize(width);
 					}
 				}
@@ -5282,7 +5282,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] textureFlags
 		*    Texture flags, see "RERHI::TextureFlag::Enum"
 		*/
-		Texture1DArray(OpenGLES3Rhi& openGLES3Rhi, uint32_t width, uint32_t numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		Texture1DArray(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 width, RECore::uint32 numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture1DArray(openGLES3Rhi, width, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLES3Texture(0)
 		{
@@ -5432,7 +5432,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] textureFlags
 		*    Texture flags, see "RERHI::TextureFlag::Enum"
 		*/
-		Texture2D(OpenGLES3Rhi& openGLES3Rhi, uint32_t width, uint32_t height, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		Texture2D(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 width, RECore::uint32 height, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture2D(openGLES3Rhi, width, height RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLES3Texture(0)
 		{
@@ -5458,7 +5458,7 @@ namespace OpenGLES3Rhi
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & RERHI::TextureFlag::GENERATE_MIPMAPS));
-			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
+			const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
 
 			// Create the OpenGL ES 3 texture instance
 			glGenTextures(1, &mOpenGLES3Texture);
@@ -5472,14 +5472,14 @@ namespace OpenGLES3Rhi
 				{
 					// Upload all mipmaps
 					const GLenum internalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
-					for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+					for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 					{
 						// Upload the current mipmap
 						const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height));
 						glCompressedTexImage2D(GL_TEXTURE_2D, static_cast<GLint>(mipmap), internalFormat, static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0, numberOfBytesPerSlice, data);
 
 						// Move on to the next mipmap and ensure the size is always at least 1x1
-						data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+						data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 						width = getHalfSize(width);
 						height = getHalfSize(height);
 					}
@@ -5501,14 +5501,14 @@ namespace OpenGLES3Rhi
 					const GLenum internalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
 					const GLenum format = Mapping::getOpenGLES3Format(textureFormat);
 					const GLenum type = Mapping::getOpenGLES3Type(textureFormat);
-					for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+					for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 					{
 						// Upload the current mipmap
 						const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height));
 						glTexImage2D(GL_TEXTURE_2D, static_cast<GLint>(mipmap), internalFormat, static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0, format, type, data);
 
 						// Move on to the next mipmap and ensure the size is always at least 1x1
-						data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+						data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 						width = getHalfSize(width);
 						height = getHalfSize(height);
 					}
@@ -5582,7 +5582,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] maximumMipmapIndex
 		*    Maximum mipmap index, the least detailed mipmap, <number of mipmaps> by default
 		*/
-		void setMinimumMaximumMipmapIndex(uint32_t minimumMipmapIndex, uint32_t maximumMipmapIndex)
+		void setMinimumMaximumMipmapIndex(RECore::uint32 minimumMipmapIndex, RECore::uint32 maximumMipmapIndex)
 		{
 			#ifdef RHI_OPENGLES3_STATE_CLEANUP
 				// Backup the currently bound OpenGL ES 3 texture
@@ -5684,7 +5684,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] textureFlags
 		*    Texture flags, see "RERHI::TextureFlag::Enum"
 		*/
-		Texture2DArray(OpenGLES3Rhi& openGLES3Rhi, uint32_t width, uint32_t height, uint32_t numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		Texture2DArray(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture2DArray(openGLES3Rhi, width, height, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLES3Texture(0)
 		{
@@ -5834,7 +5834,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] textureFlags
 		*    Texture flags, see "RERHI::TextureFlag::Enum"
 		*/
-		inline Texture3D(OpenGLES3Rhi& openGLES3Rhi, uint32_t width, uint32_t height, uint32_t depth, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		inline Texture3D(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture3D(openGLES3Rhi, width, height, depth RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mTextureFormat(textureFormat),
 			mOpenGLES3Texture(0)
@@ -5861,7 +5861,7 @@ namespace OpenGLES3Rhi
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & RERHI::TextureFlag::GENERATE_MIPMAPS));
-			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height, depth) : 1;
+			const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height, depth) : 1;
 
 			// Create the OpenGL ES 3 texture instance
 			glGenTextures(1, &mOpenGLES3Texture);
@@ -5880,14 +5880,14 @@ namespace OpenGLES3Rhi
 
 					// Upload all mipmaps
 					const GLenum internalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
-					for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+					for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 					{
 						// Upload the current mipmap
 						const GLsizei numberOfBytesPerMipmap = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height) * depth);
 						glCompressedTexImage3D(GL_TEXTURE_3D, static_cast<GLint>(mipmap), internalFormat, static_cast<GLsizei>(width), static_cast<GLsizei>(height), static_cast<GLsizei>(depth), 0, numberOfBytesPerMipmap, data);
 
 						// Move on to the next mipmap and ensure the size is always at least 1x1x1
-						data = static_cast<const uint8_t*>(data) + numberOfBytesPerMipmap;
+						data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerMipmap;
 						width = getHalfSize(width);
 						height = getHalfSize(height);
 						depth = getHalfSize(depth);
@@ -5915,14 +5915,14 @@ namespace OpenGLES3Rhi
 					const GLenum internalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
 					const GLenum format = Mapping::getOpenGLES3Format(textureFormat);
 					const GLenum type = Mapping::getOpenGLES3Type(textureFormat);
-					for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+					for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 					{
 						// Upload the current mipmap
 						const GLsizei numberOfBytesPerMipmap = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height) * depth);
 						glTexImage3D(GL_TEXTURE_3D, static_cast<GLint>(mipmap), internalFormat, static_cast<GLsizei>(width), static_cast<GLsizei>(height), static_cast<GLsizei>(depth), 0, format, type, data);
 
 						// Move on to the next mipmap and ensure the size is always at least 1x1x1
-						data = static_cast<const uint8_t*>(data) + numberOfBytesPerMipmap;
+						data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerMipmap;
 						width = getHalfSize(width);
 						height = getHalfSize(height);
 						depth = getHalfSize(depth);
@@ -6060,7 +6060,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] textureFlags
 		*    Texture flags, see "RERHI::TextureFlag::Enum"
 		*/
-		TextureCube(OpenGLES3Rhi& openGLES3Rhi, uint32_t width, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		TextureCube(OpenGLES3Rhi& openGLES3Rhi, RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITextureCube(openGLES3Rhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLES3Texture(0)
 		{
@@ -6086,7 +6086,7 @@ namespace OpenGLES3Rhi
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & RERHI::TextureFlag::GENERATE_MIPMAPS));
-			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
+			const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
 
 			// Create the OpenGL ES 3 texture instance
 			glGenTextures(1, &mOpenGLES3Texture);
@@ -6105,16 +6105,16 @@ namespace OpenGLES3Rhi
 
 					// Upload all mipmaps of all faces
 					const GLenum internalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
-					for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+					for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 					{
 						const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width));
-						for (uint32_t face = 0; face < 6; ++face)
+						for (RECore::uint32 face = 0; face < 6; ++face)
 						{
 							// Upload the current face
 							glCompressedTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, static_cast<GLint>(mipmap), internalFormat, static_cast<GLsizei>(width), static_cast<GLsizei>(width), 0, numberOfBytesPerSlice, data);
 
 							// Move on to the next face
-							data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+							data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 						}
 
 						// Move on to the next mipmap and ensure the size is always at least 1x1
@@ -6126,10 +6126,10 @@ namespace OpenGLES3Rhi
 					// The user only provided us with the base texture, no mipmaps
 					const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width));
 					const GLenum openGLES3InternalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
-					for (uint32_t face = 0; face < 6; ++face)
+					for (RECore::uint32 face = 0; face < 6; ++face)
 					{
 						glCompressedTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, 0, openGLES3InternalFormat, static_cast<GLsizei>(width), static_cast<GLsizei>(width), 0, numberOfBytesPerSlice, data);
-						data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+						data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 					}
 				}
 			}
@@ -6149,16 +6149,16 @@ namespace OpenGLES3Rhi
 					const GLenum internalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
 					const GLenum format = Mapping::getOpenGLES3Format(textureFormat);
 					const GLenum type = Mapping::getOpenGLES3Type(textureFormat);
-					for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+					for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 					{
 						const GLsizei numberOfBytesPerSlice = static_cast<GLsizei>(RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width));
-						for (uint32_t face = 0; face < 6; ++face)
+						for (RECore::uint32 face = 0; face < 6; ++face)
 						{
 							// Upload the current face
 							glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, static_cast<GLint>(mipmap), internalFormat, static_cast<GLsizei>(width), static_cast<GLsizei>(width), 0, format, type, data);
 
 							// Move on to the next face
-							data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+							data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 						}
 
 						// Move on to the next mipmap and ensure the size is always at least 1x1
@@ -6168,14 +6168,14 @@ namespace OpenGLES3Rhi
 				else
 				{
 					// The user only provided us with the base texture, no mipmaps
-					const uint32_t numberOfBytesPerSlice = RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width);
+					const RECore::uint32 numberOfBytesPerSlice = RERHI::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width);
 					const GLenum openGLES3InternalFormat = Mapping::getOpenGLES3InternalFormat(textureFormat);
 					const GLenum openGLES3Format = Mapping::getOpenGLES3Format(textureFormat);
 					const GLenum openGLES3Type = Mapping::getOpenGLES3Type(textureFormat);
-					for (uint32_t face = 0; face < 6; ++face)
+					for (RECore::uint32 face = 0; face < 6; ++face)
 					{
 						glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face, 0, openGLES3InternalFormat, static_cast<GLsizei>(width), static_cast<GLsizei>(width), 0, openGLES3Format, openGLES3Type, data);
-						data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+						data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 					}
 				}
 			}
@@ -6313,7 +6313,7 @@ namespace OpenGLES3Rhi
 	//[ Public virtual RERHI::RHITextureManager methods           ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] virtual RERHI::RHITexture1D* createTexture1D(uint32_t width, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual RERHI::RHITexture1D* createTexture1D(RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
@@ -6325,7 +6325,7 @@ namespace OpenGLES3Rhi
 			return RHI_NEW(openGLES3Rhi.getContext(), Texture1D)(openGLES3Rhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual RERHI::RHITexture1DArray* createTexture1DArray(uint32_t width, uint32_t numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual RERHI::RHITexture1DArray* createTexture1DArray(RECore::uint32 width, RECore::uint32 numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
@@ -6337,7 +6337,7 @@ namespace OpenGLES3Rhi
 			return RHI_NEW(openGLES3Rhi.getContext(), Texture1DArray)(openGLES3Rhi, width, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual RERHI::RHITexture2D* createTexture2D(uint32_t width, uint32_t height, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT, [[maybe_unused]] uint8_t numberOfMultisamples = 1, [[maybe_unused]] const RERHI::OptimizedTextureClearValue* optimizedTextureClearValue = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual RERHI::RHITexture2D* createTexture2D(RECore::uint32 width, RECore::uint32 height, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT, [[maybe_unused]] RECore::uint8 numberOfMultisamples = 1, [[maybe_unused]] const RERHI::OptimizedTextureClearValue* optimizedTextureClearValue = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
@@ -6349,7 +6349,7 @@ namespace OpenGLES3Rhi
 			return RHI_NEW(openGLES3Rhi.getContext(), Texture2D)(openGLES3Rhi, width, height, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual RERHI::RHITexture2DArray* createTexture2DArray(uint32_t width, uint32_t height, uint32_t numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual RERHI::RHITexture2DArray* createTexture2DArray(RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
@@ -6361,7 +6361,7 @@ namespace OpenGLES3Rhi
 			return RHI_NEW(openGLES3Rhi.getContext(), Texture2DArray)(openGLES3Rhi, width, height, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual RERHI::RHITexture3D* createTexture3D(uint32_t width, uint32_t height, uint32_t depth, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual RERHI::RHITexture3D* createTexture3D(RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
@@ -6373,7 +6373,7 @@ namespace OpenGLES3Rhi
 			return RHI_NEW(openGLES3Rhi.getContext(), Texture3D)(openGLES3Rhi, width, height, depth, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual RERHI::RHITextureCube* createTextureCube(uint32_t width, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual RERHI::RHITextureCube* createTextureCube(RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
@@ -6385,7 +6385,7 @@ namespace OpenGLES3Rhi
 			return RHI_NEW(openGLES3Rhi.getContext(), TextureCube)(openGLES3Rhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual RERHI::RHITextureCubeArray* createTextureCubeArray([[maybe_unused]] uint32_t width, [[maybe_unused]] uint32_t numberOfSlices, [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] uint32_t textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual RERHI::RHITextureCubeArray* createTextureCubeArray([[maybe_unused]] RECore::uint32 width, [[maybe_unused]] RECore::uint32 numberOfSlices, [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] RECore::uint32 textureFlags = 0, [[maybe_unused]] RERHI::TextureUsage textureUsage = RERHI::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			// TODO(naetherm) Implement me, OpenGL ES 3.1 "GL_EXT_texture_cube_map_array"-extension
 			#ifdef DEBUG
@@ -6457,7 +6457,7 @@ namespace OpenGLES3Rhi
 			mOpenGLTextureAddressModeT(Mapping::getOpenGLES3TextureAddressMode(samplerState.addressV)),
 			mOpenGLTextureAddressModeR(Mapping::getOpenGLES3TextureAddressMode(samplerState.addressW)),
 			mMipLodBias(samplerState.mipLodBias),
-			mMaxAnisotropy(static_cast<float>(samplerState.maxAnisotropy)),	// Maximum anisotropy is "uint32_t" in Direct3D 10 & 11
+			mMaxAnisotropy(static_cast<float>(samplerState.maxAnisotropy)),	// Maximum anisotropy is "RECore::uint32" in Direct3D 10 & 11
 			mOpenGLCompareMode(Mapping::getOpenGLES3CompareMode(samplerState.filter)),
 			mOpenGLComparisonFunc(Mapping::getOpenGLES3ComparisonFunc(samplerState.comparisonFunc)),
 			mMinLod(samplerState.minLod),
@@ -6982,7 +6982,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] numberOfMultisamples
 		*    The number of multisamples per pixel (valid values: 1, 2, 4, 8)
 		*/
-		RenderPass(RERHI::RHIDynamicRHI& rhi, uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		RenderPass(RERHI::RHIDynamicRHI& rhi, RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IRenderPass(rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mNumberOfColorAttachments(numberOfColorAttachments),
 			mDepthStencilAttachmentTextureFormat(depthStencilAttachmentTextureFormat),
@@ -7006,7 +7006,7 @@ namespace OpenGLES3Rhi
 		*  @return
 		*    The number of color render target textures
 		*/
-		[[nodiscard]] inline uint32_t getNumberOfColorAttachments() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfColorAttachments() const
 		{
 			return mNumberOfColorAttachments;
 		}
@@ -7034,10 +7034,10 @@ namespace OpenGLES3Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t				 mNumberOfColorAttachments;
+		RECore::uint32				 mNumberOfColorAttachments;
 		RERHI::TextureFormat::Enum mColorAttachmentTextureFormats[8];
 		RERHI::TextureFormat::Enum mDepthStencilAttachmentTextureFormat;
-		uint8_t					 mNumberOfMultisamples;
+		RECore::uint8					 mNumberOfMultisamples;
 
 
 	};
@@ -7088,7 +7088,7 @@ namespace OpenGLES3Rhi
 	//[ Public virtual RERHI::RHIRenderTarget methods             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void getWidthAndHeight(uint32_t& width, uint32_t& height) const override
+		virtual void getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const override
 		{
 			// TODO(naetherm) Use "eglQuerySurface()"
 		//	EGLint renderTargetWidth  = 1;
@@ -7190,7 +7190,7 @@ namespace OpenGLES3Rhi
 			return mNativeWindowHandle;
 		}
 
-		inline virtual void setVerticalSynchronizationInterval(uint32_t synchronizationInterval) override
+		inline virtual void setVerticalSynchronizationInterval(RECore::uint32 synchronizationInterval) override
 		{
 			mNewVerticalSynchronizationInterval = synchronizationInterval;
 		}
@@ -7263,7 +7263,7 @@ namespace OpenGLES3Rhi
 	private:
 		RECore::handle			mNativeWindowHandle;	///< Native window handle window, can be a null handle
 		RERHI::RHIRenderWindow* mRenderWindow;			///< Render window instance, can be a null pointer, don't destroy the instance since we don't own it
-		uint32_t			mNewVerticalSynchronizationInterval;
+		RECore::uint32			mNewVerticalSynchronizationInterval;
 
 
 	};
@@ -7628,7 +7628,7 @@ namespace OpenGLES3Rhi
 		*  @return
 		*    The number of color render target textures
 		*/
-		[[nodiscard]] inline uint32_t getNumberOfColorTextures() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfColorTextures() const
 		{
 			return mNumberOfColorTextures;
 		}
@@ -7648,7 +7648,7 @@ namespace OpenGLES3Rhi
 	//[ Public virtual RERHI::RHIRenderTarget methods             ]
 	//[-------------------------------------------------------]
 	public:
-		inline virtual void getWidthAndHeight(uint32_t& width, uint32_t& height) const override
+		inline virtual void getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const override
 		{
 			// No fancy implementation in here, just copy over the internal information
 			width  = mWidth;
@@ -7680,11 +7680,11 @@ namespace OpenGLES3Rhi
 	private:
 		GLuint			mOpenGLES3Framebuffer;	///< OpenGL ES 3 framebuffer, can be zero if no resource is allocated
 		GLuint			mDepthRenderbuffer;		///< OpenGL ES render buffer for the depth component, can be zero if no resource is allocated
-		uint32_t		mNumberOfColorTextures;	///< Number of color render target textures
+		RECore::uint32		mNumberOfColorTextures;	///< Number of color render target textures
 		RERHI::RHITexture** mColorTextures;			///< The color render target textures (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "mNumberOfColorTextures" textures in the provided C-array of pointers
 		RERHI::RHITexture*  mDepthStencilTexture;	///< The depth stencil render target texture (we keep a reference to it), can be a null pointer
-		uint32_t		mWidth;					///< The framebuffer width
-		uint32_t		mHeight;				///< The framebuffer height
+		RECore::uint32		mWidth;					///< The framebuffer width
+		RECore::uint32		mHeight;				///< The framebuffer height
 
 
 	};
@@ -7850,7 +7850,7 @@ namespace OpenGLES3Rhi
 		*  @return
 		*    The OpenGL ES 3 shader, can be zero if no resource is allocated, do not destroy the returned resource
 		*/
-		[[nodiscard]] inline uint32_t getOpenGLES3Shader() const
+		[[nodiscard]] inline RECore::uint32 getOpenGLES3Shader() const
 		{
 			return mOpenGLES3Shader;
 		}
@@ -7888,7 +7888,7 @@ namespace OpenGLES3Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t mOpenGLES3Shader;	///< OpenGL ES 3 shader, can be zero if no resource is allocated
+		RECore::uint32 mOpenGLES3Shader;	///< OpenGL ES 3 shader, can be zero if no resource is allocated
 
 
 	};
@@ -7936,8 +7936,8 @@ namespace OpenGLES3Rhi
 			mDrawIdUniformLocation(-1)
 		{
 			{ // Define the vertex array attribute binding locations ("vertex declaration" in Direct3D 9 terminology, "input layout" in Direct3D 10 & 11 terminology)
-				const uint32_t numberOfVertexAttributes = vertexAttributes.numberOfAttributes;
-				for (uint32_t vertexAttribute = 0; vertexAttribute < numberOfVertexAttributes; ++vertexAttribute)
+				const RECore::uint32 numberOfVertexAttributes = vertexAttributes.numberOfAttributes;
+				for (RECore::uint32 vertexAttribute = 0; vertexAttribute < numberOfVertexAttributes; ++vertexAttribute)
 				{
 					glBindAttribLocation(mOpenGLES3Program, vertexAttribute, vertexAttributes.attributes[vertexAttribute].name);
 				}
@@ -7975,19 +7975,19 @@ namespace OpenGLES3Rhi
 				// The actual locations assigned to uniform variables are not known until the program object is linked successfully
 				// -> So we have to build a root signature parameter index -> uniform location mapping here
 				const RERHI::RootSignature& rootSignatureData = static_cast<const RootSignature&>(rootSignature).getRootSignature();
-				const uint32_t numberOfRootParameters = rootSignatureData.numberOfParameters;
+				const RECore::uint32 numberOfRootParameters = rootSignatureData.numberOfParameters;
 				if (numberOfRootParameters > 0)
 				{
-					uint32_t uniformBlockBindingIndex = 0;
+					RECore::uint32 uniformBlockBindingIndex = 0;
 					const bool isGL_EXT_texture_buffer = openGLES3Rhi.getOpenGLES3Context().getExtensions().isGL_EXT_texture_buffer();
-					for (uint32_t rootParameterIndex = 0; rootParameterIndex < numberOfRootParameters; ++rootParameterIndex)
+					for (RECore::uint32 rootParameterIndex = 0; rootParameterIndex < numberOfRootParameters; ++rootParameterIndex)
 					{
 						const RERHI::RootParameter& rootParameter = rootSignatureData.parameters[rootParameterIndex];
 						if (RERHI::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
 						{
 							RHI_ASSERT(nullptr != reinterpret_cast<const RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL ES 3 descriptor ranges")
-							const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
-							for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
+							const RECore::uint32 numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
+							for (RECore::uint32 descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
 							{
 								const RERHI::DescriptorRange& descriptorRange = reinterpret_cast<const RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges)[descriptorRangeIndex];
 
@@ -8357,7 +8357,7 @@ namespace OpenGLES3Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t mNumberOfRootSignatureParameters;	///< Number of root signature parameters
+		RECore::uint32 mNumberOfRootSignatureParameters;	///< Number of root signature parameters
 		GLuint	 mOpenGLES3Program;					///< OpenGL ES 3 program, can be zero if no resource is allocated
 		GLint	 mDrawIdUniformLocation;			///< Draw ID uniform location, used for "GL_EXT_base_instance"-emulation (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
 
@@ -8591,7 +8591,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] id
 		*    The unique compact graphics pipeline state ID
 		*/
-		GraphicsPipelineState(OpenGLES3Rhi& openGLES3Rhi, const RERHI::GraphicsPipelineState& graphicsPipelineState, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		GraphicsPipelineState(OpenGLES3Rhi& openGLES3Rhi, const RERHI::GraphicsPipelineState& graphicsPipelineState, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IGraphicsPipelineState(openGLES3Rhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLES3PrimitiveTopology(Mapping::getOpenGLES3Type(graphicsPipelineState.primitiveTopology)),
 			mGraphicsProgram(graphicsPipelineState.graphicsProgram),
@@ -8734,7 +8734,7 @@ namespace
 			return N;
 		}
 
-		[[nodiscard]] bool mapBuffer([[maybe_unused]] const RERHI::RHIContext& context, GLenum target, GLenum bindingTarget, GLuint openGLES3Buffer, uint32_t bufferSize, RERHI::MapType mapType, RERHI::MappedSubresource& mappedSubresource)
+		[[nodiscard]] bool mapBuffer([[maybe_unused]] const RERHI::RHIContext& context, GLenum target, GLenum bindingTarget, GLuint openGLES3Buffer, RECore::uint32 bufferSize, RERHI::MapType mapType, RERHI::MappedSubresource& mappedSubresource)
 		{
 			// TODO(naetherm) This buffer update isn't efficient, use e.g. persistent buffer mapping
 
@@ -9056,7 +9056,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		static constexpr RERHI::RHImplementationDispatchFunction DISPATCH_FUNCTIONS[static_cast<uint8_t>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
+		static constexpr RERHI::RHImplementationDispatchFunction DISPATCH_FUNCTIONS[static_cast<RECore::uint8>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
 		{
 			// Command buffer
 			&ImplementationDispatch::DispatchCommandBuffer,
@@ -9223,7 +9223,7 @@ namespace OpenGLES3Rhi
 		#ifdef RHI_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
-			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
+			const RECore::uint32 numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
 			if (numberOfCurrentResources > 0)
 			{
 				// Error!
@@ -9255,18 +9255,18 @@ namespace OpenGLES3Rhi
 	void OpenGLES3Rhi::dispatchCommandBufferInternal(const RERHI::RHICommandBuffer& commandBuffer)
 	{
 		// Loop through all commands
-		const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
+		const RECore::uint8* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
 		RERHI::ConstCommandPacket constCommandPacket = commandPacketBuffer;
 		while (nullptr != constCommandPacket)
 		{
 			{ // Dispatch command packet
 				const RERHI::CommandDispatchFunctionIndex commandDispatchFunctionIndex = RERHI::CommandPacketHelper::loadCommandDispatchFunctionIndex(constCommandPacket);
 				const void* command = RERHI::CommandPacketHelper::loadCommand(constCommandPacket);
-				detail::DISPATCH_FUNCTIONS[static_cast<uint32_t>(commandDispatchFunctionIndex)](command, *this);
+				detail::DISPATCH_FUNCTIONS[static_cast<RECore::uint32>(commandDispatchFunctionIndex)](command, *this);
 			}
 
 			{ // Next command
-				const uint32_t nextCommandPacketByteIndex = RERHI::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
+				const RECore::uint32 nextCommandPacketByteIndex = RERHI::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
 				constCommandPacket = (~0u != nextCommandPacketByteIndex) ? &commandPacketBuffer[nextCommandPacketByteIndex] : nullptr;
 			}
 		}
@@ -9322,7 +9322,7 @@ namespace OpenGLES3Rhi
 		}
 	}
 
-	void OpenGLES3Rhi::setGraphicsResourceGroup(uint32_t rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
+	void OpenGLES3Rhi::setGraphicsResourceGroup(RECore::uint32 rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
 	{
 		// Security checks
 		#ifdef DEBUG
@@ -9343,10 +9343,10 @@ namespace OpenGLES3Rhi
 
 			// Set graphics resource group
 			const ResourceGroup* openGLES3ResourceGroup = static_cast<ResourceGroup*>(resourceGroup);
-			const uint32_t numberOfResources = openGLES3ResourceGroup->getNumberOfResources();
+			const RECore::uint32 numberOfResources = openGLES3ResourceGroup->getNumberOfResources();
 			RERHI::RHIResource** resources = openGLES3ResourceGroup->getResources();
 			const RERHI::RootParameter& rootParameter = mGraphicsRootSignature->getRootSignature().parameters[rootParameterIndex];
-			for (uint32_t resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
+			for (RECore::uint32 resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
 			{
 				RERHI::RHIResource* resource = *resources;
 				RHI_ASSERT(nullptr != reinterpret_cast<const RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL ES 3 descriptor ranges")
@@ -9576,7 +9576,7 @@ namespace OpenGLES3Rhi
 		}
 	}
 
-	void OpenGLES3Rhi::setGraphicsViewports([[maybe_unused]] uint32_t numberOfViewports, const RERHI::Viewport* viewports)
+	void OpenGLES3Rhi::setGraphicsViewports([[maybe_unused]] RECore::uint32 numberOfViewports, const RERHI::Viewport* viewports)
 	{
 		// Rasterizer (RS) stage
 
@@ -9588,10 +9588,10 @@ namespace OpenGLES3Rhi
 		// -> This isn't influenced by the "GL_EXT_clip_control"-extension
 
 		// Get the width and height of the current render target
-		uint32_t renderTargetHeight = 1;
+		RECore::uint32 renderTargetHeight = 1;
 		if (nullptr != mRenderTarget)
 		{
-			uint32_t renderTargetWidth = 1;
+			RECore::uint32 renderTargetWidth = 1;
 			mRenderTarget->getWidthAndHeight(renderTargetWidth, renderTargetHeight);
 		}
 
@@ -9602,7 +9602,7 @@ namespace OpenGLES3Rhi
 		glDepthRangef(static_cast<GLclampf>(viewports->minDepth), static_cast<GLclampf>(viewports->maxDepth));
 	}
 
-	void OpenGLES3Rhi::setGraphicsScissorRectangles([[maybe_unused]] uint32_t numberOfScissorRectangles, const RERHI::ScissorRectangle* scissorRectangles)
+	void OpenGLES3Rhi::setGraphicsScissorRectangles([[maybe_unused]] RECore::uint32 numberOfScissorRectangles, const RERHI::ScissorRectangle* scissorRectangles)
 	{
 		// Rasterizer (RS) stage
 
@@ -9614,10 +9614,10 @@ namespace OpenGLES3Rhi
 		// -> This isn't influenced by the "GL_EXT_clip_control"-extension
 
 		// Get the width and height of the current render target
-		uint32_t renderTargetHeight = 1;
+		RECore::uint32 renderTargetHeight = 1;
 		if (nullptr != mRenderTarget)
 		{
-			uint32_t renderTargetWidth = 1;
+			RECore::uint32 renderTargetWidth = 1;
 			mRenderTarget->getWidthAndHeight(renderTargetWidth, renderTargetHeight);
 		}
 
@@ -9757,13 +9757,13 @@ namespace OpenGLES3Rhi
 		}
 	}
 
-	void OpenGLES3Rhi::clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil)
+	void OpenGLES3Rhi::clearGraphics(RECore::uint32 clearFlags, const float color[4], float z, RECore::uint32 stencil)
 	{
 		// Sanity check
 		RHI_ASSERT(z >= 0.0f && z <= 1.0f, "The OpenGL ES 3 clear graphics z value must be between [0, 1] (inclusive)")
 
 		// Get API flags
-		uint32_t flagsApi = 0;
+		RECore::uint32 flagsApi = 0;
 		if (clearFlags & RERHI::ClearFlag::COLOR)
 		{
 			flagsApi |= GL_COLOR_BUFFER_BIT;
@@ -9822,7 +9822,7 @@ namespace OpenGLES3Rhi
 		}
 	}
 
-	void OpenGLES3Rhi::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+	void OpenGLES3Rhi::drawGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 	{
 		// Sanity checks
 		RHI_ASSERT(nullptr != emulationData, "The OpenGL ES 3 emulation data must be valid")
@@ -9839,7 +9839,7 @@ namespace OpenGLES3Rhi
 				beginDebugEvent("Multi-draw-indirect emulation");
 			}
 		#endif
-		for (uint32_t i = 0; i < numberOfDraws; ++i)
+		for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
 		{
 			const RERHI::DrawArguments& drawArguments = *reinterpret_cast<const RERHI::DrawArguments*>(emulationData);
 			updateGL_EXT_base_instanceEmulation(drawArguments.startInstanceLocation);
@@ -9873,7 +9873,7 @@ namespace OpenGLES3Rhi
 		#endif
 	}
 
-	void OpenGLES3Rhi::drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+	void OpenGLES3Rhi::drawIndexedGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 	{
 		// Sanity checks
 		RHI_ASSERT(nullptr != emulationData, "The OpenGL ES 3 emulation data must be valid")
@@ -9892,7 +9892,7 @@ namespace OpenGLES3Rhi
 			}
 		#endif
 		IndexBuffer* indexBuffer = mVertexArray->getIndexBuffer();
-		for (uint32_t i = 0; i < numberOfDraws; ++i)
+		for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
 		{
 			const RERHI::DrawIndexedArguments& drawIndexedArguments = *reinterpret_cast<const RERHI::DrawIndexedArguments*>(emulationData);
 			updateGL_EXT_base_instanceEmulation(drawIndexedArguments.startInstanceLocation);
@@ -10097,7 +10097,7 @@ namespace OpenGLES3Rhi
 	//[-------------------------------------------------------]
 	//[ Query                                                 ]
 	//[-------------------------------------------------------]
-	void OpenGLES3Rhi::resetQueryPool([[maybe_unused]] RERHI::RHIQueryPool& queryPool, [[maybe_unused]] uint32_t firstQueryIndex, [[maybe_unused]] uint32_t numberOfQueries)
+	void OpenGLES3Rhi::resetQueryPool([[maybe_unused]] RERHI::RHIQueryPool& queryPool, [[maybe_unused]] RECore::uint32 firstQueryIndex, [[maybe_unused]] RECore::uint32 numberOfQueries)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -10106,7 +10106,7 @@ namespace OpenGLES3Rhi
 		NOP;
 	}
 
-	void OpenGLES3Rhi::beginQuery([[maybe_unused]] RERHI::RHIQueryPool& queryPool, [[maybe_unused]] uint32_t queryIndex, [[maybe_unused]] uint32_t queryControlFlags)
+	void OpenGLES3Rhi::beginQuery([[maybe_unused]] RERHI::RHIQueryPool& queryPool, [[maybe_unused]] RECore::uint32 queryIndex, [[maybe_unused]] RECore::uint32 queryControlFlags)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -10115,7 +10115,7 @@ namespace OpenGLES3Rhi
 		NOP;
 	}
 
-	void OpenGLES3Rhi::endQuery([[maybe_unused]] RERHI::RHIQueryPool& queryPool, [[maybe_unused]] uint32_t queryIndex)
+	void OpenGLES3Rhi::endQuery([[maybe_unused]] RERHI::RHIQueryPool& queryPool, [[maybe_unused]] RECore::uint32 queryIndex)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -10124,7 +10124,7 @@ namespace OpenGLES3Rhi
 		NOP;
 	}
 
-	void OpenGLES3Rhi::writeTimestampQuery([[maybe_unused]] RERHI::RHIQueryPool& queryPool, [[maybe_unused]] uint32_t queryIndex)
+	void OpenGLES3Rhi::writeTimestampQuery([[maybe_unused]] RERHI::RHIQueryPool& queryPool, [[maybe_unused]] RECore::uint32 queryIndex)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -10195,12 +10195,12 @@ namespace OpenGLES3Rhi
 	//[-------------------------------------------------------]
 	//[ Shader language                                       ]
 	//[-------------------------------------------------------]
-	uint32_t OpenGLES3Rhi::getNumberOfShaderLanguages() const
+	RECore::uint32 OpenGLES3Rhi::getNumberOfShaderLanguages() const
 	{
 		return 1;
 	}
 
-	const char* OpenGLES3Rhi::getShaderLanguageName([[maybe_unused]] uint32_t index) const
+	const char* OpenGLES3Rhi::getShaderLanguageName([[maybe_unused]] RECore::uint32 index) const
 	{
 		RHI_ASSERT(index < getNumberOfShaderLanguages(), "OpenGL ES 3: Shader language index is out-of-bounds")
 		return ::detail::GLSLES_NAME;
@@ -10237,12 +10237,12 @@ namespace OpenGLES3Rhi
 	//[-------------------------------------------------------]
 	//[ Resource creation                                     ]
 	//[-------------------------------------------------------]
-	RERHI::RHIRenderPass* OpenGLES3Rhi::createRenderPass(uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
+	RERHI::RHIRenderPass* OpenGLES3Rhi::createRenderPass(RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		return RHI_NEW(mContext, RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
-	RERHI::RHIQueryPool* OpenGLES3Rhi::createQueryPool([[maybe_unused]] RERHI::QueryType queryType, [[maybe_unused]] uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER_NO_DEFAULT)
+	RERHI::RHIQueryPool* OpenGLES3Rhi::createQueryPool([[maybe_unused]] RERHI::QueryType queryType, [[maybe_unused]] RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER_NO_DEFAULT)
 	{
 		// TODO(naetherm) Implement me
 		return nullptr;
@@ -10290,7 +10290,7 @@ namespace OpenGLES3Rhi
 		RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "OpenGL ES 3: Invalid graphics pipeline state render pass")
 
 		// Create graphics pipeline state
-		uint16_t id = 0;
+		RECore::uint16 id = 0;
 		if (GraphicsPipelineStateMakeId.CreateID(id))
 		{
 			return RHI_NEW(mContext, GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -10331,7 +10331,7 @@ namespace OpenGLES3Rhi
 	//[-------------------------------------------------------]
 	//[ Resource handling                                     ]
 	//[-------------------------------------------------------]
-	bool OpenGLES3Rhi::map(RERHI::RHIResource& resource, uint32_t, RERHI::MapType mapType, uint32_t, RERHI::MappedSubresource& mappedSubresource)
+	bool OpenGLES3Rhi::map(RERHI::RHIResource& resource, RECore::uint32, RERHI::MapType mapType, RECore::uint32, RERHI::MappedSubresource& mappedSubresource)
 	{
 		// Evaluate the resource type
 		switch (resource.getResourceType())
@@ -10490,7 +10490,7 @@ namespace OpenGLES3Rhi
 		}
 	}
 
-	void OpenGLES3Rhi::unmap(RERHI::RHIResource& resource, uint32_t)
+	void OpenGLES3Rhi::unmap(RERHI::RHIResource& resource, RECore::uint32)
 	{
 		// Evaluate the resource type
 		switch (resource.getResourceType())
@@ -10612,7 +10612,7 @@ namespace OpenGLES3Rhi
 		}
 	}
 
-	bool OpenGLES3Rhi::getQueryPoolResults([[maybe_unused]] RERHI::RHIQueryPool& queryPool, [[maybe_unused]] uint32_t numberOfDataBytes, [[maybe_unused]] uint8_t* data, [[maybe_unused]] uint32_t firstQueryIndex, [[maybe_unused]] uint32_t numberOfQueries, [[maybe_unused]] uint32_t strideInBytes, [[maybe_unused]] uint32_t queryResultFlags)
+	bool OpenGLES3Rhi::getQueryPoolResults([[maybe_unused]] RERHI::RHIQueryPool& queryPool, [[maybe_unused]] RECore::uint32 numberOfDataBytes, [[maybe_unused]] RECore::uint8* data, [[maybe_unused]] RECore::uint32 firstQueryIndex, [[maybe_unused]] RECore::uint32 numberOfQueries, [[maybe_unused]] RECore::uint32 strideInBytes, [[maybe_unused]] RECore::uint32 queryResultFlags)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -10639,7 +10639,7 @@ namespace OpenGLES3Rhi
 	//[ Private static methods                                ]
 	//[-------------------------------------------------------]
 	#ifdef DEBUG
-		void OpenGLES3Rhi::debugMessageCallback(uint32_t source, uint32_t type, uint32_t id, uint32_t severity, int, const char* message, const void* userParam)
+		void OpenGLES3Rhi::debugMessageCallback(RECore::uint32 source, RECore::uint32 type, RECore::uint32 id, RECore::uint32 severity, int, const char* message, const void* userParam)
 		{
 			// Source to string
 			char debugSource[20 + 1]{0};	// +1 for terminating zero
@@ -10753,13 +10753,13 @@ namespace OpenGLES3Rhi
 			}
 
 			// Print into log
-			if (static_cast<const OpenGLES3Rhi*>(userParam)->getContext().getLog().print(logType, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "OpenGL ES 3 debug message\tSource:\"%s\"\tType:\"%s\"\tID:\"%u\"\tSeverity:\"%s\"\tMessage:\"%s\"", debugSource, debugType, id, debugSeverity, message))
+			if (static_cast<const OpenGLES3Rhi*>(userParam)->getContext().getLog().print(logType, nullptr, __FILE__, static_cast<RECore::uint32>(__LINE__), "OpenGL ES 3 debug message\tSource:\"%s\"\tType:\"%s\"\tID:\"%u\"\tSeverity:\"%s\"\tMessage:\"%s\"", debugSource, debugType, id, debugSeverity, message))
 			{
 				DEBUG_BREAK;
 			}
 		}
 	#else
-		void OpenGLES3Rhi::debugMessageCallback(uint32_t, uint32_t, uint32_t, uint32_t, int, const char*, const void*)
+		void OpenGLES3Rhi::debugMessageCallback(RECore::uint32, RECore::uint32, RECore::uint32, RECore::uint32, int, const char*, const void*)
 		{
 			// Nothing here
 		}
@@ -10790,34 +10790,34 @@ namespace OpenGLES3Rhi
 
 		// Maximum number of simultaneous render targets (if <1 render to texture is not supported)
 		glGetIntegerv(GL_MAX_DRAW_BUFFERS, &openGLValue);
-		mCapabilities.maximumNumberOfSimultaneousRenderTargets = static_cast<uint32_t>(openGLValue);
+		mCapabilities.maximumNumberOfSimultaneousRenderTargets = static_cast<RECore::uint32>(openGLValue);
 
 		// Maximum texture dimension
 		openGLValue = 0;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &openGLValue);
-		mCapabilities.maximumTextureDimension = static_cast<uint32_t>(openGLValue);
+		mCapabilities.maximumTextureDimension = static_cast<RECore::uint32>(openGLValue);
 
 		// Maximum number of 1D texture array slices (usually 512, in case there's no support for 1D texture arrays it's 0)
 		glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS, &openGLValue);
-		mCapabilities.maximumNumberOf1DTextureArraySlices = static_cast<uint32_t>(openGLValue);
+		mCapabilities.maximumNumberOf1DTextureArraySlices = static_cast<RECore::uint32>(openGLValue);
 
 		// Maximum number of 2D texture array slices (usually 512, in case there's no support for 2D texture arrays it's 0)
-		mCapabilities.maximumNumberOf2DTextureArraySlices = static_cast<uint32_t>(openGLValue);
+		mCapabilities.maximumNumberOf2DTextureArraySlices = static_cast<RECore::uint32>(openGLValue);
 
 		// Maximum number of cube texture array slices (usually 512, in case there's no support for cube texture arrays it's 0)
-		mCapabilities.maximumNumberOfCubeTextureArraySlices = 0;	// TODO(naetherm) Implement me		static_cast<uint32_t>(openGLValue);
+		mCapabilities.maximumNumberOfCubeTextureArraySlices = 0;	// TODO(naetherm) Implement me		static_cast<RECore::uint32>(openGLValue);
 
 		// Maximum uniform buffer (UBO) size in bytes (usually at least 16384 bytes, in case there's no support for uniform buffer it's 0)
 		openGLValue = 0;
 		glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &openGLValue);
-		mCapabilities.maximumUniformBufferSize = static_cast<uint32_t>(openGLValue);
+		mCapabilities.maximumUniformBufferSize = static_cast<RECore::uint32>(openGLValue);
 
 		// Maximum texture buffer (TBO) size in texel (>65536, typically much larger than that of one-dimensional texture, in case there's no support for texture buffer it's 0)
 		if (mOpenGLES3Context->getExtensions().isGL_EXT_texture_buffer())
 		{
 			openGLValue = 0;
 			glGetIntegerv(GL_MAX_TEXTURE_BUFFER_SIZE_EXT, &openGLValue);
-			mCapabilities.maximumTextureBufferSize = static_cast<uint32_t>(openGLValue);
+			mCapabilities.maximumTextureBufferSize = static_cast<RECore::uint32>(openGLValue);
 		}
 		else
 		{
@@ -10838,14 +10838,14 @@ namespace OpenGLES3Rhi
 			// Limit to known maximum we can test
 			openGLValue = 8;
 		}
-		mCapabilities.maximumNumberOfMultisamples = static_cast<uint8_t>(openGLValue);
+		mCapabilities.maximumNumberOfMultisamples = static_cast<RECore::uint8>(openGLValue);
 		// TODO(naetherm) Implement multisample support
 		mCapabilities.maximumNumberOfMultisamples = 1;
 
 		// Maximum anisotropy (always at least 1, usually 16)
 		// -> "GL_EXT_texture_filter_anisotropic"-extension
 		glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &openGLValue);
-		mCapabilities.maximumAnisotropy = static_cast<uint8_t>(openGLValue);
+		mCapabilities.maximumAnisotropy = static_cast<RECore::uint8>(openGLValue);
 
 		// Coordinate system
 		// -> If the "GL_EXT_clip_control"-extension is available: Left-handed coordinate system with clip space depth value range 0..1
@@ -10898,7 +10898,7 @@ namespace OpenGLES3Rhi
 
 			// Bind the graphics program, if required
 			const GraphicsProgramGlsl* graphicsProgramGlsl = static_cast<GraphicsProgramGlsl*>(graphicsProgram);
-			const uint32_t openGLES3Program = graphicsProgramGlsl->getOpenGLES3Program();
+			const RECore::uint32 openGLES3Program = graphicsProgramGlsl->getOpenGLES3Program();
 			if (openGLES3Program != mOpenGLES3Program)
 			{
 				mOpenGLES3Program = openGLES3Program;
@@ -10917,7 +10917,7 @@ namespace OpenGLES3Rhi
 		}
 	}
 
-	void OpenGLES3Rhi::updateGL_EXT_base_instanceEmulation(uint32_t startInstanceLocation)
+	void OpenGLES3Rhi::updateGL_EXT_base_instanceEmulation(RECore::uint32 startInstanceLocation)
 	{
 		if (mDrawIdUniformLocation != -1 && 0 != mOpenGLES3Program && mCurrentStartInstanceLocation != startInstanceLocation)
 		{

@@ -131,7 +131,7 @@ void Gui::onInitialization()
       rootParameters[1].initializeAsDescriptorTable(1, &ranges[2]);
       // Setup
       RERHI::RootSignatureBuilder rootSignatureBuilder;
-      rootSignatureBuilder.initialize(static_cast<uint32_t>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+      rootSignatureBuilder.initialize(static_cast<RECore::uint32>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
       // Create the instance
       mRootSignature = rhi->createRootSignature(rootSignatureBuilder);
@@ -156,21 +156,21 @@ void Gui::onInitialization()
       // -> The optimized texture clear value is a Direct3D 12 related option
       const RERHI::TextureFormat::Enum textureFormat = RERHI::TextureFormat::Enum::R8G8B8A8;
       { // Create the 2D texture
-        static constexpr uint32_t TEXTURE_WIDTH = 64;
-        static constexpr uint32_t TEXTURE_HEIGHT = 64;
-        static constexpr uint32_t TEXEL_ELEMENTS = 4;
-        static constexpr uint32_t NUMBER_OF_BYTES = TEXTURE_WIDTH * TEXTURE_HEIGHT * TEXEL_ELEMENTS;
-        uint8_t data[NUMBER_OF_BYTES];
+        static constexpr RECore::uint32 TEXTURE_WIDTH = 64;
+        static constexpr RECore::uint32 TEXTURE_HEIGHT = 64;
+        static constexpr RECore::uint32 TEXEL_ELEMENTS = 4;
+        static constexpr RECore::uint32 NUMBER_OF_BYTES = TEXTURE_WIDTH * TEXTURE_HEIGHT * TEXEL_ELEMENTS;
+        RECore::uint8 data[NUMBER_OF_BYTES];
 
         { // Fill the texture data with a defective checkboard
-          const uint32_t rowPitch = TEXTURE_WIDTH * TEXEL_ELEMENTS;
-          const uint32_t cellPitch = rowPitch >> 3;    // The width of a cell in the checkboard texture
-          const uint32_t cellHeight = TEXTURE_WIDTH >> 3;  // The height of a cell in the checkerboard texture
-          for (uint32_t n = 0; n < NUMBER_OF_BYTES; n += TEXEL_ELEMENTS) {
-            const uint32_t x = n % rowPitch;
-            const uint32_t y = n / rowPitch;
-            const uint32_t i = x / cellPitch;
-            const uint32_t j = y / cellHeight;
+          const RECore::uint32 rowPitch = TEXTURE_WIDTH * TEXEL_ELEMENTS;
+          const RECore::uint32 cellPitch = rowPitch >> 3;    // The width of a cell in the checkboard texture
+          const RECore::uint32 cellHeight = TEXTURE_WIDTH >> 3;  // The height of a cell in the checkerboard texture
+          for (RECore::uint32 n = 0; n < NUMBER_OF_BYTES; n += TEXEL_ELEMENTS) {
+            const RECore::uint32 x = n % rowPitch;
+            const RECore::uint32 y = n / rowPitch;
+            const RECore::uint32 i = x / cellPitch;
+            const RECore::uint32 j = y / cellHeight;
 
             if (i % 2 == j % 2) {
               // Black
@@ -180,10 +180,10 @@ void Gui::onInitialization()
               data[n + 3] = 255;  // A
             } else {
               // Add some color fun instead of just boring white
-              data[n + 0] = static_cast<uint8_t>(rand() % 255);  // R
-              data[n + 1] = static_cast<uint8_t>(rand() % 255);  // G
-              data[n + 2] = static_cast<uint8_t>(rand() % 255);  // B
-              data[n + 3] = static_cast<uint8_t>(rand() % 255);  // A
+              data[n + 0] = static_cast<RECore::uint8>(rand() % 255);  // R
+              data[n + 1] = static_cast<RECore::uint8>(rand() % 255);  // G
+              data[n + 2] = static_cast<RECore::uint8>(rand() % 255);  // B
+              data[n + 3] = static_cast<RECore::uint8>(rand() % 255);  // A
             }
           }
         }
@@ -217,15 +217,15 @@ void Gui::onInitialization()
           RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
           "Position",								// name[32] (char)
           "POSITION",								// semanticName[32] (char)
-          0,										// semanticIndex (uint32_t)
+          0,										// semanticIndex (RECore::uint32)
           // Data source
-          0,										// inputSlot (uint32_t)
-          0,										// alignedByteOffset (uint32_t)
-          sizeof(float) * 2,						// strideInBytes (uint32_t)
-          0										// instancesPerElement (uint32_t)
+          0,										// inputSlot (RECore::uint32)
+          0,										// alignedByteOffset (RECore::uint32)
+          sizeof(float) * 2,						// strideInBytes (RECore::uint32)
+          0										// instancesPerElement (RECore::uint32)
         }
       };
-    const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+    const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
     { // Create vertex array object (VAO)
       // Create the vertex buffer object (VBO)
@@ -248,7 +248,7 @@ void Gui::onInitialization()
       //    reference of the used vertex buffer objects (VBO). If the reference counter of a
       //    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
       const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-      mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
+      mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
     }
 
     {

@@ -56,15 +56,15 @@ namespace
 					RERHI::VertexAttributeFormat::FLOAT_3,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 					"Position",								// name[32] (char)
 					"POSITION",								// semanticName[32] (char)
-					0,										// semanticIndex (uint32_t)
+					0,										// semanticIndex (RECore::uint32)
 					// Data source
-					0,										// inputSlot (uint32_t)
-					0,										// alignedByteOffset (uint32_t)
-					sizeof(float) * 3,						// strideInBytes (uint32_t)
-					0										// instancesPerElement (uint32_t)
+					0,										// inputSlot (RECore::uint32)
+					0,										// alignedByteOffset (RECore::uint32)
+					sizeof(float) * 3,						// strideInBytes (RECore::uint32)
+					0										// instancesPerElement (RECore::uint32)
 				}
 			};
-			const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+			const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
 			// Create the vertex buffer object (VBO)
 			// -> Clip space vertex positions, left/bottom is (-1,-1) and right/top is (1,1)
@@ -82,7 +82,7 @@ namespace
 			RERHI::RHIVertexBufferPtr vertexBuffer(bufferManager.createVertexBuffer(sizeof(VERTEX_POSITION), VERTEX_POSITION, 0, RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME("Sky")));
 
 			// Create the index buffer object (IBO)
-			static constexpr uint16_t INDICES[] =
+			static constexpr RECore::uint16 INDICES[] =
 			{
 				0, 1, 2, 2, 3, 0,	// Front
 				1, 4, 7, 7, 2, 1,	// Right
@@ -95,7 +95,7 @@ namespace
 
 			// Create vertex array object (VAO)
 			const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-			return bufferManager.createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBuffer RHI_RESOURCE_DEBUG_NAME("Sky"));
+			return bufferManager.createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBuffer RHI_RESOURCE_DEBUG_NAME("Sky"));
 		}
 
 

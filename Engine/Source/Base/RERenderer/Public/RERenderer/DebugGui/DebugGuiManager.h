@@ -70,7 +70,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId			 AssetId;	///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::StringId			 AssetId;	///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
 	typedef std::vector<AssetId> AssetIds;
 
 
@@ -199,9 +199,9 @@ namespace RERenderer
 		RERHI::RHIResourceGroupPtr			mSamplerStateGroup;	///< Sampler state resource group, can be a null pointer
 		// Vertex and index buffer
 		RERHI::RHIVertexBufferPtr mVertexBuffer;
-		uint32_t			  mNumberOfAllocatedVertices;
+		RECore::uint32			  mNumberOfAllocatedVertices;
 		RERHI::RHIIndexBufferPtr  mIndexBuffer;
-		uint32_t			  mNumberOfAllocatedIndices;
+		RECore::uint32			  mNumberOfAllocatedIndices;
 		RERHI::RHIVertexArrayPtr  mVertexArray;
 		// Helper
 		bool mOpenMetricsWindow;

@@ -43,7 +43,7 @@ class RHIDynamicRHI;
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 OcclusionTimestampQueryPool::OcclusionTimestampQueryPool(RHIDynamicRHI &openGLRhi, RERHI::QueryType queryType,
-                                                         uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+                                                         RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   QueryPool(openGLRhi, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mOpenGLQueries(RHI_MALLOC_TYPED(openGLRhi.getContext(), GLuint, numberOfQueries)) {
 // If possible, use "glCreateQueries()" (OpenGL 4.5) in order to create the query instance at once
@@ -74,7 +74,7 @@ OcclusionTimestampQueryPool::OcclusionTimestampQueryPool(RHIDynamicRHI &openGLRh
               case RERHI::QueryType::OCCLUSION:
               {
                 RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Occlusion query", 18)	// 18 = "Occlusion query: " including terminating zero
-                for (uint32_t i = 0; i < mNumberOfQueries; ++i)
+                for (RECore::uint32 i = 0; i < mNumberOfQueries; ++i)
                 {
                   glObjectLabel(GL_QUERY, mOpenGLQueries[i], -1, detailedDebugName);
                 }
@@ -88,7 +88,7 @@ OcclusionTimestampQueryPool::OcclusionTimestampQueryPool(RHIDynamicRHI &openGLRh
               case RERHI::QueryType::TIMESTAMP:
               {
                 RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Timestamp query", 18)	// 18 = "Timestamp query: " including terminating zero
-                for (uint32_t i = 0; i < mNumberOfQueries; ++i)
+                for (RECore::uint32 i = 0; i < mNumberOfQueries; ++i)
                 {
                   glObjectLabel(GL_QUERY, mOpenGLQueries[i], -1, detailedDebugName);
                 }

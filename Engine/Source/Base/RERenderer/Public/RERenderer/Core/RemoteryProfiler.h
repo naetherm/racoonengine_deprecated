@@ -164,7 +164,7 @@ namespace RERenderer
 	//[ Public virtual RERenderer::IProfiler methods            ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void beginCpuSample(const char* name, uint32_t* hashCache) override
+		virtual void beginCpuSample(const char* name, RECore::uint32* hashCache) override
 		{
 			#ifdef DEBUG
 				++mNumberOfCurrentlyBegunCpuSamples;
@@ -180,7 +180,7 @@ namespace RERenderer
 			#endif
 		}
 
-		virtual void beginGpuSample([[maybe_unused]] const char* name, [[maybe_unused]] uint32_t* hashCache) override
+		virtual void beginGpuSample([[maybe_unused]] const char* name, [[maybe_unused]] RECore::uint32* hashCache) override
 		{
 			#ifdef DEBUG
 				++mNumberOfCurrentlyBegunGpuSamples;

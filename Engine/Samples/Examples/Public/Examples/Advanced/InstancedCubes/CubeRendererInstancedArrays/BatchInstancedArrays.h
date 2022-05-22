@@ -92,7 +92,7 @@ public:
 	*  @param[in] sceneRadius
 	*    Scene radius
 	*/
-	void initialize(RERHI::RHIBufferManager& bufferManager, RERHI::RHIRootSignature& rootSignature, const RERHI::VertexAttributes& vertexAttributes, RERHI::RHIVertexBuffer& vertexBuffer, RERHI::RHIIndexBuffer& indexBuffer, RERHI::RHIGraphicsProgram& graphicsProgram, RERHI::RHIRenderPass& renderPass, uint32_t numberOfCubeInstances, bool alphaBlending, uint32_t numberOfTextures, uint32_t sceneRadius);
+	void initialize(RERHI::RHIBufferManager& bufferManager, RERHI::RHIRootSignature& rootSignature, const RERHI::VertexAttributes& vertexAttributes, RERHI::RHIVertexBuffer& vertexBuffer, RERHI::RHIIndexBuffer& indexBuffer, RERHI::RHIGraphicsProgram& graphicsProgram, RERHI::RHIRenderPass& renderPass, RECore::uint32 numberOfCubeInstances, bool alphaBlending, RECore::uint32 numberOfTextures, RECore::uint32 sceneRadius);
 
 	/**
 	*  @brief
@@ -117,7 +117,7 @@ private:
 //[-------------------------------------------------------]
 private:
 	RERHI::RHIDynamicRHIPtr					mRhi;					///< Owner RHI instance, can be a null pointer
-	uint32_t						mNumberOfCubeInstances;	///< Number of cube instances
+	RECore::uint32						mNumberOfCubeInstances;	///< Number of cube instances
 	RERHI::RHIVertexArrayPtr			mVertexArray;			///< Vertex array object (VAO), can be a null pointer
 	RERHI::RHIGraphicsPipelineStatePtr	mGraphicsPipelineState;	///< Graphics pipeline state object (PSO), can be a null pointer
 

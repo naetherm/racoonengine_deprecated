@@ -83,20 +83,20 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] uint32_t alignToSimdLaneCount(uint32_t value)
+		[[nodiscard]] RECore::uint32 alignToSimdLaneCount(RECore::uint32 value)
 		{
 			return RECore::Math::makeMultipleOf(value, xsimd::simd_type<float>::size);
 		}
 
-		[[nodiscard]] uint32_t removeNotVisible(const RERenderer::SceneItemSet& sceneItemSet, uint32_t count, const uint32_t* inputIndirection, uint32_t* outputIndirection)
+		[[nodiscard]] RECore::uint32 removeNotVisible(const RERenderer::SceneItemSet& sceneItemSet, RECore::uint32 count, const RECore::uint32* inputIndirection, RECore::uint32* outputIndirection)
 		{
-			const uint32_t* RESTRICT visibilityFlag = sceneItemSet.visibilityFlag.data();
-			uint32_t numberOfVisibleItems = 0u;
+			const RECore::uint32* RESTRICT visibilityFlag = sceneItemSet.visibilityFlag.data();
+			RECore::uint32 numberOfVisibleItems = 0u;
 			if (nullptr != inputIndirection)
 			{
-				for (uint32_t i = 0; i < count; ++i)
+				for (RECore::uint32 i = 0; i < count; ++i)
 				{
-					const uint32_t index = inputIndirection[i];
+					const RECore::uint32 index = inputIndirection[i];
 					if (visibilityFlag[index])
 					{
 						outputIndirection[numberOfVisibleItems] = index;
@@ -106,7 +106,7 @@ namespace
 			}
 			else
 			{
-				for (uint32_t i = 0; i < count; ++i)
+				for (RECore::uint32 i = 0; i < count; ++i)
 				{
 					if (visibilityFlag[i])
 					{
@@ -117,9 +117,9 @@ namespace
 			}
 
 			// Pad out to the SIMD alignment
-			const uint32_t numberOfVisibleItemsAligned = alignToSimdLaneCount(numberOfVisibleItems);
-			const uint32_t lastVisibleItem = numberOfVisibleItems ? outputIndirection[numberOfVisibleItems - 1] : 0;
-			for (uint32_t i = numberOfVisibleItems; i < numberOfVisibleItemsAligned; ++i)
+			const RECore::uint32 numberOfVisibleItemsAligned = alignToSimdLaneCount(numberOfVisibleItems);
+			const RECore::uint32 lastVisibleItem = numberOfVisibleItems ? outputIndirection[numberOfVisibleItems - 1] : 0;
+			for (RECore::uint32 i = numberOfVisibleItems; i < numberOfVisibleItemsAligned; ++i)
 			{
 				outputIndirection[i] = lastVisibleItem;
 			}
@@ -275,8 +275,8 @@ namespace
 				bool added = false;
 				for (RERenderer::CompositorWorkspaceInstance::RenderQueueIndexRange& renderQueueIndexRange : renderQueueIndexRanges)
 				{
-					const uint8_t minimumRenderQueueIndex = renderableManager->getMinimumRenderQueueIndex();
-					const uint8_t maximumRenderQueueIndex = renderableManager->getMaximumRenderQueueIndex();
+					const RECore::uint8 minimumRenderQueueIndex = renderableManager->getMinimumRenderQueueIndex();
+					const RECore::uint8 maximumRenderQueueIndex = renderableManager->getMaximumRenderQueueIndex();
 					if ((minimumRenderQueueIndex >= renderQueueIndexRange.minimumRenderQueueIndex && minimumRenderQueueIndex <= renderQueueIndexRange.maximumRenderQueueIndex) ||
 						(maximumRenderQueueIndex >= renderQueueIndexRange.minimumRenderQueueIndex && maximumRenderQueueIndex <= renderQueueIndexRange.maximumRenderQueueIndex))
 					{
@@ -304,7 +304,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global thread functions                               ]
 		//[-------------------------------------------------------]
-		void simdSphereCulling(const float4 worldSpaceCameraPosition[3], const SimdPlane planes[6], const RERenderer::SceneItemSet& sceneItemSet, size_t threadSceneItemIndexStart, size_t threadSceneItemIndexEnd, uint32_t* RESTRICT visibilityFlag)
+		void simdSphereCulling(const float4 worldSpaceCameraPosition[3], const SimdPlane planes[6], const RERenderer::SceneItemSet& sceneItemSet, size_t threadSceneItemIndexStart, size_t threadSceneItemIndexEnd, RECore::uint32* RESTRICT visibilityFlag)
 		{
 			// Get pointers to the necessary members of the object set
 			const float* RESTRICT spherePositionXData = sceneItemSet.spherePositionX.data();
@@ -338,7 +338,7 @@ namespace
 				const float4 negativeRadius = xsimd::load_aligned(&negativeRadiusData[sceneItemIndex]);
 
 				bool4 inside = BOOL4_ALL_TRUE;
-				for (uint32_t p = 0; p < 6; ++p)
+				for (RECore::uint32 p = 0; p < 6; ++p)
 				{
 					const float4& RESTRICT n_x = planes[p].normalX;
 					const float4& RESTRICT n_y = planes[p].normalY;
@@ -362,7 +362,7 @@ namespace
 			}
 		}
 
-		void simdOobbCulling([[maybe_unused]] const float4 worldSpaceCameraPositionFloat4[3], const SimdMatrix& viewSpaceToClipSpaceMatrix, const RERenderer::SceneItemSet& sceneItemSet, const uint32_t* RESTRICT indirection, size_t threadSceneItemIndexStart, size_t threadSceneItemIndexEnd, uint32_t* RESTRICT visibilityFlag)
+		void simdOobbCulling([[maybe_unused]] const float4 worldSpaceCameraPositionFloat4[3], const SimdMatrix& viewSpaceToClipSpaceMatrix, const RERenderer::SceneItemSet& sceneItemSet, const RECore::uint32* RESTRICT indirection, size_t threadSceneItemIndexStart, size_t threadSceneItemIndexEnd, RECore::uint32* RESTRICT visibilityFlag)
 		{
 			// Get pointers to the necessary members of the object set
 
@@ -399,10 +399,10 @@ namespace
 			for (size_t sceneItemIndex = threadSceneItemIndexStart; sceneItemIndex < threadSceneItemIndexEnd; sceneItemIndex += simdSize)
 			{
 				// Load the world transform matrix for four objects via the indirection table
-				const uint32_t i0 = indirection[sceneItemIndex];
-				const uint32_t i1 = indirection[sceneItemIndex + 1];
-				const uint32_t i2 = indirection[sceneItemIndex + 2];
-				const uint32_t i3 = indirection[sceneItemIndex + 3];
+				const RECore::uint32 i0 = indirection[sceneItemIndex];
+				const RECore::uint32 i1 = indirection[sceneItemIndex + 1];
+				const RECore::uint32 i2 = indirection[sceneItemIndex + 2];
+				const RECore::uint32 i3 = indirection[sceneItemIndex + 3];
 
 				#if defined(XSIMD_X86_INSTR_SET_AVAILABLE)
 				{ // Prefetch data for the next loop iteration in order to try to hide memory latency
@@ -410,7 +410,7 @@ namespace
 					const size_t nextIndirectionIndex = sceneItemIndex + simdSize;
 					for (size_t componentIndex = 0; componentIndex < 4; ++componentIndex)
 					{
-						const uint32_t nextIndex = indirection[nextIndirectionIndex + componentIndex];
+						const RECore::uint32 nextIndex = indirection[nextIndirectionIndex + componentIndex];
 
 						// Minimum object space bounding box corner position
 						xsimd::prefetch(&minimumX[nextIndex]);
@@ -497,7 +497,7 @@ namespace
 				bool4 allZGreater = BOOL4_ALL_TRUE;
 
 				// Test each corner of the OOBB and if any corner intersects the frustum that object is visible
-				for (uint32_t cs = 0; cs < 8; ++cs)
+				for (RECore::uint32 cs = 0; cs < 8; ++cs)
 				{
 					const float4 neg_cs_w = -clipPosition[cs].w;
 
@@ -589,7 +589,7 @@ namespace RERenderer
 					// TODO(naetherm) There are currently multiple culling issues notable when using stereo rendering, so disabled culling for now until this has been resolved
 					// Fill render queue index ranges with the visible stuff
 					const glm::dvec3& cameraPosition = cameraSceneItem->getParentSceneNodeSafe().getGlobalTransform().position;	// 64 bit world space position of the camera
-					for (uint32_t i = 0; i < mCullableSceneItemSet->numberOfSceneItems; ++i)
+					for (RECore::uint32 i = 0; i < mCullableSceneItemSet->numberOfSceneItems; ++i)
 					{
 						::detail::gatherRenderQueueIndexRangesRenderableManagersBySceneItem(*mCullableSceneItemSet->sceneItemVector[i], cameraPosition, renderQueueIndexRanges, executeOnRenderingSceneItems);
 					}
@@ -607,8 +607,8 @@ namespace RERenderer
 			#endif
 			{
 				// Get the render target with and height
-				uint32_t renderTargetWidth = 0;
-				uint32_t renderTargetHeight = 0;
+				RECore::uint32 renderTargetWidth = 0;
+				RECore::uint32 renderTargetHeight = 0;
 				renderTarget.getWidthAndHeight(renderTargetWidth, renderTargetHeight);
 
 				// Get view space to clip space matrix
@@ -662,13 +662,13 @@ namespace RERenderer
 		};
 
 		// Make sure to align the size to the SIMD lane count
-		const uint32_t n_aligned_objects = ::detail::alignToSimdLaneCount(mCullableSceneItemSet->numberOfSceneItems);
+		const RECore::uint32 n_aligned_objects = ::detail::alignToSimdLaneCount(mCullableSceneItemSet->numberOfSceneItems);
 
 		// TODO(naetherm) We need to ensure that scene item set fits the SIMD lane count, this is only done at this place for the culling kickoff
 		if (mCullableSceneItemSet->minimumX.size() != n_aligned_objects)
 		{
 			// Determine the needed vector size which takes alignment as well as prefetch ("xsimd::prefetch()" -> "_mm_prefetch()") into account
-			const uint32_t size = n_aligned_objects + xsimd::simd_type<float>::size;
+			const RECore::uint32 size = n_aligned_objects + xsimd::simd_type<float>::size;
 
 			// Minimum object space bounding box corner position
 			mCullableSceneItemSet->minimumX.resize(size);
@@ -741,7 +741,7 @@ namespace RERenderer
 
 		// Store the indices of the objects that passed the frustum-sphere culling in the `indirection` array
 		mIndirection.resize(n_aligned_objects);
-		const uint32_t numberOfVisibleItems = ::detail::removeNotVisible(*mCullableSceneItemSet, mCullableSceneItemSet->numberOfSceneItems, nullptr, mIndirection.data());
+		const RECore::uint32 numberOfVisibleItems = ::detail::removeNotVisible(*mCullableSceneItemSet, mCullableSceneItemSet->numberOfSceneItems, nullptr, mIndirection.data());
 
 		// Construct the SimdMatrix "simd_view_proj"
 		const ::detail::SimdMatrix simd_view_proj =
@@ -794,11 +794,11 @@ namespace RERenderer
 		}
 
 		// Build up the indirection array that represents the objects that survived the frustum-OOBB culling
-		const uint32_t numberOfOobbVisible = ::detail::removeNotVisible(*mCullableSceneItemSet, numberOfVisibleItems, mIndirection.data(), mIndirection.data());
+		const RECore::uint32 numberOfOobbVisible = ::detail::removeNotVisible(*mCullableSceneItemSet, numberOfVisibleItems, mIndirection.data(), mIndirection.data());
 
 		// Fill render queue index ranges with the visible stuff
 		const glm::dvec3& cameraPosition = cameraSceneItem->getParentSceneNodeSafe().getGlobalTransform().position;
-		for (uint32_t indirectionIndex = 0; indirectionIndex < numberOfOobbVisible; ++indirectionIndex)
+		for (RECore::uint32 indirectionIndex = 0; indirectionIndex < numberOfOobbVisible; ++indirectionIndex)
 		{
 			::detail::gatherRenderQueueIndexRangesRenderableManagersBySceneItem(*mCullableSceneItemSet->sceneItemVector[mIndirection[indirectionIndex]], cameraPosition, renderQueueIndexRanges, executeOnRenderingSceneItems);
 		}

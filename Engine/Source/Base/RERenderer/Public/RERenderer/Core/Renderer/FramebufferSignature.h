@@ -45,8 +45,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;					///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
-	typedef uint32_t FramebufferSignatureId;	///< Framebuffer signature identifier, result of hashing framebuffer properties
+	typedef RECore::StringId AssetId;					///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::uint32 FramebufferSignatureId;	///< Framebuffer signature identifier, result of hashing framebuffer properties
 
 
 	//[-------------------------------------------------------]
@@ -55,8 +55,8 @@ namespace RERenderer
 	struct FramebufferSignatureAttachment final
 	{
 		AssetId  textureAssetId;
-		uint32_t mipmapIndex;
-		uint32_t layerIndex;	///< "slice" in Direct3D terminology, depending on the texture type it's a 2D texture array layer, 3D texture slice or cube map face
+		RECore::uint32 mipmapIndex;
+		RECore::uint32 layerIndex;	///< "slice" in Direct3D terminology, depending on the texture type it's a 2D texture array layer, 3D texture slice or cube map face
 		inline FramebufferSignatureAttachment() :
 			textureAssetId(RECore::getInvalid<AssetId>()),
 			mipmapIndex(0),
@@ -71,7 +71,7 @@ namespace RERenderer
 		{
 			// Nothing here
 		}
-		inline FramebufferSignatureAttachment(AssetId _textureAssetId, uint32_t _mipmapIndex = 0, uint32_t _layerIndex = 0) :
+		inline FramebufferSignatureAttachment(AssetId _textureAssetId, RECore::uint32 _mipmapIndex = 0, RECore::uint32 _layerIndex = 0) :
 			textureAssetId(_textureAssetId),
 			mipmapIndex(_mipmapIndex),
 			layerIndex(_layerIndex)
@@ -114,7 +114,7 @@ namespace RERenderer
 		*  @param[in] depthStencilFramebufferSignatureAttachment
 		*    Depth stencil framebuffer signature attachment
 		*/
-		FramebufferSignature(uint8_t numberOfColorAttachments, const FramebufferSignatureAttachment colorFramebufferSignatureAttachments[8], const FramebufferSignatureAttachment& depthStencilFramebufferSignatureAttachment);
+		FramebufferSignature(RECore::uint8 numberOfColorAttachments, const FramebufferSignatureAttachment colorFramebufferSignatureAttachments[8], const FramebufferSignatureAttachment& depthStencilFramebufferSignatureAttachment);
 
 		/**
 		*  @brief
@@ -159,12 +159,12 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Getter for input data                                 ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] inline uint8_t getNumberOfColorAttachments() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfColorAttachments() const
 		{
 			return mNumberOfColorAttachments;
 		}
 
-		[[nodiscard]] inline const FramebufferSignatureAttachment& getColorFramebufferSignatureAttachment(uint8_t index) const
+		[[nodiscard]] inline const FramebufferSignatureAttachment& getColorFramebufferSignatureAttachment(RECore::uint8 index) const
 		{
 			ASSERT(index < mNumberOfColorAttachments, "Invalid index")
 			return mColorFramebufferSignatureAttachments[index];
@@ -189,7 +189,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
 		// Input data
-		uint8_t						   mNumberOfColorAttachments;
+		RECore::uint8						   mNumberOfColorAttachments;
 		FramebufferSignatureAttachment mColorFramebufferSignatureAttachments[8];
 		FramebufferSignatureAttachment mDepthStencilFramebufferSignatureAttachment;
 		// Derived data

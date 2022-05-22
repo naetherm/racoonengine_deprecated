@@ -41,7 +41,7 @@ namespace RERenderer
 {
 	class IRenderer;
 	class MaterialBlueprintResource;
-	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
+	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
 	namespace v1MaterialBlueprint
 	{
 		struct Texture;
@@ -60,7 +60,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialBlueprintResourceId;	///< POD material blueprint resource identifier
+	typedef RECore::uint32 MaterialBlueprintResourceId;	///< POD material blueprint resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -80,7 +80,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("material_blueprint");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("material_blueprint");
 
 
 	//[-------------------------------------------------------]
@@ -149,9 +149,9 @@ namespace RERenderer
 		RECore::MemoryFile mMemoryFile;
 
 		// Temporary data: Root signature
-		uint32_t						  mMaximumNumberOfRootParameters;
+		RECore::uint32						  mMaximumNumberOfRootParameters;
 		std::vector<RERHI::RootParameter>   mRootParameters;
-		uint32_t						  mMaximumNumberOfDescriptorRanges;
+		RECore::uint32						  mMaximumNumberOfDescriptorRanges;
 		std::vector<RERHI::DescriptorRange> mDescriptorRanges;
 		RERHI::RootSignature				  mRootSignature;
 
@@ -163,11 +163,11 @@ namespace RERenderer
     RECore::AssetId mComputeShaderBlueprintAssetId;
 
 		// Temporary data: Sampler states
-		uint32_t						   mMaximumNumberOfMaterialBlueprintSamplerStates;
+		RECore::uint32						   mMaximumNumberOfMaterialBlueprintSamplerStates;
 		v1MaterialBlueprint::SamplerState* mMaterialBlueprintSamplerStates;
 
 		// Temporary data: Textures
-		uint32_t					  mMaximumNumberOfMaterialBlueprintTextures;
+		RECore::uint32					  mMaximumNumberOfMaterialBlueprintTextures;
 		v1MaterialBlueprint::Texture* mMaterialBlueprintTextures;
 
 

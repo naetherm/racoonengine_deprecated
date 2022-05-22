@@ -69,7 +69,7 @@ public:
   *  @param[in] id
   *    The unique compact graphics pipeline state ID
   */
-  GraphicsPipelineState(RHIDynamicRHI& openGLES3Rhi, const RERHI::GraphicsPipelineState& graphicsPipelineState, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  GraphicsPipelineState(RHIDynamicRHI& openGLES3Rhi, const RERHI::GraphicsPipelineState& graphicsPipelineState, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief

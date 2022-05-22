@@ -94,7 +94,7 @@ public:
     return mOpenGLES3Texture;
   }
 
-  [[nodiscard]] inline uint32_t getBufferSize() const
+  [[nodiscard]] inline RECore::uint32 getBufferSize() const
   {
     return mBufferSize;
   }
@@ -113,7 +113,7 @@ protected:
   *  @param[in] numberOfBytes
   *    Number of bytes within the texture buffer, must be valid
   */
-  TextureBuffer(RHIDynamicRHI& openGLES3Rhi, uint32_t numberOfBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  TextureBuffer(RHIDynamicRHI& openGLES3Rhi, RECore::uint32 numberOfBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
 
   //[-------------------------------------------------------]
@@ -132,7 +132,7 @@ protected:
 protected:
   GLuint	 mOpenGLES3TextureBuffer;	///< OpenGL ES 3 texture buffer, can be zero if no resource is allocated
   GLuint	 mOpenGLES3Texture;			///< OpenGL ES 3 texture, can be zero if no resource is allocated
-  uint32_t mBufferSize;				///< Holds the size of the buffer
+  RECore::uint32 mBufferSize;				///< Holds the size of the buffer
 
 
   //[-------------------------------------------------------]

@@ -41,8 +41,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;				///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
-	typedef RECore::StringId MaterialPropertyId;	///< Material property identifier, internally just a POD "uint32_t", result of hashing the property name
+	typedef RECore::StringId AssetId;				///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::StringId MaterialPropertyId;	///< Material property identifier, internally just a POD "RECore::uint32", result of hashing the property name
 
 
 	//[-------------------------------------------------------]
@@ -62,7 +62,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("GenerateMipmaps");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("GenerateMipmaps");
 
 
 	//[-------------------------------------------------------]
@@ -94,7 +94,7 @@ namespace RERenderer
 			return TYPE_ID;
 		}
 
-		virtual void deserialize(uint32_t numberOfBytes, const uint8_t* data) override;
+		virtual void deserialize(RECore::uint32 numberOfBytes, const RECore::uint8* data) override;
 
 
 	//[-------------------------------------------------------]

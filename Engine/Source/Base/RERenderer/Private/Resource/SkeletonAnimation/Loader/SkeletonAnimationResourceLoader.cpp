@@ -49,8 +49,8 @@ namespace RERenderer
 		// Read in the file format header
 		struct FileFormatHeader final
 		{
-			uint32_t formatType;
-			uint32_t formatVersion;
+			RECore::uint32 formatType;
+			RECore::uint32 formatVersion;
 		};
 		FileFormatHeader fileFormatHeader;
 		file.read(&fileFormatHeader, sizeof(FileFormatHeader));
@@ -69,7 +69,7 @@ namespace RERenderer
 
 			// Read in bone IDs
 			mSkeletonAnimationResource->mBoneIds.resize(skeletonAnimationHeader.numberOfChannels);
-			file.read(mSkeletonAnimationResource->mBoneIds.data(), sizeof(uint32_t) * skeletonAnimationHeader.numberOfChannels);
+			file.read(mSkeletonAnimationResource->mBoneIds.data(), sizeof(RECore::uint32) * skeletonAnimationHeader.numberOfChannels);
 
 			// Read in the ACL ( https://github.com/nfrechette/acl ) compressed skeleton animation tracks
 			mSkeletonAnimationResource->mAclCompressedTracks.resize(skeletonAnimationHeader.aclCompressedTracksSize);

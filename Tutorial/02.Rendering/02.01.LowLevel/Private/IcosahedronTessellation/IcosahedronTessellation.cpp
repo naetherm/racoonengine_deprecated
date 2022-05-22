@@ -72,7 +72,7 @@ void IcosahedronTessellation::onInitialization()
 
 			// Setup
 			RERHI::RootSignatureBuilder rootSignatureBuilder;
-			rootSignatureBuilder.initialize(static_cast<uint32_t>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+			rootSignatureBuilder.initialize(static_cast<RECore::uint32>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
 			// Create the instance
 			mRootSignature = rhi->createRootSignature(rootSignatureBuilder);
@@ -86,15 +86,15 @@ void IcosahedronTessellation::onInitialization()
 				RERHI::VertexAttributeFormat::FLOAT_3,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Position",								// name[32] (char)
 				"POSITION",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				0,										// alignedByteOffset (uint32_t)
-				sizeof(float) * 3,						// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				0,										// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 3,						// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			}
 		};
-		const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+		const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
 		{ // Create vertex array object (VAO)
 			// Create the vertex buffer object (VBO)
@@ -118,7 +118,7 @@ void IcosahedronTessellation::onInitialization()
 
 			// Create the index buffer object (IBO)
 			// -> Geometry is from: http://prideout.net/blog/?p=48 (Philip Rideout, "The Little Grasshopper - Graphics Programming Tips")
-			static constexpr uint16_t INDICES[] =
+			static constexpr RECore::uint16 INDICES[] =
 			{				// Triangle ID
 				0,  1,  2,	// 0
 				0,  2,  3,	// 1
@@ -150,12 +150,12 @@ void IcosahedronTessellation::onInitialization()
 			//    reference of the used vertex buffer objects (VBO). If the reference counter of a
 			//    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
 			const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-			mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBuffer);
+			mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, indexBuffer);
 		}
 
 		{ // Create the uniform buffer group with tessellation control shader visibility
 			RERHI::RHIResource* resources[1] = { mUniformBufferDynamicTcs = mBufferManager->createUniformBuffer(sizeof(float) * 2, nullptr, RERHI::BufferUsage::DYNAMIC_DRAW) };
-			mUniformBufferGroupTcs = mRootSignature->createResourceGroup(0, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources);
+			mUniformBufferGroupTcs = mRootSignature->createResourceGroup(0, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources);
 		}
 
 		{ // Create the uniform buffer group with tessellation evaluation shader visibility: "ObjectSpaceToClipSpaceMatrix"
@@ -163,7 +163,7 @@ void IcosahedronTessellation::onInitialization()
 			const glm::mat4 viewSpaceToClipSpaceMatrix = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 1000.0f, 0.001f);	// Also known as "projection matrix", near and far flipped due to usage of Reversed-Z (see e.g. https://developer.nvidia.com/content/depth-precision-visualized and https://nlguillemot.wordpress.com/2016/12/07/reversed-z-in-opengl/)
 			const glm::mat4 objectSpaceToClipSpaceMatrix = viewSpaceToClipSpaceMatrix * worldSpaceToViewSpaceMatrix;			// Also known as "model view projection matrix"
 			RERHI::RHIResource* resources[1] = { mBufferManager->createUniformBuffer(sizeof(float) * 4 * 4, glm::value_ptr(objectSpaceToClipSpaceMatrix)) };
-			mUniformBufferGroupTes = mRootSignature->createResourceGroup(1, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources);
+			mUniformBufferGroupTes = mRootSignature->createResourceGroup(1, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources);
 		}
 
 		{ // Create the uniform buffer group with geometry visibility: "NormalMatrix"
@@ -173,7 +173,7 @@ void IcosahedronTessellation::onInitialization()
 			const glm::mat3 nMVP(objectSpaceToClipSpaceMatrix);
 			const glm::mat4 tMVP(nMVP);
 			RERHI::RHIResource* resources[1] = { mBufferManager->createUniformBuffer(sizeof(float) * 4 * 4, glm::value_ptr(tMVP)) };
-			mUniformBufferGroupGs = mRootSignature->createResourceGroup(2, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources);
+			mUniformBufferGroupGs = mRootSignature->createResourceGroup(2, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources);
 		}
 
 		{ // Create the uniform buffer group with fragment shader visibility: Light and material
@@ -184,7 +184,7 @@ void IcosahedronTessellation::onInitialization()
 				0.04f, 0.04f, 0.04f, 1.0,	// "AmbientMaterial"
 			};
 			RERHI::RHIResource* resources[1] = { mBufferManager->createUniformBuffer(sizeof(LIGHT_AND_MATERIAL), LIGHT_AND_MATERIAL) };
-			mUniformBufferGroupFs = mRootSignature->createResourceGroup(3, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources);
+			mUniformBufferGroupFs = mRootSignature->createResourceGroup(3, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources);
 		}
 
 		{

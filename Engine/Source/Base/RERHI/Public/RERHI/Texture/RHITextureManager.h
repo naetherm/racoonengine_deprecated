@@ -119,8 +119,8 @@ public:
   *    - The following texture data layout is expected: Mip0, Mip1, Mip2, Mip3 ...
   */
   [[nodiscard]] virtual RHITexture1D *
-  createTexture1D(uint32_t width, TextureFormat::Enum textureFormat, const void *data = nullptr,
-                  uint32_t textureFlags = 0, TextureUsage textureUsage = TextureUsage::DEFAULT
+  createTexture1D(RECore::uint32 width, TextureFormat::Enum textureFormat, const void *data = nullptr,
+                  RECore::uint32 textureFlags = 0, TextureUsage textureUsage = TextureUsage::DEFAULT
                   RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
@@ -154,8 +154,8 @@ public:
   *    - Only supported if "Rhi::Capabilities::maximumNumberOf1DTextureArraySlices" is not 0
   */
   [[nodiscard]] virtual RHITexture1DArray *
-  createTexture1DArray(uint32_t width, uint32_t numberOfSlices, TextureFormat::Enum textureFormat,
-                       const void *data = nullptr, uint32_t textureFlags = 0,
+  createTexture1DArray(RECore::uint32 width, RECore::uint32 numberOfSlices, TextureFormat::Enum textureFormat,
+                       const void *data = nullptr, RECore::uint32 textureFlags = 0,
                        TextureUsage textureUsage = TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
@@ -186,9 +186,9 @@ public:
   *    - The following texture data layout is expected: Mip0, Mip1, Mip2, Mip3 ...
   */
   [[nodiscard]] virtual RHITexture2D *
-  createTexture2D(uint32_t width, uint32_t height, TextureFormat::Enum textureFormat, const void *data = nullptr,
-                  uint32_t textureFlags = 0, TextureUsage textureUsage = TextureUsage::DEFAULT,
-                  uint8_t numberOfMultisamples = 1,
+  createTexture2D(RECore::uint32 width, RECore::uint32 height, TextureFormat::Enum textureFormat, const void *data = nullptr,
+                  RECore::uint32 textureFlags = 0, TextureUsage textureUsage = TextureUsage::DEFAULT,
+                  RECore::uint8 numberOfMultisamples = 1,
                   const OptimizedTextureClearValue *optimizedTextureClearValue = nullptr
                   RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
@@ -225,8 +225,8 @@ public:
   *    - Only supported if "Rhi::Capabilities::maximumNumberOf2DTextureArraySlices" is not 0
   */
   [[nodiscard]] virtual RHITexture2DArray *
-  createTexture2DArray(uint32_t width, uint32_t height, uint32_t numberOfSlices, TextureFormat::Enum textureFormat,
-                       const void *data = nullptr, uint32_t textureFlags = 0,
+  createTexture2DArray(RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices, TextureFormat::Enum textureFormat,
+                       const void *data = nullptr, RECore::uint32 textureFlags = 0,
                        TextureUsage textureUsage = TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
@@ -258,8 +258,8 @@ public:
   *    (DDS-texture layout is using face-major order)
   */
   [[nodiscard]] virtual RHITexture3D *
-  createTexture3D(uint32_t width, uint32_t height, uint32_t depth, TextureFormat::Enum textureFormat,
-                  const void *data = nullptr, uint32_t textureFlags = 0,
+  createTexture3D(RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth, TextureFormat::Enum textureFormat,
+                  const void *data = nullptr, RECore::uint32 textureFlags = 0,
                   TextureUsage textureUsage = TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
@@ -287,8 +287,8 @@ public:
   *    (DDS-texture layout is using face-major order)
   */
   [[nodiscard]] virtual RHITextureCube *
-  createTextureCube(uint32_t width, TextureFormat::Enum textureFormat, const void *data = nullptr,
-                    uint32_t textureFlags = 0, TextureUsage textureUsage = TextureUsage::DEFAULT
+  createTextureCube(RECore::uint32 width, TextureFormat::Enum textureFormat, const void *data = nullptr,
+                    RECore::uint32 textureFlags = 0, TextureUsage textureUsage = TextureUsage::DEFAULT
                     RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
@@ -321,8 +321,8 @@ public:
   *    - Only supported if "Rhi::Capabilities::maximumNumberOfCubeTextureArraySlices" is not 0
   */
   [[nodiscard]] virtual RHITextureCubeArray *
-  createTextureCubeArray(uint32_t width, uint32_t numberOfSlices, TextureFormat::Enum textureFormat,
-                         const void *data = nullptr, uint32_t textureFlags = 0,
+  createTextureCubeArray(RECore::uint32 width, RECore::uint32 numberOfSlices, TextureFormat::Enum textureFormat,
+                         const void *data = nullptr, RECore::uint32 textureFlags = 0,
                          TextureUsage textureUsage = TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   // Protected methods

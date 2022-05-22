@@ -65,27 +65,27 @@ void VertexBuffer::onInitialization()
 				RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Position",								// name[32] (char)
 				"POSITION",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				0,										// alignedByteOffset (uint32_t)
-				sizeof(float) * 5,						// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				0,										// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5,						// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 1
 				// Data destination
 				RERHI::VertexAttributeFormat::FLOAT_3,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Color",								// name[32] (char)
 				"COLOR",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				sizeof(float) * 2,						// alignedByteOffset (uint32_t)
-				sizeof(float) * 5,						// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				sizeof(float) * 2,						// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5,						// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			}
 		};
-		const RERHI::VertexAttributes vertexAttributesVBO(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayoutVBO)), vertexAttributesLayoutVBO);
+		const RERHI::VertexAttributes vertexAttributesVBO(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayoutVBO)), vertexAttributesLayoutVBO);
 		static constexpr RERHI::VertexAttribute vertexAttributesLayoutVBOs[] =
 		{
 			{ // Attribute 0
@@ -93,27 +93,27 @@ void VertexBuffer::onInitialization()
 				RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Position",								// name[32] (char)
 				"POSITION",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				0,										// alignedByteOffset (uint32_t)
-				sizeof(float) * 2,						// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				0,										// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 2,						// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 1
 				// Data destination
 				RERHI::VertexAttributeFormat::FLOAT_3,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Color",								// name[32] (char)
 				"COLOR",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				1,										// inputSlot (uint32_t)
-				0,										// alignedByteOffset (uint32_t)
-				sizeof(float) * 3,						// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				1,										// inputSlot (RECore::uint32)
+				0,										// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 3,						// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			}
 		};
-		const RERHI::VertexAttributes vertexAttributesVBOs(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayoutVBOs)), vertexAttributesLayoutVBOs);
+		const RERHI::VertexAttributes vertexAttributesVBOs(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayoutVBOs)), vertexAttributesLayoutVBOs);
 
 		// Vertex array object (VAO)
 		// -> The vertex array object (VAO) keeps a reference to the used vertex buffer object (VBO)
@@ -136,7 +136,7 @@ void VertexBuffer::onInitialization()
 
 			// Create vertex array object (VAO)
 			const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBufferPositionColor };
-			mVertexArrayVbo = mBufferManager->createVertexArray(vertexAttributesVBO, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
+			mVertexArrayVbo = mBufferManager->createVertexArray(vertexAttributesVBO, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
 		}
 
 		{ // Create vertex array object (VAO) using multiple vertex buffer object (VBO)
@@ -162,7 +162,7 @@ void VertexBuffer::onInitialization()
 
 			// Create vertex array object (VAO)
 			const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBufferPosition, vertexBufferColor };
-			mVertexArrayVbos = mBufferManager->createVertexArray(vertexAttributesVBOs, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
+			mVertexArrayVbos = mBufferManager->createVertexArray(vertexAttributesVBOs, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
 		}
 
 		{

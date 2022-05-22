@@ -44,7 +44,7 @@ ComputeShaderGlsl::ComputeShaderGlsl(RHIDynamicRHI &vulkanRhi, const RERHI::Shad
   if (nullptr != vkDebugMarkerSetObjectNameEXT)
         {
           RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "CS", 5)	// 5 = "CS: " including terminating zero
-          Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT, (uint64_t)mVkShaderModule, detailedDebugName);
+          Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT, (RECore::uint64)mVkShaderModule, detailedDebugName);
         }
 #endif
 }
@@ -69,7 +69,7 @@ ComputeShaderGlsl::ComputeShaderGlsl(RHIDynamicRHI &vulkanRhi, const char *sourc
   if (nullptr != vkDebugMarkerSetObjectNameEXT)
         {
           RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "CS", 5)	// 5 = "CS: " including terminating zero
-          Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT, (uint64_t)mVkShaderModule, detailedDebugName);
+          Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT, (RECore::uint64)mVkShaderModule, detailedDebugName);
         }
 #endif
 }

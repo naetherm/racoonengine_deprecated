@@ -35,10 +35,10 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace RECore {
-template<class ELEMENT_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
+template<class ELEMENT_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS>
 class PackedElementManager;
 
-template<class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
+template<class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS>
 class ResourceManagerTemplate;
 }
 namespace RERenderer {
@@ -56,7 +56,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t SkeletonAnimationResourceId;	///< POD skeleton animation resource identifier
+	typedef RECore::uint32 SkeletonAnimationResourceId;	///< POD skeleton animation resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -82,7 +82,7 @@ namespace RERenderer
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline uint8_t getNumberOfChannels() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfChannels() const
 		{
 			return mNumberOfChannels;
 		}
@@ -97,12 +97,12 @@ namespace RERenderer
 			return mTicksPerSecond;
 		}
 
-		[[nodiscard]] inline const std::vector<uint32_t>& getBoneIds() const
+		[[nodiscard]] inline const std::vector<RECore::uint32>& getBoneIds() const
 		{
 			return mBoneIds;
 		}
 
-		[[nodiscard]] inline const std::vector<uint8_t>& getAclCompressedTracks() const
+		[[nodiscard]] inline const std::vector<RECore::uint8>& getAclCompressedTracks() const
 		{
 			return mAclCompressedTracks;
 		}
@@ -166,11 +166,11 @@ namespace RERenderer
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint8_t				  mNumberOfChannels;	///< The number of bone animation channels; each channel affects a single bone
+		RECore::uint8				  mNumberOfChannels;	///< The number of bone animation channels; each channel affects a single bone
 		float				  mDurationInTicks;		///< Duration of the animation in ticks
 		float				  mTicksPerSecond;		///< Ticks per second; 0 if not specified in the imported file
-		std::vector<uint32_t> mBoneIds;
-		std::vector<uint8_t>  mAclCompressedTracks;	///< ACL ( https://github.com/nfrechette/acl ) compressed skeleton animation tracks
+		std::vector<RECore::uint32> mBoneIds;
+		std::vector<RECore::uint8>  mAclCompressedTracks;	///< ACL ( https://github.com/nfrechette/acl ) compressed skeleton animation tracks
 
 
 	};

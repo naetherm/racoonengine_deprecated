@@ -80,7 +80,7 @@ public:
   *  @param[in] textureUsage
   *    Indication of the texture usage
   */
-  Texture3DBind(RHIDynamicRHI& openGLRhi, uint32_t width, uint32_t height, uint32_t depth, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  Texture3DBind(RHIDynamicRHI& openGLRhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

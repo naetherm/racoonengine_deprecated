@@ -131,7 +131,7 @@ public:
   *  @return
   *    Size of an input report in bytes (unique to each HID device)
   */
-  [[nodiscard]] inline uint32_t getInputReportSize() const
+  [[nodiscard]] inline RECore::uint32 getInputReportSize() const
   {
     return m_nInputReportSize;
   }
@@ -143,9 +143,9 @@ public:
   *  @param[in] nSize
   *    Size of an input report in bytes (unique to each HID device)
   */
-  inline void setInputReportSize(uint32_t nSize)
+  inline void setInputReportSize(RECore::uint32 nSize)
   {
-    m_nInputReportSize = static_cast<uint16_t>(nSize);
+    m_nInputReportSize = static_cast<RECore::uint16>(nSize);
   }
 
   /**
@@ -155,7 +155,7 @@ public:
   *  @return
   *    Size of an output report in bytes
   */
-  [[nodiscard]] inline uint32_t getOutputReportSize() const
+  [[nodiscard]] inline RECore::uint32 getOutputReportSize() const
   {
     return m_nOutputReportSize;
   }
@@ -167,9 +167,9 @@ public:
   *  @param[in] nSize
   *    Size of an output report in bytes (unique to each HID device)
   */
-  inline void setOutputReportSize(uint32_t nSize)
+  inline void setOutputReportSize(RECore::uint32 nSize)
   {
-    m_nOutputReportSize = static_cast<uint16_t>(nSize);
+    m_nOutputReportSize = static_cast<RECore::uint16>(nSize);
   }
 
   /**
@@ -179,7 +179,7 @@ public:
   *  @return
   *    Input buffer (can be a null pointer if the device is not open), do not destroy the returned buffer!
   */
-  [[nodiscard]] inline uint8_t *getInputBuffer() const
+  [[nodiscard]] inline RECore::uint8 *getInputBuffer() const
   {
     return m_pInputBuffer;
   }
@@ -191,7 +191,7 @@ public:
   *  @return
   *    Output buffer (can be a null pointer if the device is not open), do not destroy the returned buffer!
   */
-  [[nodiscard]] inline uint8_t *getOutputBuffer() const
+  [[nodiscard]] inline RECore::uint8 *getOutputBuffer() const
   {
     return m_pOutputBuffer;
   }
@@ -217,7 +217,7 @@ public:
   *    - The default implementation is empty
   *    - If you are using a "HIDDevice", the output and input ports will be ignored
   */
-  inline virtual bool open([[maybe_unused]] uint16_t nOutputPort = 0, [[maybe_unused]] uint16_t nInputPort = 0)
+  inline virtual bool open([[maybe_unused]] RECore::uint16 nOutputPort = 0, [[maybe_unused]] RECore::uint16 nInputPort = 0)
   {
     // To be implemented in derived classes
     // Please use initThread() to start the read thread after successful connection
@@ -280,7 +280,7 @@ public:
   *  @note
   *    - The default implementation is empty
   */
-  inline virtual bool read(uint8_t*, uint32_t)
+  inline virtual bool read(RECore::uint8*, RECore::uint32)
   {
     // To be implemented in derived classes
     // Please call lockCriticalSection() before and unlockCriticalSection() after the read operation
@@ -305,7 +305,7 @@ public:
   *  @note
   *    - The default implementation is empty
   */
-  inline virtual bool write(const uint8_t*, uint32_t)
+  inline virtual bool write(const RECore::uint8*, RECore::uint32)
   {
     // To be implemented in derived classes
     // Please call lockCriticalSection() before and unlockCriticalSection() after the write operation
@@ -376,10 +376,10 @@ protected:
   EDeviceType m_nDeviceType;	///< Device type
 
   // Input and output buffers
-  uint8_t	 *m_pInputBuffer;		///< Input report buffer, can be a null pointer
-  uint8_t	 *m_pOutputBuffer;		///< Output report buffer, can be a null pointer
-  uint16_t  m_nInputReportSize;	///< Size of input report in bytes
-  uint16_t  m_nOutputReportSize;	///< Size of output report in bytes
+  RECore::uint8	 *m_pInputBuffer;		///< Input report buffer, can be a null pointer
+  RECore::uint8	 *m_pOutputBuffer;		///< Output report buffer, can be a null pointer
+  RECore::uint16  m_nInputReportSize;	///< Size of input report in bytes
+  RECore::uint16  m_nOutputReportSize;	///< Size of output report in bytes
 
   // Read thread
   std::thread	*m_pThread;		///< Update thread, can be a null pointer

@@ -52,7 +52,7 @@ namespace RERenderer
 		mSceneResource(sceneResource),
 		mParentSceneNode(nullptr),
 		mSceneItemSet(nullptr),
-		mSceneItemSetIndex(RECore::getInvalid<uint32_t>()),
+		mSceneItemSetIndex(RECore::getInvalid<RECore::uint32>()),
 		mCallExecuteOnRendering(false)
 	{
 		// TODO(naetherm) The following is just for culling kickoff and won't stay this way

@@ -42,7 +42,7 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-QueryPool::QueryPool(RHIDynamicRHI& openGLRhi, RERHI::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+QueryPool::QueryPool(RHIDynamicRHI& openGLRhi, RERHI::QueryType queryType, RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 RHIQueryPool(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mQueryType(queryType),
 mNumberOfQueries(numberOfQueries)

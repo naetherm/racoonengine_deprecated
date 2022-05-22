@@ -35,7 +35,7 @@ namespace RERHIOpenGL {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-ResourceGroup::ResourceGroup(RERHI::RHIDynamicRHI& rhi, const RERHI::RootSignature& rootSignature, uint32_t rootParameterIndex, uint32_t numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+ResourceGroup::ResourceGroup(RERHI::RHIDynamicRHI& rhi, const RERHI::RootSignature& rootSignature, RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 RHIResourceGroup(rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mRootParameterIndex(rootParameterIndex),
 mNumberOfResources(numberOfResources),
@@ -45,15 +45,15 @@ mResourceIndexToUniformBlockBindingIndex(nullptr)
 {
   // Get the uniform block binding start index
   const RERHI::RHIContext& context = rhi.getContext();
-  uint32_t uniformBlockBindingIndex = 0;
-  for (uint32_t currentRootParameterIndex = 0; currentRootParameterIndex < rootParameterIndex; ++currentRootParameterIndex)
+  RECore::uint32 uniformBlockBindingIndex = 0;
+  for (RECore::uint32 currentRootParameterIndex = 0; currentRootParameterIndex < rootParameterIndex; ++currentRootParameterIndex)
   {
     const RERHI::RootParameter& rootParameter = rootSignature.parameters[currentRootParameterIndex];
     if (RERHI::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
     {
       RHI_ASSERT(nullptr != reinterpret_cast<const RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
-      const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
-      for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
+      const RECore::uint32 numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
+      for (RECore::uint32 descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
       {
         if (RERHI::DescriptorRangeType::UBV == reinterpret_cast<const RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges)[descriptorRangeIndex].rangeType)
         {
@@ -65,7 +65,7 @@ mResourceIndexToUniformBlockBindingIndex(nullptr)
 
   // Process all resources and add our reference to the RHI resource
   const RERHI::RootParameter& rootParameter = rootSignature.parameters[rootParameterIndex];
-  for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
+  for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
   {
     RERHI::RHIResource* resource = *resources;
     RHI_ASSERT(nullptr != resource, "Invalid OpenGL resource")
@@ -78,8 +78,8 @@ mResourceIndexToUniformBlockBindingIndex(nullptr)
     {
       if (nullptr == mResourceIndexToUniformBlockBindingIndex)
       {
-        mResourceIndexToUniformBlockBindingIndex = RHI_MALLOC_TYPED(context, uint32_t, mNumberOfResources);
-        memset(mResourceIndexToUniformBlockBindingIndex, 0, sizeof(uint32_t) * mNumberOfResources);
+        mResourceIndexToUniformBlockBindingIndex = RHI_MALLOC_TYPED(context, RECore::uint32, mNumberOfResources);
+        memset(mResourceIndexToUniformBlockBindingIndex, 0, sizeof(RECore::uint32) * mNumberOfResources);
       }
       mResourceIndexToUniformBlockBindingIndex[resourceIndex] = uniformBlockBindingIndex;
       ++uniformBlockBindingIndex;
@@ -88,7 +88,7 @@ mResourceIndexToUniformBlockBindingIndex(nullptr)
   if (nullptr != samplerStates)
   {
     mSamplerStates = RHI_MALLOC_TYPED(context, RERHI::RHISamplerState*, mNumberOfResources);
-    for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+    for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
     {
       RERHI::RHISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
       if (nullptr != samplerState)
@@ -109,7 +109,7 @@ ResourceGroup::~ResourceGroup()
   const RERHI::RHIContext& context = getRhi().getContext();
   if (nullptr != mSamplerStates)
   {
-    for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+    for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
     {
       RERHI::RHISamplerState* samplerState = mSamplerStates[resourceIndex];
       if (nullptr != samplerState)
@@ -119,7 +119,7 @@ ResourceGroup::~ResourceGroup()
     }
     RHI_FREE(context, mSamplerStates);
   }
-  for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+  for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
   {
     mResources[resourceIndex]->Release();
   }

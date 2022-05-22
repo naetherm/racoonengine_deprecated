@@ -61,7 +61,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId CompositorFramebufferId;	///< Compositor framebuffer identifier, internally just a POD "uint32_t"
+	typedef RECore::StringId CompositorFramebufferId;	///< Compositor framebuffer identifier, internally just a POD "RECore::uint32"
 
 
 	//[-------------------------------------------------------]
@@ -79,7 +79,7 @@ namespace RERenderer
 		{
 			FramebufferSignature framebufferSignature;
 			RERHI::RHIFramebuffer*	 framebuffer;			///< Can be a null pointer, no "RERHI::RHIFramebufferPtr" to not have overhead when internally reallocating
-			uint32_t			 numberOfReferences;	///< Number of framebuffer references (don't misuse the RHI framebuffer reference counter for this)
+			RECore::uint32			 numberOfReferences;	///< Number of framebuffer references (don't misuse the RHI framebuffer reference counter for this)
 
 			inline FramebufferElement() :
 				framebuffer(nullptr),
@@ -128,7 +128,7 @@ namespace RERenderer
 		void clearRhiResources();
 		void addFramebuffer(CompositorFramebufferId compositorFramebufferId, const FramebufferSignature& framebufferSignature);
 		[[nodiscard]] RERHI::RHIFramebuffer* getFramebufferByCompositorFramebufferId(CompositorFramebufferId compositorFramebufferId) const;
-		[[nodiscard]] RERHI::RHIFramebuffer* getFramebufferByCompositorFramebufferId(CompositorFramebufferId compositorFramebufferId, const RERHI::RHIRenderTarget& mainRenderTarget, uint8_t numberOfMultisamples, float resolutionScale);
+		[[nodiscard]] RERHI::RHIFramebuffer* getFramebufferByCompositorFramebufferId(CompositorFramebufferId compositorFramebufferId, const RERHI::RHIRenderTarget& mainRenderTarget, RECore::uint8 numberOfMultisamples, float resolutionScale);
 		void releaseFramebufferBySignature(const FramebufferSignature& framebufferSignature);
 
 
@@ -137,7 +137,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
 		typedef std::vector<FramebufferElement> SortedFramebufferVector;
-		typedef std::unordered_map<uint32_t, FramebufferSignatureId> CompositorFramebufferIdToFramebufferSignatureId;	///< Key = "RERenderer::CompositorFramebufferId"
+		typedef std::unordered_map<RECore::uint32, FramebufferSignatureId> CompositorFramebufferIdToFramebufferSignatureId;	///< Key = "RERenderer::CompositorFramebufferId"
 
 
 	//[-------------------------------------------------------]

@@ -46,7 +46,7 @@ namespace RERHINull {
 *  @param[in] samplerStates
 *    If not a null pointer at least "numberOfResources" sampler state pointers, must be valid if there's at least one texture resource, the resource group will keep a reference to the sampler states
 */
-ResourceGroup::ResourceGroup(RERHI::RHIDynamicRHI& rhi, uint32_t rootParameterIndex, uint32_t numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+ResourceGroup::ResourceGroup(RERHI::RHIDynamicRHI& rhi, RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 RHIResourceGroup(rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mRootParameterIndex(rootParameterIndex),
 mNumberOfResources(numberOfResources),
@@ -54,7 +54,7 @@ mResources(RHI_MALLOC_TYPED(rhi.getContext(), RERHI::RHIResource*, mNumberOfReso
 mSamplerStates(nullptr)
 {
   // Process all resources and add our reference to the RHI resource
-  for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
+  for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
   {
     RERHI::RHIResource* resource = *resources;
     RHI_ASSERT(nullptr != resource, "Invalid null resource")
@@ -64,7 +64,7 @@ mSamplerStates(nullptr)
   if (nullptr != samplerStates)
   {
     mSamplerStates = RHI_MALLOC_TYPED(rhi.getContext(), RERHI::RHISamplerState*, mNumberOfResources);
-    for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+    for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
     {
       RERHI::RHISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
       if (nullptr != samplerState)
@@ -85,7 +85,7 @@ ResourceGroup::~ResourceGroup()
   const RERHI::RHIContext& context = getRhi().getContext();
   if (nullptr != mSamplerStates)
   {
-    for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+    for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
     {
       RERHI::RHISamplerState* samplerState = mSamplerStates[resourceIndex];
       if (nullptr != samplerState)
@@ -95,7 +95,7 @@ ResourceGroup::~ResourceGroup()
     }
     RHI_FREE(context, mSamplerStates);
   }
-  for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+  for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
   {
     mResources[resourceIndex]->Release();
   }
@@ -109,7 +109,7 @@ ResourceGroup::~ResourceGroup()
 *  @return
 *    The number of resources this resource group groups together
 */
-uint32_t ResourceGroup::getNumberOfResources() const
+RECore::uint32 ResourceGroup::getNumberOfResources() const
 {
   return mNumberOfResources;
 }

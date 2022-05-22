@@ -34,9 +34,9 @@
 //[-------------------------------------------------------]
 namespace RERHIVulkan {
 
-Texture2D::Texture2D(RHIDynamicRHI &vulkanRhi, uint32_t width, uint32_t height,
-                     RERHI::TextureFormat::Enum textureFormat, const void *data, uint32_t textureFlags,
-                     uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+Texture2D::Texture2D(RHIDynamicRHI &vulkanRhi, RECore::uint32 width, RECore::uint32 height,
+                     RERHI::TextureFormat::Enum textureFormat, const void *data, RECore::uint32 textureFlags,
+                     RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHITexture2D(vulkanRhi, width, height RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mVrVulkanTextureData{},
   mVkImageLayout(Helper::getVkImageLayoutByTextureFlags(textureFlags)),
@@ -55,11 +55,11 @@ Texture2D::Texture2D(RHIDynamicRHI &vulkanRhi, uint32_t width, uint32_t height,
   mVrVulkanTextureData.m_pPhysicalDevice = vulkanContext.getVkPhysicalDevice();      // m_pPhysicalDevice (VkPhysicalDevice)
   mVrVulkanTextureData.m_pInstance = vulkanRuntimeLinking.getVkInstance();    // m_pInstance (VkInstance)
   mVrVulkanTextureData.m_pQueue = vulkanContext.getGraphicsVkQueue();      // m_pQueue (VkQueue)
-  mVrVulkanTextureData.m_nQueueFamilyIndex = vulkanContext.getGraphicsQueueFamilyIndex();  // m_nQueueFamilyIndex (uint32_t)
-  mVrVulkanTextureData.m_nWidth = width;                    // m_nWidth (uint32_t)
-  mVrVulkanTextureData.m_nHeight = height;                    // m_nHeight (uint32_t)
+  mVrVulkanTextureData.m_nQueueFamilyIndex = vulkanContext.getGraphicsQueueFamilyIndex();  // m_nQueueFamilyIndex (RECore::uint32)
+  mVrVulkanTextureData.m_nWidth = width;                    // m_nWidth (RECore::uint32)
+  mVrVulkanTextureData.m_nHeight = height;                    // m_nHeight (RECore::uint32)
   // m_nFormat (VkFormat)  was set by "RHIDynamicRHI::Helper::createAndFillVkImage()" above
-  mVrVulkanTextureData.m_nSampleCount = numberOfMultisamples;            // m_nSampleCount (uint32_t)
+  mVrVulkanTextureData.m_nSampleCount = numberOfMultisamples;            // m_nSampleCount (RECore::uint32)
 
   // Assign a default name to the resource for debugging purposes
 #ifdef DEBUG
@@ -67,9 +67,9 @@ Texture2D::Texture2D(RHIDynamicRHI &vulkanRhi, uint32_t width, uint32_t height,
         {
           RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "2D texture", 13)	// 13 = "2D texture: " including terminating zero
           const VkDevice vkDevice = vulkanRhi.getVulkanContext().getVkDevice();
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT, (uint64_t)mVrVulkanTextureData.m_nImage, detailedDebugName);
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT, (uint64_t)mVkDeviceMemory, detailedDebugName);
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT, (uint64_t)mVkImageView, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT, (RECore::uint64)mVrVulkanTextureData.m_nImage, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT, (RECore::uint64)mVkDeviceMemory, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT, (RECore::uint64)mVkImageView, detailedDebugName);
         }
 #endif
 }

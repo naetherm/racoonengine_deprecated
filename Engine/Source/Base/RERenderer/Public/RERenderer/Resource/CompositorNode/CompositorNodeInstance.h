@@ -60,7 +60,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t CompositorNodeResourceId;	///< POD compositor node resource identifier
+	typedef RECore::uint32 CompositorNodeResourceId;	///< POD compositor node resource identifier
 
 
 	//[-------------------------------------------------------]

@@ -77,7 +77,7 @@ private:
   virtual ~BTLinux() override
   {
     // Clear devices
-    for (uint32_t i=0; i<m_lstDevices.size(); i++)
+    for (RECore::uint32 i=0; i<m_lstDevices.size(); i++)
       delete m_lstDevices[i];
     m_lstDevices.clear();
   }
@@ -116,7 +116,7 @@ private:
             // org.bluez.Adapter.DeviceFound
             std::string sDeviceAddress;
             std::string sDeviceName;
-            uint32_t nDeviceClass = 0;
+            RECore::uint32 nDeviceClass = 0;
 
             // Get arguments
             DBusMessageIter sIter;
@@ -165,7 +165,7 @@ private:
                           }
                         } else if (dbus_message_iter_get_arg_type(&sVariantIter) == DBUS_TYPE_UINT32) {
                           // Get value
-                          uint32_t nValue = 0;
+                          RECore::uint32 nValue = 0;
                           dbus_message_iter_get_basic(&sVariantIter, &nValue);
 
                           // Save value
@@ -263,7 +263,7 @@ private:
   virtual void enumerateDevices(std::vector<BTDevice*> &lstDevices) override
   {
     // Clear devices
-    for (uint32_t i=0; i<m_lstDevices.size(); i++)
+    for (RECore::uint32 i=0; i<m_lstDevices.size(); i++)
       delete m_lstDevices[i];
     m_lstDevices.clear();
 

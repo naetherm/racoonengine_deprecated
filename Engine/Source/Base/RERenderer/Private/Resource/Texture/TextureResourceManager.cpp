@@ -53,7 +53,7 @@ namespace
 			RERHI::RHITextureManager& textureManager = renderer.getTextureManager();
 
 			// White RGBA texture
-			const uint8_t whiteRgbaData[] = {
+			const RECore::uint8 whiteRgbaData[] = {
 				255, 255, 255, 255,	// Face 0
 				255, 255, 255, 255,	// Face 1
 				255, 255, 255, 255,	// Face 2
@@ -67,15 +67,15 @@ namespace
 			RERHI::RHITexturePtr whiteRgba3DTexturePtr(textureManager.createTexture3D(1, 1, 1, RERHI::TextureFormat::R8G8B8A8, whiteRgbaData, RERHI::TextureFlag::SHADER_RESOURCE, RERHI::TextureUsage::IMMUTABLE RHI_RESOURCE_DEBUG_NAME("White RGBA")));
 
 			// Normal map identity texture
-			const uint8_t normalMapIdentityData[] = { 128, 128, 255, 255 };
+			const RECore::uint8 normalMapIdentityData[] = { 128, 128, 255, 255 };
 			RERHI::RHITexturePtr normalMapIdentity2DTexturePtr(textureManager.createTexture2D(1, 1, RERHI::TextureFormat::R8G8B8A8, normalMapIdentityData, RERHI::TextureFlag::SHADER_RESOURCE, RERHI::TextureUsage::IMMUTABLE, 1, nullptr RHI_RESOURCE_DEBUG_NAME("Normal map identity")));
 
 			// White alpha texture
-			const uint8_t whiteAData[] = { 255 };
+			const RECore::uint8 whiteAData[] = { 255 };
 			RERHI::RHITexturePtr whiteA2DTexturePtr(textureManager.createTexture2D(1, 1, RERHI::TextureFormat::R8, whiteAData, RERHI::TextureFlag::SHADER_RESOURCE, RERHI::TextureUsage::IMMUTABLE, 1, nullptr RHI_RESOURCE_DEBUG_NAME("White alpha")));
 
 			// Black RGBA texture
-			const uint8_t blackRgbaData[] = {
+			const RECore::uint8 blackRgbaData[] = {
 				0, 0, 0, 0,	// Face 0
 				0, 0, 0, 0,	// Face 1
 				0, 0, 0, 0,	// Face 2
@@ -89,16 +89,16 @@ namespace
 			RERHI::RHITexturePtr blackRgba3DTexturePtr(textureManager.createTexture3D(1, 1, 1, RERHI::TextureFormat::R8G8B8A8, blackRgbaData, RERHI::TextureFlag::SHADER_RESOURCE, RERHI::TextureUsage::IMMUTABLE RHI_RESOURCE_DEBUG_NAME("Black RGBA")));
 
 			// Black alpha texture
-			const uint8_t blackAData[] = { 0 };
+			const RECore::uint8 blackAData[] = { 0 };
 			RERHI::RHITexturePtr blackA2DTexturePtr(textureManager.createTexture2D(1, 1, RERHI::TextureFormat::R8, blackAData, RERHI::TextureFlag::SHADER_RESOURCE, RERHI::TextureUsage::IMMUTABLE, 1, nullptr RHI_RESOURCE_DEBUG_NAME("Black alpha")));
 
 			// "_argb_nxa"-texture
 			// -> Must be white so e.g. albedo color can be multiplied in
-			const uint8_t _argb_nxaIdentityData[] = { 255, 255, 255, 128 };
+			const RECore::uint8 _argb_nxaIdentityData[] = { 255, 255, 255, 128 };
 			RERHI::RHITexturePtr _argb_nxaIdentity2DTexturePtr(textureManager.createTexture2D(1, 1, RERHI::TextureFormat::R8G8B8A8, _argb_nxaIdentityData, RERHI::TextureFlag::SHADER_RESOURCE, RERHI::TextureUsage::IMMUTABLE, 1, nullptr RHI_RESOURCE_DEBUG_NAME("_argb_nxa identity")));
 
 			// "_hr_rg_mb_nya"-texture
-			const uint8_t _hr_rg_mb_nyaIdentityData[] = { 0, 255, 0, 128 };
+			const RECore::uint8 _hr_rg_mb_nyaIdentityData[] = { 0, 255, 0, 128 };
 			RERHI::RHITexturePtr _hr_rg_mb_nyaIdentity2DTexturePtr(textureManager.createTexture2D(1, 1, RERHI::TextureFormat::R8G8B8A8, _hr_rg_mb_nyaIdentityData, RERHI::TextureFlag::SHADER_RESOURCE, RERHI::TextureUsage::IMMUTABLE, 1, nullptr RHI_RESOURCE_DEBUG_NAME("_hr_rg_mb_nya identity")));
 
 			// Define helper macro
@@ -175,7 +175,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	void TextureResourceManager::setNumberOfTopMipmapsToRemove(uint8_t numberOfTopMipmapsToRemove)
+	void TextureResourceManager::setNumberOfTopMipmapsToRemove(RECore::uint8 numberOfTopMipmapsToRemove)
 	{
 		if (mNumberOfTopMipmapsToRemove != numberOfTopMipmapsToRemove)
 		{
@@ -183,8 +183,8 @@ namespace RERenderer
 
 			// Update the already loaded textures, but really only textures loaded from texture assets and not e.g. textures dynamically created during runtime
 			const RECore::AssetManager& assetManager = mRenderer.getAssetManager();
-			const uint32_t numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
-			for (uint32_t i = 0; i < numberOfElements; ++i)
+			const RECore::uint32 numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
+			for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 			{
 				const TextureResource& textureResource = mInternalResourceManager->getResources().getElementByIndex(i);
 				const AssetId assetId = textureResource.getAssetId();
@@ -336,12 +336,12 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
-	uint32_t TextureResourceManager::getNumberOfResources() const
+	RECore::uint32 TextureResourceManager::getNumberOfResources() const
 	{
 		return mInternalResourceManager->getResources().getNumberOfElements();
 	}
 
-RECore::IResource& TextureResourceManager::getResourceByIndex(uint32_t index) const
+RECore::IResource& TextureResourceManager::getResourceByIndex(RECore::uint32 index) const
 	{
 		return mInternalResourceManager->getResources().getElementByIndex(index);
 	}
@@ -359,8 +359,8 @@ RECore::IResource* TextureResourceManager::tryGetResourceByResourceId(RECore::Re
 	void TextureResourceManager::reloadResourceByAssetId(AssetId assetId)
 	{
 		// TODO(naetherm) Experimental implementation (take care of resource cleanup etc.)
-		const uint32_t numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
-		for (uint32_t i = 0; i < numberOfElements; ++i)
+		const RECore::uint32 numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
+		for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 		{
 			const TextureResource& textureResource = mInternalResourceManager->getResources().getElementByIndex(i);
 			if (textureResource.getAssetId() == assetId)

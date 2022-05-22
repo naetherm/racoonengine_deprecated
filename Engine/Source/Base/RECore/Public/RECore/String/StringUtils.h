@@ -45,19 +45,19 @@ inline char CharToLower(char c) {
 
 inline char16_t CharToLower(char16_t c) {
   if ((unsigned) c <= 0xff)
-    return (char16_t) tolower((uint8_t) c);
+    return (char16_t) tolower((RECore::uint8) c);
   return c;
 }
 
 inline char32_t CharToLower(char32_t c) {
   if ((unsigned) c <= 0xff)
-    return (char32_t) tolower((uint8_t) c);
+    return (char32_t) tolower((RECore::uint8) c);
   return c;
 }
 
 inline wchar_t CharToLower(wchar_t c) {
   if ((unsigned) c <= 0xff)
-    return (wchar_t) tolower((uint8_t) c);
+    return (wchar_t) tolower((RECore::uint8) c);
   return c;
 }
 
@@ -68,19 +68,19 @@ inline char CharToUpper(char c) {
 
 inline char16_t CharToUpper(char16_t c) {
   if ((unsigned) c <= 0xff)
-    return (char16_t) toupper((uint8_t) c);
+    return (char16_t) toupper((RECore::uint8) c);
   return c;
 }
 
 inline char32_t CharToUpper(char32_t c) {
   if ((unsigned) c <= 0xff)
-    return (char32_t) toupper((uint8_t) c);
+    return (char32_t) toupper((RECore::uint8) c);
   return c;
 }
 
 inline wchar_t CharToUpper(wchar_t c) {
   if ((unsigned) c <= 0xff)
-    return (wchar_t) toupper((uint8_t) c);
+    return (wchar_t) toupper((RECore::uint8) c);
   return c;
 }
 
@@ -310,7 +310,7 @@ inline const T *CharTypeStringrFind(const T *pRBegin, const T *pREnd, const T c)
 
 inline char *CharStringUninitializedFillN(char *pDestination, sizeT n, const char c) {
   if (n) {
-    memset(pDestination, (uint8_t) c, (sizeT) n);
+    memset(pDestination, (RECore::uint8) c, (sizeT) n);
   }
   return pDestination + n;
 }

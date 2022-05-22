@@ -53,7 +53,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialResourceId;	///< POD material resource identifier
+	typedef RECore::uint32 MaterialResourceId;	///< POD material resource identifier
 
 
 	//[-------------------------------------------------------]

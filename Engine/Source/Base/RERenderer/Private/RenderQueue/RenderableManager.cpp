@@ -101,7 +101,7 @@ namespace RERenderer
 			for (size_t i = 1; i < numberOfRenderables; ++i)
 			{
 				const Renderable& renderable = mRenderables[i];
-				const uint8_t renderQueueIndex = renderable.getRenderQueueIndex();
+				const RECore::uint8 renderQueueIndex = renderable.getRenderQueueIndex();
 				if (mMinimumRenderQueueIndex > renderQueueIndex)
 				{
 					mMinimumRenderQueueIndex = renderQueueIndex;

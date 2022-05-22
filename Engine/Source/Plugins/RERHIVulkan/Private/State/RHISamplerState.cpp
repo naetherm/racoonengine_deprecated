@@ -74,7 +74,7 @@ SamplerState::SamplerState(RHIDynamicRHI &vulkanRhi, const RERHI::SamplerState &
     if (nullptr != vkDebugMarkerSetObjectNameEXT)
           {
             RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Sampler state", 16)	// 16 = "Sampler state: " including terminating zero
-            Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT, (uint64_t)mVkSampler, detailedDebugName);
+            Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT, (RECore::uint64)mVkSampler, detailedDebugName);
           }
 #endif
   } else {

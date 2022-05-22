@@ -47,7 +47,7 @@ namespace RERHINull {
 *  @param[in] numberOfMultisamples
 *    The number of multisamples per pixel (valid values: 1, 2, 4, 8)
 */
-RenderPass::RenderPass(RERHI::RHIDynamicRHI& rhi, uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+RenderPass::RenderPass(RERHI::RHIDynamicRHI& rhi, RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 RHIRenderPass(rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mNumberOfColorAttachments(numberOfColorAttachments),
 mDepthStencilAttachmentTextureFormat(depthStencilAttachmentTextureFormat),
@@ -70,7 +70,7 @@ RenderPass::~RenderPass() {}
 *  @return
 *    The number of color render target textures
 */
-uint32_t RenderPass::getNumberOfColorAttachments() const
+RECore::uint32 RenderPass::getNumberOfColorAttachments() const
 {
   return mNumberOfColorAttachments;
 }

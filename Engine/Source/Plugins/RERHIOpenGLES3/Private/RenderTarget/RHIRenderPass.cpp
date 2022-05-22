@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 namespace RERHIOpenGLES3 {
 
-RenderPass::RenderPass(RERHI::RHIDynamicRHI& rhi, uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+RenderPass::RenderPass(RERHI::RHIDynamicRHI& rhi, RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 RHIRenderPass(rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mNumberOfColorAttachments(numberOfColorAttachments),
 mDepthStencilAttachmentTextureFormat(depthStencilAttachmentTextureFormat),

@@ -60,28 +60,28 @@ public:
     delete [] mBytecode;
   }
 
-  [[nodiscard]] inline uint32_t getNumberOfBytes() const
+  [[nodiscard]] inline RECore::uint32 getNumberOfBytes() const
   {
     return mNumberOfBytes;
   }
 
-  [[nodiscard]] inline const uint8_t* getBytecode() const
+  [[nodiscard]] inline const RECore::uint8* getBytecode() const
   {
     return mBytecode;
   }
 
-  inline void setBytecodeCopy(uint32_t numberOfBytes, uint8_t* bytecode)
+  inline void setBytecodeCopy(RECore::uint32 numberOfBytes, RECore::uint8* bytecode)
   {
     delete [] mBytecode;
     mNumberOfBytes = numberOfBytes;
-    mBytecode = new uint8_t[mNumberOfBytes];
+    mBytecode = new RECore::uint8[mNumberOfBytes];
     memcpy(mBytecode, bytecode, mNumberOfBytes);
   }
 
   // Private data
 private:
-  uint32_t mNumberOfBytes;	///< Number of bytes in the bytecode
-  uint8_t* mBytecode;			///< Shader bytecode, can be a null pointer
+  RECore::uint32 mNumberOfBytes;	///< Number of bytes in the bytecode
+  RECore::uint8* mBytecode;			///< Shader bytecode, can be a null pointer
 
 };
 

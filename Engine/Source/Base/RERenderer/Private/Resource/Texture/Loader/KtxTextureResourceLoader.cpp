@@ -56,7 +56,7 @@ namespace
 		#define GL_ETC1_RGB8_OES 0x8D64
 
 		// From "khrplatform.h"
-		typedef uint32_t khronos_uint32_t;
+		typedef RECore::uint32 khronos_uint32_t;
 
 		// From https://github.com/KhronosGroup/KTX/tree/master/lib
 		#define KTX_IDENTIFIER_REF	{ 0xAB, 0x4B, 0x54, 0x58, 0x20, 0x31, 0x31, 0xBB, 0x0D, 0x0A, 0x1A, 0x0A }
@@ -71,20 +71,20 @@ namespace
 			*/
 			struct KtxHeader final
 			{
-				uint8_t  identifier[12];
-				uint32_t endianness;
-				uint32_t glType;
-				uint32_t glTypeSize;
-				uint32_t glFormat;
-				uint32_t glInternalFormat;
-				uint32_t glBaseInternalFormat;
-				uint32_t pixelWidth;
-				uint32_t pixelHeight;
-				uint32_t pixelDepth;
-				uint32_t numberOfArrayElements;
-				uint32_t numberOfFaces;
-				uint32_t numberOfMipmapLevels;
-				uint32_t bytesOfKeyValueData;
+				RECore::uint8  identifier[12];
+				RECore::uint32 endianness;
+				RECore::uint32 glType;
+				RECore::uint32 glTypeSize;
+				RECore::uint32 glFormat;
+				RECore::uint32 glInternalFormat;
+				RECore::uint32 glBaseInternalFormat;
+				RECore::uint32 pixelWidth;
+				RECore::uint32 pixelHeight;
+				RECore::uint32 pixelDepth;
+				RECore::uint32 numberOfArrayElements;
+				RECore::uint32 numberOfFaces;
+				RECore::uint32 numberOfMipmapLevels;
+				RECore::uint32 bytesOfKeyValueData;
 			};
 		#pragma pack(pop)
 
@@ -92,22 +92,22 @@ namespace
 		struct KTX_texinfo final
 		{
 			// Data filled in by _ktxCheckHeader()
-			uint32_t textureDimensions;
-			uint32_t glTarget;
-			uint32_t compressed;
-			uint32_t generateMipmaps;
+			RECore::uint32 textureDimensions;
+			RECore::uint32 glTarget;
+			RECore::uint32 compressed;
+			RECore::uint32 generateMipmaps;
 		};
 
 
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		void ktxSwapEndian16(uint16_t* data, uint32_t count)
+		void ktxSwapEndian16(RECore::uint16* data, RECore::uint32 count)
 		{
-			for (uint32_t i = 0; i < count; ++i)
+			for (RECore::uint32 i = 0; i < count; ++i)
 			{
-				const uint16_t x = *data;
-				*data++ = static_cast<uint16_t>((x << 8) | (x >> 8));
+				const RECore::uint16 x = *data;
+				*data++ = static_cast<RECore::uint16>((x << 8) | (x >> 8));
 			}
 		}
 
@@ -115,11 +115,11 @@ namespace
 		*  @brief
 		*    SwapEndian32: Swap endianness in an array of 32-bit values
 		*/
-		void ktxSwapEndian32(uint32_t* data, uint32_t count)
+		void ktxSwapEndian32(RECore::uint32* data, RECore::uint32 count)
 		{
-			for (uint32_t i = 0; i < count; ++i)
+			for (RECore::uint32 i = 0; i < count; ++i)
 			{
-				const uint32_t x = *data;
+				const RECore::uint32 x = *data;
 				*data++ = (x << 24) | ((x & 0xFF00) << 8) | ((x & 0xFF0000) >> 8) | (x >> 24);
 			}
 		}
@@ -127,7 +127,7 @@ namespace
 		[[nodiscard]] bool checkHeader(KtxHeader& ktxHeader, KTX_texinfo& ktxTexinfo)
 		{
 			{ // Compare identifier, is this a KTX file?
-				const uint8_t identifierReference[12] = KTX_IDENTIFIER_REF;
+				const RECore::uint8 identifierReference[12] = KTX_IDENTIFIER_REF;
 				if (memcmp(ktxHeader.identifier, identifierReference, 12) != 0)
 				{
 					// KTX_UNKNOWN_FILE_FORMAT
@@ -307,11 +307,11 @@ namespace RERenderer
 		// Get the size of the compressed image
 		mNumberOfUsedImageDataBytes = 0;
 		{
-			uint32_t width  = mWidth;
-			uint32_t height = mHeight;
-			for (uint32_t mipmap = 0; mipmap < ktxHeader.numberOfMipmapLevels; ++mipmap)
+			RECore::uint32 width  = mWidth;
+			RECore::uint32 height = mHeight;
+			for (RECore::uint32 mipmap = 0; mipmap < ktxHeader.numberOfMipmapLevels; ++mipmap)
 			{
-				for (uint32_t face = 0; face < ktxHeader.numberOfFaces; ++face)
+				for (RECore::uint32 face = 0; face < ktxHeader.numberOfFaces; ++face)
 				{
 					if (GL_ETC1_RGB8_OES == ktxHeader.glInternalFormat)
 					{
@@ -330,7 +330,7 @@ namespace RERenderer
 		{
 			mNumberOfImageDataBytes = mNumberOfUsedImageDataBytes;
 			delete [] mImageData;
-			mImageData = new uint8_t[mNumberOfImageDataBytes];
+			mImageData = new RECore::uint8[mNumberOfImageDataBytes];
 		}
 
 		// Data layout: The RHI expects: CRN and KTX files are organized in mip-major order, like this:
@@ -339,13 +339,13 @@ namespace RERenderer
 		//   etc.
 
 		// Load in the image data
-		uint8_t* currentImageData = mImageData;
-		uint32_t width = mWidth;
-		uint32_t height = mHeight;
-		for (uint32_t mipmap = 0; mipmap < ktxHeader.numberOfMipmapLevels; ++mipmap)
+		RECore::uint8* currentImageData = mImageData;
+		RECore::uint32 width = mWidth;
+		RECore::uint32 height = mHeight;
+		for (RECore::uint32 mipmap = 0; mipmap < ktxHeader.numberOfMipmapLevels; ++mipmap)
 		{
-			uint32_t imageSize = 0;
-			file.read(&imageSize, sizeof(uint32_t));
+			RECore::uint32 imageSize = 0;
+			file.read(&imageSize, sizeof(RECore::uint32));
 
 			// Perform endianness conversion on image size data
 			if (KTX_ENDIAN_REF_REV == ktxHeader.endianness)
@@ -353,7 +353,7 @@ namespace RERenderer
 				::detail::ktxSwapEndian32(&imageSize, 1);
 			}
 
-			for (uint32_t face = 0; face < ktxHeader.numberOfFaces; ++face)
+			for (RECore::uint32 face = 0; face < ktxHeader.numberOfFaces; ++face)
 			{
 				// Read the image data per face
 				file.read(currentImageData, imageSize);
@@ -361,11 +361,11 @@ namespace RERenderer
 				// Perform endianness conversion on texture data
 				if (KTX_ENDIAN_REF_REV == ktxHeader.endianness && 2 == ktxHeader.glTypeSize)
 				{
-					::detail::ktxSwapEndian16(reinterpret_cast<uint16_t*>(currentImageData), imageSize / 2);
+					::detail::ktxSwapEndian16(reinterpret_cast<RECore::uint16*>(currentImageData), imageSize / 2);
 				}
 				else if (KTX_ENDIAN_REF_REV == ktxHeader.endianness && 4 == ktxHeader.glTypeSize)
 				{
-					::detail::ktxSwapEndian32(reinterpret_cast<uint32_t*>(currentImageData), imageSize / 4);
+					::detail::ktxSwapEndian32(reinterpret_cast<RECore::uint32*>(currentImageData), imageSize / 4);
 				}
 
 				// Move on to the next face of the current mipmap
@@ -373,7 +373,7 @@ namespace RERenderer
 			}
 
 			// An mipmap level data might have padding bytes (up to 3) formula from https://www.khronos.org/opengles/sdk/tools/KTX/file_format_spec/
-			const uint32_t paddingBytes = 3 - ((imageSize + 3) % 4);
+			const RECore::uint32 paddingBytes = 3 - ((imageSize + 3) % 4);
 			file.skip(paddingBytes);
 
 			// Move on to the next mipmap
@@ -397,7 +397,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	RERHI::RHITexture* KtxTextureResourceLoader::createRhiTexture()
 	{
-		const uint32_t flags = (mDataContainsMipmaps ? (RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS | RERHI::TextureFlag::SHADER_RESOURCE) : RERHI::TextureFlag::SHADER_RESOURCE);
+		const RECore::uint32 flags = (mDataContainsMipmaps ? (RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS | RERHI::TextureFlag::SHADER_RESOURCE) : RERHI::TextureFlag::SHADER_RESOURCE);
 		if (mCubeMap)
 		{
 			// Cube texture

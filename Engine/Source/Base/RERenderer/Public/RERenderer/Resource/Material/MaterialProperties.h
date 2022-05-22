@@ -153,7 +153,7 @@ namespace RERenderer
 		*  @return
 		*    The shader combination generation counter
 		*/
-		[[nodiscard]] inline uint32_t getShaderCombinationGenerationCounter() const
+		[[nodiscard]] inline RECore::uint32 getShaderCombinationGenerationCounter() const
 		{
 			return mShaderCombinationGenerationCounter;
 		}
@@ -164,7 +164,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
 		SortedPropertyVector mSortedPropertyVector;
-		uint32_t			 mShaderCombinationGenerationCounter;	// Incremented each time a shader combination material property gets changed, used for e.g. performance critical renderable cache updates were hashes would be too expensive to generate
+		RECore::uint32			 mShaderCombinationGenerationCounter;	// Incremented each time a shader combination material property gets changed, used for e.g. performance critical renderable cache updates were hashes would be too expensive to generate
 
 
 	};

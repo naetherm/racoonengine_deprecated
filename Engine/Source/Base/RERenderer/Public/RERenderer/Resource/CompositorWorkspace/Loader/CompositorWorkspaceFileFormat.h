@@ -41,7 +41,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;	///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::StringId AssetId;	///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
 
 
 	// Compositor workspace file format content:
@@ -54,19 +54,19 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("CompositorWorkspace");
-		static constexpr uint32_t FORMAT_VERSION = 2;
+		static constexpr RECore::uint32 FORMAT_TYPE	 = STRING_ID("CompositorWorkspace");
+		static constexpr RECore::uint32 FORMAT_VERSION = 2;
 
 		#pragma pack(push)
 		#pragma pack(1)
 			struct CompositorWorkspaceHeader final
 			{
-				uint32_t unused;	// TODO(naetherm) Currently the compositor workspace header is unused
+				RECore::uint32 unused;	// TODO(naetherm) Currently the compositor workspace header is unused
 			};
 
 			struct Nodes final
 			{
-				uint32_t numberOfNodes;
+				RECore::uint32 numberOfNodes;
 			};
 
 			struct Node final

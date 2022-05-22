@@ -62,14 +62,14 @@ namespace RERenderer
 		~RenderPassManager();
 		explicit RenderPassManager(const RenderPassManager&) = delete;
 		RenderPassManager& operator=(const RenderPassManager&) = delete;
-		[[nodiscard]] RERHI::RHIRenderPass* getOrCreateRenderPass(uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat = RERHI::TextureFormat::UNKNOWN, uint8_t numberOfMultisamples = 1);
+		[[nodiscard]] RERHI::RHIRenderPass* getOrCreateRenderPass(RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat = RERHI::TextureFormat::UNKNOWN, RECore::uint8 numberOfMultisamples = 1);
 
 
 	//[-------------------------------------------------------]
 	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
-		typedef std::unordered_map<uint32_t, RERHI::RHIRenderPass*> RenderPasses;
+		typedef std::unordered_map<RECore::uint32, RERHI::RHIRenderPass*> RenderPasses;
 
 
 	//[-------------------------------------------------------]

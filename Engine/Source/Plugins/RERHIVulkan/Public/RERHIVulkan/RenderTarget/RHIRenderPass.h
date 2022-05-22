@@ -71,7 +71,7 @@ public:
   *  @param[in] numberOfMultisamples
   *    The number of multisamples per pixel (valid values: 1, 2, 4, 8)
   */
-  RenderPass(RHIDynamicRHI& vulkanRhi, uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  RenderPass(RHIDynamicRHI& vulkanRhi, RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief
@@ -97,7 +97,7 @@ public:
   *  @return
   *    The number of color render target textures
   */
-  [[nodiscard]] inline uint32_t getNumberOfColorAttachments() const
+  [[nodiscard]] inline RECore::uint32 getNumberOfColorAttachments() const
   {
     return mNumberOfColorAttachments;
   }
@@ -109,7 +109,7 @@ public:
   *  @return
   *    The number of render target textures (color and depth stencil)
   */
-  [[nodiscard]] inline uint32_t getNumberOfAttachments() const
+  [[nodiscard]] inline RECore::uint32 getNumberOfAttachments() const
   {
     return (mDepthStencilAttachmentTextureFormat != RERHI::TextureFormat::Enum::UNKNOWN) ? (mNumberOfColorAttachments + 1) : mNumberOfColorAttachments;
   }
@@ -162,7 +162,7 @@ private:
   //[-------------------------------------------------------]
 private:
   VkRenderPass			 mVkRenderPass;							///< Vulkan render pass instance, can be a null handle
-  uint32_t				 mNumberOfColorAttachments;				///< Number of color render target textures
+  RECore::uint32				 mNumberOfColorAttachments;				///< Number of color render target textures
   RERHI::TextureFormat::Enum mDepthStencilAttachmentTextureFormat;	///< The depth stencil attachment texture format
   VkSampleCountFlagBits	 mVkSampleCountFlagBits;				///< Vulkan sample count flag bits
 

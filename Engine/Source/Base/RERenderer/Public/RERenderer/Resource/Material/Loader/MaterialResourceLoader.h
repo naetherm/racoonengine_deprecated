@@ -39,7 +39,7 @@ namespace RERenderer
 {
 	class IRenderer;
 	class MaterialResource;
-	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
+	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
 	namespace v1Material
 	{
 		struct Technique;
@@ -57,13 +57,13 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialBlueprintResourceId;	///< POD material blueprint resource identifier
+	typedef RECore::uint32 MaterialBlueprintResourceId;	///< POD material blueprint resource identifier
 
 
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialResourceId;	///< POD material resource identifier
+	typedef RECore::uint32 MaterialResourceId;	///< POD material resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -83,7 +83,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("material");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("material");
 
 
 	//[-------------------------------------------------------]
@@ -152,8 +152,8 @@ namespace RERenderer
 		RECore::MemoryFile mMemoryFile;
 
 		// Temporary data: Techniques
-		uint32_t					 mMaximumNumberOfMaterialTechniques;
-		uint32_t					 mNumberOfTechniques;
+		RECore::uint32					 mMaximumNumberOfMaterialTechniques;
+		RECore::uint32					 mNumberOfTechniques;
 		v1Material::Technique*		 mMaterialTechniques;
 		MaterialBlueprintResourceIds mMaterialBlueprintResourceIds;
 

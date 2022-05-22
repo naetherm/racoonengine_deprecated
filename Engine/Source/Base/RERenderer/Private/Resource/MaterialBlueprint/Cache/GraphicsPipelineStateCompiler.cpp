@@ -70,7 +70,7 @@ namespace RERenderer
 		}
 	}
 
-	void GraphicsPipelineStateCompiler::setNumberOfCompilerThreads(uint32_t numberOfCompilerThreads)
+	void GraphicsPipelineStateCompiler::setNumberOfCompilerThreads(RECore::uint32 numberOfCompilerThreads)
 	{
 		if (mNumberOfCompilerThreads != numberOfCompilerThreads)
 		{
@@ -87,7 +87,7 @@ namespace RERenderer
 			mCompilerThreads.clear();
 			mCompilerThreads.reserve(mNumberOfCompilerThreads);
 			mShutdownCompilerThread = false;
-			for (uint32_t i = 0; i < mNumberOfCompilerThreads; ++i)
+			for (RECore::uint32 i = 0; i < mNumberOfCompilerThreads; ++i)
 			{
 				mCompilerThreads.push_back(std::thread(&GraphicsPipelineStateCompiler::compilerThreadWorker, this));
 			}
@@ -250,7 +250,7 @@ namespace RERenderer
 								std::unique_lock<std::mutex> inFlightGraphicsProgramCachesMutexLock(mInFlightGraphicsProgramCachesMutex);
 								mInFlightGraphicsProgramCaches.insert(graphicsProgramCacheId);
 							}
-							for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
+							for (RECore::uint8 i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
 							{
 								// Get the shader blueprint resource ID
 								const GraphicsShaderType graphicsShaderType = static_cast<GraphicsShaderType>(i);
@@ -291,7 +291,7 @@ namespace RERenderer
 												// Generate the shader source code ID
 												// -> Especially in complex shaders, there are situations where different shader combinations result in one and the same shader source code
 												// -> Shader compilation is considered to be expensive, so we need to be pretty sure that we really need to perform this heavy work
-												const ShaderSourceCodeId shaderSourceCodeId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(sourceCode.c_str()), static_cast<uint32_t>(sourceCode.size()));
+												const ShaderSourceCodeId shaderSourceCodeId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(sourceCode.c_str()), static_cast<RECore::uint32>(sourceCode.size()));
 												ShaderCacheManager::ShaderCacheByShaderSourceCodeId::const_iterator shaderSourceCodeIdIterator = shaderCacheManager.mShaderCacheByShaderSourceCodeId.find(shaderSourceCodeId);
 												if (shaderSourceCodeIdIterator != shaderCacheManager.mShaderCacheByShaderSourceCodeId.cend())
 												{
@@ -376,7 +376,7 @@ namespace RERenderer
 				// Do the work: Compiling the shader source code it in order to get the shader bytecode
 				bool needToWaitForShaderCache = false;
 				RERHI::RHIShader* shaders[NUMBER_OF_GRAPHICS_SHADER_TYPES] = {};
-				for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES && !needToWaitForShaderCache; ++i)
+				for (RECore::uint8 i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES && !needToWaitForShaderCache; ++i)
 				{
 					ShaderCache* shaderCache = compilerRequest.shaderCache[i];
 					if (nullptr != shaderCache)
@@ -484,7 +484,7 @@ namespace RERenderer
 		}
 	}
 
-	RERHI::RHIGraphicsPipelineState* GraphicsPipelineStateCompiler::createGraphicsPipelineState(const MaterialBlueprintResource& materialBlueprintResource, uint32_t serializedGraphicsPipelineStateHash, RERHI::RHIGraphicsProgram& graphicsProgram) const
+	RERHI::RHIGraphicsPipelineState* GraphicsPipelineStateCompiler::createGraphicsPipelineState(const MaterialBlueprintResource& materialBlueprintResource, RECore::uint32 serializedGraphicsPipelineStateHash, RERHI::RHIGraphicsProgram& graphicsProgram) const
 	{
 		// Start with the graphics pipeline state of the material blueprint resource, then copy over serialized graphics pipeline state
 		RERHI::GraphicsPipelineState graphicsPipelineState = materialBlueprintResource.getGraphicsPipelineState();

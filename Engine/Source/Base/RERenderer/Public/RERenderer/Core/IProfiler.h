@@ -31,7 +31,7 @@
 	//[-------------------------------------------------------]
 	//[ Includes                                              ]
 	//[-------------------------------------------------------]
-	#include <inttypes.h>	// For uint32_t, uint64_t etc.
+	#include <inttypes.h>	// For RECore::uint32, RECore::uint64 etc.
 
 
 	//[-------------------------------------------------------]
@@ -65,7 +65,7 @@
 			*  @param[in] hashCache
 			*    Hash cache, can be a null pointer (less efficient)
 			*/
-			virtual void beginCpuSample(const char* name, uint32_t* hashCache) = 0;
+			virtual void beginCpuSample(const char* name, RECore::uint32* hashCache) = 0;
 
 			/**
 			*  @brief
@@ -82,7 +82,7 @@
 			*  @param[in] hashCache
 			*    Hash cache, can be a null pointer (less efficient)
 			*/
-			virtual void beginGpuSample(const char* name, uint32_t* hashCache) = 0;
+			virtual void beginGpuSample(const char* name, RECore::uint32* hashCache) = 0;
 
 			/**
 			*  @brief
@@ -130,7 +130,7 @@
 	*  @param[in] name
 	*    Section name
 	*/
-	#define RENDERER_PROFILER_BEGIN_CPU_SAMPLE(context, name) { static uint32_t sampleHash_##__LINE__ = 0; (context).getProfiler().beginCpuSample(name, &sampleHash_##__LINE__); }
+	#define RENDERER_PROFILER_BEGIN_CPU_SAMPLE(context, name) { static RECore::uint32 sampleHash_##__LINE__ = 0; (context).getProfiler().beginCpuSample(name, &sampleHash_##__LINE__); }
 
 	/**
 	*  @brief
@@ -181,7 +181,7 @@
 	*    Section name
 	*/
 	#define RENDERER_PROFILER_SCOPED_CPU_SAMPLE(context, name) \
-		{ static uint32_t sampleHash_##__LINE__ = 0; (context).getProfiler().beginCpuSample(name, &sampleHash_##__LINE__); } \
+		{ static RECore::uint32 sampleHash_##__LINE__ = 0; (context).getProfiler().beginCpuSample(name, &sampleHash_##__LINE__); } \
 		PRAGMA_WARNING_PUSH \
 			PRAGMA_WARNING_DISABLE_MSVC(4456) \
 			RERenderer::RendererProfilerScopedCpuSampleOnExit rendererProfilerScopedCpuSampleOnExit##__FUNCTION__((context).getProfiler()); \
@@ -196,7 +196,7 @@
 	*  @param[in] name
 	*    Section name
 	*/
-	#define RENDERER_PROFILER_BEGIN_GPU_SAMPLE(context, name) { static uint32_t sampleHash_##__LINE__ = 0; (context).getProfiler().beginGpuSample(name, &sampleHash_##__LINE__); }
+	#define RENDERER_PROFILER_BEGIN_GPU_SAMPLE(context, name) { static RECore::uint32 sampleHash_##__LINE__ = 0; (context).getProfiler().beginGpuSample(name, &sampleHash_##__LINE__); }
 
 	/**
 	*  @brief
@@ -247,7 +247,7 @@
 	*    Section name
 	*/
 	#define RENDERER_PROFILER_SCOPED_GPU_SAMPLE(context, name) \
-		{ static uint32_t sampleHash_##__LINE__ = 0; (context).getProfiler().beginGpuSample(name, &sampleHash_##__LINE__); } \
+		{ static RECore::uint32 sampleHash_##__LINE__ = 0; (context).getProfiler().beginGpuSample(name, &sampleHash_##__LINE__); } \
 		PRAGMA_WARNING_PUSH \
 			PRAGMA_WARNING_DISABLE_MSVC(4456) \
 			RERenderer::RendererProfilerScopedGpuSampleOnExit rendererProfilerScopedGpuSampleOnExit##__FUNCTION__((context).getProfiler()); \
@@ -266,7 +266,7 @@
 	*/
 	#define RENDERER_SCOPED_PROFILER_EVENT(context, commandBuffer, name) \
 		COMMAND_SCOPED_DEBUG_EVENT(commandBuffer, name) \
-		{ static uint32_t sampleHash_##__LINE__ = 0; (context).getProfiler().beginGpuSample(name, &sampleHash_##__LINE__); (context).getProfiler().beginCpuSample(name, &sampleHash_##__LINE__); } \
+		{ static RECore::uint32 sampleHash_##__LINE__ = 0; (context).getProfiler().beginGpuSample(name, &sampleHash_##__LINE__); (context).getProfiler().beginCpuSample(name, &sampleHash_##__LINE__); } \
 		PRAGMA_WARNING_PUSH \
 			PRAGMA_WARNING_DISABLE_MSVC(4456) \
 			RERenderer::RendererProfilerScopedCpuSampleOnExit rendererProfilerScopedCpuSampleOnExit##__FUNCTION__((context).getProfiler()); \

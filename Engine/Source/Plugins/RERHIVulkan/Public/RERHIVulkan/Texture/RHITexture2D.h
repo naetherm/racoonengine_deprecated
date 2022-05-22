@@ -57,11 +57,11 @@ struct VRVulkanTextureData_t
   VkPhysicalDevice m_pPhysicalDevice;
   VkInstance		 m_pInstance;
   VkQueue			 m_pQueue;
-  uint32_t		 m_nQueueFamilyIndex;
-  uint32_t		 m_nWidth;
-  uint32_t		 m_nHeight;
+  RECore::uint32		 m_nQueueFamilyIndex;
+  RECore::uint32		 m_nWidth;
+  RECore::uint32		 m_nHeight;
   VkFormat		 m_nFormat;
-  uint32_t		 m_nSampleCount;
+  RECore::uint32		 m_nSampleCount;
 };
 
 /**
@@ -95,7 +95,7 @@ public:
   *  @param[in] numberOfMultisamples
   *    The number of multisamples per pixel (valid values: 1, 2, 4, 8)
   */
-  Texture2D(RHIDynamicRHI& vulkanRhi, uint32_t width, uint32_t height, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  Texture2D(RHIDynamicRHI& vulkanRhi, RECore::uint32 width, RECore::uint32 height, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief
@@ -148,7 +148,7 @@ public:
   *  @param[in] maximumMipmapIndex
   *    Maximum mipmap index, the least detailed mipmap, <number of mipmaps> by default
   */
-  inline void setMinimumMaximumMipmapIndex([[maybe_unused]] uint32_t minimumMipmapIndex, [[maybe_unused]] uint32_t maximumMipmapIndex)
+  inline void setMinimumMaximumMipmapIndex([[maybe_unused]] RECore::uint32 minimumMipmapIndex, [[maybe_unused]] RECore::uint32 maximumMipmapIndex)
   {
     // TODO(naetherm) Implement me
   }

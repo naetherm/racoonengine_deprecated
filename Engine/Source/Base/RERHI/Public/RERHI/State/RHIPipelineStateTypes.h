@@ -136,7 +136,7 @@ struct SerializedGraphicsPipelineState
   RasterizerState		  rasterizerState;				///< Rasterizer state
   DepthStencilState	  depthStencilState;			///< Depth stencil state
   BlendState			  blendState;					///< Blend state
-  uint32_t			  numberOfRenderTargets;		///< Number of render targets
+  RECore::uint32			  numberOfRenderTargets;		///< Number of render targets
   TextureFormat::Enum	  renderTargetViewFormats[8];	///< Render target view formats
   TextureFormat::Enum	  depthStencilViewFormat;		///< Depth stencil view formats
 };

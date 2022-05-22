@@ -70,8 +70,8 @@ namespace RERenderer
 		}
 
 		{ // The "_argb_nxa" texture channel packing stores the x channel of a normal map inside the alpha channel, set identity normal map x value
-			uint8_t* rubTextureMapData = const_cast<uint8_t*>(mVrRenderModelTextureMap->rubTextureMapData);	// Evil const-cast since I don't want to copy the data
-			const uint8_t* rubTextureMapDataEnd = rubTextureMapData + mVrRenderModelTextureMap->unWidth * mVrRenderModelTextureMap->unHeight * 4;
+			RECore::uint8* rubTextureMapData = const_cast<RECore::uint8*>(mVrRenderModelTextureMap->rubTextureMapData);	// Evil const-cast since I don't want to copy the data
+			const RECore::uint8* rubTextureMapDataEnd = rubTextureMapData + mVrRenderModelTextureMap->unWidth * mVrRenderModelTextureMap->unHeight * 4;
 			for (; rubTextureMapData < rubTextureMapDataEnd; rubTextureMapData += 4)
 			{
 				rubTextureMapData[3] = 128;

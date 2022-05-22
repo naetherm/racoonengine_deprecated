@@ -111,7 +111,7 @@ namespace RERenderer
 		SceneItemSet*		  mCullableSceneItemSet;				///< Cullable scene item set, always valid, destroy the instance if you no longer need it
 		SceneItemSet*		  mCullableShadowCastersSceneItemSet;	///< Cullable shadow casters scene item set, always valid, destroy the instance if you no longer need it	TODO(naetherm) Implement me
 		SceneItems			  mUncullableSceneItems;				///< Scene items which can't be culled and hence are always considered to be visible
-		std::vector<uint32_t> mIndirection;
+		std::vector<RECore::uint32> mIndirection;
 
 
 	};

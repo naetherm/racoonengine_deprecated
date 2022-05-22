@@ -34,7 +34,7 @@
 namespace RERHIVulkan {
 
 
-IndirectBuffer::IndirectBuffer(RHIDynamicRHI& vulkanRhi, uint32_t numberOfBytes, const void* data, uint32_t indirectBufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+IndirectBuffer::IndirectBuffer(RHIDynamicRHI& vulkanRhi, RECore::uint32 numberOfBytes, const void* data, RECore::uint32 indirectBufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 RHIIndirectBuffer(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mVkBuffer(VK_NULL_HANDLE),
 mVkDeviceMemory(VK_NULL_HANDLE)
@@ -59,8 +59,8 @@ mVkDeviceMemory(VK_NULL_HANDLE)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "IndirectBufferObject", 23)	// 23 = "IndirectBufferObject: " including terminating zero
 					const VkDevice vkDevice = vulkanRhi.getVulkanContext().getVkDevice();
-					Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT, (uint64_t)mVkBuffer, detailedDebugName);
-					Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT, (uint64_t)mVkDeviceMemory, detailedDebugName);
+					Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT, (RECore::uint64)mVkBuffer, detailedDebugName);
+					Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT, (RECore::uint64)mVkDeviceMemory, detailedDebugName);
 				}
 #endif
 }

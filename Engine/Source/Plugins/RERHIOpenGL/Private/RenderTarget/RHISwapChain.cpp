@@ -72,7 +72,7 @@ SwapChain::~SwapChain()
   }
 }
 
-void SwapChain::getWidthAndHeight(uint32_t& width, uint32_t& height) const
+void SwapChain::getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const
 {
   // Return stored width and height when both valid
   if (nullptr != mRenderWindow)

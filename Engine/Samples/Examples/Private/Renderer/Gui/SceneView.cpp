@@ -112,8 +112,8 @@ namespace SceneDetail
 //[ Global definitions                                    ]
 //[-------------------------------------------------------]
 static constexpr char*    VIRTUAL_SETTINGS_FILENAME	= "LocalData/SceneExample.ini";
-static constexpr uint32_t SCENE_ASSET_ID			= ASSET_ID("Example/Scene/S_Scene");
-static constexpr uint32_t IMROD_MATERIAL_ASSET_ID	= ASSET_ID("Example/Mesh/Imrod/M_Imrod");
+static constexpr RECore::uint32 SCENE_ASSET_ID			= ASSET_ID("Example/Scene/S_Scene");
+static constexpr RECore::uint32 IMROD_MATERIAL_ASSET_ID	= ASSET_ID("Example/Mesh/Imrod/M_Imrod");
 
 
 //[-------------------------------------------------------]
@@ -121,8 +121,8 @@ static constexpr uint32_t IMROD_MATERIAL_ASSET_ID	= ASSET_ID("Example/Mesh/Imrod
 //[-------------------------------------------------------]
 void drawLabel(const RERHI::RHIRenderTarget& mainRenderTarget, const RERenderer::CameraSceneItem& cameraSceneItem, RERenderer::DebugDrawSceneItem& debugDrawSceneItem, const glm::vec3& position, const char* text)
 {
-  uint32_t width = 1;
-  uint32_t height = 1;
+  RECore::uint32 width = 1;
+  RECore::uint32 height = 1;
   mainRenderTarget.getWidthAndHeight(width, height);
   const glm::mat4 worldSpaceToClipSpaceMatrix = cameraSceneItem.getViewSpaceToClipSpaceMatrix(static_cast<float>(width) / static_cast<float>(height)) * cameraSceneItem.getCameraRelativeWorldSpaceToViewSpaceMatrix();
 
@@ -228,8 +228,8 @@ void debugDrawExample(const RERHI::RHIRenderTarget& mainRenderTarget, const RERe
     drawLabel(mainRenderTarget, cameraSceneItem, debugDrawSceneItem, frustumOrigin, "frustum + axes");
 
     // The frustum will depict a fake camera
-    uint32_t width  = 1;
-    uint32_t height = 1;
+    RECore::uint32 width  = 1;
+    RECore::uint32 height = 1;
     mainRenderTarget.getWidthAndHeight(width, height);
     const float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
     const glm::vec3 position(-8.0f, 0.5f, 14.0f);
@@ -378,7 +378,7 @@ void SceneView::onInitialization()
 
       // Setup
       RERHI::RootSignatureBuilder rootSignatureBuilder;
-      rootSignatureBuilder.initialize(static_cast<uint32_t>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+      rootSignatureBuilder.initialize(static_cast<RECore::uint32>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
       // Create the instance
       mRootSignature = rhi->createRootSignature(rootSignatureBuilder);
@@ -422,15 +422,15 @@ void SceneView::onInitialization()
           RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
           "Position",								// name[32] (char)
           "POSITION",								// semanticName[32] (char)
-          0,										// semanticIndex (uint32_t)
+          0,										// semanticIndex (RECore::uint32)
           // Data source
-          0,										// inputSlot (uint32_t)
-          0,										// alignedByteOffset (uint32_t)
-          sizeof(float) * 2,						// strideInBytes (uint32_t)
-          0										// instancesPerElement (uint32_t)
+          0,										// inputSlot (RECore::uint32)
+          0,										// alignedByteOffset (RECore::uint32)
+          sizeof(float) * 2,						// strideInBytes (RECore::uint32)
+          0										// instancesPerElement (RECore::uint32)
         }
       };
-    const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+    const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
     { // Create vertex array object (VAO)
       // Create the vertex buffer object (VBO)
@@ -450,7 +450,7 @@ void SceneView::onInitialization()
       //    reference of the used vertex buffer objects (VBO). If the reference counter of a
       //    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
       const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-      mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
+      mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
     }
 
     {
@@ -1032,17 +1032,17 @@ void SceneView::applyCurrentSettings(RERHI::RHIRenderTarget& mainRenderTarget)
           break;
       }
     }
-    renderer.getTextureResourceManager().setNumberOfTopMipmapsToRemove(static_cast<uint8_t>(mNumberOfTopTextureMipmapsToRemove));
+    renderer.getTextureResourceManager().setNumberOfTopMipmapsToRemove(static_cast<RECore::uint8>(mNumberOfTopTextureMipmapsToRemove));
 
     // Update mesh related settings
-    renderer.getMeshResourceManager().setNumberOfTopMeshLodsToRemove(static_cast<uint8_t>(mNumberOfTopMeshLodsToRemove));
+    renderer.getMeshResourceManager().setNumberOfTopMeshLodsToRemove(static_cast<RECore::uint8>(mNumberOfTopMeshLodsToRemove));
 
     { // Update compositor workspace
-      const uint8_t maximumNumberOfMultisamples = renderer.getRhi().getCapabilities().maximumNumberOfMultisamples;
+      const RECore::uint8 maximumNumberOfMultisamples = renderer.getRhi().getCapabilities().maximumNumberOfMultisamples;
 
       { // MSAA
-        static constexpr uint8_t NUMBER_OF_MULTISAMPLES[4] = { 1, 2, 4, 8 };
-        const uint8_t numberOfMultisamples = NUMBER_OF_MULTISAMPLES[mCurrentMsaa];
+        static constexpr RECore::uint8 NUMBER_OF_MULTISAMPLES[4] = { 1, 2, 4, 8 };
+        const RECore::uint8 numberOfMultisamples = NUMBER_OF_MULTISAMPLES[mCurrentMsaa];
         mCompositorWorkspaceInstance->setNumberOfMultisamples((numberOfMultisamples > maximumNumberOfMultisamples) ? maximumNumberOfMultisamples : numberOfMultisamples);
       }
 
@@ -1124,8 +1124,8 @@ void SceneView::applyCurrentSettings(RERHI::RHIRenderTarget& mainRenderTarget)
       materialResource = materialResourceManager.getMaterialResourceByAssetId(ASSET_ID("Example/Blueprint/Compositor/MB_Final"));
       if (nullptr != materialResource)
       {
-        static constexpr uint32_t IDENTITY_TEXTURE_ASSET_ID = ASSET_ID("RacoonEngine/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D");
-        static constexpr uint32_t SEPIA_TEXTURE_ASSET_ID = ASSET_ID("Example/Blueprint/Compositor/T_SepiaColorCorrectionLookupTable16x1");
+        static constexpr RECore::uint32 IDENTITY_TEXTURE_ASSET_ID = ASSET_ID("RacoonEngine/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D");
+        static constexpr RECore::uint32 SEPIA_TEXTURE_ASSET_ID = ASSET_ID("Example/Blueprint/Compositor/T_SepiaColorCorrectionLookupTable16x1");
         materialResource->setPropertyById(STRING_ID("ColorCorrectionLookupTableMap"), RERenderer::MaterialPropertyValue::fromTextureAssetId(mPerformSepiaColorCorrection ? SEPIA_TEXTURE_ASSET_ID : IDENTITY_TEXTURE_ASSET_ID));
         materialResource->setPropertyById(STRING_ID("Fxaa"), RERenderer::MaterialPropertyValue::fromBoolean(mPerformFxaa));
         materialResource->setPropertyById(STRING_ID("Sharpen"), RERenderer::MaterialPropertyValue::fromBoolean(mPerformSharpen));
@@ -1149,7 +1149,7 @@ void SceneView::applyCurrentSettings(RERHI::RHIRenderTarget& mainRenderTarget)
 void SceneView::createCompositorWorkspace()
 {
   // Create/recreate the compositor workspace instance
-  static constexpr uint32_t COMPOSITOR_WORKSPACE_ASSET_ID[4] =
+  static constexpr RECore::uint32 COMPOSITOR_WORKSPACE_ASSET_ID[4] =
     {
       ASSET_ID("Example/CompositorWorkspace/CW_Debug"),
       ASSET_ID("Example/CompositorWorkspace/CW_Forward"),

@@ -280,7 +280,7 @@ namespace RERenderer
 						// Update the cached material data of all attached renderables
 						for (Renderable* renderable : mAttachedRenderables)
 						{
-							renderable->mRenderQueueIndex = static_cast<uint8_t>(renderQueueIndex);
+							renderable->mRenderQueueIndex = static_cast<RECore::uint8>(renderQueueIndex);
 
 							// In here we don't care about the fact that one and the same renderable manager instance might
 							// update cached renderables data. It's not performance critical in here and resolving this will

@@ -47,7 +47,7 @@ namespace RERHI
 	*/
 	struct TextureFormat final
 	{
-		enum Enum : uint8_t
+		enum Enum : RECore::uint8
 		{
 			R8				  = 0,	///< 8-bit pixel format, all bits red
 			R8G8B8			  = 1,	///< 24-bit pixel format, 8 bits for red, green and blue
@@ -170,32 +170,32 @@ namespace RERHI
 		*  @return
 		*    Number of bytes per element
 		*/
-		[[nodiscard]] static inline uint32_t getNumberOfBytesPerElement(Enum textureFormat)
+		[[nodiscard]] static inline RECore::uint32 getNumberOfBytesPerElement(Enum textureFormat)
 		{
-			static constexpr uint32_t MAPPING[] =
+			static constexpr RECore::uint32 MAPPING[] =
 			{
-				sizeof(uint8_t),		// Rhi::TextureFormat::R8            - 8-bit pixel format, all bits red
-				sizeof(uint8_t) * 3,	// Rhi::TextureFormat::R8G8B8        - 24-bit pixel format, 8 bits for red, green and blue
-				sizeof(uint8_t) * 4,	// Rhi::TextureFormat::R8G8B8A8      - 32-bit pixel format, 8 bits for red, green, blue and alpha
-				sizeof(uint8_t) * 4,	// Rhi::TextureFormat::R8G8B8A8_SRGB - 32-bit pixel format, 8 bits for red, green, blue and alpha; sRGB = RGB hardware gamma correction, the alpha channel always remains linear
-				sizeof(uint8_t) * 4,	// Rhi::TextureFormat::B8G8R8A8      - 32-bit pixel format, 8 bits for red, green, blue and alpha
+				sizeof(RECore::uint8),		// Rhi::TextureFormat::R8            - 8-bit pixel format, all bits red
+				sizeof(RECore::uint8) * 3,	// Rhi::TextureFormat::R8G8B8        - 24-bit pixel format, 8 bits for red, green and blue
+				sizeof(RECore::uint8) * 4,	// Rhi::TextureFormat::R8G8B8A8      - 32-bit pixel format, 8 bits for red, green, blue and alpha
+				sizeof(RECore::uint8) * 4,	// Rhi::TextureFormat::R8G8B8A8_SRGB - 32-bit pixel format, 8 bits for red, green, blue and alpha; sRGB = RGB hardware gamma correction, the alpha channel always remains linear
+				sizeof(RECore::uint8) * 4,	// Rhi::TextureFormat::B8G8R8A8      - 32-bit pixel format, 8 bits for red, green, blue and alpha
 				sizeof(float),			// Rhi::TextureFormat::R11G11B10F    - 32-bit float format using 11 bits the red and green channel, 10 bits the blue channel; red and green channels have a 6 bits mantissa and a 5 bits exponent and blue has a 5 bits mantissa and 5 bits exponent
 				sizeof(float) * 2,		// Rhi::TextureFormat::R16G16B16A16F - 64-bit float format using 16 bits for the each channel (red, green, blue, alpha)
 				sizeof(float) * 4,		// Rhi::TextureFormat::R32G32B32A32F - 128-bit float format using 32 bits for the each channel (red, green, blue, alpha)
-				sizeof(uint8_t) * 3,	// Rhi::TextureFormat::BC1           - DXT1 compression (known as BC1 in DirectX 10, RGB compression: 8:1, 8 bytes per block) - when being uncompressed
-				sizeof(uint8_t) * 3,	// Rhi::TextureFormat::BC1_SRGB      - DXT1 compression (known as BC1 in DirectX 10, RGB compression: 8:1, 8 bytes per block) - when being uncompressed; sRGB = RGB hardware gamma correction, the alpha channel always remains linear
-				sizeof(uint8_t) * 4,	// Rhi::TextureFormat::BC2           - DXT3 compression (known as BC2 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) - when being uncompressed
-				sizeof(uint8_t) * 4,	// Rhi::TextureFormat::BC2_SRGB      - DXT3 compression (known as BC2 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) - when being uncompressed; sRGB = RGB hardware gamma correction, the alpha channel always remains linear
-				sizeof(uint8_t) * 4,	// Rhi::TextureFormat::BC3           - DXT5 compression (known as BC3 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) - when being uncompressed
-				sizeof(uint8_t) * 4,	// Rhi::TextureFormat::BC3_SRGB      - DXT5 compression (known as BC3 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) - when being uncompressed; sRGB = RGB hardware gamma correction, the alpha channel always remains linear
-				sizeof(uint8_t) * 1,	// Rhi::TextureFormat::BC4           - 1 component texture compression (also known as 3DC+/ATI1N, known as BC4 in DirectX 10, 8 bytes per block) - when being uncompressed
-				sizeof(uint8_t) * 2,	// Rhi::TextureFormat::BC5           - 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC/ATI2N, known as BC5 in DirectX 10, 16 bytes per block) - when being uncompressed
-				sizeof(uint8_t) * 3,	// Rhi::TextureFormat::ETC1          - 3 component texture compression meant for mobile devices - when being uncompressed
-				sizeof(uint16_t),		// Rhi::TextureFormat::R16_UNORM     - 16-bit unsigned-normalized-integer format that supports 16 bits for the red channel
-				sizeof(uint32_t),		// Rhi::TextureFormat::R32_UINT      - 32-bit unsigned integer format
+				sizeof(RECore::uint8) * 3,	// Rhi::TextureFormat::BC1           - DXT1 compression (known as BC1 in DirectX 10, RGB compression: 8:1, 8 bytes per block) - when being uncompressed
+				sizeof(RECore::uint8) * 3,	// Rhi::TextureFormat::BC1_SRGB      - DXT1 compression (known as BC1 in DirectX 10, RGB compression: 8:1, 8 bytes per block) - when being uncompressed; sRGB = RGB hardware gamma correction, the alpha channel always remains linear
+				sizeof(RECore::uint8) * 4,	// Rhi::TextureFormat::BC2           - DXT3 compression (known as BC2 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) - when being uncompressed
+				sizeof(RECore::uint8) * 4,	// Rhi::TextureFormat::BC2_SRGB      - DXT3 compression (known as BC2 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) - when being uncompressed; sRGB = RGB hardware gamma correction, the alpha channel always remains linear
+				sizeof(RECore::uint8) * 4,	// Rhi::TextureFormat::BC3           - DXT5 compression (known as BC3 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) - when being uncompressed
+				sizeof(RECore::uint8) * 4,	// Rhi::TextureFormat::BC3_SRGB      - DXT5 compression (known as BC3 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) - when being uncompressed; sRGB = RGB hardware gamma correction, the alpha channel always remains linear
+				sizeof(RECore::uint8) * 1,	// Rhi::TextureFormat::BC4           - 1 component texture compression (also known as 3DC+/ATI1N, known as BC4 in DirectX 10, 8 bytes per block) - when being uncompressed
+				sizeof(RECore::uint8) * 2,	// Rhi::TextureFormat::BC5           - 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC/ATI2N, known as BC5 in DirectX 10, 16 bytes per block) - when being uncompressed
+				sizeof(RECore::uint8) * 3,	// Rhi::TextureFormat::ETC1          - 3 component texture compression meant for mobile devices - when being uncompressed
+				sizeof(RECore::uint16),		// Rhi::TextureFormat::R16_UNORM     - 16-bit unsigned-normalized-integer format that supports 16 bits for the red channel
+				sizeof(RECore::uint32),		// Rhi::TextureFormat::R32_UINT      - 32-bit unsigned integer format
 				sizeof(float),			// Rhi::TextureFormat::R32_FLOAT     - 32-bit float format
 				sizeof(float),			// Rhi::TextureFormat::D32_FLOAT     - 32-bit float depth format
-				sizeof(uint32_t),		// Rhi::TextureFormat::R16G16_SNORM  - A two-component, 32-bit signed-normalized-integer format that supports 16 bits for the red channel and 16 bits for the green channel
+				sizeof(RECore::uint32),		// Rhi::TextureFormat::R16G16_SNORM  - A two-component, 32-bit signed-normalized-integer format that supports 16 bits for the red channel and 16 bits for the green channel
 				sizeof(float),			// Rhi::TextureFormat::R16G16_FLOAT  - A two-component, 32-bit floating-point format that supports 16 bits for the red channel and 16 bits for the green channel
 				0						// Rhi::TextureFormat::UNKNOWN       - Unknown
 			};
@@ -214,7 +214,7 @@ namespace RERHI
 		*  @return
 		*    Number of bytes per row
 		*/
-		[[nodiscard]] static inline uint32_t getNumberOfBytesPerRow(Enum textureFormat, uint32_t width)
+		[[nodiscard]] static inline RECore::uint32 getNumberOfBytesPerRow(Enum textureFormat, RECore::uint32 width)
 		{
 			switch (textureFormat)
 			{
@@ -273,11 +273,11 @@ namespace RERHI
 
 				// 16-bit unsigned-normalized-integer format that supports 16 bits for the red channel
 				case R16_UNORM:
-					return sizeof(uint16_t) * width;
+					return sizeof(RECore::uint16) * width;
 
 				// 32-bit unsigned integer format
 				case R32_UINT:
-					return sizeof(uint32_t) * width;
+					return sizeof(RECore::uint32) * width;
 
 				// 32-bit float red/depth format
 				case R32_FLOAT:
@@ -286,7 +286,7 @@ namespace RERHI
 
 				// A two-component, 32-bit signed-normalized-integer format that supports 16 bits for the red channel and 16 bits for the green channel
 				case R16G16_SNORM:
-					return sizeof(uint32_t) * width;
+					return sizeof(RECore::uint32) * width;
 
 				// A two-component, 32-bit floating-point format that supports 16 bits for the red channel and 16 bits for the green channel
 				case R16G16_FLOAT:
@@ -316,7 +316,7 @@ namespace RERHI
 		*  @return
 		*    Number of bytes per slice
 		*/
-		[[nodiscard]] static inline uint32_t getNumberOfBytesPerSlice(Enum textureFormat, uint32_t width, uint32_t height)
+		[[nodiscard]] static inline RECore::uint32 getNumberOfBytesPerSlice(Enum textureFormat, RECore::uint32 width, RECore::uint32 height)
 		{
 			switch (textureFormat)
 			{
@@ -372,17 +372,17 @@ namespace RERHI
 				// 3 component texture compression meant for mobile devices
 				case ETC1:
 				{
-					const uint32_t numberOfBytesPerSlice = (width * height) >> 1;
+					const RECore::uint32 numberOfBytesPerSlice = (width * height) >> 1;
 					return (numberOfBytesPerSlice > 8) ? numberOfBytesPerSlice : 8;
 				}
 
 				// 16-bit unsigned-normalized-integer format that supports 16 bits for the red channel
 				case R16_UNORM:
-					return sizeof(uint16_t) * width * height;
+					return sizeof(RECore::uint16) * width * height;
 
 				// 32-bit unsigned integer format
 				case R32_UINT:
-					return sizeof(uint32_t) * width * height;
+					return sizeof(RECore::uint32) * width * height;
 
 				// 32-bit float depth format
 				case R32_FLOAT:
@@ -391,7 +391,7 @@ namespace RERHI
 
 				// A two-component, 32-bit signed-normalized-integer format that supports 16 bits for the red channel and 16 bits for the green channel
 				case R16G16_SNORM:
-					return sizeof(uint32_t) * width * height;
+					return sizeof(RECore::uint32) * width * height;
 
 				// A two-component, 32-bit floating-point format that supports 16 bits for the red channel and 16 bits for the green channel
 				case R16G16_FLOAT:
@@ -415,7 +415,7 @@ namespace RERHI
 	*/
 	struct TextureFlag final
 	{
-		enum Enum : uint32_t
+		enum Enum : RECore::uint32
 		{
 			UNORDERED_ACCESS      = 1 << 0,	///< This texture can be used for unordered access which is needed for compute shader read/write textures (when using Direct3D 11 a unordered access view (UAV) will be generated)
 			SHADER_RESOURCE       = 1 << 1,	///< This texture can be used as shader resource (when using Direct3D 11 a shader resource view (SRV) will be generated)
@@ -457,7 +457,7 @@ namespace RERHI
 			struct
 			{
 				float depth;
-				uint8_t stencil;
+				RECore::uint8 stencil;
 			} DepthStencil;
 		};
 	};

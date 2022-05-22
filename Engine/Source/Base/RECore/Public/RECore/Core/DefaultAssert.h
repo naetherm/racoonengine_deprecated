@@ -145,14 +145,14 @@ namespace RECore
 	//[ Public virtual RECore::IAssert methods                   ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] static inline bool handleAssert(const char* expression, const char* file, uint32_t line, const char* format, ...)
+		[[nodiscard]] static inline bool handleAssert(const char* expression, const char* file, uint32 line, const char* format, ...)
 		{
 			bool requestDebugBreak = false;
 
 			// Get the required buffer length, does not include the terminating zero character
 			va_list vaList;
 			va_start(vaList, format);
-			const uint32_t textLength = static_cast<uint32_t>(vsnprintf(nullptr, 0, format, vaList));
+			const uint32 textLength = static_cast<uint32>(vsnprintf(nullptr, 0, format, vaList));
 			va_end(vaList);
 			if (256 > textLength)
 			{
@@ -212,7 +212,7 @@ namespace RECore
 		*  @return
 		*    "true" to request debug break, else "false"
 		*/
-		[[nodiscard]] static inline bool handleAssertInternal(const char* expression, const char* file, uint32_t line, const char* message, uint32_t)
+		[[nodiscard]] static inline bool handleAssertInternal(const char* expression, const char* file, uint32 line, const char* message, uint32)
 		{
 			std::lock_guard<std::mutex> mutexLock(mMutex);
 			bool requestDebugBreak = false;

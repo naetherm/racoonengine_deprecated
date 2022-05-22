@@ -53,7 +53,7 @@ typedef std::array<VkPipelineShaderStageCreateInfo, 5> VkPipelineShaderStageCrea
 #ifdef __ANDROID__
 // On Android we need to explicitly select all layers
 			#warning "TODO(naetherm) Not tested"
-			static constexpr uint32_t NUMBER_OF_VALIDATION_LAYERS = 6;
+			static constexpr RECore::uint32 NUMBER_OF_VALIDATION_LAYERS = 6;
 			static constexpr const char* VALIDATION_LAYER_NAMES[] =
 			{
 				"VK_LAYER_GOOGLE_threading",
@@ -65,7 +65,7 @@ typedef std::array<VkPipelineShaderStageCreateInfo, 5> VkPipelineShaderStageCrea
 			};
 #else
 // On desktop the LunarG loaders exposes a meta layer that contains all layers
-static constexpr uint32_t NUMBER_OF_VALIDATION_LAYERS = 1;
+static constexpr RECore::uint32 NUMBER_OF_VALIDATION_LAYERS = 1;
 static constexpr const char* VALIDATION_LAYER_NAMES[] =
   {
     "VK_LAYER_LUNARG_standard_validation"
@@ -188,7 +188,7 @@ static bool GlslangInitialized = false;
 //[-------------------------------------------------------]
 //[ Global functions                                      ]
 //[-------------------------------------------------------]
-void updateWidthHeight(uint32_t mipmapIndex, uint32_t textureWidth, uint32_t textureHeight, uint32_t& width, uint32_t& height)
+void updateWidthHeight(RECore::uint32 mipmapIndex, RECore::uint32 textureWidth, RECore::uint32 textureHeight, RECore::uint32& width, RECore::uint32& height)
 {
   RERHI::RHITexture::getMipmapSize(mipmapIndex, textureWidth, textureHeight);
   if (width > textureWidth)
@@ -201,7 +201,7 @@ void updateWidthHeight(uint32_t mipmapIndex, uint32_t textureWidth, uint32_t tex
   }
 }
 
-void addVkPipelineShaderStageCreateInfo(VkShaderStageFlagBits vkShaderStageFlagBits, VkShaderModule vkShaderModule, VkPipelineShaderStageCreateInfos& vkPipelineShaderStageCreateInfos, uint32_t stageCount)
+void addVkPipelineShaderStageCreateInfo(VkShaderStageFlagBits vkShaderStageFlagBits, VkShaderModule vkShaderModule, VkPipelineShaderStageCreateInfos& vkPipelineShaderStageCreateInfos, RECore::uint32 stageCount)
 {
   VkPipelineShaderStageCreateInfo& vkPipelineShaderStageCreateInfo = vkPipelineShaderStageCreateInfos[stageCount];
   vkPipelineShaderStageCreateInfo.sType				= VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;	// sType (VkStructureType)
@@ -216,7 +216,7 @@ void addVkPipelineShaderStageCreateInfo(VkShaderStageFlagBits vkShaderStageFlagB
 void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkInstance, VkPhysicalDevices& vkPhysicalDevices)
 {
   // Get the number of available physical devices
-  uint32_t physicalDeviceCount = 0;
+  RECore::uint32 physicalDeviceCount = 0;
   VkResult vkResult = vkEnumeratePhysicalDevices(vkInstance, &physicalDeviceCount, nullptr);
   if (VK_SUCCESS == vkResult)
   {
@@ -265,7 +265,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
   for (const VkPhysicalDevice& vkPhysicalDevice : vkPhysicalDevices)
   {
     // Get of device extensions
-    uint32_t propertyCount = 0;
+    RECore::uint32 propertyCount = 0;
     if ((vkEnumerateDeviceExtensionProperties(vkPhysicalDevice, nullptr, &propertyCount, nullptr) != VK_SUCCESS) || (0 == propertyCount))
     {
       // Reject physical Vulkan device
@@ -305,7 +305,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
     { // Reject physical Vulkan devices basing on supported API version and some basic limits
       VkPhysicalDeviceProperties vkPhysicalDeviceProperties;
       vkGetPhysicalDeviceProperties(vkPhysicalDevice, &vkPhysicalDeviceProperties);
-      const uint32_t majorVersion = VK_VERSION_MAJOR(vkPhysicalDeviceProperties.apiVersion);
+      const RECore::uint32 majorVersion = VK_VERSION_MAJOR(vkPhysicalDeviceProperties.apiVersion);
       if ((majorVersion < 1) || (vkPhysicalDeviceProperties.limits.maxImageDimension2D < 4096))
       {
         // Reject physical Vulkan device
@@ -314,7 +314,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
     }
 
     // Reject physical Vulkan devices basing on supported queue family
-    uint32_t queueFamilyPropertyCount = 0;
+    RECore::uint32 queueFamilyPropertyCount = 0;
     vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &queueFamilyPropertyCount, nullptr);
     if (0 == queueFamilyPropertyCount)
     {
@@ -323,7 +323,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
     }
     std::vector<VkQueueFamilyProperties> queueFamilyProperties(queueFamilyPropertyCount);
     vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &queueFamilyPropertyCount, queueFamilyProperties.data());
-    for (uint32_t i = 0; i < queueFamilyPropertyCount; ++i)
+    for (RECore::uint32 i = 0; i < queueFamilyPropertyCount; ++i)
     {
       if ((queueFamilyProperties[i].queueCount > 0) && (queueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT))
       {
@@ -449,11 +449,11 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
       VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,									// sType (VkStructureType)
       hasMeshShaderSupport ? &vkPhysicalDeviceMeshShaderFeaturesNV : nullptr,	// pNext (const void*)
       0,																		// flags (VkDeviceCreateFlags)
-      1,																		// queueCreateInfoCount (uint32_t)
+      1,																		// queueCreateInfoCount (RECore::uint32)
       &vkDeviceQueueCreateInfo,												// pQueueCreateInfos (const VkDeviceQueueCreateInfo*)
-      enableValidation ? NUMBER_OF_VALIDATION_LAYERS : 0,						// enabledLayerCount (uint32_t)
+      enableValidation ? NUMBER_OF_VALIDATION_LAYERS : 0,						// enabledLayerCount (RECore::uint32)
       enableValidation ? VALIDATION_LAYER_NAMES : nullptr,					// ppEnabledLayerNames (const char* const*)
-      static_cast<uint32_t>(enabledExtensions.size()),						// enabledExtensionCount (uint32_t)
+      static_cast<RECore::uint32>(enabledExtensions.size()),						// enabledExtensionCount (RECore::uint32)
       enabledExtensions.empty() ? nullptr : enabledExtensions.data(),			// ppEnabledExtensionNames (const char* const*)
       &vkPhysicalDeviceFeatures												// pEnabledFeatures (const VkPhysicalDeviceFeatures*)
     };
@@ -488,12 +488,12 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
   return vkResult;
 }
 
-[[nodiscard]] VkDevice createVkDevice(const RERHI::RHIContext& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkPhysicalDevice vkPhysicalDevice, bool enableValidation, bool enableDebugMarker, bool hasMeshShaderSupport, uint32_t& graphicsQueueFamilyIndex, uint32_t& presentQueueFamilyIndex)
+[[nodiscard]] VkDevice createVkDevice(const RERHI::RHIContext& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkPhysicalDevice vkPhysicalDevice, bool enableValidation, bool enableDebugMarker, bool hasMeshShaderSupport, RECore::uint32& graphicsQueueFamilyIndex, RECore::uint32& presentQueueFamilyIndex)
 {
   VkDevice vkDevice = VK_NULL_HANDLE;
 
   // Get physical device queue family properties
-  uint32_t queueFamilyPropertyCount = 0;
+  RECore::uint32 queueFamilyPropertyCount = 0;
   vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &queueFamilyPropertyCount, nullptr);
   if (queueFamilyPropertyCount > 0)
   {
@@ -502,7 +502,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
     vkGetPhysicalDeviceQueueFamilyProperties(vkPhysicalDevice, &queueFamilyPropertyCount, vkQueueFamilyProperties.data());
 
     // Find a queue that supports graphics operations
-    uint32_t graphicsQueueIndex = 0;
+    RECore::uint32 graphicsQueueIndex = 0;
     for (; graphicsQueueIndex < queueFamilyPropertyCount; ++graphicsQueueIndex)
     {
       if (vkQueueFamilyProperties[graphicsQueueIndex].queueFlags & VK_QUEUE_GRAPHICS_BIT)
@@ -514,8 +514,8 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
             VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,	// sType (VkStructureType)
             nullptr,									// pNext (const void*)
             0,											// flags (VkDeviceQueueCreateFlags)
-            graphicsQueueIndex,							// queueFamilyIndex (uint32_t)
-            1,											// queueCount (uint32_t)
+            graphicsQueueIndex,							// queueFamilyIndex (RECore::uint32)
+            1,											// queueCount (RECore::uint32)
             queuePriorities.data()						// pQueuePriorities (const float*)
           };
         VkResult vkResult = createVkDevice(context, vkAllocationCallbacks, vkPhysicalDevice, vkDeviceQueueCreateInfo, enableValidation, enableDebugMarker, hasMeshShaderSupport, vkDevice);
@@ -544,7 +544,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
   return vkDevice;
 }
 
-[[nodiscard]] VkCommandPool createVkCommandPool(const RERHI::RHIContext& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkDevice vkDevice, uint32_t graphicsQueueFamilyIndex)
+[[nodiscard]] VkCommandPool createVkCommandPool(const RERHI::RHIContext& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkDevice vkDevice, RECore::uint32 graphicsQueueFamilyIndex)
 {
   VkCommandPool vkCommandPool = VK_NULL_HANDLE;
 
@@ -554,7 +554,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
       VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,			// sType (VkStructureType)
       nullptr,											// pNext (const void*)
       VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,	// flags (VkCommandPoolCreateFlags)
-      graphicsQueueFamilyIndex,							/// queueFamilyIndex (uint32_t)
+      graphicsQueueFamilyIndex,							/// queueFamilyIndex (RECore::uint32)
     };
   const VkResult vkResult = vkCreateCommandPool(vkDevice, &vkCommandPoolCreateInfo, vkAllocationCallbacks, &vkCommandPool);
   if (VK_SUCCESS != vkResult)
@@ -578,7 +578,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
       nullptr,										// pNext (const void*)
       vkCommandPool,									// commandPool (VkCommandPool)
       VK_COMMAND_BUFFER_LEVEL_PRIMARY,				// level (VkCommandBufferLevel)
-      1												// commandBufferCount (uint32_t)
+      1												// commandBufferCount (RECore::uint32)
     };
   VkResult vkResult = vkAllocateCommandBuffers(vkDevice, &vkCommandBufferAllocateInfo, &vkCommandBuffer);
   if (VK_SUCCESS != vkResult)
@@ -656,7 +656,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
   return nullptr;
 }
 
-[[nodiscard]] VKAPI_ATTR VkBool32 VKAPI_CALL debugReportCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char* pLayerPrefix, const char* pMessage, void* pUserData)
+[[nodiscard]] VKAPI_ATTR VkBool32 VKAPI_CALL debugReportCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, RECore::uint64 object, size_t location, RECore::int32 messageCode, const char* pLayerPrefix, const char* pMessage, void* pUserData)
 {
   const RERHI::RHIContext* context = static_cast<const RERHI::RHIContext*>(pUserData);
 
@@ -715,7 +715,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
 
   // Print log message
   RE_LOG(Critical, message.str())
-  //if (context->getLog().print(type, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), message.str().c_str()))
+  //if (context->getLog().print(type, nullptr, __FILE__, static_cast<RECore::uint32>(__LINE__), message.str().c_str()))
   {
     //	DEBUG_BREAK;
   }
@@ -724,7 +724,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
   return VK_FALSE;
 }
 
-[[nodiscard]] VkSurfaceKHR createPresentationSurface(const RERHI::RHIContext& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkInstance vkInstance, VkPhysicalDevice vkPhysicalDevice, uint32_t graphicsQueueFamilyIndex, RERHI::WindowHandle windoInfo)
+[[nodiscard]] VkSurfaceKHR createPresentationSurface(const RERHI::RHIContext& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkInstance vkInstance, VkPhysicalDevice vkPhysicalDevice, RECore::uint32 graphicsQueueFamilyIndex, RERHI::WindowHandle windoInfo)
 {
   VkSurfaceKHR vkSurfaceKHR = VK_NULL_HANDLE;
 
@@ -828,12 +828,12 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
   return vkSurfaceKHR;
 }
 
-[[nodiscard]] uint32_t getNumberOfSwapChainImages(const VkSurfaceCapabilitiesKHR& vkSurfaceCapabilitiesKHR)
+[[nodiscard]] RECore::uint32 getNumberOfSwapChainImages(const VkSurfaceCapabilitiesKHR& vkSurfaceCapabilitiesKHR)
 {
   // Set of images defined in a swap chain may not always be available for application to render to:
   // - One may be displayed and one may wait in a queue to be presented
   // - If application wants to use more images at the same time it must ask for more images
-  uint32_t numberOfImages = vkSurfaceCapabilitiesKHR.minImageCount + 1;
+  RECore::uint32 numberOfImages = vkSurfaceCapabilitiesKHR.minImageCount + 1;
   if ((vkSurfaceCapabilitiesKHR.maxImageCount > 0) && (numberOfImages > vkSurfaceCapabilitiesKHR.maxImageCount))
   {
     numberOfImages = vkSurfaceCapabilitiesKHR.maxImageCount;
@@ -843,7 +843,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
 
 [[nodiscard]] VkSurfaceFormatKHR getSwapChainFormat(const RERHI::RHIContext& context, VkPhysicalDevice vkPhysicalDevice, VkSurfaceKHR vkSurfaceKHR)
 {
-  uint32_t surfaceFormatCount = 0;
+  RECore::uint32 surfaceFormatCount = 0;
   if ((vkGetPhysicalDeviceSurfaceFormatsKHR(vkPhysicalDevice, vkSurfaceKHR, &surfaceFormatCount, nullptr) != VK_SUCCESS) || (0 == surfaceFormatCount))
   {
     RE_LOG(Critical, "Failed to get physical Vulkan device surface formats")
@@ -944,7 +944,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
 
 [[nodiscard]] VkPresentModeKHR getSwapChainPresentMode(const RERHI::RHIContext& context, VkPhysicalDevice vkPhysicalDevice, VkSurfaceKHR vkSurfaceKHR)
 {
-  uint32_t presentModeCount = 0;
+  RECore::uint32 presentModeCount = 0;
   if ((vkGetPhysicalDeviceSurfacePresentModesKHR(vkPhysicalDevice, vkSurfaceKHR, &presentModeCount, nullptr) != VK_SUCCESS) || (0 == presentModeCount))
   {
     RE_LOG(Critical, "Failed to get physical Vulkan device surface present modes")
@@ -1012,31 +1012,31 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
      }};
   static constexpr VkAttachmentReference colorVkAttachmentReference =
     {
-      0,											// attachment (uint32_t)
+      0,											// attachment (RECore::uint32)
       VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL	// layout (VkImageLayout)
     };
   static constexpr VkAttachmentReference depthVkAttachmentReference =
     {
-      1,													// attachment (uint32_t)
+      1,													// attachment (RECore::uint32)
       VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL	// layout (VkImageLayout)
     };
   const VkSubpassDescription vkSubpassDescription =
     {
       0,																	// flags (VkSubpassDescriptionFlags)
       VK_PIPELINE_BIND_POINT_GRAPHICS,									// pipelineBindPoint (VkPipelineBindPoint)
-      0,																	// inputAttachmentCount (uint32_t)
+      0,																	// inputAttachmentCount (RECore::uint32)
       nullptr,															// pInputAttachments (const VkAttachmentReference*)
-      1,																	// colorAttachmentCount (uint32_t)
+      1,																	// colorAttachmentCount (RECore::uint32)
       &colorVkAttachmentReference,										// pColorAttachments (const VkAttachmentReference*)
       nullptr,															// pResolveAttachments (const VkAttachmentReference*)
       hasDepthStencilAttachment ? &depthVkAttachmentReference : nullptr,	// pDepthStencilAttachment (const VkAttachmentReference*)
-      0,																	// preserveAttachmentCount (uint32_t)
-      nullptr																// pPreserveAttachments (const uint32_t*)
+      0,																	// preserveAttachmentCount (RECore::uint32)
+      nullptr																// pPreserveAttachments (const RECore::uint32*)
     };
   static constexpr VkSubpassDependency vkSubpassDependency =
     {
-      VK_SUBPASS_EXTERNAL,														// srcSubpass (uint32_t)
-      0,																			// dstSubpass (uint32_t)
+      VK_SUBPASS_EXTERNAL,														// srcSubpass (RECore::uint32)
+      0,																			// dstSubpass (RECore::uint32)
       VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,								// srcStageMask (VkPipelineStageFlags)
       VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,								// dstStageMask (VkPipelineStageFlags)
       0,																			// srcAccessMask (VkAccessFlags)
@@ -1048,11 +1048,11 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
       VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,	// sType (VkStructureType)
       nullptr,									// pNext (const void*)
       0,											// flags (VkRenderPassCreateFlags)
-      hasDepthStencilAttachment ? 2u : 1u,		// attachmentCount (uint32_t)
+      hasDepthStencilAttachment ? 2u : 1u,		// attachmentCount (RECore::uint32)
       vkAttachmentDescriptions.data(),			// pAttachments (const VkAttachmentDescription*)
-      1,											// subpassCount (uint32_t)
+      1,											// subpassCount (RECore::uint32)
       &vkSubpassDescription,						// pSubpasses (const VkSubpassDescription*)
-      1,											// dependencyCount (uint32_t)
+      1,											// dependencyCount (RECore::uint32)
       &vkSubpassDependency						// pDependencies (const VkSubpassDependency*)
     };
 
@@ -1110,7 +1110,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
   // -> http://aras-p.info/blog/2016/09/01/SPIR-V-Compression/
   const size_t spirvOutputBufferSize = smolv::GetDecodedBufferSize(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes());
   // TODO(naetherm) Try to avoid new/delete by trying to use the C-runtime stack if there aren't too many bytes
-  uint8_t* spirvOutputBuffer = RHI_MALLOC_TYPED(context, uint8_t, spirvOutputBufferSize);
+  RECore::uint8* spirvOutputBuffer = RHI_MALLOC_TYPED(context, RECore::uint8, spirvOutputBufferSize);
   smolv::Decode(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes(), spirvOutputBuffer, spirvOutputBufferSize);
 
   // Create the Vulkan shader module
@@ -1120,7 +1120,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
       nullptr,												// pNext (const void*)
       0,														// flags (VkShaderModuleCreateFlags)
       spirvOutputBufferSize,									// codeSize (size_t)
-      reinterpret_cast<const uint32_t*>(spirvOutputBuffer)	// pCode (const uint32_t*)
+      reinterpret_cast<const RECore::uint32*>(spirvOutputBuffer)	// pCode (const RECore::uint32*)
     };
   VkShaderModule vkShaderModule = VK_NULL_HANDLE;
   if (vkCreateShaderModule(vkDevice, &vkShaderModuleCreateInfo, vkAllocationCallbacks, &vkShaderModule) != VK_SUCCESS)
@@ -1235,7 +1235,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
 								smolv::Encode(spirv.data(), sizeof(unsigned int) * spirv.size(), byteArray, smolv::kEncodeFlagStripDebugInfo);
 
 								// Done
-								shaderBytecode->setBytecodeCopy(static_cast<uint32_t>(byteArray.size()), reinterpret_cast<uint8_t*>(byteArray.data()));
+								shaderBytecode->setBytecodeCopy(static_cast<RECore::uint32>(byteArray.size()), reinterpret_cast<RECore::uint8*>(byteArray.data()));
 							}
 
 							// Create the Vulkan shader module
@@ -1245,7 +1245,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
 								nullptr,										// pNext (const void*)
 								0,												// flags (VkShaderModuleCreateFlags)
 								sizeof(unsigned int) * spirv.size(),			// codeSize (size_t)
-								spirv.data()									// pCode (const uint32_t*)
+								spirv.data()									// pCode (const RECore::uint32*)
 							};
 							VkShaderModule vkShaderModule = VK_NULL_HANDLE;
 							if (vkCreateShaderModule(vkDevice, &vkShaderModuleCreateInfo, vkAllocationCallbacks, &vkShaderModule) != VK_SUCCESS)
@@ -1259,7 +1259,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
 					{
 						// Failed to link the program
             RE_LOG(Critical, std::string("Failed to link the GLSL program: ") + program.getInfoLog())
-						//if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to link the GLSL program: %s", program.getInfoLog()))
+						//if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), "Failed to link the GLSL program: %s", program.getInfoLog()))
 						{
 						//	DEBUG_BREAK;
 						}
@@ -1269,7 +1269,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
 				{
 					// Failed to parse the shader source code
             RE_LOG(Critical, std::string("Failed to parse the GLSL shader source code: ") + shader.getInfoLog()
-					//if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to parse the GLSL shader source code: %s", shader.getInfoLog()))
+					//if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), "Failed to parse the GLSL shader source code: %s", shader.getInfoLog()))
 					{
 					//	DEBUG_BREAK;
 					}
@@ -1328,7 +1328,7 @@ public:
   //[-------------------------------------------------------]
   static void transitionVkImageLayout(const RHIDynamicRHI& vulkanRhi, VkImage vkImage, VkImageAspectFlags vkImageAspectFlags, VkImageLayout oldVkImageLayout, VkImageLayout newVkImageLayout);
 
-  static void transitionVkImageLayout(const RHIDynamicRHI& vulkanRhi, VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageAspectFlags vkImageAspectFlags, uint32_t levelCount, uint32_t layerCount, VkImageLayout oldVkImageLayout, VkImageLayout newVkImageLayout);
+  static void transitionVkImageLayout(const RHIDynamicRHI& vulkanRhi, VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageAspectFlags vkImageAspectFlags, RECore::uint32 levelCount, RECore::uint32 layerCount, VkImageLayout oldVkImageLayout, VkImageLayout newVkImageLayout);
 
   static void transitionVkImageLayout(const RHIDynamicRHI& vulkanRhi, VkCommandBuffer vkCommandBuffer, VkImage vkImage, VkImageLayout oldVkImageLayout, VkImageLayout newVkImageLayout, VkImageSubresourceRange vkImageSubresourceRange, VkPipelineStageFlags sourceVkPipelineStageFlags, VkPipelineStageFlags destinationVkPipelineStageFlags);
 
@@ -1343,24 +1343,24 @@ public:
   //[-------------------------------------------------------]
   //[ Image                                                 ]
   //[-------------------------------------------------------]
-  [[nodiscard]] static VkImageLayout getVkImageLayoutByTextureFlags(uint32_t textureFlags);
+  [[nodiscard]] static VkImageLayout getVkImageLayoutByTextureFlags(RECore::uint32 textureFlags);
 
   // TODO(naetherm) Trivial implementation to have something to start with. Need to use more clever memory management and stating buffers later on.
-  static VkFormat createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageType vkImageType, VkImageViewType vkImageViewType, const VkExtent3D& vkExtent3D, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, uint8_t numberOfMultisamples, VkImage& vkImage, VkDeviceMemory& vkDeviceMemory, VkImageView& vkImageView);
+  static VkFormat createAndFillVkImage(const RHIDynamicRHI& vulkanRhi, VkImageType vkImageType, VkImageViewType vkImageViewType, const VkExtent3D& vkExtent3D, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, RECore::uint8 numberOfMultisamples, VkImage& vkImage, VkDeviceMemory& vkDeviceMemory, VkImageView& vkImageView);
 
-  static void createAndAllocateVkImage(const RHIDynamicRHI& vulkanRhi, VkImageCreateFlags vkImageCreateFlags, VkImageType vkImageType, const VkExtent3D& vkExtent3D, uint32_t mipLevels, uint32_t arrayLayers, VkFormat vkFormat, VkSampleCountFlagBits vkSampleCountFlagBits, VkImageTiling vkImageTiling, VkImageUsageFlags vkImageUsageFlags, VkMemoryPropertyFlags vkMemoryPropertyFlags, VkImage& vkImage, VkDeviceMemory& vkDeviceMemory);
+  static void createAndAllocateVkImage(const RHIDynamicRHI& vulkanRhi, VkImageCreateFlags vkImageCreateFlags, VkImageType vkImageType, const VkExtent3D& vkExtent3D, RECore::uint32 mipLevels, RECore::uint32 arrayLayers, VkFormat vkFormat, VkSampleCountFlagBits vkSampleCountFlagBits, VkImageTiling vkImageTiling, VkImageUsageFlags vkImageUsageFlags, VkMemoryPropertyFlags vkMemoryPropertyFlags, VkImage& vkImage, VkDeviceMemory& vkDeviceMemory);
 
   static void destroyAndFreeVkImage(const RHIDynamicRHI& vulkanRhi, VkImage& vkImage, VkDeviceMemory& vkDeviceMemory);
 
   static void destroyAndFreeVkImage(const RHIDynamicRHI& vulkanRhi, VkImage& vkImage, VkDeviceMemory& vkDeviceMemory, VkImageView& vkImageView);
 
-  static void createVkImageView(const RHIDynamicRHI& vulkanRhi, VkImage vkImage, VkImageViewType vkImageViewType, uint32_t levelCount, uint32_t layerCount, VkFormat vkFormat, VkImageAspectFlags vkImageAspectFlags, VkImageView& vkImageView);
+  static void createVkImageView(const RHIDynamicRHI& vulkanRhi, VkImage vkImage, VkImageViewType vkImageViewType, RECore::uint32 levelCount, RECore::uint32 layerCount, VkFormat vkFormat, VkImageAspectFlags vkImageAspectFlags, VkImageView& vkImageView);
 
   //[-------------------------------------------------------]
   //[ Debug                                                 ]
   //[-------------------------------------------------------]
 #ifdef DEBUG
-  static void setDebugObjectName(VkDevice vkDevice, VkDebugReportObjectTypeEXT vkDebugReportObjectTypeEXT, uint64_t object, const char* objectName);
+  static void setDebugObjectName(VkDevice vkDevice, VkDebugReportObjectTypeEXT vkDebugReportObjectTypeEXT, RECore::uint64 object, const char* objectName);
 #endif
 
 

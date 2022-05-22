@@ -43,14 +43,14 @@ void Provider::detectDevices(bool bReset)
     clear();
 
   // Flag all current devices as 'not confirmed'
-  for (uint32_t i=0; i<m_lstDevices.size(); ++i)
+  for (RECore::uint32 i=0; i<m_lstDevices.size(); ++i)
     m_lstDevices[i]->m_bConfirmed = false;
 
   // Detect new devices (the ones that are already there will be ignored by addDevice)
   queryDevices();
 
   // Delete all devices that are no longer there (confirmed == false)
-  for (uint32_t i=0; i<m_lstDevices.size(); ++i) {
+  for (RECore::uint32 i=0; i<m_lstDevices.size(); ++i) {
     Device *pDevice = m_lstDevices[i];
     if (!pDevice->m_bConfirmed) {
       // Remove device
@@ -65,7 +65,7 @@ void Provider::detectDevices(bool bReset)
 void Provider::clear()
 {
   // Delete all input devices
-  for (uint32_t i=0; i<m_lstDevices.size(); ++i)
+  for (RECore::uint32 i=0; i<m_lstDevices.size(); ++i)
   {
     Device *pDevice = m_lstDevices[i];
     mInputManager.removeDevice(pDevice);

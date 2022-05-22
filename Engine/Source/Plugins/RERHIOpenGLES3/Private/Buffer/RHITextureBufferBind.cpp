@@ -33,7 +33,7 @@
 namespace RERHIOpenGLES3 {
 
 
-TextureBufferBind::TextureBufferBind(RHIDynamicRHI &openGLES3Rhi, uint32_t numberOfBytes, const void *data,
+TextureBufferBind::TextureBufferBind(RHIDynamicRHI &openGLES3Rhi, RECore::uint32 numberOfBytes, const void *data,
                                      RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat
                                      RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   TextureBuffer(openGLES3Rhi, numberOfBytes RHI_RESOURCE_DEBUG_PASS_PARAMETER) {

@@ -41,7 +41,7 @@ IndirectBuffer::IndirectBuffer(RHIDynamicRHI &nullRhi RHI_RESOURCE_DEBUG_NAME_PA
 IndirectBuffer::~IndirectBuffer() {}
 
 
-const uint8_t *IndirectBuffer::getEmulationData() const {
+const RECore::uint8 *IndirectBuffer::getEmulationData() const {
   return nullptr;
 }
 

@@ -43,7 +43,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RERenderer::ICompositorResourcePass methods ]
 	//[-------------------------------------------------------]
-	void CompositorResourcePassClear::deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
+	void CompositorResourcePassClear::deserialize([[maybe_unused]] RECore::uint32 numberOfBytes, const RECore::uint8* data)
 	{
 		// Sanity check
 		ASSERT(sizeof(v1CompositorNode::PassClear) == numberOfBytes, "Invalid number of bytes")

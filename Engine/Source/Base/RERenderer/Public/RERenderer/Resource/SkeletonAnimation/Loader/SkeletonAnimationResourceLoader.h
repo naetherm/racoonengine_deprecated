@@ -65,7 +65,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("skeleton_animation");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("skeleton_animation");
 
 
 	//[-------------------------------------------------------]

@@ -57,7 +57,7 @@ class IResourceListener;
 *  @brief
 *    Internal resource manager template; not public used to keep template instantiation overhead under control
 */
-template<class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
+template<class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32 MAXIMUM_NUMBER_OF_ELEMENTS>
 class ResourceManagerTemplate : private RECore::Manager {
 
 
@@ -92,8 +92,8 @@ public:
   getResourceByAssetId(AssetId assetId) const  // Considered to be inefficient, avoid method whenever possible
   {
     // TODO(naetherm) Implement more efficient solution later on
-    const uint32_t numberOfElements = mResources.getNumberOfElements();
-    for (uint32_t i = 0; i < numberOfElements; ++i) {
+    const uint32 numberOfElements = mResources.getNumberOfElements();
+    for (uint32 i = 0; i < numberOfElements; ++i) {
       TYPE &resource = mResources.getElementByIndex(i);
       if (resource.getAssetId() == assetId) {
         return &resource;
@@ -162,8 +162,8 @@ public:
 
   inline void reloadResourceByAssetId(AssetId assetId) {
     // TODO(naetherm) Experimental implementation (take care of resource cleanup etc.)
-    const uint32_t numberOfElements = mResources.getNumberOfElements();
-    for (uint32_t i = 0; i < numberOfElements; ++i) {
+    const uint32 numberOfElements = mResources.getNumberOfElements();
+    for (uint32 i = 0; i < numberOfElements; ++i) {
       const TYPE &resource = mResources.getElementByIndex(i);
       if (resource.getAssetId() == assetId) {
         ID_TYPE resourceId = RECore::getInvalid<ID_TYPE>();

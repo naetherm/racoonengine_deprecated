@@ -196,7 +196,7 @@
 // Disable warnings in external headers, we can't fix them
 PRAGMA_WARNING_PUSH
 	PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-	#include <inttypes.h>	// For uint32_t, uint64_t etc.
+	#include <inttypes.h>	// For RECore::uint32, uint64_t etc.
 PRAGMA_WARNING_POP
 
 #ifdef DEBUG
@@ -224,9 +224,9 @@ PRAGMA_WARNING_POP
 	#endif
 #elif LINUX
 	#ifdef ARCHITECTURE_X64
-		typedef uint64_t handle;
+		typedef RECore::uint64 handle;
 	#else
-		typedef uint32_t handle;
+		typedef RECore::uint32 handle;
 	#endif
 	#ifndef NULL_HANDLE
 		// #define NULL_HANDLE 0

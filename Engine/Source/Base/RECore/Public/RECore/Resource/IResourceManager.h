@@ -67,9 +67,9 @@ class RECORE_API IResourceManager : private RECore::Manager {
   //[ Public virtual Renderer::IResourceManager methods     ]
   //[-------------------------------------------------------]
 public:
-  [[nodiscard]] virtual uint32_t getNumberOfResources() const = 0;
+  [[nodiscard]] virtual uint32 getNumberOfResources() const = 0;
 
-  [[nodiscard]] virtual IResource &getResourceByIndex(uint32_t index) const = 0;
+  [[nodiscard]] virtual IResource &getResourceByIndex(uint32 index) const = 0;
 
   [[nodiscard]] virtual IResource &getResourceByResourceId(ResourceId resourceId) const = 0;
 

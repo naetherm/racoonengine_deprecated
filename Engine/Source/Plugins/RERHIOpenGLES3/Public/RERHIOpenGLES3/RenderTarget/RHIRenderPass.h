@@ -71,7 +71,7 @@ public:
   *  @param[in] numberOfMultisamples
   *    The number of multisamples per pixel (valid values: 1, 2, 4, 8)
   */
-  RenderPass(RERHI::RHIDynamicRHI& rhi, uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  RenderPass(RERHI::RHIDynamicRHI& rhi, RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief
@@ -87,7 +87,7 @@ public:
   *  @return
   *    The number of color render target textures
   */
-  [[nodiscard]] inline uint32_t getNumberOfColorAttachments() const
+  [[nodiscard]] inline RECore::uint32 getNumberOfColorAttachments() const
   {
     return mNumberOfColorAttachments;
   }
@@ -115,10 +115,10 @@ private:
   //[ Private data                                          ]
   //[-------------------------------------------------------]
 private:
-  uint32_t				 mNumberOfColorAttachments;
+  RECore::uint32				 mNumberOfColorAttachments;
   RERHI::TextureFormat::Enum mColorAttachmentTextureFormats[8];
   RERHI::TextureFormat::Enum mDepthStencilAttachmentTextureFormat;
-  uint8_t					 mNumberOfMultisamples;
+  RECore::uint8					 mNumberOfMultisamples;
 
 
 };

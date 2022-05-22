@@ -168,17 +168,17 @@ namespace RERenderer
 	private:
 		struct BufferPool final
 		{
-			std::vector<uint32_t> freeSlots;
+			std::vector<RECore::uint32> freeSlots;
 			RERHI::RHIUniformBuffer*  uniformBuffer;	///< Memory is managed by this buffer pool instance
 			RERHI::RHIResourceGroup*  resourceGroup;	///< Memory is managed by this buffer pool instance
 
-			BufferPool(uint32_t bufferSize, uint32_t slotsPerPool, RERHI::RHIBufferManager& bufferManager, const MaterialBlueprintResource& materialBlueprintResource);
+			BufferPool(RECore::uint32 bufferSize, RECore::uint32 slotsPerPool, RERHI::RHIBufferManager& bufferManager, const MaterialBlueprintResource& materialBlueprintResource);
 			~BufferPool();
 		};
 
 		typedef std::vector<BufferPool*>		 BufferPools;
 		typedef std::vector<MaterialBufferSlot*> MaterialBufferSlots;
-		typedef std::vector<uint8_t>			 ScratchBuffer;
+		typedef std::vector<RECore::uint8>			 ScratchBuffer;
 
 
 	//[-------------------------------------------------------]
@@ -188,8 +188,8 @@ namespace RERenderer
 		IRenderer&						 mRenderer;
 		const MaterialBlueprintResource& mMaterialBlueprintResource;
 		BufferPools						 mBufferPools;
-		uint32_t						 mSlotsPerPool;
-		uint32_t						 mBufferSize;
+		RECore::uint32						 mSlotsPerPool;
+		RECore::uint32						 mBufferSize;
 		MaterialBufferSlots				 mDirtyMaterialBufferSlots;
 		MaterialBufferSlots				 mMaterialBufferSlots;
 		const BufferPool*				 mLastGraphicsBoundPool;

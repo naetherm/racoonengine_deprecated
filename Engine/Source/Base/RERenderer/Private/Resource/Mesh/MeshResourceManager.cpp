@@ -52,12 +52,12 @@ namespace
 				RERHI::VertexAttributeFormat::UINT_1,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"drawId",							// name[32] (char)
 				"DRAWID",							// semanticName[32] (char)
-				0,									// semanticIndex (uint32_t)
+				0,									// semanticIndex (RECore::uint32)
 				// Data source
-				0,									// inputSlot (uint32_t)
-				0,									// alignedByteOffset (uint32_t)
-				sizeof(uint32_t),					// strideInBytes (uint32_t)
-				1									// instancesPerElement (uint32_t)
+				0,									// inputSlot (RECore::uint32)
+				0,									// alignedByteOffset (RECore::uint32)
+				sizeof(RECore::uint32),					// strideInBytes (RECore::uint32)
+				1									// instancesPerElement (RECore::uint32)
 			}
 		};
 
@@ -79,7 +79,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
-	const RERHI::VertexAttributes MeshResourceManager::DRAW_ID_VERTEX_ATTRIBUTES(static_cast<uint32_t>(GLM_COUNTOF(::detail::DrawIdVertexAttributesLayout)), ::detail::DrawIdVertexAttributesLayout);
+	const RERHI::VertexAttributes MeshResourceManager::DRAW_ID_VERTEX_ATTRIBUTES(static_cast<RECore::uint32>(GLM_COUNTOF(::detail::DrawIdVertexAttributesLayout)), ::detail::DrawIdVertexAttributesLayout);
 
 
 	//[-------------------------------------------------------]
@@ -123,12 +123,12 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
-	uint32_t MeshResourceManager::getNumberOfResources() const
+	RECore::uint32 MeshResourceManager::getNumberOfResources() const
 	{
 		return mInternalResourceManager->getResources().getNumberOfElements();
 	}
 
-RECore::IResource& MeshResourceManager::getResourceByIndex(uint32_t index) const
+RECore::IResource& MeshResourceManager::getResourceByIndex(RECore::uint32 index) const
 	{
 		return mInternalResourceManager->getResources().getElementByIndex(index);
 	}
@@ -186,8 +186,8 @@ RECore::IResource* MeshResourceManager::tryGetResourceByResourceId(RECore::Resou
 		mInternalResourceManager = new RECore::ResourceManagerTemplate<MeshResource, IMeshResourceLoader, MeshResourceId, 4096>(renderer.getAssetManager(), renderer.getResourceStreamer(), *this);
 
 		// Create the draw ID vertex buffer, see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html
-		uint32_t drawIds[4096];
-		for (uint32_t i = 0; i < 4096; ++i)
+		RECore::uint32 drawIds[4096];
+		for (RECore::uint32 i = 0; i < 4096; ++i)
 		{
 			drawIds[i] = i;
 		}
@@ -201,7 +201,7 @@ RECore::IResource* MeshResourceManager::tryGetResourceByResourceId(RECore::Resou
 		//    reference of the used vertex buffer objects (VBO). If the reference counter of a
 		//    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
 		const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { mDrawIdVertexBufferPtr };
-		mDrawIdVertexArrayPtr = bufferManager.createVertexArray(DRAW_ID_VERTEX_ATTRIBUTES, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, nullptr RHI_RESOURCE_DEBUG_NAME("Draw ID"));
+		mDrawIdVertexArrayPtr = bufferManager.createVertexArray(DRAW_ID_VERTEX_ATTRIBUTES, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, nullptr RHI_RESOURCE_DEBUG_NAME("Draw ID"));
 	}
 
 	MeshResourceManager::~MeshResourceManager()

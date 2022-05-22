@@ -56,7 +56,7 @@ namespace
 		struct MaterialBlueprintCacheEntry final
 		{
 			RECore::AssetId materialBlueprintAssetId;
-			uint32_t		  numberOfBytes;
+			RECore::uint32		  numberOfBytes;
 		};
 
 
@@ -182,7 +182,7 @@ namespace RERenderer
 		}
 	}
 
-	void MaterialBlueprintResourceManager::setDefaultTextureFiltering(RERHI::FilterMode filterMode, uint8_t maximumAnisotropy)
+	void MaterialBlueprintResourceManager::setDefaultTextureFiltering(RERHI::FilterMode filterMode, RECore::uint8 maximumAnisotropy)
 	{
 		// State change?
 		if (mDefaultTextureFilterMode != filterMode || mDefaultMaximumTextureAnisotropy != maximumAnisotropy)
@@ -192,8 +192,8 @@ namespace RERenderer
 			mDefaultMaximumTextureAnisotropy = maximumAnisotropy;
 
 			{ // Recreate sampler state instances of all material blueprint resources
-				const uint32_t numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
-				for (uint32_t i = 0; i < numberOfElements; ++i)
+				const RECore::uint32 numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
+				for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 				{
 					mInternalResourceManager->getResources().getElementByIndex(i).onDefaultTextureFilteringChanged(mDefaultTextureFilterMode, mDefaultMaximumTextureAnisotropy);
 				}
@@ -201,8 +201,8 @@ namespace RERenderer
 
 			{ // Make the resource groups of all material techniques dirty to instantly see default texture filtering changes
 				const MaterialResourceManager& materialResourceManager = mRenderer.getMaterialResourceManager();
-				const uint32_t numberOfElements = materialResourceManager.getNumberOfResources();
-				for (uint32_t i = 0; i < numberOfElements; ++i)
+				const RECore::uint32 numberOfElements = materialResourceManager.getNumberOfResources();
+				for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 				{
 					for (MaterialTechnique* materialTechnique : materialResourceManager.getByIndex(i).getSortedMaterialTechniqueVector())
 					{
@@ -217,12 +217,12 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
-	uint32_t MaterialBlueprintResourceManager::getNumberOfResources() const
+	RECore::uint32 MaterialBlueprintResourceManager::getNumberOfResources() const
 	{
 		return mInternalResourceManager->getResources().getNumberOfElements();
 	}
 
-RECore::IResource& MaterialBlueprintResourceManager::getResourceByIndex(uint32_t index) const
+RECore::IResource& MaterialBlueprintResourceManager::getResourceByIndex(RECore::uint32 index) const
 	{
 		return mInternalResourceManager->getResources().getElementByIndex(index);
 	}
@@ -240,8 +240,8 @@ RECore::IResource* MaterialBlueprintResourceManager::tryGetResourceByResourceId(
 	void MaterialBlueprintResourceManager::reloadResourceByAssetId(AssetId assetId)
 	{
 		// TODO(naetherm) Experimental implementation (take care of resource cleanup etc.)
-		const uint32_t numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
-		for (uint32_t i = 0; i < numberOfElements; ++i)
+		const RECore::uint32 numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
+		for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 		{
 			MaterialBlueprintResource& materialBlueprintResource = mInternalResourceManager->getResources().getElementByIndex(i);
 			if (materialBlueprintResource.getAssetId() == assetId)
@@ -249,8 +249,8 @@ RECore::IResource* MaterialBlueprintResourceManager::tryGetResourceByResourceId(
 				{ // Properly release material buffer slots
 					MaterialBufferManager* materialBufferManager = materialBlueprintResource.mMaterialBufferManager;
 					const MaterialResourceManager& materialResourceManager = mRenderer.getMaterialResourceManager();
-					const uint32_t numberOfMaterials = materialResourceManager.getNumberOfResources();
-					for (uint32_t materialIndex = 0; materialIndex < numberOfMaterials; ++materialIndex)
+					const RECore::uint32 numberOfMaterials = materialResourceManager.getNumberOfResources();
+					for (RECore::uint32 materialIndex = 0; materialIndex < numberOfMaterials; ++materialIndex)
 					{
 						for (MaterialTechnique* materialTechnique : materialResourceManager.getByIndex(materialIndex).getSortedMaterialTechniqueVector())
 						{
@@ -272,10 +272,10 @@ RECore::IResource* MaterialBlueprintResourceManager::tryGetResourceByResourceId(
 				{ // Make the texture resource groups of all material techniques
 					MaterialBufferManager* materialBufferManager = materialBlueprintResource.mMaterialBufferManager;
 					const MaterialResourceManager& materialResourceManager = mRenderer.getMaterialResourceManager();
-					const uint32_t numberOfMaterials = materialResourceManager.getNumberOfResources();
+					const RECore::uint32 numberOfMaterials = materialResourceManager.getNumberOfResources();
 
 					// Loop through all materials
-					for (uint32_t materialIndex = 0; materialIndex < numberOfMaterials; ++materialIndex)
+					for (RECore::uint32 materialIndex = 0; materialIndex < numberOfMaterials; ++materialIndex)
 					{
 						// Loop through all material techniques of the current material
 						MaterialResource& materialResource = materialResourceManager.getByIndex(materialIndex);
@@ -387,7 +387,7 @@ RECore::IResource* MaterialBlueprintResourceManager::tryGetResourceByResourceId(
 		::detail::defaultMaterialBlueprintResourceListener.clear();
 	}
 
-	void MaterialBlueprintResourceManager::addSerializedGraphicsPipelineState(uint32_t serializedGraphicsPipelineStateHash, const RERHI::SerializedGraphicsPipelineState& serializedGraphicsPipelineState)
+	void MaterialBlueprintResourceManager::addSerializedGraphicsPipelineState(RECore::uint32 serializedGraphicsPipelineStateHash, const RERHI::SerializedGraphicsPipelineState& serializedGraphicsPipelineState)
 	{
 		std::lock_guard<std::mutex> serializedGraphicsPipelineStatesMutexLock(mSerializedGraphicsPipelineStatesMutex);
 		SerializedGraphicsPipelineStates::iterator iterator = mSerializedGraphicsPipelineStates.find(serializedGraphicsPipelineStateHash);
@@ -397,7 +397,7 @@ RECore::IResource* MaterialBlueprintResourceManager::tryGetResourceByResourceId(
 		}
 	}
 
-	void MaterialBlueprintResourceManager::applySerializedGraphicsPipelineState(uint32_t serializedGraphicsPipelineStateHash, RERHI::GraphicsPipelineState& graphicsPipelineState)
+	void MaterialBlueprintResourceManager::applySerializedGraphicsPipelineState(RECore::uint32 serializedGraphicsPipelineStateHash, RERHI::GraphicsPipelineState& graphicsPipelineState)
 	{
 		std::lock_guard<std::mutex> serializedGraphicsPipelineStatesMutexLock(mSerializedGraphicsPipelineStatesMutex);
 		MaterialBlueprintResourceManager::SerializedGraphicsPipelineStates::const_iterator iterator = mSerializedGraphicsPipelineStates.find(serializedGraphicsPipelineStateHash);
@@ -414,8 +414,8 @@ RECore::IResource* MaterialBlueprintResourceManager::tryGetResourceByResourceId(
 	void MaterialBlueprintResourceManager::clearPipelineStateObjectCache()
 	{
 		// Loop through all material blueprint resources and clear the cache entries
-		const uint32_t numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
-		for (uint32_t i = 0; i < numberOfElements; ++i)
+		const RECore::uint32 numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
+		for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 		{
 			mInternalResourceManager->getResources().getElementByIndex(i).clearPipelineStateObjectCache();
 		}
@@ -424,13 +424,13 @@ RECore::IResource* MaterialBlueprintResourceManager::tryGetResourceByResourceId(
 	void MaterialBlueprintResourceManager::loadPipelineStateObjectCache(RECore::IFile& file)
 	{
 		{ // Read the serialized graphics pipeline states
-			uint32_t numberOfElements = RECore::getInvalid<uint32_t>();
-			file.read(&numberOfElements, sizeof(uint32_t));
+			RECore::uint32 numberOfElements = RECore::getInvalid<RECore::uint32>();
+			file.read(&numberOfElements, sizeof(RECore::uint32));
 			mSerializedGraphicsPipelineStates.reserve(numberOfElements);
-			for (uint32_t i = 0; i < numberOfElements; ++i)
+			for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 			{
-				uint32_t key = RECore::getInvalid<uint32_t>();
-				file.read(&key, sizeof(uint32_t));
+				RECore::uint32 key = RECore::getInvalid<RECore::uint32>();
+				file.read(&key, sizeof(RECore::uint32));
 				RERHI::SerializedGraphicsPipelineState serializedGraphicsPipelineState = {};
 				file.read(&serializedGraphicsPipelineState, sizeof(RERHI::SerializedGraphicsPipelineState));
 				mSerializedGraphicsPipelineStates.emplace(key, serializedGraphicsPipelineState);
@@ -438,8 +438,8 @@ RECore::IResource* MaterialBlueprintResourceManager::tryGetResourceByResourceId(
 		}
 
 		{ // Read the pipeline state object cache header which consists of information about the contained material blueprint resources
-			uint32_t numberOfElements = 0;
-			file.read(&numberOfElements, sizeof(uint32_t));
+			RECore::uint32 numberOfElements = 0;
+			file.read(&numberOfElements, sizeof(RECore::uint32));
 			if (numberOfElements > 0)
 			{
 				std::vector< ::detail::MaterialBlueprintCacheEntry> materialBlueprintCacheEntries;
@@ -447,7 +447,7 @@ RECore::IResource* MaterialBlueprintResourceManager::tryGetResourceByResourceId(
 				file.read(materialBlueprintCacheEntries.data(), sizeof(::detail::MaterialBlueprintCacheEntry) * numberOfElements);
 
 				// Loop through all material blueprint resources and read the cache entries
-				for (uint32_t i = 0; i < numberOfElements; ++i)
+				for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 				{
 					// TODO(naetherm) Currently material blueprint resource loading is a blocking process
 					const ::detail::MaterialBlueprintCacheEntry& materialBlueprintCacheEntry = materialBlueprintCacheEntries[i];
@@ -475,8 +475,8 @@ RECore::IResource* MaterialBlueprintResourceManager::tryGetResourceByResourceId(
 
 	bool MaterialBlueprintResourceManager::doesPipelineStateObjectCacheNeedSaving() const
 	{
-		const uint32_t numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
-		for (uint32_t i = 0; i < numberOfElements; ++i)
+		const RECore::uint32 numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
+		for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 		{
 			if (mInternalResourceManager->getResources().getElementByIndex(i).doesPipelineStateObjectCacheNeedSaving())
 			{
@@ -492,20 +492,20 @@ RECore::IResource* MaterialBlueprintResourceManager::tryGetResourceByResourceId(
 	void MaterialBlueprintResourceManager::savePipelineStateObjectCache(RECore::MemoryFile& memoryFile)
 	{
 		{ // Write the serialized graphics pipeline states
-			const uint32_t numberOfElements = static_cast<uint32_t>(mSerializedGraphicsPipelineStates.size());
-			memoryFile.write(&numberOfElements, sizeof(uint32_t));
+			const RECore::uint32 numberOfElements = static_cast<RECore::uint32>(mSerializedGraphicsPipelineStates.size());
+			memoryFile.write(&numberOfElements, sizeof(RECore::uint32));
 			for (const auto& elementPair : mSerializedGraphicsPipelineStates)
 			{
-				memoryFile.write(&elementPair.first, sizeof(uint32_t));
+				memoryFile.write(&elementPair.first, sizeof(RECore::uint32));
 				memoryFile.write(&elementPair.second, sizeof(RERHI::SerializedGraphicsPipelineState));
 			}
 		}
 
 		{ // Write the pipeline state object cache header which consists of information about the contained material blueprint resources
-			const uint32_t numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
-			memoryFile.write(&numberOfElements, sizeof(uint32_t));
-			uint32_t firstMaterialBlueprintCacheEntryIndex = 0;
-			for (uint32_t i = 0; i < numberOfElements; ++i)
+			const RECore::uint32 numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
+			memoryFile.write(&numberOfElements, sizeof(RECore::uint32));
+			RECore::uint32 firstMaterialBlueprintCacheEntryIndex = 0;
+			for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 			{
 				::detail::MaterialBlueprintCacheEntry materialBlueprintCacheEntry;
 				materialBlueprintCacheEntry.materialBlueprintAssetId = mInternalResourceManager->getResources().getElementByIndex(i).getAssetId();
@@ -513,17 +513,17 @@ RECore::IResource* MaterialBlueprintResourceManager::tryGetResourceByResourceId(
 				memoryFile.write(&materialBlueprintCacheEntry, sizeof(::detail::MaterialBlueprintCacheEntry));
 				if (0 == firstMaterialBlueprintCacheEntryIndex)
 				{
-					firstMaterialBlueprintCacheEntryIndex = static_cast<uint32_t>(memoryFile.getNumberOfBytes() - sizeof(::detail::MaterialBlueprintCacheEntry));
+					firstMaterialBlueprintCacheEntryIndex = static_cast<RECore::uint32>(memoryFile.getNumberOfBytes() - sizeof(::detail::MaterialBlueprintCacheEntry));
 				}
 			}
 			::detail::MaterialBlueprintCacheEntry* firstMaterialBlueprintCacheEntry = reinterpret_cast< ::detail::MaterialBlueprintCacheEntry*>(&memoryFile.getByteVector()[firstMaterialBlueprintCacheEntryIndex]);
 
 			// Loop through all material blueprint resources and write the cache entries
-			for (uint32_t i = 0; i < numberOfElements; ++i)
+			for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 			{
-				const uint32_t fileStart = static_cast<uint32_t>(memoryFile.getNumberOfBytes());
+				const RECore::uint32 fileStart = static_cast<RECore::uint32>(memoryFile.getNumberOfBytes());
 				mInternalResourceManager->getResources().getElementByIndex(i).savePipelineStateObjectCache(memoryFile);
-				firstMaterialBlueprintCacheEntry[i].numberOfBytes = static_cast<uint32_t>(memoryFile.getNumberOfBytes() - fileStart);
+				firstMaterialBlueprintCacheEntry[i].numberOfBytes = static_cast<RECore::uint32>(memoryFile.getNumberOfBytes() - fileStart);
 			}
 		}
 	}

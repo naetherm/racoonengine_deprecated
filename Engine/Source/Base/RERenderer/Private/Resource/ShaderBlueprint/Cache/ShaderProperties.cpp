@@ -69,7 +69,7 @@ namespace RERenderer
 		return (iterator != mSortedPropertyVector.end() && iterator->shaderPropertyId == property.shaderPropertyId);
 	}
 
-	bool ShaderProperties::getPropertyValue(ShaderPropertyId shaderPropertyId, int32_t& value, int32_t defaultValue) const
+	bool ShaderProperties::getPropertyValue(ShaderPropertyId shaderPropertyId, RECore::int32& value, RECore::int32 defaultValue) const
 	{
 		const Property property(shaderPropertyId, 0);
 		SortedPropertyVector::const_iterator iterator = std::lower_bound(mSortedPropertyVector.begin(), mSortedPropertyVector.end(), property, ::detail::orderPropertyByShaderPropertyId);
@@ -85,14 +85,14 @@ namespace RERenderer
 		}
 	}
 
-	int32_t ShaderProperties::getPropertyValueUnsafe(ShaderPropertyId shaderPropertyId, int32_t defaultValue) const
+	RECore::int32 ShaderProperties::getPropertyValueUnsafe(ShaderPropertyId shaderPropertyId, RECore::int32 defaultValue) const
 	{
 		const Property property(shaderPropertyId, 0);
 		SortedPropertyVector::const_iterator iterator = std::lower_bound(mSortedPropertyVector.begin(), mSortedPropertyVector.end(), property, ::detail::orderPropertyByShaderPropertyId);
 		return (iterator != mSortedPropertyVector.end() && iterator->shaderPropertyId == property.shaderPropertyId) ? iterator->value : defaultValue;
 	}
 
-	void ShaderProperties::setPropertyValue(ShaderPropertyId shaderPropertyId, int32_t value)
+	void ShaderProperties::setPropertyValue(ShaderPropertyId shaderPropertyId, RECore::int32 value)
 	{
 		const Property property(shaderPropertyId, value);
 		SortedPropertyVector::iterator iterator = std::lower_bound(mSortedPropertyVector.begin(), mSortedPropertyVector.end(), property, ::detail::orderPropertyByShaderPropertyId);

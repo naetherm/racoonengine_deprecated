@@ -55,7 +55,7 @@ SwapChain::~SwapChain()
 {}
 
 
-void SwapChain::getWidthAndHeight(uint32_t& width, uint32_t& height) const
+void SwapChain::getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const
 {
 #ifdef _WIN32
   // Is there a valid native OS window?
@@ -134,7 +134,7 @@ RECore::handle SwapChain::getNativeWindowHandle() const
   return mNativeWindowHandle;
 }
 
-void SwapChain::setVerticalSynchronizationInterval(uint32_t)
+void SwapChain::setVerticalSynchronizationInterval(RECore::uint32)
 {}
 
 void SwapChain::present()

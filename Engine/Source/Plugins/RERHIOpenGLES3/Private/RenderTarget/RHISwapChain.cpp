@@ -42,7 +42,7 @@ SwapChain::SwapChain(RERHI::RHIRenderPass &renderPass, RERHI::WindowHandle windo
     0)  // 0 instead of ~0u to ensure that we always set the swap interval at least once to have a known initial setting
 {}
 
-void SwapChain::getWidthAndHeight(uint32_t &width, uint32_t &height) const {
+void SwapChain::getWidthAndHeight(RECore::uint32 &width, RECore::uint32 &height) const {
 // TODO(naetherm) Use "eglQuerySurface()"
 //	EGLint renderTargetWidth  = 1;
 //	EGLint renderTargetHeight = 1;

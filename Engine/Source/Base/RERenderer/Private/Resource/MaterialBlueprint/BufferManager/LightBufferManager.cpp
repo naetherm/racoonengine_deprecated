@@ -48,13 +48,13 @@ namespace
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
 		// TODO(naetherm) Add support for persistent mapped buffers. For now, the big picture has to be OK so first focus on that.
-		static constexpr uint32_t LIGHT_DEFAULT_TEXTURE_BUFFER_NUMBER_OF_BYTES = 64 * 1024;	// 64 KiB
-		// static constexpr uint32_t LIGHT_DEFAULT_TEXTURE_BUFFER_NUMBER_OF_BYTES = 512 * 1024;	// 512 KiB
+		static constexpr RECore::uint32 LIGHT_DEFAULT_TEXTURE_BUFFER_NUMBER_OF_BYTES = 64 * 1024;	// 64 KiB
+		// static constexpr RECore::uint32 LIGHT_DEFAULT_TEXTURE_BUFFER_NUMBER_OF_BYTES = 512 * 1024;	// 512 KiB
 
 		// TODO(naetherm) Just for the clusters shading kickoff
-		static constexpr uint32_t CLUSTER_X = 32;
-		static constexpr uint32_t CLUSTER_Y = 8;
-		static constexpr uint32_t CLUSTER_Z = 32;
+		static constexpr RECore::uint32 CLUSTER_X = 32;
+		static constexpr RECore::uint32 CLUSTER_Y = 8;
+		static constexpr RECore::uint32 CLUSTER_Z = 32;
 
 
 //[-------------------------------------------------------]
@@ -100,7 +100,7 @@ namespace RERenderer
 	{
 		// Create texture buffer instance
 		mTextureScratchBuffer.resize(std::min(mRenderer.getRhi().getCapabilities().maximumTextureBufferSize, ::detail::LIGHT_DEFAULT_TEXTURE_BUFFER_NUMBER_OF_BYTES));
-		mTextureBuffer = mRenderer.getBufferManager().createTextureBuffer(static_cast<uint32_t>(mTextureScratchBuffer.size()), nullptr, RERHI::BufferFlag::SHADER_RESOURCE, RERHI::BufferUsage::DYNAMIC_DRAW, RERHI::TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME("Light buffer manager"));
+		mTextureBuffer = mRenderer.getBufferManager().createTextureBuffer(static_cast<RECore::uint32>(mTextureScratchBuffer.size()), nullptr, RERHI::BufferFlag::SHADER_RESOURCE, RERHI::BufferUsage::DYNAMIC_DRAW, RERHI::TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME("Light buffer manager"));
 		mTextureBuffer->AddReference();
 
 		// Create the clusters 3D texture resource
@@ -141,7 +141,7 @@ namespace RERenderer
 				// TODO(naetherm) We probably should put the clusters 3D texture resource into the light buffer manager resource group as well
 				// RERHI::RHIResource* resources[2] = { mTextureBuffer, mRenderer.getTextureResourceManager().getById(mClusters3DTextureResourceId).getTexturePtr() };
 				RERHI::RHIResource* resources[1] = { mTextureBuffer };
-				mResourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(lightTextureBuffer->rootParameterIndex, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, nullptr RHI_RESOURCE_DEBUG_NAME("Light buffer manager"));
+				mResourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(lightTextureBuffer->rootParameterIndex, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, nullptr RHI_RESOURCE_DEBUG_NAME("Light buffer manager"));
 				mResourceGroup->AddReference();
 			}
 
@@ -166,7 +166,7 @@ namespace RERenderer
 				// TODO(naetherm) We probably should put the clusters 3D texture resource into the light buffer manager resource group as well
 				// RERHI::RHIResource* resources[2] = { mTextureBuffer, mRenderer.getTextureResourceManager().getById(mClusters3DTextureResourceId).getTexturePtr() };
 				RERHI::RHIResource* resources[1] = { mTextureBuffer };
-				mResourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(lightTextureBuffer->rootParameterIndex, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, nullptr RHI_RESOURCE_DEBUG_NAME("Light buffer manager"));
+				mResourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(lightTextureBuffer->rootParameterIndex, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, nullptr RHI_RESOURCE_DEBUG_NAME("Light buffer manager"));
 				mResourceGroup->AddReference();
 			}
 
@@ -194,7 +194,7 @@ namespace RERenderer
 		// TODO(naetherm) This is just a placeholder implementation until "RERenderer::LightBufferManager" is ready (containing e.g. reasonable optimizations)
 
 		// Loop through all scene nodes and look for point and spot lights
-		uint8_t* scratchBufferPointer = mTextureScratchBuffer.data();
+		RECore::uint8* scratchBufferPointer = mTextureScratchBuffer.data();
 		for (const SceneNode* sceneNode : sceneResource.getSceneNodes())
 		{
 			// Loop through all scene items attached to the current scene node
@@ -221,7 +221,7 @@ namespace RERenderer
 		}
 
 		// Update the texture buffer by using our scratch buffer
-		const uint32_t numberOfBytes = static_cast<uint32_t>(scratchBufferPointer - mTextureScratchBuffer.data());
+		const RECore::uint32 numberOfBytes = static_cast<RECore::uint32>(scratchBufferPointer - mTextureScratchBuffer.data());
 		if (0 != numberOfBytes)
 		{
 			RERHI::MappedSubresource mappedSubresource;
@@ -249,12 +249,12 @@ namespace RERenderer
 		//          - Containing e.g. reasonable optimizations
 		//          - Processing on the GPU instead of CPU
 		//          - Using a dynamic light clusters AABB
-		uint32_t lights[::detail::CLUSTER_Z][::detail::CLUSTER_Y][::detail::CLUSTER_X] = {};
+		RECore::uint32 lights[::detail::CLUSTER_Z][::detail::CLUSTER_Y][::detail::CLUSTER_X] = {};
 		const glm::vec3 scale = glm::vec3(static_cast<float>(::detail::CLUSTER_X), static_cast<float>(::detail::CLUSTER_Y), static_cast<float>(::detail::CLUSTER_Z)) / (mLightClustersAabbMaximum - mLightClustersAabbMinimum);
 		const glm::vec3 inverseScale = 1.0f / scale;
 
 		// Loop through all scene nodes and look for point and spot lights
-		uint32_t currentLightIndex = 0;
+		RECore::uint32 currentLightIndex = 0;
 		for (const SceneNode* sceneNode : sceneResource.getSceneNodes())
 		{
 			// Loop through all scene items attached to the current scene node
@@ -330,7 +330,7 @@ namespace RERenderer
 		RERHI::RHIDynamicRHI& rhi = mRenderer.getRhi();
 		if (rhi.map(*texture3D, 0, RERHI::MapType::WRITE_DISCARD, 0, mappedSubresource))
 		{
-			memcpy(mappedSubresource.data, lights, ::detail::CLUSTER_X * ::detail::CLUSTER_Y * ::detail::CLUSTER_Z * sizeof(uint32_t));
+			memcpy(mappedSubresource.data, lights, ::detail::CLUSTER_X * ::detail::CLUSTER_Y * ::detail::CLUSTER_Z * sizeof(RECore::uint32));
 			rhi.unmap(*texture3D, 0);
 		}
 	}

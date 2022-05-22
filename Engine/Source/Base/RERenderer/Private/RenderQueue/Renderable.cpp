@@ -86,7 +86,7 @@ namespace RERenderer
 		// Nothing here
 	}
 
-	Renderable::Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, uint32_t startIndexLocation, uint32_t numberOfIndices, uint32_t instanceCount RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+	Renderable::Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, RECore::uint32 startIndexLocation, RECore::uint32 numberOfIndices, RECore::uint32 instanceCount RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 		// Debug
 		#ifdef DEBUG
 			mDebugName{},
@@ -120,7 +120,7 @@ namespace RERenderer
 		}
 	}
 
-	Renderable::Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, const RERHI::RHIIndirectBufferPtr& indirectBufferPtr, uint32_t indirectBufferOffset, uint32_t numberOfDraws RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+	Renderable::Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, const RERHI::RHIIndirectBufferPtr& indirectBufferPtr, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 		// Debug
 		#ifdef DEBUG
 			mDebugName{},
@@ -155,7 +155,7 @@ namespace RERenderer
 		}
 	}
 
-	Renderable::Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const RERHI::RHIVertexArrayPtr& positionOnlyVertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, uint32_t startIndexLocation, uint32_t numberOfIndices, uint32_t instanceCount RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+	Renderable::Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const RERHI::RHIVertexArrayPtr& positionOnlyVertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, RECore::uint32 startIndexLocation, RECore::uint32 numberOfIndices, RECore::uint32 instanceCount RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 		// Debug
 		#ifdef DEBUG
 			mDebugName{},
@@ -190,7 +190,7 @@ namespace RERenderer
 		}
 	}
 
-	Renderable::Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const RERHI::RHIVertexArrayPtr& positionOnlyVertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, const RERHI::RHIIndirectBufferPtr& indirectBufferPtr, uint32_t indirectBufferOffset, uint32_t numberOfDraws RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+	Renderable::Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const RERHI::RHIVertexArrayPtr& positionOnlyVertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, const RERHI::RHIIndirectBufferPtr& indirectBufferPtr, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 		// Debug
 		#ifdef DEBUG
 			mDebugName{},
@@ -261,7 +261,7 @@ namespace RERenderer
 						RHI_ASSERT(renderQueueIndex <= 255, "Invalid render queue index")
 
 						// Set value
-						mRenderQueueIndex = static_cast<uint8_t>(renderQueueIndex);
+						mRenderQueueIndex = static_cast<RECore::uint8>(renderQueueIndex);
 					}
 					else
 					{

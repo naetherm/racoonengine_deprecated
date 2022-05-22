@@ -50,8 +50,8 @@ class MaterialBufferManager;
 class MaterialBlueprintResourceLoader;
 }
 namespace RECore {
-	template <class ELEMENT_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class PackedElementManager;
-	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
+	template <class ELEMENT_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS> class PackedElementManager;
+	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
 }
 
 
@@ -65,12 +65,12 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;						///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
-	typedef uint32_t TextureResourceId;				///< POD texture resource identifier
-	typedef uint32_t ShaderBlueprintResourceId;		///< POD shader blueprint resource identifier
-	typedef uint32_t VertexAttributesResourceId;	///< POD vertex attributes resource identifier
-	typedef uint32_t MaterialBlueprintResourceId;	///< POD material blueprint resource identifier
-	typedef RECore::StringId ShaderPropertyId;				///< Shader property identifier, internally just a POD "uint32_t", result of hashing the property name
+	typedef RECore::StringId AssetId;						///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::uint32 TextureResourceId;				///< POD texture resource identifier
+	typedef RECore::uint32 ShaderBlueprintResourceId;		///< POD shader blueprint resource identifier
+	typedef RECore::uint32 VertexAttributesResourceId;	///< POD vertex attributes resource identifier
+	typedef RECore::uint32 MaterialBlueprintResourceId;	///< POD material blueprint resource identifier
+	typedef RECore::StringId ShaderPropertyId;				///< Shader property identifier, internally just a POD "RECore::uint32", result of hashing the property name
 
 
 	//[-------------------------------------------------------]
@@ -118,13 +118,13 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr int32_t MANDATORY_SHADER_PROPERTY = std::numeric_limits<int32_t>::max();	///< Visual importance value for mandatory shader properties (such properties are not removed when finding a fallback pipeline state)
+		static constexpr RECore::int32 MANDATORY_SHADER_PROPERTY = std::numeric_limits<RECore::int32>::max();	///< Visual importance value for mandatory shader properties (such properties are not removed when finding a fallback pipeline state)
 
 		/**
 		*  @brief
 		*    Uniform/texture buffer usage
 		*/
-		enum class BufferUsage : uint8_t
+		enum class BufferUsage : RECore::uint8
 		{
 			UNKNOWN = 0,	///< Unknown buffer usage, supports the following "RERenderer::MaterialProperty::Usage": "UNKNOWN_REFERENCE", "GLOBAL_REFERENCE" as well as properties with simple values
 			PASS,			///< Pass buffer usage, supports the following "Renderer::MaterialProperty::Usage": "PASS_REFERENCE", "GLOBAL_REFERENCE" as well as properties with simple values
@@ -137,29 +137,29 @@ namespace RERenderer
 
 		struct UniformBuffer final
 		{
-			uint32_t					   rootParameterIndex;			///< Root parameter index = resource group index
+			RECore::uint32					   rootParameterIndex;			///< Root parameter index = resource group index
 			BufferUsage					   bufferUsage;
-			uint32_t					   numberOfElements;
+			RECore::uint32					   numberOfElements;
 			UniformBufferElementProperties uniformBufferElementProperties;
-			uint32_t					   uniformBufferNumberOfBytes;	///< Includes handling of packing rules for uniform variables (see "Reference for HLSL - Shader Models vs Shader Profiles - Shader Model 4 - Packing Rules for Constant Variables" at https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632%28v=vs.85%29.aspx )
+			RECore::uint32					   uniformBufferNumberOfBytes;	///< Includes handling of packing rules for uniform variables (see "Reference for HLSL - Shader Models vs Shader Profiles - Shader Model 4 - Packing Rules for Constant Variables" at https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632%28v=vs.85%29.aspx )
 		};
 		typedef std::vector<UniformBuffer> UniformBuffers;
 
 		struct TextureBuffer final
 		{
-			uint32_t			  rootParameterIndex;	///< Root parameter index = resource group index
+			RECore::uint32			  rootParameterIndex;	///< Root parameter index = resource group index
 			BufferUsage			  bufferUsage;
 			MaterialPropertyValue materialPropertyValue;
 
 			TextureBuffer() :
-				rootParameterIndex(RECore::getInvalid<uint32_t>()),
+				rootParameterIndex(RECore::getInvalid<RECore::uint32>()),
 				bufferUsage(BufferUsage::UNKNOWN),
 				materialPropertyValue(MaterialPropertyValue::fromUnknown())
 			{
 				// Nothing here
 			}
 
-			TextureBuffer(uint32_t rootParameterIndex, BufferUsage bufferUsage, const MaterialPropertyValue& _materialPropertyValue) :
+			TextureBuffer(RECore::uint32 rootParameterIndex, BufferUsage bufferUsage, const MaterialPropertyValue& _materialPropertyValue) :
 				rootParameterIndex(rootParameterIndex),
 				bufferUsage(bufferUsage),
 				materialPropertyValue(MaterialProperty(RECore::getInvalid<MaterialPropertyId>(), getMaterialPropertyUsageFromBufferUsage(bufferUsage), _materialPropertyValue))
@@ -173,7 +173,7 @@ namespace RERenderer
 		struct SamplerState final
 		{
 			RERHI::SamplerState	  rhiSamplerState;
-			uint32_t			  rootParameterIndex;	///< Root parameter index = resource group index
+			RECore::uint32			  rootParameterIndex;	///< Root parameter index = resource group index
 			RERHI::RHISamplerStatePtr samplerStatePtr;
 		};
 		typedef std::vector<SamplerState> SamplerStates;
@@ -181,20 +181,20 @@ namespace RERenderer
 		struct Texture final
 		{
 			// Loaded from material blueprint
-			uint32_t		  rootParameterIndex;	///< Root parameter index = resource group index
+			RECore::uint32		  rootParameterIndex;	///< Root parameter index = resource group index
 			MaterialProperty  materialProperty;
 			AssetId			  fallbackTextureAssetId;
 			bool			  rgbHardwareGammaCorrection;
-			uint32_t		  samplerStateIndex;	///< Index of the material blueprint sampler state resource to use, can be invalid (e.g. texel fetch instead of sampling might be used)
+			RECore::uint32		  samplerStateIndex;	///< Index of the material blueprint sampler state resource to use, can be invalid (e.g. texel fetch instead of sampling might be used)
 
 			// Derived data
 			TextureResourceId textureResourceId;
 
 			// Constructors
 			Texture() :
-				rootParameterIndex(RECore::getInvalid<uint32_t>()),
+				rootParameterIndex(RECore::getInvalid<RECore::uint32>()),
 				rgbHardwareGammaCorrection(false),
-				samplerStateIndex(RECore::getInvalid<uint32_t>()),
+				samplerStateIndex(RECore::getInvalid<RECore::uint32>()),
 				textureResourceId(RECore::getInvalid<TextureResourceId>())
 			{
 				// Nothing here
@@ -258,7 +258,7 @@ namespace RERenderer
 		*    The visual importance of the requested shader property, lower visual importance value = lower probability that someone will miss the shader property,
 		*    can be "Renderer::MaterialBlueprintResource::MANDATORY_SHADER_PROPERTY" for mandatory shader properties (such properties are not removed when finding a fallback pipeline state)
 		*/
-		[[nodiscard]] inline int32_t getVisualImportanceOfShaderProperty(ShaderPropertyId shaderPropertyId) const
+		[[nodiscard]] inline RECore::int32 getVisualImportanceOfShaderProperty(ShaderPropertyId shaderPropertyId) const
 		{
 			return mVisualImportanceOfShaderProperties.getPropertyValueUnsafe(shaderPropertyId);
 		}
@@ -270,7 +270,7 @@ namespace RERenderer
 		*  @return
 		*    The maximum integer value (inclusive) of the requested shader property
 		*/
-		[[nodiscard]] inline int32_t getMaximumIntegerValueOfShaderProperty(ShaderPropertyId shaderPropertyId) const
+		[[nodiscard]] inline RECore::int32 getMaximumIntegerValueOfShaderProperty(ShaderPropertyId shaderPropertyId) const
 		{
 			return mMaximumIntegerValueOfShaderProperties.getPropertyValueUnsafe(shaderPropertyId);
 		}
@@ -345,7 +345,7 @@ namespace RERenderer
 		*/
 		[[nodiscard]] inline ShaderBlueprintResourceId getGraphicsShaderBlueprintResourceId(GraphicsShaderType graphicsShaderType) const
 		{
-			return mGraphicsShaderBlueprintResourceId[static_cast<uint8_t>(graphicsShaderType)];
+			return mGraphicsShaderBlueprintResourceId[static_cast<RECore::uint8>(graphicsShaderType)];
 		}
 
 		//[-------------------------------------------------------]
@@ -565,7 +565,7 @@ namespace RERenderer
 		virtual ~MaterialBlueprintResource() override;
 		explicit MaterialBlueprintResource(const MaterialBlueprintResource&) = delete;
 		MaterialBlueprintResource& operator=(const MaterialBlueprintResource&) = delete;
-		void onDefaultTextureFilteringChanged(RERHI::FilterMode defaultFilterMode, uint8_t maximumDefaultAnisotropy);
+		void onDefaultTextureFilteringChanged(RERHI::FilterMode defaultFilterMode, RECore::uint8 maximumDefaultAnisotropy);
 
 		//[-------------------------------------------------------]
 		//[ Pipeline state object cache                           ]

@@ -40,30 +40,30 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t DDSCAPS2_CUBEMAP = 0x00000200;
-		static constexpr uint32_t DDS_FOURCC = 0x00000004;
-		static constexpr uint32_t DDS_LUMINANCE = 0x00020000;
-		static constexpr uint32_t DDS_ALPHAPIXELS = 0x00000001;
-		static constexpr uint32_t DDS_LINEARSIZE = 0x00080000;
-		static constexpr uint32_t DDS_PITCH = 0x00000008;
-		static constexpr uint32_t DDSD_CAPS = 0x00000001;
-		static constexpr uint32_t DDSD_PIXELFORMAT = 0x00001000;
-		static constexpr uint32_t DDSD_HEIGHT = 0x00000002;
-		static constexpr uint32_t DDSD_WIDTH = 0x00000004;
-		static constexpr uint32_t DDSD_MIPMAPCOUNT = 0x00020000;
-		static constexpr uint32_t DDSD_DEPTH = 0x00800000;
-		static constexpr uint32_t DDPF_FOURCC = 0x00000004;
-		static constexpr uint32_t DDSCAPS_TEXTURE = 0x00001000;
-		static constexpr uint32_t DDSCAPS_MIPMAP = 0x00400000;
-		static constexpr uint32_t DDSCAPS_COMPLEX = 0x00000008;
-		static constexpr uint32_t DDSCAPS2_VOLUME = 0x00200000;
-		static constexpr uint32_t DDSCAPS2_CUBEMAP_POSITIVEX = 0x00000400;
-		static constexpr uint32_t DDSCAPS2_CUBEMAP_NEGATIVEX = 0x00000800;
-		static constexpr uint32_t DDSCAPS2_CUBEMAP_POSITIVEY = 0x00001000;
-		static constexpr uint32_t DDSCAPS2_CUBEMAP_NEGATIVEY = 0x00002000;
-		static constexpr uint32_t DDSCAPS2_CUBEMAP_POSITIVEZ = 0x00004000;
-		static constexpr uint32_t DDSCAPS2_CUBEMAP_NEGATIVEZ = 0x00008000;
-		static constexpr uint32_t DDSCAPS2_CUBEMAP_ALL_FACES = (DDSCAPS2_CUBEMAP_POSITIVEX | DDSCAPS2_CUBEMAP_NEGATIVEX | DDSCAPS2_CUBEMAP_POSITIVEY | DDSCAPS2_CUBEMAP_NEGATIVEY | DDSCAPS2_CUBEMAP_POSITIVEZ | DDSCAPS2_CUBEMAP_NEGATIVEZ);
+		static constexpr RECore::uint32 DDSCAPS2_CUBEMAP = 0x00000200;
+		static constexpr RECore::uint32 DDS_FOURCC = 0x00000004;
+		static constexpr RECore::uint32 DDS_LUMINANCE = 0x00020000;
+		static constexpr RECore::uint32 DDS_ALPHAPIXELS = 0x00000001;
+		static constexpr RECore::uint32 DDS_LINEARSIZE = 0x00080000;
+		static constexpr RECore::uint32 DDS_PITCH = 0x00000008;
+		static constexpr RECore::uint32 DDSD_CAPS = 0x00000001;
+		static constexpr RECore::uint32 DDSD_PIXELFORMAT = 0x00001000;
+		static constexpr RECore::uint32 DDSD_HEIGHT = 0x00000002;
+		static constexpr RECore::uint32 DDSD_WIDTH = 0x00000004;
+		static constexpr RECore::uint32 DDSD_MIPMAPCOUNT = 0x00020000;
+		static constexpr RECore::uint32 DDSD_DEPTH = 0x00800000;
+		static constexpr RECore::uint32 DDPF_FOURCC = 0x00000004;
+		static constexpr RECore::uint32 DDSCAPS_TEXTURE = 0x00001000;
+		static constexpr RECore::uint32 DDSCAPS_MIPMAP = 0x00400000;
+		static constexpr RECore::uint32 DDSCAPS_COMPLEX = 0x00000008;
+		static constexpr RECore::uint32 DDSCAPS2_VOLUME = 0x00200000;
+		static constexpr RECore::uint32 DDSCAPS2_CUBEMAP_POSITIVEX = 0x00000400;
+		static constexpr RECore::uint32 DDSCAPS2_CUBEMAP_NEGATIVEX = 0x00000800;
+		static constexpr RECore::uint32 DDSCAPS2_CUBEMAP_POSITIVEY = 0x00001000;
+		static constexpr RECore::uint32 DDSCAPS2_CUBEMAP_NEGATIVEY = 0x00002000;
+		static constexpr RECore::uint32 DDSCAPS2_CUBEMAP_POSITIVEZ = 0x00004000;
+		static constexpr RECore::uint32 DDSCAPS2_CUBEMAP_NEGATIVEZ = 0x00008000;
+		static constexpr RECore::uint32 DDSCAPS2_CUBEMAP_ALL_FACES = (DDSCAPS2_CUBEMAP_POSITIVEX | DDSCAPS2_CUBEMAP_NEGATIVEX | DDSCAPS2_CUBEMAP_POSITIVEY | DDSCAPS2_CUBEMAP_NEGATIVEY | DDSCAPS2_CUBEMAP_POSITIVEZ | DDSCAPS2_CUBEMAP_NEGATIVEZ);
 
 
 		//[-------------------------------------------------------]
@@ -71,42 +71,42 @@ namespace
 		//[-------------------------------------------------------]
 		struct DdsHeader final
 		{
-			uint8_t magic[4];
-			uint32_t size;
-			uint32_t flags;
-			uint32_t height;
-			uint32_t width;
-			uint32_t pitchOrLinearSize;
-			uint32_t depth;
-			uint32_t mipMapCount;
-			uint32_t reserved[11];
+			RECore::uint8 magic[4];
+			RECore::uint32 size;
+			RECore::uint32 flags;
+			RECore::uint32 height;
+			RECore::uint32 width;
+			RECore::uint32 pitchOrLinearSize;
+			RECore::uint32 depth;
+			RECore::uint32 mipMapCount;
+			RECore::uint32 reserved[11];
 			struct
 			{
-				uint32_t size;
-				uint32_t flags;
-				uint32_t fourCC;
-				uint32_t RGBBitCount;
-				uint32_t RBitMask;
-				uint32_t GBitMask;
-				uint32_t BBitMask;
-				uint32_t RGBAlphaBitMask;
+				RECore::uint32 size;
+				RECore::uint32 flags;
+				RECore::uint32 fourCC;
+				RECore::uint32 RGBBitCount;
+				RECore::uint32 RBitMask;
+				RECore::uint32 GBitMask;
+				RECore::uint32 BBitMask;
+				RECore::uint32 RGBAlphaBitMask;
 			} ddpfPixelFormat;
 			struct
 			{
-				uint32_t caps1;
-				uint32_t caps2;
-				uint32_t reserved[2];
+				RECore::uint32 caps1;
+				RECore::uint32 caps2;
+				RECore::uint32 reserved[2];
 			} ddsCaps;
-			uint32_t reserved2;
+			RECore::uint32 reserved2;
 		};
 
 		struct DdsHeaderDX10 final
 		{
-			uint32_t DXGIFormat; // See http://msdn.microsoft.com/en-us/library/bb173059.aspx
-			uint32_t resourceDimension;
-			uint32_t miscFlag;
-			uint32_t arraySize;
-			uint32_t reserved;
+			RECore::uint32 DXGIFormat; // See http://msdn.microsoft.com/en-us/library/bb173059.aspx
+			RECore::uint32 resourceDimension;
+			RECore::uint32 miscFlag;
+			RECore::uint32 arraySize;
+			RECore::uint32 reserved;
 		};
 
 
@@ -475,10 +475,10 @@ namespace RERenderer
 			}
 
 			// Get the number of mipmaps
-			const uint32_t numberOfMipmaps = (!ddsHeader.mipMapCount) ? 1 : ddsHeader.mipMapCount;
+			const RECore::uint32 numberOfMipmaps = (!ddsHeader.mipMapCount) ? 1 : ddsHeader.mipMapCount;
 
 			// Cube map?
-			const uint32_t numberOfFaces = (ddsHeader.ddsCaps.caps2 & ::detail::DDSCAPS2_CUBEMAP) ? 6u : 1u;
+			const RECore::uint32 numberOfFaces = (ddsHeader.ddsCaps.caps2 & ::detail::DDSCAPS2_CUBEMAP) ? 6u : 1u;
 
 			// TODO(naetherm) Make this dynamic
 			if (1 == mWidth || 1 == mHeight)
@@ -491,7 +491,7 @@ namespace RERenderer
 				else
 				{
 					// The 4x4 block size based DXT compression format has no support for 1D textures
-					mTextureFormat = static_cast<uint8_t>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::R8G8B8A8_SRGB : RERHI::TextureFormat::R8G8B8A8);
+					mTextureFormat = static_cast<RECore::uint8>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::R8G8B8A8_SRGB : RERHI::TextureFormat::R8G8B8A8);
 				}
 			}
 			else
@@ -509,7 +509,7 @@ namespace RERenderer
 					}
 					else if (ddsHeader.ddpfPixelFormat.flags & ::detail::DDS_FOURCC)
 					{
-						mTextureFormat = static_cast<uint8_t>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC1_SRGB : RERHI::TextureFormat::BC1);
+						mTextureFormat = static_cast<RECore::uint8>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC1_SRGB : RERHI::TextureFormat::BC1);
 					}
 					else
 					{
@@ -519,9 +519,9 @@ namespace RERenderer
 			}
 
 			{ // Loop through all faces
-				uint32_t width = mWidth;
-				uint32_t height = mHeight;
-				uint32_t depth = mDepth;
+				RECore::uint32 width = mWidth;
+				RECore::uint32 height = mHeight;
+				RECore::uint32 depth = mDepth;
 				mNumberOfUsedImageDataBytes = 0;
 				if (numberOfMipmaps > 1)
 				{
@@ -541,7 +541,7 @@ namespace RERenderer
 				{
 					mNumberOfImageDataBytes = mNumberOfUsedImageDataBytes;
 					delete [] mImageData;
-					mImageData = new uint8_t[mNumberOfImageDataBytes];
+					mImageData = new RECore::uint8[mNumberOfImageDataBytes];
 				}
 
 				// Avoid slow division by using bit-shift
@@ -564,22 +564,22 @@ namespace RERenderer
 
 
 
-				//uint8_t* tempData = nullptr;	// Used when "DDS_LINEARSIZE" is set
-				for (uint32_t face = 0; face < numberOfFaces; ++face)
+				//RECore::uint8* tempData = nullptr;	// Used when "DDS_LINEARSIZE" is set
+				for (RECore::uint32 face = 0; face < numberOfFaces; ++face)
 				{
 					// Load in all mipmaps
-					for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+					for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 					{
 					}
 
 					// TODO(naetherm)
 					/*
 					// Create image part with reasonable semantic
-					ImagePart *pImagePart = cImage.CreatePart((numberOfFaces == 6) ? (static_cast<uint32_t>(ImagePartCubeSidePosX) + face) : 0);
+					ImagePart *pImagePart = cImage.CreatePart((numberOfFaces == 6) ? (static_cast<RECore::uint32>(ImagePartCubeSidePosX) + face) : 0);
 					if (pImagePart)
 					{
 						// Load in all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
 							// Create image buffer
 							ImageBuffer *pImageBuffer = pImagePart->CreateMipmap();
@@ -597,12 +597,12 @@ namespace RERenderer
 								if (ddsHeader.ddpfPixelFormat.flags & DDS_LINEARSIZE)
 								{
 									// Calculate the current linear size
-									const uint32_t pitchOrLinearSize = (pImageBuffer->GetSize().x * pImageBuffer->GetSize().y * nDepth * (ddsHeader.ddpfPixelFormat.nRGBBitCount >> 3));
+									const RECore::uint32 pitchOrLinearSize = (pImageBuffer->GetSize().x * pImageBuffer->GetSize().y * nDepth * (ddsHeader.ddpfPixelFormat.nRGBBitCount >> 3));
 
 									// Allocate temp data right now? (we can reuse it for the following smaller mipmaps)
 									if (!tempData)
 									{
-										tempData = new uint8_t[pitchOrLinearSize];
+										tempData = new RECore::uint8[pitchOrLinearSize];
 									}
 
 									// Read the data
@@ -640,14 +640,14 @@ namespace RERenderer
 			if (nInternalColorFormat == ColorBGR)
 			{
 				// Loop through all faces
-				for (uint32_t face = 0; face < numberOfFaces; ++face)
+				for (RECore::uint32 face = 0; face < numberOfFaces; ++face)
 				{
 					// Create image part with reasonable semantic
-					ImagePart *pImagePart = cImage.GetPartBySemantics((numberOfFaces == 6) ? (static_cast<uint32_t>(ImagePartCubeSidePosX) + face) : 0);
+					ImagePart *pImagePart = cImage.GetPartBySemantics((numberOfFaces == 6) ? (static_cast<RECore::uint32>(ImagePartCubeSidePosX) + face) : 0);
 					if (pImagePart)
 					{
 						// Load in all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
 							// Get image buffer
 							ImageBuffer *pImageBuffer = pImagePart->GetMipmap(mipmap);
@@ -661,14 +661,14 @@ namespace RERenderer
 			else if (nInternalColorFormat == ColorBGRA)
 			{
 				// Loop through all faces
-				for (uint32_t face = 0; face < numberOfFaces; ++face)
+				for (RECore::uint32 face = 0; face < numberOfFaces; ++face)
 				{
 					// Create image part with reasonable semantic
-					ImagePart *pImagePart = cImage.GetPartBySemantics((numberOfFaces == 6) ? (static_cast<uint32_t>(ImagePartCubeSidePosX) + face) : 0);
+					ImagePart *pImagePart = cImage.GetPartBySemantics((numberOfFaces == 6) ? (static_cast<RECore::uint32>(ImagePartCubeSidePosX) + face) : 0);
 					if (pImagePart)
 					{
 						// Load in all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
 							// Get image buffer
 							ImageBuffer *pImageBuffer = pImagePart->GetMipmap(mipmap);
@@ -701,7 +701,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	RERHI::RHITexture* Lz4DdsTextureResourceLoader::createRhiTexture()
 	{
-		const uint32_t flags = (mDataContainsMipmaps ? (RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS | RERHI::TextureFlag::SHADER_RESOURCE) : RERHI::TextureFlag::SHADER_RESOURCE);
+		const RECore::uint32 flags = (mDataContainsMipmaps ? (RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS | RERHI::TextureFlag::SHADER_RESOURCE) : RERHI::TextureFlag::SHADER_RESOURCE);
 		if (1 == mWidth || 1 == mHeight)
 		{
 			// 1D texture

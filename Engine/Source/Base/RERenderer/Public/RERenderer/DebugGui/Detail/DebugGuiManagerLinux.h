@@ -55,10 +55,10 @@ namespace RERenderer
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
-		void onWindowResize(uint32_t width, uint32_t heigth);
-		void onKeyInput(uint32_t keySym, char character, bool pressed);
+		void onWindowResize(RECore::uint32 width, RECore::uint32 heigth);
+		void onKeyInput(RECore::uint32 keySym, char character, bool pressed);
 		void onMouseMoveInput(int x, int y);
-		void onMouseButtonInput(uint32_t button, bool pressed);
+		void onMouseButtonInput(RECore::uint32 button, bool pressed);
 		void onMouseWheelInput(bool scrollUp);
 
 
@@ -96,9 +96,9 @@ namespace RERenderer
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t mWindowWidth;
-		uint32_t mWindowHeigth;
-		uint64_t mTime;	//< Holds the time in microseconds
+		RECore::uint32 mWindowWidth;
+		RECore::uint32 mWindowHeigth;
+		RECore::uint64 mTime;	//< Holds the time in microseconds
 
 
 	};

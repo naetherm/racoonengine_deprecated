@@ -40,7 +40,7 @@ namespace RERHINull {
 *  @param[in] id
 *    The unique compact vertex array ID
 */
-VertexArray::VertexArray(RHIDynamicRHI& nullRhi, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+VertexArray::VertexArray(RHIDynamicRHI& nullRhi, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 RHIVertexArray(nullRhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 {}
 

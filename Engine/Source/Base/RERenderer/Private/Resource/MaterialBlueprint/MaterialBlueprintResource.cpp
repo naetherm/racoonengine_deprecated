@@ -83,7 +83,7 @@ namespace
 				addIntegerProperty(2);
 			}
 
-			inline void addIntegerProperty(uint32_t numberOfIntegerValues)
+			inline void addIntegerProperty(RECore::uint32 numberOfIntegerValues)
 			{
 				mNumberOfPropertyValuesByPropertyIndex.push_back(numberOfIntegerValues);
 			}
@@ -93,7 +93,7 @@ namespace
 				return (getCurrentCombinationIntegerProperty(index) > 0);
 			}
 
-			[[nodiscard]] inline uint32_t getCurrentCombinationIntegerProperty(size_t index) const
+			[[nodiscard]] inline RECore::uint32 getCurrentCombinationIntegerProperty(size_t index) const
 			{
 				ASSERT(index < mCurrentCombination.size(), "Invalid index")
 				return mCurrentCombination[index];
@@ -103,7 +103,7 @@ namespace
 			{
 				// Start with every property value set to zero
 				mCurrentCombination.resize(mNumberOfPropertyValuesByPropertyIndex.size());
-				memset(mCurrentCombination.data(), 0, sizeof(uint32_t) * mNumberOfPropertyValuesByPropertyIndex.size());
+				memset(mCurrentCombination.data(), 0, sizeof(RECore::uint32) * mNumberOfPropertyValuesByPropertyIndex.size());
 			}
 
 			[[nodiscard]] bool iterate()
@@ -113,7 +113,7 @@ namespace
 
 				for (size_t index = 0; index < mCurrentCombination.size(); ++index)
 				{
-					uint32_t& propertyValue = mCurrentCombination[index];
+					RECore::uint32& propertyValue = mCurrentCombination[index];
 					++propertyValue;
 					if (propertyValue < mNumberOfPropertyValuesByPropertyIndex[index])
 					{
@@ -131,8 +131,8 @@ namespace
 				return false;
 			}
 		private:
-			std::vector<uint32_t> mNumberOfPropertyValuesByPropertyIndex;
-			std::vector<uint32_t> mCurrentCombination;
+			std::vector<RECore::uint32> mNumberOfPropertyValuesByPropertyIndex;
+			std::vector<RECore::uint32> mCurrentCombination;
 		};
 
 
@@ -150,7 +150,7 @@ namespace
 
 				case RERenderer::MaterialPropertyValue::ValueType::INTEGER:
 					shaderPropertyIds.push_back(materialPropertyId);	// Shader property ID and material property ID are identical, so this is valid
-					shaderCombinationIterator.addIntegerProperty(static_cast<uint32_t>(materialBlueprintResource.getMaximumIntegerValueOfShaderProperty(materialPropertyId)));
+					shaderCombinationIterator.addIntegerProperty(static_cast<RECore::uint32>(materialBlueprintResource.getMaximumIntegerValueOfShaderProperty(materialPropertyId)));
 					break;
 
 				case RERenderer::MaterialPropertyValue::ValueType::UNKNOWN:
@@ -277,7 +277,7 @@ namespace RERenderer
 					resources[i] = mSamplerStates[i].samplerStatePtr;
 				}
 				// TODO(naetherm) All sampler states need to be inside the same resource group, this needs to be guaranteed by design
-				mSamplerStateGroup = mRootSignaturePtr->createResourceGroup(mSamplerStates[0].rootParameterIndex, static_cast<uint32_t>(numberOfSamplerStates), resources.data(), nullptr RHI_RESOURCE_DEBUG_NAME("Material blueprint"));
+				mSamplerStateGroup = mRootSignaturePtr->createResourceGroup(mSamplerStates[0].rootParameterIndex, static_cast<RECore::uint32>(numberOfSamplerStates), resources.data(), nullptr RHI_RESOURCE_DEBUG_NAME("Material blueprint"));
 			}
 
 			// Set graphics resource group
@@ -316,7 +316,7 @@ namespace RERenderer
 					resources[i] = mSamplerStates[i].samplerStatePtr;
 				}
 				// TODO(naetherm) All sampler states need to be inside the same resource group, this needs to be guaranteed by design
-				mSamplerStateGroup = mRootSignaturePtr->createResourceGroup(mSamplerStates[0].rootParameterIndex, static_cast<uint32_t>(numberOfSamplerStates), resources.data(), nullptr RHI_RESOURCE_DEBUG_NAME("Material blueprint"));
+				mSamplerStateGroup = mRootSignaturePtr->createResourceGroup(mSamplerStates[0].rootParameterIndex, static_cast<RECore::uint32>(numberOfSamplerStates), resources.data(), nullptr RHI_RESOURCE_DEBUG_NAME("Material blueprint"));
 			}
 
 			// Set compute resource group
@@ -357,7 +357,7 @@ namespace RERenderer
 
 						case MaterialProperty::ValueType::INTEGER:
 							shaderPropertyIds.push_back(materialProperty.getMaterialPropertyId());	// Shader property ID and material property ID are identical, so this is valid
-							shaderCombinationIterator.addIntegerProperty(static_cast<uint32_t>(getMaximumIntegerValueOfShaderProperty(materialPropertyId)));
+							shaderCombinationIterator.addIntegerProperty(static_cast<RECore::uint32>(getMaximumIntegerValueOfShaderProperty(materialPropertyId)));
 							break;
 
 						case MaterialProperty::ValueType::GLOBAL_MATERIAL_PROPERTY_ID:
@@ -415,19 +415,19 @@ namespace RERenderer
 		}
 
 		{ // Create the pipeline state caches
-			const uint32_t numberOfShaderProperties = static_cast<uint32_t>(shaderPropertyIds.size());
+			const RECore::uint32 numberOfShaderProperties = static_cast<RECore::uint32>(shaderPropertyIds.size());
 			shaderCombinationIterator.startIterate();
 			do
 			{
 				// Set the current shader properties combination
 				// -> The value always starts with 0 and has no holes in enumeration
 				shaderProperties.clear();
-				for (uint32_t i = 0; i < numberOfShaderProperties; ++i)
+				for (RECore::uint32 i = 0; i < numberOfShaderProperties; ++i)
 				{
-					const uint32_t value = shaderCombinationIterator.getCurrentCombinationIntegerProperty(i);
+					const RECore::uint32 value = shaderCombinationIterator.getCurrentCombinationIntegerProperty(i);
 					if (value != 0)
 					{
-						shaderProperties.setPropertyValue(shaderPropertyIds[i], static_cast<int32_t>(value));
+						shaderProperties.setPropertyValue(shaderPropertyIds[i], static_cast<RECore::int32>(value));
 					}
 				}
 
@@ -438,7 +438,7 @@ namespace RERenderer
 				}
 				else
 				{
-					[[maybe_unused]] const GraphicsPipelineStateCache* graphicsPipelineStateCache = mGraphicsPipelineStateCacheManager.getGraphicsPipelineStateCacheByCombination(RECore::getInvalid<uint32_t>(), shaderProperties, false);
+					[[maybe_unused]] const GraphicsPipelineStateCache* graphicsPipelineStateCache = mGraphicsPipelineStateCacheManager.getGraphicsPipelineStateCacheByCombination(RECore::getInvalid<RECore::uint32>(), shaderProperties, false);
 				}
 			}
 			while (shaderCombinationIterator.iterate());
@@ -499,7 +499,7 @@ namespace RERenderer
 		*/
 	}
 
-	void MaterialBlueprintResource::onDefaultTextureFilteringChanged(RERHI::FilterMode defaultFilterMode, uint8_t maximumDefaultAnisotropy)
+	void MaterialBlueprintResource::onDefaultTextureFilteringChanged(RERHI::FilterMode defaultFilterMode, RECore::uint8 maximumDefaultAnisotropy)
 	{
 		const IRenderer& renderer = getResourceManager<MaterialBlueprintResourceManager>().getRenderer();
 		RERHI::RHIDynamicRHI& rhi = renderer.getRhi();

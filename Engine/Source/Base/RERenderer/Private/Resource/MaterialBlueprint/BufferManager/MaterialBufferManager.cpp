@@ -56,11 +56,11 @@ namespace RERenderer
 		RHI_ASSERT(nullptr != materialUniformBuffer, "Invalid material uniform buffer")
 
 		// Get the buffer size
-		mBufferSize = std::min<uint32_t>(renderer.getRhi().getCapabilities().maximumUniformBufferSize, 64 * 1024);
+		mBufferSize = std::min<RECore::uint32>(renderer.getRhi().getCapabilities().maximumUniformBufferSize, 64 * 1024);
 		mScratchBuffer.resize(mBufferSize);
 
 		// Calculate the number of slots per pool
-		const uint32_t numberOfBytesPerElement = materialUniformBuffer->uniformBufferNumberOfBytes / materialUniformBuffer->numberOfElements;
+		const RECore::uint32 numberOfBytesPerElement = materialUniformBuffer->uniformBufferNumberOfBytes / materialUniformBuffer->numberOfElements;
 		mSlotsPerPool = mBufferSize / numberOfBytesPerElement;
 	}
 
@@ -128,7 +128,7 @@ namespace RERenderer
 		// Put the slot back to the list of free slots
 		bufferPool->freeSlots.push_back(materialBufferSlot.mAssignedMaterialSlot);
 		materialBufferSlot.mAssignedMaterialPool = nullptr;
-		materialBufferSlot.mAssignedMaterialSlot = RECore::getInvalid<uint32_t>();
+		materialBufferSlot.mAssignedMaterialSlot = RECore::getInvalid<RECore::uint32>();
 		materialBufferSlot.mDirty				 = false;
 		MaterialBufferSlots::iterator iterator = mMaterialBufferSlots.begin() + materialBufferSlot.mGlobalIndex;
 		iterator = ::detail::swizzleVectorElementRemove(mMaterialBufferSlots, iterator);
@@ -213,11 +213,11 @@ namespace RERenderer
 		{
 			const MaterialBlueprintResource::UniformBufferElementProperties& uniformBufferElementProperties = materialUniformBuffer->uniformBufferElementProperties;
 			const size_t numberOfUniformBufferElementProperties = uniformBufferElementProperties.size();
-			const uint32_t numberOfBytesPerElement = materialUniformBuffer->uniformBufferNumberOfBytes / materialUniformBuffer->numberOfElements;
+			const RECore::uint32 numberOfBytesPerElement = materialUniformBuffer->uniformBufferNumberOfBytes / materialUniformBuffer->numberOfElements;
 			for (MaterialBufferSlot* materialBufferSlot : mDirtyMaterialBufferSlots)
 			{
 				const MaterialResource& materialResource = materialBufferSlot->getMaterialResource();
-				uint8_t* scratchBufferPointer = mScratchBuffer.data() + numberOfBytesPerElement * materialBufferSlot->mAssignedMaterialSlot;
+				RECore::uint8* scratchBufferPointer = mScratchBuffer.data() + numberOfBytesPerElement * materialBufferSlot->mAssignedMaterialSlot;
 
 				// TODO(naetherm) Implement proper uniform buffer handling and only update dirty sections
 				uniformBuffer = static_cast<BufferPool*>(materialBufferSlot->mAssignedMaterialPool)->uniformBuffer;
@@ -227,7 +227,7 @@ namespace RERenderer
 					const MaterialProperty& uniformBufferElementProperty = uniformBufferElementProperties[i];
 
 					// Get value type number of bytes
-					const uint32_t valueTypeNumberOfBytes = uniformBufferElementProperty.getValueTypeNumberOfBytes(uniformBufferElementProperty.getValueType());
+					const RECore::uint32 valueTypeNumberOfBytes = uniformBufferElementProperty.getValueTypeNumberOfBytes(uniformBufferElementProperty.getValueType());
 
 					// Handling of packing rules for uniform variables (see "Reference for HLSL - Shader Models vs Shader Profiles - Shader Model 4 - Packing Rules for Constant Variables" at https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632%28v=vs.85%29.aspx )
 					if (0 != numberOfPackageBytes && numberOfPackageBytes + valueTypeNumberOfBytes > 16)
@@ -311,7 +311,7 @@ namespace RERenderer
 			RERHI::RHIDynamicRHI& rhi = mRenderer.getRhi();
 			if (rhi.map(*uniformBuffer, 0, RERHI::MapType::WRITE_DISCARD, 0, mappedSubresource))
 			{
-				memcpy(mappedSubresource.data, mScratchBuffer.data(), static_cast<uint32_t>(mScratchBuffer.size()));
+				memcpy(mappedSubresource.data, mScratchBuffer.data(), static_cast<RECore::uint32>(mScratchBuffer.size()));
 				rhi.unmap(*uniformBuffer, 0);
 			}
 		}
@@ -324,7 +324,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public RERenderer::MaterialBufferManager::BufferPool methods ]
 	//[-------------------------------------------------------]
-	MaterialBufferManager::BufferPool::BufferPool(uint32_t bufferSize, uint32_t slotsPerPool, RERHI::RHIBufferManager& bufferManager, const MaterialBlueprintResource& materialBlueprintResource) :
+	MaterialBufferManager::BufferPool::BufferPool(RECore::uint32 bufferSize, RECore::uint32 slotsPerPool, RERHI::RHIBufferManager& bufferManager, const MaterialBlueprintResource& materialBlueprintResource) :
 		uniformBuffer(bufferManager.createUniformBuffer(bufferSize, nullptr, RERHI::BufferUsage::DYNAMIC_DRAW RHI_RESOURCE_DEBUG_NAME("Material buffer manager"))),
 		resourceGroup(nullptr)
 	{
@@ -333,7 +333,7 @@ namespace RERenderer
 		resourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(materialBlueprintResource.getMaterialUniformBuffer()->rootParameterIndex, 1, &resource, nullptr RHI_RESOURCE_DEBUG_NAME("Material buffer manager"));
 		resourceGroup->AddReference();
 		freeSlots.reserve(slotsPerPool);
-		for (uint32_t i = 0; i < slotsPerPool; ++i)
+		for (RECore::uint32 i = 0; i < slotsPerPool; ++i)
 		{
 			freeSlots.push_back((slotsPerPool - i) - 1);
 		}

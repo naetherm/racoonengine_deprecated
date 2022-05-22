@@ -37,7 +37,7 @@
 namespace RERHIVulkan {
 
 ComputePipelineState::ComputePipelineState(RHIDynamicRHI &vulkanRhi, RERHI::RHIRootSignature &rootSignature,
-                                           RERHI::RHIComputeShader &computeShader, uint16_t id
+                                           RERHI::RHIComputeShader &computeShader, RECore::uint16 id
                                            RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHIComputePipelineState(vulkanRhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mRootSignature(rootSignature),
@@ -74,7 +74,7 @@ ComputePipelineState::ComputePipelineState(RHIDynamicRHI &vulkanRhi, RERHI::RHIR
     if (nullptr != vkDebugMarkerSetObjectNameEXT)
           {
             RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Compute PSO", 14)	// 14 = "Compute PSO: " including terminating zero
-            Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT, (uint64_t)mVkPipeline, detailedDebugName);
+            Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT, (RECore::uint64)mVkPipeline, detailedDebugName);
           }
 #endif
   } else {

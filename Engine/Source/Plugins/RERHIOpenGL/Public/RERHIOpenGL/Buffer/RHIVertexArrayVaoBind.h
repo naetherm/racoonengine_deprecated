@@ -76,7 +76,7 @@ public:
   *  @param[in] id
   *    The unique compact vertex array ID
   */
-  VertexArrayVaoBind(RHIDynamicRHI& openGLRhi, const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  VertexArrayVaoBind(RHIDynamicRHI& openGLRhi, const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

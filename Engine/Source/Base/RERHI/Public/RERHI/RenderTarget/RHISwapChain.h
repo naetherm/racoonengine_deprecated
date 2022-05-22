@@ -74,7 +74,7 @@ public:
   *  @param[out] height
   *    Height of the render window
   */
-  virtual void getWidthAndHeight(uint32_t& width, uint32_t& height) const = 0;
+  virtual void getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const = 0;
 
   /**
   *  @brief
@@ -134,7 +134,7 @@ public:
   *  @param[in] synchronizationInterval
   *    Synchronization interval, >0 if vertical synchronization should be used, else zero
   */
-  virtual void setVerticalSynchronizationInterval(uint32_t synchronizationInterval) = 0;
+  virtual void setVerticalSynchronizationInterval(RECore::uint32 synchronizationInterval) = 0;
 
   /**
   *  @brief

@@ -67,7 +67,7 @@ void MultipleRenderTargets::onInitialization()
 
 				// Setup
 				RERHI::RootSignatureBuilder rootSignatureBuilder;
-				rootSignatureBuilder.initialize(static_cast<uint32_t>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+				rootSignatureBuilder.initialize(static_cast<RECore::uint32>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
 				// Create the instance
 				mRootSignature = rhi->createRootSignature(rootSignatureBuilder);
@@ -93,7 +93,7 @@ void MultipleRenderTargets::onInitialization()
 				RERHI::RHIResource* textureResource[NUMBER_OF_TEXTURES] = {};
 				RERHI::RHISamplerState* samplerStates[NUMBER_OF_TEXTURES] = {};
 				RERHI::FramebufferAttachment colorFramebufferAttachments[NUMBER_OF_TEXTURES];
-				for (uint32_t i = 0; i < NUMBER_OF_TEXTURES; ++i)
+				for (RECore::uint32 i = 0; i < NUMBER_OF_TEXTURES; ++i)
 				{
 					textureFormats[i] = RERHI::TextureFormat::R8G8B8A8;
 					textureResource[i] = colorFramebufferAttachments[i].texture = mTextureManager->createTexture2D(TEXTURE_SIZE, TEXTURE_SIZE, textureFormats[i], nullptr, RERHI::TextureFlag::SHADER_RESOURCE | RERHI::TextureFlag::RENDER_TARGET, RERHI::TextureUsage::DEFAULT, 1, reinterpret_cast<const RERHI::OptimizedTextureClearValue*>(&RECore::Color4::BLACK));
@@ -115,15 +115,15 @@ void MultipleRenderTargets::onInitialization()
 					RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 					"Position",								// name[32] (char)
 					"POSITION",								// semanticName[32] (char)
-					0,										// semanticIndex (uint32_t)
+					0,										// semanticIndex (RECore::uint32)
 					// Data source
-					0,										// inputSlot (uint32_t)
-					0,										// alignedByteOffset (uint32_t)
-					sizeof(float) * 2,						// strideInBytes (uint32_t)
-					0										// instancesPerElement (uint32_t)
+					0,										// inputSlot (RECore::uint32)
+					0,										// alignedByteOffset (RECore::uint32)
+					sizeof(float) * 2,						// strideInBytes (RECore::uint32)
+					0										// instancesPerElement (RECore::uint32)
 				}
 			};
-			const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+			const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
 			{ // Create vertex array object (VAO)
 				// Create the vertex buffer object (VBO)
@@ -143,7 +143,7 @@ void MultipleRenderTargets::onInitialization()
 				//    reference of the used vertex buffer objects (VBO). If the reference counter of a
 				//    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
 				const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-				mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
+				mVertexArray = mBufferManager->createVertexArray(vertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers);
 			}
 
 			{
@@ -278,8 +278,8 @@ void MultipleRenderTargets::fillCommandBuffer()
 
 		{ // Set the viewport
 			// Get the render target with and height
-			uint32_t width  = 1;
-			uint32_t height = 1;
+			RECore::uint32 width  = 1;
+			RECore::uint32 height = 1;
 			const RERHI::RHIRenderTarget* renderTarget = getMainRenderTarget();
 			if (nullptr != renderTarget)
 			{

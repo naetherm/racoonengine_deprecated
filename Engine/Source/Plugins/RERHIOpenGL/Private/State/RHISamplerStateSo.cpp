@@ -71,7 +71,7 @@ mOpenGLSampler(0)
   glSamplerParameterf(mOpenGLSampler, GL_TEXTURE_LOD_BIAS, samplerState.mipLodBias);
 
   // RERHI::SamplerState::maxAnisotropy
-  // -> Maximum anisotropy is "uint32_t" in Direct3D 10 & 11
+  // -> Maximum anisotropy is "RECore::uint32" in Direct3D 10 & 11
   glSamplerParameterf(mOpenGLSampler, GL_TEXTURE_MAX_ANISOTROPY_EXT, static_cast<float>(samplerState.maxAnisotropy));
 
   // RERHI::SamplerState::comparisonFunc

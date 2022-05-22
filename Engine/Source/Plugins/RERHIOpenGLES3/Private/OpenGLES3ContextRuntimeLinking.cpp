@@ -108,7 +108,7 @@ const IExtensions& OpenGLES3ContextRuntimeLinking::getExtensions() const
 return *mExtensions;
 }
 
-bool OpenGLES3ContextRuntimeLinking::initialize(uint32_t multisampleAntialiasingSamples)
+bool OpenGLES3ContextRuntimeLinking::initialize(RECore::uint32 multisampleAntialiasingSamples)
 {
 // Entry points successfully registered?
 if (mEntryPointsRegistered)
@@ -128,7 +128,7 @@ return true;
 return false;
 }
 
-EGLConfig OpenGLES3ContextRuntimeLinking::chooseConfig(uint32_t multisampleAntialiasingSamples) const
+EGLConfig OpenGLES3ContextRuntimeLinking::chooseConfig(RECore::uint32 multisampleAntialiasingSamples) const
 {
 // Try to find a working EGL configuration
 EGLConfig eglConfig = nullptr;

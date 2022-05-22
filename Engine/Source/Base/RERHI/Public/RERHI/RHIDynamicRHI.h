@@ -71,7 +71,7 @@ class RHICommandBuffer;
 *  @brief
 *    RHI implementation name as ID
 */
-enum class NameId : uint32_t
+enum class NameId : RECore::uint32
 {
   VULKAN		= 1646768219,	///< Vulkan RHI implementation, same value as renderer STRING_ID("Vulkan")
   DIRECT3D12	= 2152506057,	///< Direct3D 12 RHI implementation, same value as renderer STRING_ID("Direct3D12")
@@ -267,7 +267,7 @@ public:
   *  @return
   *    The number of supported shader languages
   */
-  [[nodiscard]] virtual uint32_t getNumberOfShaderLanguages() const = 0;
+  [[nodiscard]] virtual RECore::uint32 getNumberOfShaderLanguages() const = 0;
 
   /**
   *  @brief
@@ -283,7 +283,7 @@ public:
   *    - Do not free the memory the returned pointer is pointing to
   *    - The default shader language is always at index 0
   */
-  [[nodiscard]] virtual const char* getShaderLanguageName(uint32_t index) const = 0;
+  [[nodiscard]] virtual const char* getShaderLanguageName(RECore::uint32 index) const = 0;
 
   /**
   *  @brief
@@ -318,7 +318,7 @@ public:
   *  @return
   *    The created render pass instance, null pointer on error. Release the returned instance if you no longer need it.
   */
-  [[nodiscard]] virtual RHIRenderPass* createRenderPass(uint32_t numberOfColorAttachments, const TextureFormat::Enum* colorAttachmentTextureFormats, TextureFormat::Enum depthStencilAttachmentTextureFormat = TextureFormat::UNKNOWN, uint8_t numberOfMultisamples = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
+  [[nodiscard]] virtual RHIRenderPass* createRenderPass(RECore::uint32 numberOfColorAttachments, const TextureFormat::Enum* colorAttachmentTextureFormats, TextureFormat::Enum depthStencilAttachmentTextureFormat = TextureFormat::UNKNOWN, RECore::uint8 numberOfMultisamples = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
   *  @brief
@@ -332,7 +332,7 @@ public:
   *  @return
   *    The created query pool instance, null pointer on error. Release the returned instance if you no longer need it.
   */
-  [[nodiscard]] virtual RHIQueryPool* createQueryPool(QueryType queryType, uint32_t numberOfQueries = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
+  [[nodiscard]] virtual RHIQueryPool* createQueryPool(QueryType queryType, RECore::uint32 numberOfQueries = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
   *  @brief
@@ -463,7 +463,7 @@ public:
   *  @return
   *    "true" if all went fine, else "false"
   */
-  [[nodiscard]] virtual bool map(RHIResource& resource, uint32_t subresource, MapType mapType, uint32_t mapFlags, MappedSubresource& mappedSubresource) = 0;
+  [[nodiscard]] virtual bool map(RHIResource& resource, RECore::uint32 subresource, MapType mapType, RECore::uint32 mapFlags, MappedSubresource& mappedSubresource) = 0;
 
   /**
   *  @brief
@@ -474,7 +474,7 @@ public:
   *  @param[in] subresource
   *    Subresource
   */
-  virtual void unmap(RHIResource& resource, uint32_t subresource) = 0;
+  virtual void unmap(RHIResource& resource, RECore::uint32 subresource) = 0;
 
   /**
   *  @brief
@@ -498,7 +498,7 @@ public:
   *  @return
   *    "true" if all went fine, else "false"
   */
-  [[nodiscard]] virtual bool getQueryPoolResults(RHIQueryPool& queryPool, uint32_t numberOfDataBytes, uint8_t* data, uint32_t firstQueryIndex = 0, uint32_t numberOfQueries = 1, uint32_t strideInBytes = 0, uint32_t queryResultFlags = 0) = 0;
+  [[nodiscard]] virtual bool getQueryPoolResults(RHIQueryPool& queryPool, RECore::uint32 numberOfDataBytes, RECore::uint8* data, RECore::uint32 firstQueryIndex = 0, RECore::uint32 numberOfQueries = 1, RECore::uint32 strideInBytes = 0, RECore::uint32 queryResultFlags = 0) = 0;
 
   //[-------------------------------------------------------]
   //[ Operation                                             ]

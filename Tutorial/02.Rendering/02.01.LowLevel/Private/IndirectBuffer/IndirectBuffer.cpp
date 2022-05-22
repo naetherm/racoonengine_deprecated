@@ -37,10 +37,10 @@ void IndirectBuffer::onInitialization()
 	{ // Create the indirect buffer
 		const RERHI::DrawArguments drawArguments =
 		{
-			3,	// vertexCountPerInstance (uint32_t)
-			1,	// instanceCount (uint32_t)
-			0,	// startVertexLocation (uint32_t)
-			0	// startInstanceLocation (uint32_t)
+			3,	// vertexCountPerInstance (RECore::uint32)
+			1,	// instanceCount (RECore::uint32)
+			0,	// startVertexLocation (RECore::uint32)
+			0	// startInstanceLocation (RECore::uint32)
 		};
 		mIndirectBuffer = mBufferManager->createIndirectBuffer(sizeof(RERHI::DrawArguments), &drawArguments, RERHI::IndirectBufferFlag::DRAW_ARGUMENTS);
 	}

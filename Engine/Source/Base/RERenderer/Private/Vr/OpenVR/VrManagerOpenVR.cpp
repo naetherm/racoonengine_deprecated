@@ -95,7 +95,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t ASSET_PACKAGE_ID = STRING_ID("RacoonEngine/OpenVR");
+		static constexpr RECore::uint32 ASSET_PACKAGE_ID = STRING_ID("RacoonEngine/OpenVR");
 
 
 		//[-------------------------------------------------------]
@@ -109,7 +109,7 @@ namespace
 		//[-------------------------------------------------------]
 		[[nodiscard]] std::string getTrackedDeviceString(vr::IVRSystem& vrSystem, vr::TrackedDeviceIndex_t trackedDeviceIndex, vr::TrackedDeviceProperty trackedDeviceProperty, vr::TrackedPropertyError* trackedPropertyError = nullptr)
 		{
-			uint32_t requiredBufferLength = vrSystem.GetStringTrackedDeviceProperty(trackedDeviceIndex, trackedDeviceProperty, nullptr, 0, trackedPropertyError);
+			RECore::uint32 requiredBufferLength = vrSystem.GetStringTrackedDeviceProperty(trackedDeviceIndex, trackedDeviceProperty, nullptr, 0, trackedPropertyError);
 			if (0 == requiredBufferLength)
 			{
 				return "";
@@ -122,11 +122,11 @@ namespace
 			return result;
 		}
 
-		[[nodiscard]] std::string getRenderModelName(uint32_t renderModelIndex)
+		[[nodiscard]] std::string getRenderModelName(RECore::uint32 renderModelIndex)
 		{
 			vr::IVRRenderModels* vrRenderModels = vr::VRRenderModels();
 
-			uint32_t requiredBufferLength = vrRenderModels->GetRenderModelName(renderModelIndex, nullptr, 0);
+			RECore::uint32 requiredBufferLength = vrRenderModels->GetRenderModelName(renderModelIndex, nullptr, 0);
 			if (0 == requiredBufferLength)
 			{
 				return "";
@@ -139,11 +139,11 @@ namespace
 			return result;
 		}
 
-		[[nodiscard]] std::string getRenderModelComponentName(const std::string& renderModelName, uint32_t componentIndex)
+		[[nodiscard]] std::string getRenderModelComponentName(const std::string& renderModelName, RECore::uint32 componentIndex)
 		{
 			vr::IVRRenderModels* vrRenderModels = vr::VRRenderModels();
 
-			uint32_t requiredBufferLength = vrRenderModels->GetComponentName(renderModelName.c_str(), componentIndex, nullptr, 0);
+			RECore::uint32 requiredBufferLength = vrRenderModels->GetComponentName(renderModelName.c_str(), componentIndex, nullptr, 0);
 			if (0 == requiredBufferLength)
 			{
 				return "";
@@ -160,7 +160,7 @@ namespace
 		{
 			vr::IVRRenderModels* vrRenderModels = vr::VRRenderModels();
 
-			uint32_t requiredBufferLength = vrRenderModels->GetComponentRenderModelName(renderModelName.c_str(), componentName.c_str(), nullptr, 0);
+			RECore::uint32 requiredBufferLength = vrRenderModels->GetComponentRenderModelName(renderModelName.c_str(), componentName.c_str(), nullptr, 0);
 			if (0 == requiredBufferLength)
 			{
 				return "";
@@ -213,7 +213,7 @@ namespace
 
 		void setSceneNodesVisible(RERenderer::SceneNode* sceneNodes[vr::k_unMaxTrackedDeviceCount], bool visible)
 		{
-			for (uint32_t i = 0; i < vr::k_unMaxTrackedDeviceCount; ++i)
+			for (RECore::uint32 i = 0; i < vr::k_unMaxTrackedDeviceCount; ++i)
 			{
 				RERenderer::SceneNode* sceneNode = sceneNodes[i];
 				if (nullptr != sceneNode)
@@ -270,7 +270,7 @@ namespace
 			}
 
 			outInstanceExtensionList.clear();
-			const uint32_t bufferSize = vr::VRCompositor()->GetVulkanInstanceExtensionsRequired(nullptr, 0);
+			const RECore::uint32 bufferSize = vr::VRCompositor()->GetVulkanInstanceExtensionsRequired(nullptr, 0);
 			if (bufferSize > 0)
 			{
 				// Allocate memory for the space separated list and query for it
@@ -304,7 +304,7 @@ namespace
 			}
 
 			outDeviceExtensionList.clear();
-			const uint32_t bufferSize = vr::VRCompositor()->GetVulkanDeviceExtensionsRequired(vkPhysicalDevice_T, nullptr, 0);
+			const RECore::uint32 bufferSize = vr::VRCompositor()->GetVulkanDeviceExtensionsRequired(vkPhysicalDevice_T, nullptr, 0);
 			if (bufferSize > 0)
 			{
 				// Allocate memory for the space separated list and query for it
@@ -460,8 +460,8 @@ namespace RERenderer
 
 			{ // Create RHI resources
 				// Create the texture instance
-				uint32_t width = 0;
-				uint32_t height = 0;
+				RECore::uint32 width = 0;
+				RECore::uint32 height = 0;
 				mVrSystem->GetRecommendedRenderTargetSize(&width, &height);
 				width *= 2;	// Twice the width for single pass stereo rendering via instancing as described in "High Performance Stereo Rendering For VR", Timothy Wilson, San Diego, Virtual Reality Meetup
 				const RERHI::TextureFormat::Enum textureFormat = RERHI::TextureFormat::Enum::R8G8B8A8;
@@ -480,14 +480,14 @@ namespace RERenderer
 
 				// Register render models
 				// -> OpenVR render model names can get awful long due to absolute path information, so, we need to store them inside a separate list and tell the asset just about the render model name index
-				const uint32_t renderModelCount = mVrRenderModels->GetRenderModelCount();
-				for (uint32_t renderModelIndex = 0; renderModelIndex < renderModelCount; ++renderModelIndex)
+				const RECore::uint32 renderModelCount = mVrRenderModels->GetRenderModelCount();
+				for (RECore::uint32 renderModelIndex = 0; renderModelIndex < renderModelCount; ++renderModelIndex)
 				{
 					std::string renderModelName = ::detail::getRenderModelName(renderModelIndex);
-					const uint32_t componentCount = mVrRenderModels->GetComponentCount(renderModelName.c_str());
+					const RECore::uint32 componentCount = mVrRenderModels->GetComponentCount(renderModelName.c_str());
 					if (componentCount > 0)
 					{
-						for (uint32_t componentIndex = 0; componentIndex < componentCount; ++componentIndex)
+						for (RECore::uint32 componentIndex = 0; componentIndex < componentCount; ++componentIndex)
 						{
 							const std::string componentName = ::detail::getRenderModelComponentName(renderModelName, componentIndex);
 							const std::string componentRenderModelName = ::detail::getRenderModelComponentRenderModelName(renderModelName, componentName);
@@ -507,7 +507,7 @@ namespace RERenderer
 				// Register render model textures
 				// -> Sadly, there's no way to determine all available albedo texture IDs upfront without loading the render models
 				// -> We assume, that albedo texture IDs are linear
-				for (uint32_t renderModelIndex = 0; renderModelIndex < renderModelCount; ++renderModelIndex)
+				for (RECore::uint32 renderModelIndex = 0; renderModelIndex < renderModelCount; ++renderModelIndex)
 				{
 					assetPackage.addAsset(VrManagerOpenVR::albedoTextureIdToAssetId(static_cast<vr::TextureID_t>(renderModelIndex)), std::to_string(renderModelIndex).c_str());
 				}
@@ -585,7 +585,7 @@ namespace RERenderer
 
 		// Gather all valid poses
 		mNumberOfValidDevicePoses = 0;
-		for (uint32_t deviceIndex = 0; deviceIndex < vr::k_unMaxTrackedDeviceCount; ++deviceIndex)
+		for (RECore::uint32 deviceIndex = 0; deviceIndex < vr::k_unMaxTrackedDeviceCount; ++deviceIndex)
 		{
 			if (mVrTrackedDevicePose[deviceIndex].bPoseIsValid)
 			{
@@ -612,7 +612,7 @@ namespace RERenderer
 		}
 
 		// Update render model components so we can see e.g. controller trigger animations
-		for (uint32_t deviceIndex = 0; deviceIndex < vr::k_unMaxTrackedDeviceCount; ++deviceIndex)
+		for (RECore::uint32 deviceIndex = 0; deviceIndex < vr::k_unMaxTrackedDeviceCount; ++deviceIndex)
 		{
 			const TrackedDeviceInformation& trackedDeviceInformation = mTrackedDeviceInformation[deviceIndex];
 			if (!trackedDeviceInformation.renderModelName.empty() && !trackedDeviceInformation.components.empty())
@@ -723,7 +723,7 @@ namespace RERenderer
 			mVrDeviceMaterialResourceLoaded = true;
 
 			// Setup all render models for tracked devices
-			for (uint32_t trackedDeviceIndex = vr::k_unTrackedDeviceIndex_Hmd; trackedDeviceIndex < vr::k_unMaxTrackedDeviceCount; ++trackedDeviceIndex)
+			for (RECore::uint32 trackedDeviceIndex = vr::k_unTrackedDeviceIndex_Hmd; trackedDeviceIndex < vr::k_unMaxTrackedDeviceCount; ++trackedDeviceIndex)
 			{
 				if (mVrSystem->IsTrackedDeviceConnected(trackedDeviceIndex))
 				{
@@ -786,11 +786,11 @@ namespace RERenderer
 
 				// In case the render model has components, don't use the render model directly, use its components instead so we can animate e.g. the controller trigger
 				vr::IVRRenderModels* vrRenderModels = vr::VRRenderModels();
-				const uint32_t componentCount = vrRenderModels->GetComponentCount(renderModelName.c_str());
+				const RECore::uint32 componentCount = vrRenderModels->GetComponentCount(renderModelName.c_str());
 				vr::VRControllerState_t vrControllerState;
 				if (componentCount > 0 && mVrSystem->GetControllerState(trackedDeviceIndex, &vrControllerState, sizeof(vr::VRControllerState_t)))
 				{
-					for (uint32_t componentIndex = 0; componentIndex < componentCount; ++componentIndex)
+					for (RECore::uint32 componentIndex = 0; componentIndex < componentCount; ++componentIndex)
 					{
 						const std::string componentName = ::detail::getRenderModelComponentName(renderModelName, componentIndex);
 						const std::string componentRenderModelName = ::detail::getRenderModelComponentRenderModelName(renderModelName, componentName);

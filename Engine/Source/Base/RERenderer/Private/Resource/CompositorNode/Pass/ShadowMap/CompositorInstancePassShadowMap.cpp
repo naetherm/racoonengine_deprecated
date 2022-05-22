@@ -58,9 +58,9 @@ namespace
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
 		static constexpr float	  SHADOW_MAP_FILTER_SIZE							  = 7.0f;
-		static constexpr uint8_t  INTERMEDIATE_CASCADE_INDEX						  = 3;
-		static constexpr uint32_t DEPTH_SHADOW_MAP_TEXTURE_ASSET_ID					  = ASSET_ID("RacoonEngine/Texture/DynamicByCode/DepthShadowMap");
-		static constexpr uint32_t INTERMEDIATE_DEPTH_BLUR_SHADOW_MAP_TEXTURE_ASSET_ID = ASSET_ID("RacoonEngine/Texture/DynamicByCode/IntermediateDepthBlurShadowMap");
+		static constexpr RECore::uint8  INTERMEDIATE_CASCADE_INDEX						  = 3;
+		static constexpr RECore::uint32 DEPTH_SHADOW_MAP_TEXTURE_ASSET_ID					  = ASSET_ID("RacoonEngine/Texture/DynamicByCode/DepthShadowMap");
+		static constexpr RECore::uint32 INTERMEDIATE_DEPTH_BLUR_SHADOW_MAP_TEXTURE_ASSET_ID = ASSET_ID("RacoonEngine/Texture/DynamicByCode/IntermediateDepthBlurShadowMap");
 
 
 		//[-------------------------------------------------------]
@@ -90,7 +90,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	void CompositorInstancePassShadowMap::setNumberOfShadowCascades(uint8_t numberOfShadowCascades)
+	void CompositorInstancePassShadowMap::setNumberOfShadowCascades(RECore::uint8 numberOfShadowCascades)
 	{
 		if (mNumberOfShadowCascades != numberOfShadowCascades)
 		{
@@ -100,7 +100,7 @@ namespace RERenderer
 		}
 	}
 
-	void CompositorInstancePassShadowMap::setNumberOfShadowMultisamples(uint8_t numberOfShadowMultisamples)
+	void CompositorInstancePassShadowMap::setNumberOfShadowMultisamples(RECore::uint8 numberOfShadowMultisamples)
 	{
 		if (mNumberOfShadowMultisamples != numberOfShadowMultisamples)
 		{
@@ -164,7 +164,7 @@ namespace RERenderer
 				const float range = maximumZ - minimumZ;
 				const float ratio = maximumZ / minimumZ;
 
-				for (uint8_t cascadeIndex = 0; cascadeIndex < mNumberOfShadowCascades; ++cascadeIndex)
+				for (RECore::uint8 cascadeIndex = 0; cascadeIndex < mNumberOfShadowCascades; ++cascadeIndex)
 				{
 					const float p = static_cast<float>(cascadeIndex + 1) / static_cast<float>(mNumberOfShadowCascades);
 					const float log = minimumZ * std::pow(ratio, p);
@@ -194,8 +194,8 @@ namespace RERenderer
 				{ 1.0f, -1.0f, 1.0f, 1.0f}		// 7: Far bottom right
 			};
 			{
-				uint32_t renderTargetWidth = 0;
-				uint32_t renderTargetHeight = 0;
+				RECore::uint32 renderTargetWidth = 0;
+				RECore::uint32 renderTargetHeight = 0;
 				RHI_ASSERT(nullptr != compositorWorkspaceInstance.getExecutionRenderTarget(), "Invalid compositor workspace instance execution render target")
 				compositorWorkspaceInstance.getExecutionRenderTarget()->getWidthAndHeight(renderTargetWidth, renderTargetHeight);
 				if (compositorContextData.getSinglePassStereoInstancing())
@@ -216,7 +216,7 @@ namespace RERenderer
 			// Render the meshes to each cascade
 			// -> Shadows should never be rendered via single pass stereo instancing
 			const CompositorContextData shadowCompositorContextData(compositorContextData.getCompositorWorkspaceInstance(), compositorContextData.getCameraSceneItem(), false, compositorContextData.getLightSceneItem(), compositorContextData.getCompositorInstancePassShadowMap());
-			for (uint8_t cascadeIndex = 0; cascadeIndex < mNumberOfShadowCascades; ++cascadeIndex)
+			for (RECore::uint8 cascadeIndex = 0; cascadeIndex < mNumberOfShadowCascades; ++cascadeIndex)
 			{
 				// Scoped debug event
 				RENDERER_SCOPED_PROFILER_EVENT_DYNAMIC(renderer.getContext(), commandBuffer, ("Shadow cascade " + std::to_string(cascadeIndex)).c_str())
@@ -489,9 +489,9 @@ namespace RERenderer
 				// Check shadow map settings
 				RHI_ASSERT(mNumberOfShadowCascades <= CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES, "Invalid number of shadow cascades")
 				RHI_ASSERT(mNumberOfShadowMultisamples >= 1, "Invalid number of shadow multisamples")
-				uint8_t numberOfShadowMultisamples = mNumberOfShadowMultisamples;
+				RECore::uint8 numberOfShadowMultisamples = mNumberOfShadowMultisamples;
 				{ // Multisamples sanity check
-					const uint8_t maximumNumberOfMultisamples = rhi.getCapabilities().maximumNumberOfMultisamples;
+					const RECore::uint8 maximumNumberOfMultisamples = rhi.getCapabilities().maximumNumberOfMultisamples;
 					if (numberOfShadowMultisamples > maximumNumberOfMultisamples)
 					{
 						RHI_ASSERT(false, "Number of shadow multisamples not supported by the RHI implementation")
@@ -529,12 +529,12 @@ namespace RERenderer
 
 					// Create the framebuffer object (FBO) instances
 					RERHI::RHIRenderPass* renderPass = rhi.createRenderPass(1, &textureFormat, RERHI::TextureFormat::UNKNOWN, 1 RHI_RESOURCE_DEBUG_NAME("Compositor instance pass variance shadow map"));
-					for (uint8_t cascadeIndex = 0; cascadeIndex < CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES; ++cascadeIndex)
+					for (RECore::uint8 cascadeIndex = 0; cascadeIndex < CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES; ++cascadeIndex)
 					{
 						const RERHI::FramebufferAttachment colorFramebufferAttachment(texture, 0, cascadeIndex);
 						mVarianceFramebufferPtr[cascadeIndex] = rhi.createFramebuffer(*renderPass, &colorFramebufferAttachment, nullptr RHI_RESOURCE_DEBUG_NAME(("Compositor instance pass variance shadow map " + std::to_string(cascadeIndex)).c_str()));
 					}
-					for (uint8_t cascadeIndex = CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES; cascadeIndex < CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES; ++cascadeIndex)
+					for (RECore::uint8 cascadeIndex = CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES; cascadeIndex < CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES; ++cascadeIndex)
 					{
 						mVarianceFramebufferPtr[cascadeIndex] = nullptr;
 					}
@@ -618,7 +618,7 @@ namespace RERenderer
 
 		// Release the framebuffers and other RHI resources referenced by the framebuffers
 		mDepthFramebufferPtr = nullptr;
-		for (uint8_t cascadeIndex = 0; cascadeIndex < CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES; ++cascadeIndex)
+		for (RECore::uint8 cascadeIndex = 0; cascadeIndex < CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES; ++cascadeIndex)
 		{
 			mVarianceFramebufferPtr[cascadeIndex] = nullptr;
 		}

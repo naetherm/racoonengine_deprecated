@@ -73,7 +73,7 @@ public:
   *  @return
   *    The width of the texture
   */
-  [[nodiscard]] inline uint32_t getWidth() const
+  [[nodiscard]] inline RECore::uint32 getWidth() const
   {
     return mWidth;
   }
@@ -85,7 +85,7 @@ public:
   *  @return
   *    The number of slices
   */
-  [[nodiscard]] inline uint32_t getNumberOfSlices() const
+  [[nodiscard]] inline RECore::uint32 getNumberOfSlices() const
   {
     return mNumberOfSlices;
   }
@@ -103,7 +103,7 @@ protected:
   *  @param[in] numberOfSlices
   *    The number of slices
   */
-  inline RHITextureCubeArray(RHIDynamicRHI& rhi, uint32_t width, uint32_t numberOfSlices RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+  inline RHITextureCubeArray(RHIDynamicRHI& rhi, RECore::uint32 width, RECore::uint32 numberOfSlices RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
     RHITexture(ResourceType::TEXTURE_CUBE_ARRAY, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
     mWidth(width),
     mNumberOfSlices(numberOfSlices)
@@ -120,8 +120,8 @@ protected:
 
   // Private data
 private:
-  uint32_t mWidth;			///< The width of the texture
-  uint32_t mNumberOfSlices;	///< The number of slices
+  RECore::uint32 mWidth;			///< The width of the texture
+  RECore::uint32 mNumberOfSlices;	///< The number of slices
 
 };
 

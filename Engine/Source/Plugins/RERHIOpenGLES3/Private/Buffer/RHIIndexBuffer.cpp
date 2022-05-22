@@ -34,7 +34,7 @@
 namespace RERHIOpenGLES3 {
 
 
-IndexBuffer::IndexBuffer(RHIDynamicRHI &openGLES3Rhi, uint32_t numberOfBytes, const void *data,
+IndexBuffer::IndexBuffer(RHIDynamicRHI &openGLES3Rhi, RECore::uint32 numberOfBytes, const void *data,
                          RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat
                          RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RERHI::RHIIndexBuffer(openGLES3Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),

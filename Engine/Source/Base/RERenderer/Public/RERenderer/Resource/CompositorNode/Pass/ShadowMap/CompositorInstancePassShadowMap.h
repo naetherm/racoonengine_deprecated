@@ -62,7 +62,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t TextureResourceId;	///< POD texture resource identifier
+	typedef RECore::uint32 TextureResourceId;	///< POD texture resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -96,7 +96,7 @@ namespace RERenderer
 			float		shadowCascadeSplits[CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES] = {};
 			glm::vec4	shadowCascadeOffsets[CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES] = {};
 			glm::vec4	shadowCascadeScales[CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES];
-			uint8_t		currentShadowCascadeIndex = 0;
+			RECore::uint8		currentShadowCascadeIndex = 0;
 			float		shadowFilterSize = 0.0f;
 		};
 
@@ -122,12 +122,12 @@ namespace RERenderer
 			}
 		}
 
-		[[nodiscard]] inline uint32_t getShadowMapSize() const
+		[[nodiscard]] inline RECore::uint32 getShadowMapSize() const
 		{
 			return mShadowMapSize;
 		}
 
-		inline void setShadowMapSize(uint32_t shadowMapSize)
+		inline void setShadowMapSize(RECore::uint32 shadowMapSize)
 		{
 			if (mShadowMapSize != shadowMapSize)
 			{
@@ -136,19 +136,19 @@ namespace RERenderer
 			}
 		}
 
-		[[nodiscard]] inline uint8_t getNumberOfShadowCascades() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfShadowCascades() const
 		{
 			return mNumberOfShadowCascades;
 		}
 
-		void setNumberOfShadowCascades(uint8_t numberOfShadowCascades);
+		void setNumberOfShadowCascades(RECore::uint8 numberOfShadowCascades);
 
-		[[nodiscard]] inline uint8_t getNumberOfShadowMultisamples() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfShadowMultisamples() const
 		{
 			return mNumberOfShadowMultisamples;
 		}
 
-		void setNumberOfShadowMultisamples(uint8_t numberOfShadowMultisamples);
+		void setNumberOfShadowMultisamples(RECore::uint8 numberOfShadowMultisamples);
 
 		[[nodiscard]] inline float getCascadeSplitsLambda() const
 		{
@@ -219,15 +219,15 @@ namespace RERenderer
 	private:
 		// Settings
 		bool	 mEnabled;						///< Shadow enabled?
-		uint32_t mShadowMapSize;				///< The shadow map size is usually 512, 1024 or 2048
-		uint8_t  mNumberOfShadowCascades;		///< Number of shadow cascades, usually 4
-		uint8_t  mNumberOfShadowMultisamples;	///< The number of shadow multisamples per pixel (valid values: 1, 2, 4, 8)
+		RECore::uint32 mShadowMapSize;				///< The shadow map size is usually 512, 1024 or 2048
+		RECore::uint8  mNumberOfShadowCascades;		///< Number of shadow cascades, usually 4
+		RECore::uint8  mNumberOfShadowMultisamples;	///< The number of shadow multisamples per pixel (valid values: 1, 2, 4, 8)
 		float	 mCascadeSplitsLambda;			///< Cascade splits lambda
 		float	 mShadowFilterSize;				///< Shadow filter size
 		bool	 mStabilizeCascades;			///< Keeps consistent sizes for each cascade, and snaps each cascade so that they move in texel-sized increments. Reduces temporal aliasing artifacts, but reduces the effective resolution of the cascades. See Valient, M., "Stable Rendering of Cascaded Shadow Maps", In: Engel, W. F ., et al., "ShaderX6: Advanced Rendering Techniques", Charles River Media, 2008, ISBN 1-58450-544-3.
 		// Internal
-		uint32_t					   mSettingsGenerationCounter;	// Most simple solution to detect settings changes which make internal data invalid
-		uint32_t					   mUsedSettingsGenerationCounter;
+		RECore::uint32					   mSettingsGenerationCounter;	// Most simple solution to detect settings changes which make internal data invalid
+		RECore::uint32					   mUsedSettingsGenerationCounter;
 		PassData					   mPassData;
 		RERHI::RHIFramebufferPtr		   mDepthFramebufferPtr;
 		RERHI::RHIFramebufferPtr		   mVarianceFramebufferPtr[CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES];

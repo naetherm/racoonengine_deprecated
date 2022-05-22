@@ -68,7 +68,7 @@ public:
   *  @param[in] bufferUsage
   *    Indication of the buffer usage
   */
-  VertexBuffer(RHIDynamicRHI& openGLES3Rhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  VertexBuffer(RHIDynamicRHI& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief
@@ -88,7 +88,7 @@ public:
     return mOpenGLES3ArrayBuffer;
   }
 
-  [[nodiscard]] inline uint32_t getBufferSize() const
+  [[nodiscard]] inline RECore::uint32 getBufferSize() const
   {
     return mBufferSize;
   }
@@ -117,7 +117,7 @@ private:
   //[-------------------------------------------------------]
 private:
   GLuint	 mOpenGLES3ArrayBuffer;	///< OpenGL ES 3 array buffer, can be zero if no resource is allocated
-  uint32_t mBufferSize;			///< Holds the size of the buffer
+  RECore::uint32 mBufferSize;			///< Holds the size of the buffer
 
 
 };

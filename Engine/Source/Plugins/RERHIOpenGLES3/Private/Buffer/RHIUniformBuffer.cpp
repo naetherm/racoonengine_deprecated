@@ -33,7 +33,7 @@
 namespace RERHIOpenGLES3 {
 
 
-UniformBuffer::UniformBuffer(RHIDynamicRHI& openGLES3Rhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+UniformBuffer::UniformBuffer(RHIDynamicRHI& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 RHIUniformBuffer(openGLES3Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mOpenGLES3UniformBuffer(0),
 mBufferSize(numberOfBytes)

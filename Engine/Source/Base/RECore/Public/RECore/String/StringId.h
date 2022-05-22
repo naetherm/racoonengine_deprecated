@@ -48,7 +48,7 @@ namespace RECore
 	*  @remarks
 	*    The following example shows how to use the string ID class:
 	*    @code
-	*    uint32_t id = STRING_ID("Example/Mesh/Default/Squirrel");	// Result will be 2906231359
+	*    uint32 id = STRING_ID("Example/Mesh/Default/Squirrel");	// Result will be 2906231359
 	*    @endcode
 	*
 	*  @note
@@ -64,9 +64,9 @@ namespace RECore
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t FNV1a_INITIAL_HASH_32  = 0xcbf29ce4u;
-		static constexpr uint32_t FNV1a_MAGIC_PRIME_32	 = 0x1000193u;
-		static constexpr uint32_t MAXIMUM_UINT32_T_VALUE = 4294967295u;	///< We don't want to include "<limits>" in this lightweight core header just to be able to use "std::numeric_limits<uint32_t>::max()"
+		static constexpr uint32 FNV1a_INITIAL_HASH_32  = 0xcbf29ce4u;
+		static constexpr uint32 FNV1a_MAGIC_PRIME_32	 = 0x1000193u;
+		static constexpr uint32 MAXIMUM_UINT32_T_VALUE = 4294967295u;	///< We don't want to include "<limits>" in this lightweight core header just to be able to use "std::numeric_limits<uint32>::max()"
 
 		/**
 		*  @brief
@@ -110,10 +110,10 @@ namespace RECore
 		*  @return
 		*    The hash value of the given string
 		*/
-		[[nodiscard]] static constexpr inline uint32_t compileTimeFNV(const char* string, const uint32_t value = FNV1a_INITIAL_HASH_32) noexcept
+		[[nodiscard]] static constexpr inline uint32 compileTimeFNV(const char* string, const uint32 value = FNV1a_INITIAL_HASH_32) noexcept
 		{
 			// 32-bit FNV-1a implementation basing on http://www.isthe.com/chongo/tech/comp/fnv/
-			return ('\0' == string[0]) ? value : compileTimeFNV(&string[1], (value ^ static_cast<uint32_t>(string[0])) * FNV1a_MAGIC_PRIME_32);
+			return ('\0' == string[0]) ? value : compileTimeFNV(&string[1], (value ^ static_cast<uint32>(string[0])) * FNV1a_MAGIC_PRIME_32);
 		}
 
 		/**
@@ -126,13 +126,13 @@ namespace RECore
 		*  @return
 		*    The hash value of the given string
 		*/
-		[[nodiscard]] static inline uint32_t calculateFNV(const char* string)
+		[[nodiscard]] static inline uint32 calculateFNV(const char* string)
 		{
 			// Sanity check
 			ASSERT(nullptr != string, "The string must be valid to be able to calculate a FNV1a32 hash")
 
 			// 32-bit FNV-1a implementation basing on http://www.isthe.com/chongo/tech/comp/fnv/
-			uint32_t hash = FNV1a_INITIAL_HASH_32;
+			uint32 hash = FNV1a_INITIAL_HASH_32;
 			for ( ; '\0' != *string; ++string)
 			{
 				hash = (hash ^ *string) * FNV1a_MAGIC_PRIME_32;
@@ -162,7 +162,7 @@ namespace RECore
 		*  @param[in] string
 		*    Static string to calculate the hash value for, must be valid
 		*/
-		template <uint32_t N>
+		template <uint32 N>
 		inline StringId(const char (&string)[N]) noexcept :
 			mId(compileTimeFNV(string))
 		{
@@ -187,7 +187,7 @@ namespace RECore
 
 		/**
 		*  @brief
-		*    Constructor for directly setting an uint32_t value as string ID
+		*    Constructor for directly setting an uint32 value as string ID
 		*
 		*  @param[in] id
 		*    ID value to set
@@ -195,7 +195,7 @@ namespace RECore
 		*  @note
 		*    - By intent not explicit for best possible usability
 		*/
-		inline StringId(uint32_t id) :
+		inline StringId(uint32 id) :
 			mId(id)
 		{
 			// Nothing do to in here
@@ -233,7 +233,7 @@ namespace RECore
 		*  @return
 		*    The generated FNV-1a hash value used as identifier
 		*/
-		[[nodiscard]] inline uint32_t getId() const
+		[[nodiscard]] inline uint32 getId() const
 		{
 			return mId;
 		}
@@ -245,7 +245,7 @@ namespace RECore
 		*  @return
 		*    The generated FNV-1a hash value used as identifier
 		*/
-		[[nodiscard]] inline operator uint32_t() const
+		[[nodiscard]] inline operator uint32() const
 		{
 			return mId;
 		}
@@ -255,7 +255,7 @@ namespace RECore
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t mId;	///< The generated FNV-1a hash value which is used as identifier
+		uint32 mId;	///< The generated FNV-1a hash value which is used as identifier
 
 
 	};
@@ -279,14 +279,14 @@ namespace RECore
 	#define STRING_ID(string) \
 		__pragma(warning(push)) \
 			__pragma(warning(disable:4307)) \
-			std::integral_constant<uint32_t, RECore::StringId::compileTimeFNV(string)>::value \
+			std::integral_constant<RECore::uint32, RECore::StringId::compileTimeFNV(string)>::value \
 		__pragma(warning(pop))
 #else
 	/**
 	*  @brief
 	*    Compile time string ID macro
 	*/
-	#define STRING_ID(string) std::integral_constant<uint32_t, RECore::StringId::compileTimeFNV(string)>::value
+	#define STRING_ID(string) std::integral_constant<RECore::uint32, RECore::StringId::compileTimeFNV(string)>::value
 #endif
 
 /**

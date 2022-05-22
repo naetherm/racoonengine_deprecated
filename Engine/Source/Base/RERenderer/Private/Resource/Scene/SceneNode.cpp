@@ -143,7 +143,7 @@ namespace RERenderer
 		SceneItemSet* sceneItemSet = sceneItem.mSceneItemSet;
 		if (nullptr != sceneItemSet)
 		{
-			const uint32_t sceneItemSetIndex = sceneItem.mSceneItemSetIndex;
+			const RECore::uint32 sceneItemSetIndex = sceneItem.mSceneItemSetIndex;
 
 			{ // Set object space to world space matrix
 				glm::mat4 objectSpaceToWorldSpace;

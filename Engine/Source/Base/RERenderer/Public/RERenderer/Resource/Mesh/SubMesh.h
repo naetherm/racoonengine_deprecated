@@ -41,7 +41,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialResourceId;	///< POD material resource identifier
+	typedef RECore::uint32 MaterialResourceId;	///< POD material resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -67,7 +67,7 @@ namespace RERenderer
 			// Nothing here
 		}
 
-		inline SubMesh(MaterialResourceId materialResourceId, uint32_t startIndexLocation, uint32_t numberOfIndices) :
+		inline SubMesh(MaterialResourceId materialResourceId, RECore::uint32 startIndexLocation, RECore::uint32 numberOfIndices) :
 			mMaterialResourceId(materialResourceId),
 			mStartIndexLocation(startIndexLocation),
 			mNumberOfIndices(numberOfIndices)
@@ -108,22 +108,22 @@ namespace RERenderer
 			mMaterialResourceId = materialResourceId;
 		}
 
-		[[nodiscard]] inline uint32_t getStartIndexLocation() const
+		[[nodiscard]] inline RECore::uint32 getStartIndexLocation() const
 		{
 			return mStartIndexLocation;
 		}
 
-		inline void setStartIndexLocation(uint32_t startIndexLocation)
+		inline void setStartIndexLocation(RECore::uint32 startIndexLocation)
 		{
 			mStartIndexLocation = startIndexLocation;
 		}
 
-		[[nodiscard]] inline uint32_t getNumberOfIndices() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfIndices() const
 		{
 			return mNumberOfIndices;
 		}
 
-		inline void setNumberOfIndices(uint32_t numberOfIndices)
+		inline void setNumberOfIndices(RECore::uint32 numberOfIndices)
 		{
 			mNumberOfIndices = numberOfIndices;
 		}
@@ -134,8 +134,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
 		MaterialResourceId mMaterialResourceId;	///< Material resource ID, can be set to invalid value
-		uint32_t		   mStartIndexLocation;
-		uint32_t		   mNumberOfIndices;
+		RECore::uint32		   mStartIndexLocation;
+		RECore::uint32		   mNumberOfIndices;
 
 
 	};

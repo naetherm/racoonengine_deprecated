@@ -88,8 +88,8 @@ namespace
 		//[-------------------------------------------------------]
 		namespace PipelineStateCache
 		{
-			static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("PipelineStateCache");
-			static constexpr uint32_t FORMAT_VERSION = 1;
+			static constexpr RECore::uint32 FORMAT_TYPE	 = STRING_ID("PipelineStateCache");
+			static constexpr RECore::uint32 FORMAT_VERSION = 1;
 		}
 
 
@@ -315,7 +315,7 @@ namespace RERenderer
 			if (!mAssetIdsOfResourcesToReload.empty())
 			{
 				const size_t numberOfResourceManagers = mResourceManagers.size();
-				for (uint32_t assetId : mAssetIdsOfResourcesToReload)
+				for (RECore::uint32 assetId : mAssetIdsOfResourcesToReload)
 				{
 					// Inform the individual resource manager instances
 					for (size_t i = 0; i < numberOfResourceManagers; ++i)

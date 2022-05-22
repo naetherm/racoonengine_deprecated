@@ -30,7 +30,7 @@
 // Disable warnings in external headers, we can't fix them
 PRAGMA_WARNING_PUSH
 	PRAGMA_WARNING_DISABLE_MSVC(4061)	// warning C4061: enumerator 'rtm::mix4::b' in switch of enum 'rtm::mix4' is not explicitly handled by a case label
-	PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'initializing': conversion from 'int' to 'uint8_t', signed/unsigned mismatch
+	PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'initializing': conversion from 'int' to 'RECore::uint8', signed/unsigned mismatch
 	#include <acl/decompression/decompress.h>
 PRAGMA_WARNING_POP
 
@@ -78,19 +78,19 @@ namespace
 			//[-------------------------------------------------------]
 			public:
 				// Called by the decoder to write out a quaternion rotation value for a specified bone index
-				void RTM_SIMD_CALL write_rotation(uint32_t, rtm::quatf_arg0 rotation)
+				void RTM_SIMD_CALL write_rotation(RECore::uint32, rtm::quatf_arg0 rotation)
 				{
 					mRotation = rotation;
 				}
 
 				// Called by the decoder to write out a translation value for a specified bone index
-				void RTM_SIMD_CALL write_translation(uint32_t, rtm::vector4f_arg0 translation)
+				void RTM_SIMD_CALL write_translation(RECore::uint32, rtm::vector4f_arg0 translation)
 				{
 					mTranslation = translation;
 				}
 
 				// Called by the decoder to write out a scale value for a specified bone index
-				void RTM_SIMD_CALL write_scale(uint32_t, rtm::vector4f_arg0 scale)
+				void RTM_SIMD_CALL write_scale(RECore::uint32, rtm::vector4f_arg0 scale)
 				{
 					mScale = scale;
 				}
@@ -146,7 +146,7 @@ namespace RERenderer
 	void SkeletonAnimationEvaluator::evaluate(float timeInSeconds)
 	{
 		const SkeletonAnimationResource& skeletonAnimationResource = mSkeletonAnimationResourceManager.getById(mSkeletonAnimationResourceId);
-		const uint8_t numberOfChannels = skeletonAnimationResource.getNumberOfChannels();
+		const RECore::uint8 numberOfChannels = skeletonAnimationResource.getNumberOfChannels();
 
 		// Decompress the ACL compressed skeleton animation tracks
 		::detail::AclDecompressionContext* aclDecompressionContext = static_cast<::detail::AclDecompressionContext*>(mAclDecompressionContext);
@@ -157,7 +157,7 @@ namespace RERenderer
 		}
 		static_cast<::detail::AclDecompressionContext*>(mAclDecompressionContext)->seek(timeInSeconds, acl::sample_rounding_policy::none);
 		::detail::TrackWriter trackWriter;
-		for (uint8_t i = 0; i < numberOfChannels; ++i)
+		for (RECore::uint8 i = 0; i < numberOfChannels; ++i)
 		{
 			aclDecompressionContext->decompress_track(i, trackWriter);
 			trackWriter.getTransformMatrix(mTransformMatrices[i]);

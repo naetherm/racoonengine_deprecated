@@ -85,7 +85,7 @@ void writePhysicsFSErrorToLog() {
   const char *errorAsString = PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode());
   if (nullptr != errorAsString) {
     RE_LOG(Critical, "PhysFS error: " + std::string(errorAsString))
-    //if (log.print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "PhysicsFS error: %s", errorAsString))
+    //if (log.print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32>(__LINE__), "PhysicsFS error: %s", errorAsString))
     {
       //	DEBUG_BREAK;
     }
@@ -523,7 +523,7 @@ public:
     return "";
   }
 
-  [[nodiscard]] inline virtual int64_t getLastModificationTime(VirtualFilename virtualFilename) const override
+  [[nodiscard]] inline virtual RECore::int64 getLastModificationTime(VirtualFilename virtualFilename) const override
   {
     // Sanity check
     ASSERT(nullptr != virtualFilename, "Invalid virtual filename")
@@ -540,7 +540,7 @@ public:
     }
   }
 
-  [[nodiscard]] inline virtual int64_t getFileSize(VirtualFilename virtualFilename) const override
+  [[nodiscard]] inline virtual RECore::int64 getFileSize(VirtualFilename virtualFilename) const override
   {
     // Sanity check
     ASSERT(nullptr != virtualFilename, "Invalid virtual filename")
@@ -582,7 +582,7 @@ public:
     }
     if (file->isInvalid()) {
       RE_LOG(Critical, "Failed to open file " + std::string(virtualFilename))
-      //if (mLog.print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to open file %s", virtualFilename))
+      //if (mLog.print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32>(__LINE__), "Failed to open file %s", virtualFilename))
       {
         //	DEBUG_BREAK;
       }

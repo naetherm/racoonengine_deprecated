@@ -94,22 +94,22 @@ public:
   //[-------------------------------------------------------]
   void setGraphicsRootSignature(RERHI::RHIRootSignature* rootSignature);
   void setGraphicsPipelineState(RERHI::RHIGraphicsPipelineState* graphicsPipelineState);
-  void setGraphicsResourceGroup(uint32_t rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup);
+  void setGraphicsResourceGroup(RECore::uint32 rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup);
   void setGraphicsVertexArray(RERHI::RHIVertexArray* vertexArray);															// Input-assembler (IA) stage
-  void setGraphicsViewports(uint32_t numberOfViewports, const RERHI::Viewport* viewports);									// Rasterizer (RS) stage
-  void setGraphicsScissorRectangles(uint32_t numberOfScissorRectangles, const RERHI::ScissorRectangle* scissorRectangles);	// Rasterizer (RS) stage
+  void setGraphicsViewports(RECore::uint32 numberOfViewports, const RERHI::Viewport* viewports);									// Rasterizer (RS) stage
+  void setGraphicsScissorRectangles(RECore::uint32 numberOfScissorRectangles, const RERHI::ScissorRectangle* scissorRectangles);	// Rasterizer (RS) stage
   void setGraphicsRenderTarget(RERHI::RHIRenderTarget* renderTarget);															// Output-merger (OM) stage
-  void clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil);
-  void drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1);
-  void drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1);
-  void drawMeshTasksEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1);
+  void clearGraphics(RECore::uint32 clearFlags, const float color[4], float z, RECore::uint32 stencil);
+  void drawGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1);
+  void drawIndexedGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1);
+  void drawMeshTasksEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1);
   //[-------------------------------------------------------]
   //[ Compute                                               ]
   //[-------------------------------------------------------]
   void setComputeRootSignature(RERHI::RHIRootSignature* rootSignature);
   void setComputePipelineState(RERHI::RHIComputePipelineState* computePipelineState);
-  void setComputeResourceGroup(uint32_t rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup);
-  void dispatchCompute(uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ);
+  void setComputeResourceGroup(RECore::uint32 rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup);
+  void dispatchCompute(RECore::uint32 groupCountX, RECore::uint32 groupCountY, RECore::uint32 groupCountZ);
   //[-------------------------------------------------------]
   //[ Resource                                              ]
   //[-------------------------------------------------------]
@@ -119,10 +119,10 @@ public:
   //[-------------------------------------------------------]
   //[ Query                                                 ]
   //[-------------------------------------------------------]
-  void resetQueryPool(RERHI::RHIQueryPool& queryPool, uint32_t firstQueryIndex, uint32_t numberOfQueries);
-  void beginQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryIndex, uint32_t queryControlFlags);
-  void endQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryIndex);
-  void writeTimestampQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryIndex);
+  void resetQueryPool(RERHI::RHIQueryPool& queryPool, RECore::uint32 firstQueryIndex, RECore::uint32 numberOfQueries);
+  void beginQuery(RERHI::RHIQueryPool& queryPool, RECore::uint32 queryIndex, RECore::uint32 queryControlFlags);
+  void endQuery(RERHI::RHIQueryPool& queryPool, RECore::uint32 queryIndex);
+  void writeTimestampQuery(RERHI::RHIQueryPool& queryPool, RECore::uint32 queryIndex);
   //[-------------------------------------------------------]
   //[ Debug                                                 ]
   //[-------------------------------------------------------]
@@ -143,14 +143,14 @@ public:
   //[-------------------------------------------------------]
   //[ Shader language                                       ]
   //[-------------------------------------------------------]
-  [[nodiscard]] virtual uint32_t getNumberOfShaderLanguages() const override;
-  [[nodiscard]] virtual const char* getShaderLanguageName(uint32_t index) const override;
+  [[nodiscard]] virtual RECore::uint32 getNumberOfShaderLanguages() const override;
+  [[nodiscard]] virtual const char* getShaderLanguageName(RECore::uint32 index) const override;
   [[nodiscard]] virtual RERHI::RHIShaderLanguage* getShaderLanguage(const char* shaderLanguageName = nullptr) override;
   //[-------------------------------------------------------]
   //[ Resource creation                                     ]
   //[-------------------------------------------------------]
-  [[nodiscard]] virtual RERHI::RHIRenderPass* createRenderPass(uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat = RERHI::TextureFormat::UNKNOWN, uint8_t numberOfMultisamples = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
-  [[nodiscard]] virtual RERHI::RHIQueryPool* createQueryPool(RERHI::QueryType queryType, uint32_t numberOfQueries = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHIRenderPass* createRenderPass(RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat = RERHI::TextureFormat::UNKNOWN, RECore::uint8 numberOfMultisamples = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHIQueryPool* createQueryPool(RERHI::QueryType queryType, RECore::uint32 numberOfQueries = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
   [[nodiscard]] virtual RERHI::RHISwapChain* createSwapChain(RERHI::RHIRenderPass& renderPass, RERHI::WindowHandle windowHandle, bool useExternalContext = false RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
   [[nodiscard]] virtual RERHI::RHIFramebuffer* createFramebuffer(RERHI::RHIRenderPass& renderPass, const RERHI::FramebufferAttachment* colorFramebufferAttachments, const RERHI::FramebufferAttachment* depthStencilFramebufferAttachment = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
   [[nodiscard]] virtual RERHI::RHIBufferManager* createBufferManager() override;
@@ -162,9 +162,9 @@ public:
   //[-------------------------------------------------------]
   //[ Resource handling                                     ]
   //[-------------------------------------------------------]
-  [[nodiscard]] virtual bool map(RERHI::RHIResource& resource, uint32_t subresource, RERHI::MapType mapType, uint32_t mapFlags, RERHI::MappedSubresource& mappedSubresource) override;
-  virtual void unmap(RERHI::RHIResource& resource, uint32_t subresource) override;
-  [[nodiscard]] virtual bool getQueryPoolResults(RERHI::RHIQueryPool& queryPool, uint32_t numberOfDataBytes, uint8_t* data, uint32_t firstQueryIndex = 0, uint32_t numberOfQueries = 1, uint32_t strideInBytes = 0, uint32_t queryResultFlags = 0) override;
+  [[nodiscard]] virtual bool map(RERHI::RHIResource& resource, RECore::uint32 subresource, RERHI::MapType mapType, RECore::uint32 mapFlags, RERHI::MappedSubresource& mappedSubresource) override;
+  virtual void unmap(RERHI::RHIResource& resource, RECore::uint32 subresource) override;
+  [[nodiscard]] virtual bool getQueryPoolResults(RERHI::RHIQueryPool& queryPool, RECore::uint32 numberOfDataBytes, RECore::uint8* data, RECore::uint32 firstQueryIndex = 0, RECore::uint32 numberOfQueries = 1, RECore::uint32 strideInBytes = 0, RECore::uint32 queryResultFlags = 0) override;
   //[-------------------------------------------------------]
   //[ Operation                                             ]
   //[-------------------------------------------------------]

@@ -127,7 +127,7 @@ namespace RECore
 	*    Default memory allocator implementation class one can use
 	*
 	*  @note
-	*    - Example: uint8_t* spirvOutputBuffer = RHI_MALLOC_TYPED(context, uint8_t, spirvOutputBufferSize);
+	*    - Example: RECore::uint8* spirvOutputBuffer = RHI_MALLOC_TYPED(context, RECore::uint8, spirvOutputBufferSize);
 	*    - Designed to be instanced and used inside a single C++ file
 	*/
 	class DefaultAllocator final : public IAllocator

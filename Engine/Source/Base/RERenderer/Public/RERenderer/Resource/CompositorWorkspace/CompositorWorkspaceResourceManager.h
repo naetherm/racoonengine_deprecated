@@ -48,7 +48,7 @@ class CompositorWorkspaceResource;
 class CompositorWorkspaceResourceLoader;
 }
 namespace RECore {
-	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
+	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
 }
 
 
@@ -62,7 +62,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t CompositorWorkspaceResourceId;	///< POD compositor workspace resource identifier
+	typedef RECore::uint32 CompositorWorkspaceResourceId;	///< POD compositor workspace resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -108,8 +108,8 @@ namespace RERenderer
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] virtual uint32_t getNumberOfResources() const override;
-		[[nodiscard]] virtual RECore::IResource& getResourceByIndex(uint32_t index) const override;
+		[[nodiscard]] virtual RECore::uint32 getNumberOfResources() const override;
+		[[nodiscard]] virtual RECore::IResource& getResourceByIndex(RECore::uint32 index) const override;
 		[[nodiscard]] virtual RECore::IResource& getResourceByResourceId(RECore::ResourceId resourceId) const override;
 		[[nodiscard]] virtual RECore::IResource* tryGetResourceByResourceId(RECore::ResourceId resourceId) const override;
 		virtual void reloadResourceByAssetId(RECore::AssetId assetId) override;

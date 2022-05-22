@@ -35,7 +35,7 @@
 namespace RERHIVulkan {
 
 
-TextureBuffer::TextureBuffer(RHIDynamicRHI &vulkanRhi, uint32_t numberOfBytes, const void *data, uint32_t bufferFlags,
+TextureBuffer::TextureBuffer(RHIDynamicRHI &vulkanRhi, RECore::uint32 numberOfBytes, const void *data, RECore::uint32 bufferFlags,
                              [[maybe_unused]] RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat
                              RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHITextureBuffer(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
@@ -47,7 +47,7 @@ TextureBuffer::TextureBuffer(RHIDynamicRHI &vulkanRhi, uint32_t numberOfBytes, c
              "The Vulkan texture buffer size must be a multiple of the selected texture format bytes per texel")
 
   // Create the texture buffer
-  uint32_t vkBufferUsageFlagBits = 0;
+  RECore::uint32 vkBufferUsageFlagBits = 0;
   if (bufferFlags & RERHI::BufferFlag::SHADER_RESOURCE) {
     vkBufferUsageFlagBits |= VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT;
   }
@@ -83,9 +83,9 @@ TextureBuffer::TextureBuffer(RHIDynamicRHI &vulkanRhi, uint32_t numberOfBytes, c
         {
           RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TBO", 6)	// 6 = "TBO: " including terminating zero
           const VkDevice vkDevice = vulkanRhi.getVulkanContext().getVkDevice();
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT, (uint64_t)mVkBuffer, detailedDebugName);
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT, (uint64_t)mVkDeviceMemory, detailedDebugName);
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT, (uint64_t)mVkBufferView, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT, (RECore::uint64)mVkBuffer, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT, (RECore::uint64)mVkDeviceMemory, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT, (RECore::uint64)mVkBufferView, detailedDebugName);
         }
 #endif
 }

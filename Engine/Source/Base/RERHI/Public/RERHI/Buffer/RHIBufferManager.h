@@ -118,7 +118,7 @@ public:
   *  @return
   *    The created VBO instance, null pointer on error. Release the returned instance if you no longer need it.
   */
-  [[nodiscard]] virtual RHIVertexBuffer* createVertexBuffer(uint32_t numberOfBytes, const void* data = nullptr, uint32_t bufferFlags = 0, BufferUsage bufferUsage = BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
+  [[nodiscard]] virtual RHIVertexBuffer* createVertexBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, RECore::uint32 bufferFlags = 0, BufferUsage bufferUsage = BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
   *  @brief
@@ -138,7 +138,7 @@ public:
   *  @return
   *    The created IBO instance, null pointer on error. Release the returned instance if you no longer need it.
   */
-  [[nodiscard]] virtual RHIIndexBuffer* createIndexBuffer(uint32_t numberOfBytes, const void* data = nullptr, uint32_t bufferFlags = 0, BufferUsage bufferUsage = BufferUsage::STATIC_DRAW, IndexBufferFormat::Enum indexBufferFormat = IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
+  [[nodiscard]] virtual RHIIndexBuffer* createIndexBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, RECore::uint32 bufferFlags = 0, BufferUsage bufferUsage = BufferUsage::STATIC_DRAW, IndexBufferFormat::Enum indexBufferFormat = IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
   *  @brief
@@ -161,7 +161,7 @@ public:
   *    - It's valid that a vertex array implementation is adding a reference and releasing it again at once
   *      (this means that in the case of not having any more references, a vertex buffer might get destroyed when calling this method)
   */
-  [[nodiscard]] virtual RHIVertexArray* createVertexArray(const VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const VertexArrayVertexBuffer* vertexBuffers, RHIIndexBuffer* indexBuffer = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
+  [[nodiscard]] virtual RHIVertexArray* createVertexArray(const VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const VertexArrayVertexBuffer* vertexBuffers, RHIIndexBuffer* indexBuffer = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
   *  @brief
@@ -184,7 +184,7 @@ public:
   *  @note
   *    - Only supported if "Rhi::Capabilities::maximumTextureBufferSize" is not 0
   */
-  [[nodiscard]] virtual RHITextureBuffer* createTextureBuffer(uint32_t numberOfBytes, const void* data = nullptr, uint32_t bufferFlags = BufferFlag::SHADER_RESOURCE, BufferUsage bufferUsage = BufferUsage::STATIC_DRAW, TextureFormat::Enum textureFormat = TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
+  [[nodiscard]] virtual RHITextureBuffer* createTextureBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, RECore::uint32 bufferFlags = BufferFlag::SHADER_RESOURCE, BufferUsage bufferUsage = BufferUsage::STATIC_DRAW, TextureFormat::Enum textureFormat = TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
   *  @brief
@@ -207,7 +207,7 @@ public:
   *  @note
   *    - Only supported if "Rhi::Capabilities::maximumStructuredBufferSize" is not 0
   */
-  [[nodiscard]] virtual RHIStructuredBuffer* createStructuredBuffer(uint32_t numberOfBytes, const void* data, uint32_t bufferFlags, BufferUsage bufferUsage, uint32_t numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
+  [[nodiscard]] virtual RHIStructuredBuffer* createStructuredBuffer(RECore::uint32 numberOfBytes, const void* data, RECore::uint32 bufferFlags, BufferUsage bufferUsage, RECore::uint32 numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
   *  @brief
@@ -228,7 +228,7 @@ public:
   *  @note
   *    - Only supported if "Rhi::Capabilities::maximumIndirectBufferSize" is >0
   */
-  [[nodiscard]] virtual RHIIndirectBuffer* createIndirectBuffer(uint32_t numberOfBytes, const void* data = nullptr, uint32_t indirectBufferFlags = 0, BufferUsage bufferUsage = BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
+  [[nodiscard]] virtual RHIIndirectBuffer* createIndirectBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, RECore::uint32 indirectBufferFlags = 0, BufferUsage bufferUsage = BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   /**
   *  @brief
@@ -248,7 +248,7 @@ public:
   *    - Only supported if "Rhi::Capabilities::maximumUniformBufferSize" is >0
   *    - There are no buffer flags by intent since an uniform buffer can't be used for unordered access and as a consequence an uniform buffer must always used as shader resource to not be pointless
   */
-  [[nodiscard]] virtual RHIUniformBuffer* createUniformBuffer(uint32_t numberOfBytes, const void* data = nullptr, BufferUsage bufferUsage = BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
+  [[nodiscard]] virtual RHIUniformBuffer* createUniformBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, BufferUsage bufferUsage = BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   // Protected methods
 protected:

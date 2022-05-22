@@ -82,7 +82,7 @@ public:
         TextureAddressMode::CLAMP,    // addressV (Rhi::TextureAddressMode)		"CLAMP"							"CLAMP"							"WRAP"					"WRAP"
         TextureAddressMode::CLAMP,    // addressW (Rhi::TextureAddressMode)		"CLAMP"							"CLAMP"							"WRAP"					"WRAP"
         0.0f,              // mipLodBias (float)						"0.0f"							"0.0f"							"0.0f"					"0.0f"
-        16,                // maxAnisotropy (uint32_t)					"16"							"16"							"1"						"1"
+        16,                // maxAnisotropy (RECore::uint32)					"16"							"16"							"1"						"1"
         ComparisonFunc::NEVER,      // comparisonFunc (Rhi::ComparisonFunc)		"NEVER"							"NEVER"							<unsupported>			"LESS_EQUAL"
         {
           0.0f,            // borderColor[0] (float)					"0.0f"							"0.0f"							"0.0f"					"0.0f"

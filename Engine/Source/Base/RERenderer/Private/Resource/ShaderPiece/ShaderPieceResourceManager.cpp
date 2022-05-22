@@ -58,12 +58,12 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
-	uint32_t ShaderPieceResourceManager::getNumberOfResources() const
+	RECore::uint32 ShaderPieceResourceManager::getNumberOfResources() const
 	{
 		return mInternalResourceManager->getResources().getNumberOfElements();
 	}
 
-RECore::IResource& ShaderPieceResourceManager::getResourceByIndex(uint32_t index) const
+RECore::IResource& ShaderPieceResourceManager::getResourceByIndex(RECore::uint32 index) const
 	{
 		return mInternalResourceManager->getResources().getElementByIndex(index);
 	}

@@ -54,7 +54,7 @@ Framebuffer::Framebuffer(RERHI::RHIRenderPass &renderPass,
   // Vulkan attachment descriptions and views to fill
   std::vector<VkImageView> vkImageViews;
   vkImageViews.resize(mNumberOfColorTextures + ((nullptr != depthStencilFramebufferAttachment) ? 1u : 0u));
-  uint32_t currentVkAttachmentDescriptionIndex = 0;
+  RECore::uint32 currentVkAttachmentDescriptionIndex = 0;
 
   // Add a reference to the used color textures
   if (mNumberOfColorTextures > 0) {
@@ -234,11 +234,11 @@ Framebuffer::Framebuffer(RERHI::RHIRenderPass &renderPass,
       nullptr,                  // pNext (const void*)
       0,                      // flags (VkFramebufferCreateFlags)
       mVkRenderPass,                // renderPass (VkRenderPass)
-      static_cast<uint32_t>(vkImageViews.size()),  // attachmentCount (uint32_t)
+      static_cast<RECore::uint32>(vkImageViews.size()),  // attachmentCount (RECore::uint32)
       vkImageViews.data(),            // pAttachments (const VkImageView*)
-      mWidth,                    // width (uint32_t)
-      mHeight,                  // height (uint32_t
-      1                      // layers (uint32_t)
+      mWidth,                    // width (RECore::uint32)
+      mHeight,                  // height (RECore::uint32
+      1                      // layers (RECore::uint32)
     };
   if (vkCreateFramebuffer(vulkanRhi.getVulkanContext().getVkDevice(), &vkFramebufferCreateInfo,
                           vulkanRhi.getVkAllocationCallbacks(), &mVkFramebuffer) == VK_SUCCESS) {
@@ -248,8 +248,8 @@ Framebuffer::Framebuffer(RERHI::RHIRenderPass &renderPass,
           {
             RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "FBO", 6)	// 6 = "FBO: " including terminating zero
             const VkDevice vkDevice = vulkanRhi.getVulkanContext().getVkDevice();
-            Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT, (uint64_t)mVkRenderPass, detailedDebugName);
-            Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT, (uint64_t)mVkFramebuffer, detailedDebugName);
+            Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT, (RECore::uint64)mVkRenderPass, detailedDebugName);
+            Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT, (RECore::uint64)mVkFramebuffer, detailedDebugName);
           }
 #endif
   } else {

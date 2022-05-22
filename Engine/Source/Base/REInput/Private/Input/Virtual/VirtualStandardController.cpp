@@ -247,7 +247,7 @@ void VirtualStandardController::connectToDevices()
 
   // Connect character controls
   std::vector<Device*> &lstDevices = mInputManager.getDevices();
-  for (uint32_t i=0; i<lstDevices.size(); i++) {
+  for (RECore::uint32 i=0; i<lstDevices.size(); i++) {
     // Get device
     Device *pDevice = lstDevices[i];
 

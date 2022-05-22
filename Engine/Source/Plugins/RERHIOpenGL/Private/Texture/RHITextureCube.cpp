@@ -49,7 +49,7 @@ TextureCube::~TextureCube() {
   glDeleteTextures(1, &mOpenGLTexture);
 }
 
-TextureCube::TextureCube(RHIDynamicRHI &openGLRhi, uint32_t width, RERHI::TextureFormat::Enum textureFormat
+TextureCube::TextureCube(RHIDynamicRHI &openGLRhi, RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat
                          RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
   RHITextureCube(openGLRhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mOpenGLTexture(0),

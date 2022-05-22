@@ -50,8 +50,8 @@
 //[-------------------------------------------------------]
 namespace RERHIVulkan {
 
-ResourceGroup::ResourceGroup(RootSignature &rootSignature, uint32_t rootParameterIndex, VkDescriptorSet vkDescriptorSet,
-                             uint32_t numberOfResources, RERHI::RHIResource **resources,
+ResourceGroup::ResourceGroup(RootSignature &rootSignature, RECore::uint32 rootParameterIndex, VkDescriptorSet vkDescriptorSet,
+                             RECore::uint32 numberOfResources, RERHI::RHIResource **resources,
                              RERHI::RHISamplerState **samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHIResourceGroup(rootSignature.getRhi() RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mRootSignature(rootSignature),
@@ -66,14 +66,14 @@ ResourceGroup::ResourceGroup(RootSignature &rootSignature, uint32_t rootParamete
   const VkDevice vkDevice = vulkanRhi.getVulkanContext().getVkDevice();
   if (nullptr != samplerStates) {
     mSamplerStates = RHI_MALLOC_TYPED(vulkanRhi.getContext(), RERHI::RHISamplerState*, mNumberOfResources);
-    for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex) {
+    for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex) {
       RERHI::RHISamplerState *samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
       if (nullptr != samplerState) {
         samplerState->AddReference();
       }
     }
   }
-  for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources) {
+  for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources) {
     RERHI::RHIResource *resource = *resources;
     RHI_ASSERT(nullptr != resource, "Invalid Vulkan resource")
     mResources[resourceIndex] = resource;
@@ -95,9 +95,9 @@ ResourceGroup::ResourceGroup(RootSignature &rootSignature, uint32_t rootParamete
             VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,    // sType (VkStructureType)
             nullptr,                  // pNext (const void*)
             mVkDescriptorSet,              // dstSet (VkDescriptorSet)
-            resourceIndex,                // dstBinding (uint32_t)
-            0,                      // dstArrayElement (uint32_t)
-            1,                      // descriptorCount (uint32_t)
+            resourceIndex,                // dstBinding (RECore::uint32)
+            0,                      // dstArrayElement (RECore::uint32)
+            1,                      // descriptorCount (RECore::uint32)
             VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,      // descriptorType (VkDescriptorType)
             nullptr,                  // pImageInfo (const VkDescriptorImageInfo*)
             &vkDescriptorBufferInfo,          // pBufferInfo (const VkDescriptorBufferInfo*)
@@ -119,9 +119,9 @@ ResourceGroup::ResourceGroup(RootSignature &rootSignature, uint32_t rootParamete
             VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,    // sType (VkStructureType)
             nullptr,                  // pNext (const void*)
             mVkDescriptorSet,              // dstSet (VkDescriptorSet)
-            resourceIndex,                // dstBinding (uint32_t)
-            0,                      // dstArrayElement (uint32_t)
-            1,                      // descriptorCount (uint32_t)
+            resourceIndex,                // dstBinding (RECore::uint32)
+            0,                      // dstArrayElement (RECore::uint32)
+            1,                      // descriptorCount (RECore::uint32)
             VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,      // descriptorType (VkDescriptorType)
             nullptr,                  // pImageInfo (const VkDescriptorImageInfo*)
             &vkDescriptorBufferInfo,          // pBufferInfo (const VkDescriptorBufferInfo*)
@@ -142,9 +142,9 @@ ResourceGroup::ResourceGroup(RootSignature &rootSignature, uint32_t rootParamete
             VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,                                                        // sType (VkStructureType)
             nullptr,                                                                      // pNext (const void*)
             mVkDescriptorSet,                                                                  // dstSet (VkDescriptorSet)
-            resourceIndex,                                                                    // dstBinding (uint32_t)
-            0,                                                                          // dstArrayElement (uint32_t)
-            1,                                                                          // descriptorCount (uint32_t)
+            resourceIndex,                                                                    // dstBinding (RECore::uint32)
+            0,                                                                          // dstArrayElement (RECore::uint32)
+            1,                                                                          // descriptorCount (RECore::uint32)
             (RERHI::DescriptorRangeType::SRV == descriptorRange.rangeType) ? VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER
                                                                            : VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER,  // descriptorType (VkDescriptorType)
             nullptr,                                                                      // pImageInfo (const VkDescriptorImageInfo*)
@@ -171,9 +171,9 @@ ResourceGroup::ResourceGroup(RootSignature &rootSignature, uint32_t rootParamete
             VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,  // sType (VkStructureType)
             nullptr,                // pNext (const void*)
             mVkDescriptorSet,            // dstSet (VkDescriptorSet)
-            resourceIndex,              // dstBinding (uint32_t)
-            0,                    // dstArrayElement (uint32_t)
-            1,                    // descriptorCount (uint32_t)
+            resourceIndex,              // dstBinding (RECore::uint32)
+            0,                    // dstArrayElement (RECore::uint32)
+            1,                    // descriptorCount (RECore::uint32)
             VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,    // descriptorType (VkDescriptorType)
             nullptr,                // pImageInfo (const VkDescriptorImageInfo*)
             &vkDescriptorBufferInfo,        // pBufferInfo (const VkDescriptorBufferInfo*)
@@ -195,9 +195,9 @@ ResourceGroup::ResourceGroup(RootSignature &rootSignature, uint32_t rootParamete
             VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,    // sType (VkStructureType)
             nullptr,                  // pNext (const void*)
             mVkDescriptorSet,              // dstSet (VkDescriptorSet)
-            resourceIndex,                // dstBinding (uint32_t)
-            0,                      // dstArrayElement (uint32_t)
-            1,                      // descriptorCount (uint32_t)
+            resourceIndex,                // dstBinding (RECore::uint32)
+            0,                      // dstArrayElement (RECore::uint32)
+            1,                      // descriptorCount (RECore::uint32)
             VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,      // descriptorType (VkDescriptorType)
             nullptr,                  // pImageInfo (const VkDescriptorImageInfo*)
             &vkDescriptorBufferInfo,          // pBufferInfo (const VkDescriptorBufferInfo*)
@@ -219,9 +219,9 @@ ResourceGroup::ResourceGroup(RootSignature &rootSignature, uint32_t rootParamete
             VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,  // sType (VkStructureType)
             nullptr,                // pNext (const void*)
             mVkDescriptorSet,            // dstSet (VkDescriptorSet)
-            resourceIndex,              // dstBinding (uint32_t)
-            0,                    // dstArrayElement (uint32_t)
-            1,                    // descriptorCount (uint32_t)
+            resourceIndex,              // dstBinding (RECore::uint32)
+            0,                    // dstArrayElement (RECore::uint32)
+            1,                    // descriptorCount (RECore::uint32)
             VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,    // descriptorType (VkDescriptorType)
             nullptr,                // pImageInfo (const VkDescriptorImageInfo*)
             &vkDescriptorBufferInfo,        // pBufferInfo (const VkDescriptorBufferInfo*)
@@ -336,9 +336,9 @@ ResourceGroup::ResourceGroup(RootSignature &rootSignature, uint32_t rootParamete
             VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,                                    // sType (VkStructureType)
             nullptr,                                                  // pNext (const void*)
             mVkDescriptorSet,                                              // dstSet (VkDescriptorSet)
-            resourceIndex,                                                // dstBinding (uint32_t)
-            0,                                                      // dstArrayElement (uint32_t)
-            1,                                                      // descriptorCount (uint32_t)
+            resourceIndex,                                                // dstBinding (RECore::uint32)
+            0,                                                      // dstArrayElement (RECore::uint32)
+            1,                                                      // descriptorCount (RECore::uint32)
             (nullptr != samplerState) ? VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER
                                       : VK_DESCRIPTOR_TYPE_STORAGE_IMAGE,  // descriptorType (VkDescriptorType)
             &vkDescriptorImageInfo,                                            // pImageInfo (const VkDescriptorImageInfo*)
@@ -381,7 +381,7 @@ ResourceGroup::ResourceGroup(RootSignature &rootSignature, uint32_t rootParamete
   if (nullptr != vkDebugMarkerSetObjectNameEXT)
         {
           RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Resource group", 17)	// 17 = "Resource group: " including terminating zero
-          Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT, (uint64_t)mVkDescriptorSet, detailedDebugName);
+          Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT, (RECore::uint64)mVkDescriptorSet, detailedDebugName);
         }
 #endif
 }
@@ -394,7 +394,7 @@ ResourceGroup::~ResourceGroup() {
 // Remove our reference from the RHI resources
   const RERHI::RHIContext &context = getRhi().getContext();
   if (nullptr != mSamplerStates) {
-    for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex) {
+    for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex) {
       RERHI::RHISamplerState *samplerState = mSamplerStates[resourceIndex];
       if (nullptr != samplerState) {
         samplerState->Release();
@@ -402,7 +402,7 @@ ResourceGroup::~ResourceGroup() {
     }
     RHI_FREE(context, mSamplerStates);
   }
-  for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex) {
+  for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex) {
     mResources[resourceIndex]->Release();
   }
   RHI_FREE(context, mResources);

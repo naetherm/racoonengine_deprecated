@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <RERHI/Rhi.h>
-#include <inttypes.h>	// For uint32_t, uint64_t etc.
+#include <inttypes.h>	// For RECore::uint32, uint64_t etc.
 #include <unordered_map>
 
 
@@ -77,7 +77,7 @@ namespace RERenderer
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] RERHI::RHIResourceGroup* createResourceGroup(RERHI::RHIRootSignature& rootSignature, uint32_t rootParameterIndex, uint32_t numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+		[[nodiscard]] RERHI::RHIResourceGroup* createResourceGroup(RERHI::RHIRootSignature& rootSignature, RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 		void garbageCollection();
 
 
@@ -101,7 +101,7 @@ namespace RERenderer
 	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
-		typedef std::unordered_map<uint32_t, RERHI::RHIResourceGroup*> ResourceGroups;
+		typedef std::unordered_map<RECore::uint32, RERHI::RHIResourceGroup*> ResourceGroups;
 
 
 	//[-------------------------------------------------------]
@@ -110,7 +110,7 @@ namespace RERenderer
 	private:
 		IRenderer&	   mRenderer;	///< Renderer instance, do not destroy the instance
 		ResourceGroups mResourceGroups;
-		uint32_t	   mGarbageCollectionCounter;
+		RECore::uint32	   mGarbageCollectionCounter;
 
 
 	};

@@ -44,9 +44,9 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;				///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
-	typedef uint32_t MaterialTechniqueId;	///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
-	typedef uint32_t MaterialResourceId;	///< POD material resource identifier
+	typedef RECore::StringId AssetId;				///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::uint32 MaterialTechniqueId;	///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
+	typedef RECore::uint32 MaterialResourceId;	///< POD material resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -94,7 +94,7 @@ namespace RERenderer
 	//[ Public virtual RERenderer::ISceneItem methods           ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void deserialize(uint32_t numberOfBytes, const uint8_t* data) override;
+		virtual void deserialize(RECore::uint32 numberOfBytes, const RECore::uint8* data) override;
 		virtual void onAttachedToSceneNode(SceneNode& sceneNode) override;
 
 		inline virtual void onDetachedFromSceneNode(SceneNode& sceneNode) override

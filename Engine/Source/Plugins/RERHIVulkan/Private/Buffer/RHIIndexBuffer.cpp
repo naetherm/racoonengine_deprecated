@@ -34,7 +34,7 @@
 namespace RERHIVulkan {
 
 
-IndexBuffer::IndexBuffer(RHIDynamicRHI& vulkanRhi, uint32_t numberOfBytes, const void* data, uint32_t bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+IndexBuffer::IndexBuffer(RHIDynamicRHI& vulkanRhi, RECore::uint32 numberOfBytes, const void* data, RECore::uint32 bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 RHIIndexBuffer(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mVkIndexType(Mapping::getVulkanType(vulkanRhi.getContext(), indexBufferFormat)),
 mVkBuffer(VK_NULL_HANDLE),
@@ -53,8 +53,8 @@ mVkDeviceMemory(VK_NULL_HANDLE)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "IBO", 6)	// 6 = "IBO: " including terminating zero
 					const VkDevice vkDevice = vulkanRhi.getVulkanContext().getVkDevice();
-					Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT, (uint64_t)mVkBuffer, detailedDebugName);
-					Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT, (uint64_t)mVkDeviceMemory, detailedDebugName);
+					Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT, (RECore::uint64)mVkBuffer, detailedDebugName);
+					Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT, (RECore::uint64)mVkDeviceMemory, detailedDebugName);
 				}
 #endif
 }

@@ -46,9 +46,9 @@ class RHIDynamicRHI;
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 VertexArrayVaoDsa::VertexArrayVaoDsa(RHIDynamicRHI &openGLRhi, const RERHI::VertexAttributes &vertexAttributes,
-                                     uint32_t numberOfVertexBuffers,
+                                     RECore::uint32 numberOfVertexBuffers,
                                      const RERHI::VertexArrayVertexBuffer *vertexBuffers, IndexBuffer *indexBuffer,
-                                     uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+                                     RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   VertexArrayVao(openGLRhi, numberOfVertexBuffers, vertexBuffers, indexBuffer, id RHI_RESOURCE_DEBUG_PASS_PARAMETER) {
 // Vertex buffer reference handling is done within the base class "VertexArrayVao"
   const bool isArbDsa = openGLRhi.getExtensions().isGL_ARB_direct_state_access();

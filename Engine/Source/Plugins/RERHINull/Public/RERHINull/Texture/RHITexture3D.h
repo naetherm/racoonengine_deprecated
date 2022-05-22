@@ -72,7 +72,7 @@ public:
   *  @param[in] depth
   *    The depth of the texture
   */
-  Texture3D(RHIDynamicRHI& nullRhi, uint32_t width, uint32_t height, uint32_t depth RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  Texture3D(RHIDynamicRHI& nullRhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief

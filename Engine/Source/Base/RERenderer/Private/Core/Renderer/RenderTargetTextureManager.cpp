@@ -104,7 +104,7 @@ namespace RERenderer
 			// Register the new render target texture element
 			++renderTargetTextureElement.numberOfReferences;
 			mSortedRenderTargetTextureVector.push_back(renderTargetTextureElement);
-			mAssetIdToIndex.emplace(assetId, static_cast<uint32_t>(mSortedRenderTargetTextureVector.size() - 1));
+			mAssetIdToIndex.emplace(assetId, static_cast<RECore::uint32>(mSortedRenderTargetTextureVector.size() - 1));
 		}
 		/*
 		SortedRenderTargetTextureVector::iterator iterator = std::lower_bound(mSortedRenderTargetTextureVector.begin(), mSortedRenderTargetTextureVector.end(), renderTargetTextureElement, ::detail::orderRenderTargetTextureElementByRenderTargetTextureSignatureId);
@@ -125,7 +125,7 @@ namespace RERenderer
 		*/
 	}
 
-	RERHI::RHITexture* RenderTargetTextureManager::getTextureByAssetId(AssetId assetId, const RERHI::RHIRenderTarget& renderTarget, uint8_t numberOfMultisamples, float resolutionScale, const RenderTargetTextureSignature** outRenderTargetTextureSignature)
+	RERHI::RHITexture* RenderTargetTextureManager::getTextureByAssetId(AssetId assetId, const RERHI::RHIRenderTarget& renderTarget, RECore::uint8 numberOfMultisamples, float resolutionScale, const RenderTargetTextureSignature** outRenderTargetTextureSignature)
 	{
 		RERHI::RHITexture* texture = nullptr;
 
@@ -154,12 +154,12 @@ namespace RERenderer
 				if (nullptr == renderTargetTextureElement.texture)
 				{
 					// Get the texture width and height and apply resolution scale in case the main compositor workspace render target is used
-					uint32_t width = renderTargetTextureSignature.getWidth();
-					uint32_t height = renderTargetTextureSignature.getHeight();
+					RECore::uint32 width = renderTargetTextureSignature.getWidth();
+					RECore::uint32 height = renderTargetTextureSignature.getHeight();
 					if (RECore::isInvalid(width) || RECore::isInvalid(height))
 					{
-						uint32_t renderTargetWidth = 1;
-						uint32_t renderTargetHeight = 1;
+						RECore::uint32 renderTargetWidth = 1;
+						RECore::uint32 renderTargetHeight = 1;
 						renderTarget.getWidthAndHeight(renderTargetWidth, renderTargetHeight);
 						if ((renderTargetTextureSignature.getFlags() & RenderTargetTextureSignature::Flag::ALLOW_RESOLUTION_SCALE) == 0)
 						{
@@ -167,7 +167,7 @@ namespace RERenderer
 						}
 						if (RECore::isInvalid(width))
 						{
-							width = static_cast<uint32_t>(static_cast<float>(renderTargetWidth) * resolutionScale * renderTargetTextureSignature.getWidthScale());
+							width = static_cast<RECore::uint32>(static_cast<float>(renderTargetWidth) * resolutionScale * renderTargetTextureSignature.getWidthScale());
 							if (width < 1)
 							{
 								width = 1;
@@ -175,7 +175,7 @@ namespace RERenderer
 						}
 						if (RECore::isInvalid(height))
 						{
-							height = static_cast<uint32_t>(static_cast<float>(renderTargetHeight) * resolutionScale * renderTargetTextureSignature.getHeightScale());
+							height = static_cast<RECore::uint32>(static_cast<float>(renderTargetHeight) * resolutionScale * renderTargetTextureSignature.getHeightScale());
 							if (height < 1)
 							{
 								height = 1;
@@ -184,7 +184,7 @@ namespace RERenderer
 					}
 
 					// Get texture flags
-					uint32_t textureFlags = 0;
+					RECore::uint32 textureFlags = 0;
 					if ((renderTargetTextureSignature.getFlags() & RenderTargetTextureSignature::Flag::UNORDERED_ACCESS) != 0)
 					{
 						textureFlags |= RERHI::TextureFlag::UNORDERED_ACCESS;

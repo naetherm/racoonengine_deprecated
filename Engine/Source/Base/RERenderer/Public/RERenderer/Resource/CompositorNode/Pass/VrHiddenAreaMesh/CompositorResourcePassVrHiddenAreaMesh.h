@@ -55,19 +55,19 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("VrHiddenAreaMesh");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("VrHiddenAreaMesh");
 
 
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline uint32_t getFlags() const	// Combination of "RERHI::ClearFlag", except for color-flag
+		[[nodiscard]] inline RECore::uint32 getFlags() const	// Combination of "RERHI::ClearFlag", except for color-flag
 		{
 			return mFlags;
 		}
 
-		[[nodiscard]] inline uint32_t getStencil() const
+		[[nodiscard]] inline RECore::uint32 getStencil() const
 		{
 			return mStencil;
 		}
@@ -82,7 +82,7 @@ namespace RERenderer
 			return TYPE_ID;
 		}
 
-		virtual void deserialize(uint32_t numberOfBytes, const uint8_t* data) override;
+		virtual void deserialize(RECore::uint32 numberOfBytes, const RECore::uint8* data) override;
 
 
 	//[-------------------------------------------------------]
@@ -110,8 +110,8 @@ namespace RERenderer
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t mFlags;	///< Combination of "RERHI::ClearFlag", except for color-flag
-		uint32_t mStencil;
+		RECore::uint32 mFlags;	///< Combination of "RERHI::ClearFlag", except for color-flag
+		RECore::uint32 mStencil;
 
 
 	};

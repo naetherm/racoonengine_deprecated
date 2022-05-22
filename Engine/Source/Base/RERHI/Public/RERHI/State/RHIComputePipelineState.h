@@ -72,7 +72,7 @@ protected:
   *  @param[in] id
   *    The unique compact graphics or compute pipeline state ID
   */
-  inline RHIComputePipelineState(RHIDynamicRHI &rhi, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+  inline RHIComputePipelineState(RHIDynamicRHI &rhi, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
     RHIPipelineState(ResourceType::COMPUTE_PIPELINE_STATE, rhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER) {
 #ifdef RHI_STATISTICS
     // Update the statistics

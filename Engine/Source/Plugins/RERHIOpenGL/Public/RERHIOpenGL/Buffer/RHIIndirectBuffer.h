@@ -81,7 +81,7 @@ public:
   //[ Public virtual RERHI::RHIIndirectBuffer methods           ]
   //[-------------------------------------------------------]
 public:
-  [[nodiscard]] inline virtual const uint8_t* getEmulationData() const override
+  [[nodiscard]] inline virtual const RECore::uint8* getEmulationData() const override
   {
     return nullptr;
   }

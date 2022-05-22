@@ -120,7 +120,7 @@ void IOpenGLES3Context::deinitialize() {
   }
 }
 
-EGLConfig IOpenGLES3Context::chooseConfig(uint32_t multisampleAntialiasingSamples) const {
+EGLConfig IOpenGLES3Context::chooseConfig(RECore::uint32 multisampleAntialiasingSamples) const {
   // Try to find a working EGL configuration
   EGLConfig eglConfig = nullptr;
   EGLint numberOfConfigurations = 0;
@@ -184,7 +184,7 @@ EGLBoolean IOpenGLES3Context::makeCurrent(EGLSurface eglSurface) {
   return eglMakeCurrent(mEGLDisplay, eglSurface, eglSurface, mEGLContext);
 }
 
-bool IOpenGLES3Context::initialize(uint32_t multisampleAntialiasingSamples) {
+bool IOpenGLES3Context::initialize(RECore::uint32 multisampleAntialiasingSamples) {
   if (mUseExternalContext) {
     return true;
   }

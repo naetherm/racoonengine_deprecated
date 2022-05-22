@@ -41,7 +41,7 @@ namespace RERenderer
 		mMaterialResourceManager(&materialResource.getResourceManager<MaterialResourceManager>()),
 		mMaterialResourceId(materialResource.getId()),
 		mAssignedMaterialPool(nullptr),
-		mAssignedMaterialSlot(RECore::getInvalid<uint32_t>()),
+		mAssignedMaterialSlot(RECore::getInvalid<RECore::uint32>()),
 		mGlobalIndex(RECore::getInvalid<int>()),
 		mDirty(false)
 	{

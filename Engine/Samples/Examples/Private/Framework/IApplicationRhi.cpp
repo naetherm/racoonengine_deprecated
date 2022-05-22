@@ -185,8 +185,8 @@ void IApplicationRhi::onDrawRequest()
 
 			{ // Since Direct3D 12 is command list based, the viewport and scissor rectangle must be set in every draw call to work with all supported RHI implementations
 				// Get the window size
-				uint32_t width  = 1;
-				uint32_t height = 1;
+				RECore::uint32 width  = 1;
+				RECore::uint32 height = 1;
 				mMainSwapChain->getWidthAndHeight(width, height);
 
 				// Set the graphics viewport and scissor rectangle

@@ -33,7 +33,7 @@
 namespace RERHIOpenGLES3 {
 
 
-VertexBuffer::VertexBuffer(RHIDynamicRHI& openGLES3Rhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+VertexBuffer::VertexBuffer(RHIDynamicRHI& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 RHIVertexBuffer(openGLES3Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mOpenGLES3ArrayBuffer(0),
 mBufferSize(numberOfBytes)

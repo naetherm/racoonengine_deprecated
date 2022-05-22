@@ -48,7 +48,7 @@ class CompositorResourcePass final : public RERenderer::ICompositorResourcePass
 //[ Public definitions                                    ]
 //[-------------------------------------------------------]
 public:
-	static constexpr uint32_t TYPE_ID = STRING_ID("CompositorExample");
+	static constexpr RECore::uint32 TYPE_ID = STRING_ID("CompositorExample");
 
 
 //[-------------------------------------------------------]

@@ -55,7 +55,7 @@ namespace
 
 			// Read in the compositor resource node target passes
 			compositorTarget.setNumberOfCompositorResourcePasses(target.numberOfPasses);
-			for (uint32_t i = 0; i < target.numberOfPasses; ++i)
+			for (RECore::uint32 i = 0; i < target.numberOfPasses; ++i)
 			{
 				// Read the pass header
 				RERenderer::v1CompositorNode::PassHeader passHeader;
@@ -69,7 +69,7 @@ namespace
 				{
 					// Load in the compositor resource pass data
 					// TODO(naetherm) Get rid of the new/delete in here
-					uint8_t* data = new uint8_t[passHeader.numberOfBytes];
+					RECore::uint8* data = new RECore::uint8[passHeader.numberOfBytes];
 					file.read(data, passHeader.numberOfBytes);
 
 					// Deserialize the compositor resource pass
@@ -90,7 +90,7 @@ namespace
 			// Read in the compositor resource node input channels
 			// TODO(naetherm) Read all input channels in a single burst? (need to introduce a maximum number of input channels for this)
 			compositorNodeResource.reserveInputChannels(compositorNodeHeader.numberOfInputChannels);
-			for (uint32_t i = 0; i < compositorNodeHeader.numberOfInputChannels; ++i)
+			for (RECore::uint32 i = 0; i < compositorNodeHeader.numberOfInputChannels; ++i)
 			{
 				RERenderer::CompositorChannelId channelId;
 				file.read(&channelId, sizeof(RERenderer::CompositorChannelId));
@@ -99,7 +99,7 @@ namespace
 
 			// TODO(naetherm) Read all render target textures in a single burst?
 			compositorNodeResource.reserveRenderTargetTextures(compositorNodeHeader.numberOfRenderTargetTextures);
-			for (uint32_t i = 0; i < compositorNodeHeader.numberOfRenderTargetTextures; ++i)
+			for (RECore::uint32 i = 0; i < compositorNodeHeader.numberOfRenderTargetTextures; ++i)
 			{
 				RERenderer::v1CompositorNode::RenderTargetTexture renderTargetTexture;
 				file.read(&renderTargetTexture, sizeof(RERenderer::v1CompositorNode::RenderTargetTexture));
@@ -108,7 +108,7 @@ namespace
 
 			// TODO(naetherm) Read all framebuffers in a single burst?
 			compositorNodeResource.reserveFramebuffers(compositorNodeHeader.numberOfFramebuffers);
-			for (uint32_t i = 0; i < compositorNodeHeader.numberOfFramebuffers; ++i)
+			for (RECore::uint32 i = 0; i < compositorNodeHeader.numberOfFramebuffers; ++i)
 			{
 				RERenderer::v1CompositorNode::Framebuffer framebuffer;
 				file.read(&framebuffer, sizeof(RERenderer::v1CompositorNode::Framebuffer));
@@ -117,7 +117,7 @@ namespace
 
 			// Read in the compositor node resource targets
 			compositorNodeResource.reserveCompositorTargets(compositorNodeHeader.numberOfTargets);
-			for (uint32_t i = 0; i < compositorNodeHeader.numberOfTargets; ++i)
+			for (RECore::uint32 i = 0; i < compositorNodeHeader.numberOfTargets; ++i)
 			{
 				nodeTargetDeserialization(file, compositorNodeResource, compositorPassFactory);
 			}
@@ -125,7 +125,7 @@ namespace
 			// Read in the compositor resource node output channels
 			// TODO(naetherm) Read all output channels in a single burst? (need to introduce a maximum number of output channels for this)
 			compositorNodeResource.reserveOutputChannels(compositorNodeHeader.numberOfOutputChannels);
-			for (uint32_t i = 0; i < compositorNodeHeader.numberOfOutputChannels; ++i)
+			for (RECore::uint32 i = 0; i < compositorNodeHeader.numberOfOutputChannels; ++i)
 			{
 				RERenderer::CompositorChannelId channelId;
 				file.read(&channelId, sizeof(RERenderer::CompositorChannelId));

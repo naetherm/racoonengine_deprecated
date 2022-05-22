@@ -88,7 +88,7 @@ void Mesh::onInitialization()
 
 			// Setup
 			RERHI::RootSignatureBuilder rootSignatureBuilder;
-			rootSignatureBuilder.initialize(static_cast<uint32_t>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+			rootSignatureBuilder.initialize(static_cast<RECore::uint32>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
 			// Create the instance
 			mRootSignature = rhi->createRootSignature(rootSignatureBuilder);
@@ -112,39 +112,39 @@ void Mesh::onInitialization()
 				RERHI::VertexAttributeFormat::FLOAT_3,		// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Position",									// name[32] (char)
 				"POSITION",									// semanticName[32] (char)
-				0,											// semanticIndex (uint32_t)
+				0,											// semanticIndex (RECore::uint32)
 				// Data source
-				0,											// inputSlot (uint32_t)
-				0,											// alignedByteOffset (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4,		// strideInBytes (uint32_t)
-				0											// instancesPerElement (uint32_t)
+				0,											// inputSlot (RECore::uint32)
+				0,											// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4,		// strideInBytes (RECore::uint32)
+				0											// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 1
 				// Data destination
 				RERHI::VertexAttributeFormat::FLOAT_2,		// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"TexCoord",									// name[32] (char)
 				"TEXCOORD",									// semanticName[32] (char)
-				0,											// semanticIndex (uint32_t)
+				0,											// semanticIndex (RECore::uint32)
 				// Data source
-				0,											// inputSlot (uint32_t)
-				sizeof(float) * 3,							// alignedByteOffset (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4,		// strideInBytes (uint32_t)
-				0											// instancesPerElement (uint32_t)
+				0,											// inputSlot (RECore::uint32)
+				sizeof(float) * 3,							// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4,		// strideInBytes (RECore::uint32)
+				0											// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 2
 				// Data destination
 				RERHI::VertexAttributeFormat::SHORT_4,		// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"QTangent",									// name[32] (char)
 				"TEXCOORD",									// semanticName[32] (char)
-				1,											// semanticIndex (uint32_t)
+				1,											// semanticIndex (RECore::uint32)
 				// Data source
-				0,											// inputSlot (uint32_t)
-				sizeof(float) * 5,							// alignedByteOffset (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4,		// strideInBytes (uint32_t)
-				0											// instancesPerElement (uint32_t)
+				0,											// inputSlot (RECore::uint32)
+				sizeof(float) * 5,							// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4,		// strideInBytes (RECore::uint32)
+				0											// instancesPerElement (RECore::uint32)
 			}
 		};
-		const RERHI::VertexAttributes vertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
+		const RERHI::VertexAttributes vertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(vertexAttributesLayout)), vertexAttributesLayout);
 
 		{ // Create sampler state and wrap it into a resource group instance
 			RERHI::SamplerState samplerStateSettings = RERHI::RHISamplerState::getDefaultSamplerState();
@@ -249,8 +249,8 @@ void Mesh::onDraw(RERHI::RHICommandBuffer& commandBuffer)
 			const RERHI::RHIRenderTarget* renderTarget = getMainRenderTarget();
 			if (nullptr != renderTarget)
 			{
-				uint32_t width  = 1;
-				uint32_t height = 1;
+				RECore::uint32 width  = 1;
+				RECore::uint32 height = 1;
 				renderTarget->getWidthAndHeight(width, height);
 
 				// Get the aspect ratio
@@ -326,7 +326,7 @@ void Mesh::fillCommandBuffer()
 			// Create resource group
 			RERHI::RHIResource* resources[4] = { mUniformBuffer, _argb_nxaTextureResource->getTexturePtr(), _hr_rg_mb_nyaTextureResource->getTexturePtr(), emissiveTextureResource->getTexturePtr() };
 			RERHI::RHISamplerState* samplerStates[4] = { nullptr, mSamplerStatePtr, mSamplerStatePtr, mSamplerStatePtr };
-			mResourceGroup = mRootSignature->createResourceGroup(0, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, samplerStates);
+			mResourceGroup = mRootSignature->createResourceGroup(0, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, samplerStates);
 		}
 
 		// Render frame

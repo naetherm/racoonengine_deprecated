@@ -51,48 +51,48 @@ namespace
 				RERHI::VertexAttributeFormat::FLOAT_3,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Position",								// name[32] (char)
 				"POSITION",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				0,										// alignedByteOffset (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4,	// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				0,										// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4,	// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 1
 				// Data destination
 				RERHI::VertexAttributeFormat::FLOAT_2,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"TexCoord",								// name[32] (char)
 				"TEXCOORD",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				sizeof(float) * 3,						// alignedByteOffset (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4,	// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				sizeof(float) * 3,						// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4,	// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 2
 				// Data destination
 				RERHI::VertexAttributeFormat::SHORT_4,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"QTangent",								// name[32] (char)
 				"TEXCOORD",								// semanticName[32] (char)
-				1,										// semanticIndex (uint32_t)
+				1,										// semanticIndex (RECore::uint32)
 				// Data source
-				0,										// inputSlot (uint32_t)
-				sizeof(float) * 5,						// alignedByteOffset (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4,	// strideInBytes (uint32_t)
-				0										// instancesPerElement (uint32_t)
+				0,										// inputSlot (RECore::uint32)
+				sizeof(float) * 5,						// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4,	// strideInBytes (RECore::uint32)
+				0										// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 3, see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html
 				// Data destination
 				RERHI::VertexAttributeFormat::UINT_1,		// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"drawId",								// name[32] (char)
 				"DRAWID",								// semanticName[32] (char)
-				0,										// semanticIndex (uint32_t)
+				0,										// semanticIndex (RECore::uint32)
 				// Data source
-				1,										// inputSlot (uint32_t)
-				0,										// alignedByteOffset (uint32_t)
-				sizeof(uint32_t),						// strideInBytes (uint32_t)
-				1										// instancesPerElement (uint32_t)
+				1,										// inputSlot (RECore::uint32)
+				0,										// alignedByteOffset (RECore::uint32)
+				sizeof(RECore::uint32),						// strideInBytes (RECore::uint32)
+				1										// instancesPerElement (RECore::uint32)
 			}
 		};
 		static constexpr RERHI::VertexAttribute SkinnedVertexAttributesLayout[] =
@@ -102,72 +102,72 @@ namespace
 				RERHI::VertexAttributeFormat::FLOAT_3,							// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Position",														// name[32] (char)
 				"POSITION",														// semanticName[32] (char)
-				0,																// semanticIndex (uint32_t)
+				0,																// semanticIndex (RECore::uint32)
 				// Data source
-				0,																// inputSlot (uint32_t)
-				0,																// alignedByteOffset (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4 + sizeof(uint8_t) * 8,	// strideInBytes (uint32_t)
-				0																// instancesPerElement (uint32_t)
+				0,																// inputSlot (RECore::uint32)
+				0,																// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4 + sizeof(RECore::uint8) * 8,	// strideInBytes (RECore::uint32)
+				0																// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 1
 				// Data destination
 				RERHI::VertexAttributeFormat::FLOAT_2,							// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"TexCoord",														// name[32] (char)
 				"TEXCOORD",														// semanticName[32] (char)
-				0,																// semanticIndex (uint32_t)
+				0,																// semanticIndex (RECore::uint32)
 				// Data source
-				0,																// inputSlot (uint32_t)
-				sizeof(float) * 3,												// alignedByteOffset (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4 + sizeof(uint8_t) * 8,	// strideInBytes (uint32_t)
-				0																// instancesPerElement (uint32_t)
+				0,																// inputSlot (RECore::uint32)
+				sizeof(float) * 3,												// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4 + sizeof(RECore::uint8) * 8,	// strideInBytes (RECore::uint32)
+				0																// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 2
 				// Data destination
 				RERHI::VertexAttributeFormat::SHORT_4,							// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"QTangent",														// name[32] (char)
 				"TEXCOORD",														// semanticName[32] (char)
-				1,																// semanticIndex (uint32_t)
+				1,																// semanticIndex (RECore::uint32)
 				// Data source
-				0,																// inputSlot (uint32_t)
-				sizeof(float) * 5,												// alignedByteOffset (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4 + sizeof(uint8_t) * 8,	// strideInBytes (uint32_t)
-				0																// instancesPerElement (uint32_t)
+				0,																// inputSlot (RECore::uint32)
+				sizeof(float) * 5,												// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4 + sizeof(RECore::uint8) * 8,	// strideInBytes (RECore::uint32)
+				0																// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 3, see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html
 				// Data destination
 				RERHI::VertexAttributeFormat::UINT_1,								// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"drawId",														// name[32] (char)
 				"DRAWID",														// semanticName[32] (char)
-				0,																// semanticIndex (uint32_t)
+				0,																// semanticIndex (RECore::uint32)
 				// Data source
-				1,																// inputSlot (uint32_t)
-				0,																// alignedByteOffset (uint32_t)
-				sizeof(uint32_t),												// strideInBytes (uint32_t)
-				1																// instancesPerElement (uint32_t)
+				1,																// inputSlot (RECore::uint32)
+				0,																// alignedByteOffset (RECore::uint32)
+				sizeof(RECore::uint32),												// strideInBytes (RECore::uint32)
+				1																// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 4
 				// Data destination
 				RERHI::VertexAttributeFormat::R8G8B8A8_UINT,						// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"BlendIndices",													// name[32] (char)
 				"BLENDINDICES",													// semanticName[32] (char)
-				0,																// semanticIndex (uint32_t)
+				0,																// semanticIndex (RECore::uint32)
 				// Data source
-				0,																// inputSlot (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4,							// alignedByteOffset (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4 + sizeof(uint8_t) * 8,	// strideInBytes (uint32_t)
-				0																// instancesPerElement (uint32_t)
+				0,																// inputSlot (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4,							// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4 + sizeof(RECore::uint8) * 8,	// strideInBytes (RECore::uint32)
+				0																// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 5
 				// Data destination
 				RERHI::VertexAttributeFormat::R8G8B8A8_UINT,						// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"BlendWeights",													// name[32] (char)
 				"BLENDWEIGHT",													// semanticName[32] (char)
-				0,																// semanticIndex (uint32_t)
+				0,																// semanticIndex (RECore::uint32)
 				// Data source
-				0,																// inputSlot (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4 + sizeof(uint8_t) * 4,	// alignedByteOffset (uint32_t)
-				sizeof(float) * 5 + sizeof(short) * 4 + sizeof(uint8_t) * 8,	// strideInBytes (uint32_t)
-				0																// instancesPerElement (uint32_t)
+				0,																// inputSlot (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4 + sizeof(RECore::uint8) * 4,	// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 5 + sizeof(short) * 4 + sizeof(RECore::uint8) * 8,	// strideInBytes (RECore::uint32)
+				0																// instancesPerElement (RECore::uint32)
 			}
 		};
 
@@ -189,8 +189,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
-	const RERHI::VertexAttributes MeshResource::VERTEX_ATTRIBUTES(static_cast<uint32_t>(GLM_COUNTOF(::detail::StaticVertexAttributesLayout)), ::detail::StaticVertexAttributesLayout);
-	const RERHI::VertexAttributes MeshResource::SKINNED_VERTEX_ATTRIBUTES(static_cast<uint32_t>(GLM_COUNTOF(::detail::SkinnedVertexAttributesLayout)), ::detail::SkinnedVertexAttributesLayout);
+	const RERHI::VertexAttributes MeshResource::VERTEX_ATTRIBUTES(static_cast<RECore::uint32>(GLM_COUNTOF(::detail::StaticVertexAttributesLayout)), ::detail::StaticVertexAttributesLayout);
+	const RERHI::VertexAttributes MeshResource::SKINNED_VERTEX_ATTRIBUTES(static_cast<RECore::uint32>(GLM_COUNTOF(::detail::SkinnedVertexAttributesLayout)), ::detail::SkinnedVertexAttributesLayout);
 
 
 //[-------------------------------------------------------]

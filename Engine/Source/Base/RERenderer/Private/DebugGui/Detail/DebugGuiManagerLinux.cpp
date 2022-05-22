@@ -43,13 +43,13 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	void DebugGuiManagerLinux::onWindowResize(uint32_t width, uint32_t heigth)
+	void DebugGuiManagerLinux::onWindowResize(RECore::uint32 width, RECore::uint32 heigth)
 	{
 		mWindowWidth = width;
 		mWindowHeigth = heigth;
 	}
 
-	void DebugGuiManagerLinux::onKeyInput(uint32_t keySym, char character, bool pressed)
+	void DebugGuiManagerLinux::onKeyInput(RECore::uint32 keySym, char character, bool pressed)
 	{
 		#ifndef __ANDROID__
 			ImGuiIO& imGuiIo = ImGui::GetIO();
@@ -108,7 +108,7 @@ namespace RERenderer
 		}
 	}
 
-	void DebugGuiManagerLinux::onMouseButtonInput(uint32_t button, bool pressed)
+	void DebugGuiManagerLinux::onMouseButtonInput(RECore::uint32 button, bool pressed)
 	{
 		// The mouse buttons on X11 starts at index 1 for the left mouse button. In ImGui the left mouse button is at index 0. Compensate it.
 		if (button > 0 && button <= 5)
@@ -161,8 +161,8 @@ namespace RERenderer
 		ImGuiIO& imGuiIo = ImGui::GetIO();
 
 		{ // Setup display size (every frame to accommodate for render target resizing)
-			uint32_t width = 0;
-			uint32_t height = 0;
+			RECore::uint32 width = 0;
+			RECore::uint32 height = 0;
 			renderTarget.getWidthAndHeight(width, height);
 			imGuiIo.DisplaySize = ImVec2(static_cast<float>(width), static_cast<float>(height));
 		}
@@ -170,7 +170,7 @@ namespace RERenderer
 		{ // Setup time step
 			timeval currentTimeValue;
 			gettimeofday(&currentTimeValue, nullptr);
-			const uint64_t currentTime = currentTimeValue.tv_sec * 1000000 + currentTimeValue.tv_usec;
+			const RECore::uint64 currentTime = currentTimeValue.tv_sec * 1000000 + currentTimeValue.tv_usec;
 			imGuiIo.DeltaTime = static_cast<float>(currentTime - mTime) / 1000000.0f;
 			mTime = currentTime;
 		}

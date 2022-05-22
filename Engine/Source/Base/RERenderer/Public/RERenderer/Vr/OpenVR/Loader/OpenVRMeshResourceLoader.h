@@ -92,7 +92,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("openvr_mesh");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("openvr_mesh");
 		typedef std::vector<glm::vec3> BufferData;
 
 
@@ -174,8 +174,8 @@ namespace RERenderer
 	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
-		typedef std::vector<uint8_t>  VertexBufferData;
-		typedef std::vector<uint16_t> IndexBufferData;
+		typedef std::vector<RECore::uint8>  VertexBufferData;
+		typedef std::vector<RECore::uint16> IndexBufferData;
 
 
 	//[-------------------------------------------------------]

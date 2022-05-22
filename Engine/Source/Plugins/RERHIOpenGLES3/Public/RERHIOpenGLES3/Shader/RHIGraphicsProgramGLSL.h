@@ -332,7 +332,7 @@ private:
   //[ Private data                                          ]
   //[-------------------------------------------------------]
 private:
-  uint32_t mNumberOfRootSignatureParameters;	///< Number of root signature parameters
+  RECore::uint32 mNumberOfRootSignatureParameters;	///< Number of root signature parameters
   GLuint	 mOpenGLES3Program;					///< OpenGL ES 3 program, can be zero if no resource is allocated
   GLint	 mDrawIdUniformLocation;			///< Draw ID uniform location, used for "GL_EXT_base_instance"-emulation (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
 

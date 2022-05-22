@@ -56,7 +56,7 @@ RHIBufferManager(openGLRhi),
 mExtensions(&openGLRhi.getExtensions())
 {}
 
-RERHI::RHIVertexBuffer* BufferManager::createVertexBuffer(uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t bufferFlags, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIVertexBuffer* BufferManager::createVertexBuffer(RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   // "GL_ARB_vertex_buffer_object" required
   if (mExtensions->isGL_ARB_vertex_buffer_object())
@@ -81,7 +81,7 @@ RERHI::RHIVertexBuffer* BufferManager::createVertexBuffer(uint32_t numberOfBytes
   }
 }
 
-RERHI::RHIIndexBuffer* BufferManager::createIndexBuffer(uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t bufferFlags, RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIIndexBuffer* BufferManager::createIndexBuffer(RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   // "GL_ARB_vertex_buffer_object" required
   if (mExtensions->isGL_ARB_vertex_buffer_object())
@@ -106,7 +106,7 @@ RERHI::RHIIndexBuffer* BufferManager::createIndexBuffer(uint32_t numberOfBytes, 
   }
 }
 
-RERHI::RHIVertexArray* BufferManager::createVertexArray(const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, RERHI::RHIIndexBuffer* indexBuffer RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIVertexArray* BufferManager::createVertexArray(const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, RERHI::RHIIndexBuffer* indexBuffer RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -123,7 +123,7 @@ RERHI::RHIVertexArray* BufferManager::createVertexArray(const RERHI::VertexAttri
   RHI_ASSERT(nullptr == indexBuffer || &openGLRhi == &indexBuffer->getRhi(), "OpenGL error: The given index buffer resource is owned by another RHI instance")
 
   // Create vertex array
-  uint16_t id;
+  RECore::uint16 id;
   if (openGLRhi.VertexArrayMakeId.createID(id))
   {
     // Is "GL_ARB_vertex_array_object" there?
@@ -165,7 +165,7 @@ RERHI::RHIVertexArray* BufferManager::createVertexArray(const RERHI::VertexAttri
   return nullptr;
 }
 
-RERHI::RHITextureBuffer* BufferManager::createTextureBuffer(uint32_t numberOfBytes, const void* data, uint32_t , RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHITextureBuffer* BufferManager::createTextureBuffer(RECore::uint32 numberOfBytes, const void* data, RECore::uint32 , RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -194,7 +194,7 @@ RERHI::RHITextureBuffer* BufferManager::createTextureBuffer(uint32_t numberOfByt
   }
 }
 
-RERHI::RHIStructuredBuffer* BufferManager::createStructuredBuffer(uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t bufferFlags, RERHI::BufferUsage bufferUsage, [[maybe_unused]] uint32_t numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIStructuredBuffer* BufferManager::createStructuredBuffer(RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, RERHI::BufferUsage bufferUsage, [[maybe_unused]] RECore::uint32 numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -224,7 +224,7 @@ RERHI::RHIStructuredBuffer* BufferManager::createStructuredBuffer(uint32_t numbe
   }
 }
 
-RERHI::RHIIndirectBuffer* BufferManager::createIndirectBuffer(uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t indirectBufferFlags, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIIndirectBuffer* BufferManager::createIndirectBuffer(RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 indirectBufferFlags, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -256,7 +256,7 @@ RERHI::RHIIndirectBuffer* BufferManager::createIndirectBuffer(uint32_t numberOfB
   }
 }
 
-RERHI::RHIUniformBuffer* BufferManager::createUniformBuffer(uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIUniformBuffer* BufferManager::createUniformBuffer(RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   // "GL_ARB_uniform_buffer_object" required
   if (mExtensions->isGL_ARB_uniform_buffer_object())

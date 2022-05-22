@@ -47,12 +47,12 @@ namespace RERenderer
 	GraphicsProgramCacheId GraphicsProgramCacheManager::generateGraphicsProgramCacheId(const GraphicsPipelineStateSignature& graphicsPipelineStateSignature)
 	{
 		GraphicsProgramCacheId graphicsProgramCacheId = RECore::Math::FNV1a_INITIAL_HASH_32;
-		for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
+		for (RECore::uint8 i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
 		{
 			const ShaderCombinationId shaderCombinationId = graphicsPipelineStateSignature.getShaderCombinationId(static_cast<GraphicsShaderType>(i));
 			if (RECore::isValid(shaderCombinationId))
 			{
-				graphicsProgramCacheId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&shaderCombinationId), sizeof(ShaderCombinationId), graphicsProgramCacheId);
+				graphicsProgramCacheId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&shaderCombinationId), sizeof(ShaderCombinationId), graphicsProgramCacheId);
 			}
 		}
 
@@ -86,7 +86,7 @@ namespace RERenderer
 			// Create the shaders
 			ShaderCacheManager& shaderCacheManager = renderer.getShaderBlueprintResourceManager().getShaderCacheManager();
 			RERHI::RHIShader* shaders[NUMBER_OF_GRAPHICS_SHADER_TYPES] = {};
-			for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
+			for (RECore::uint8 i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
 			{
 				ShaderCache* shaderCache = shaderCacheManager.getGraphicsShaderCache(graphicsPipelineStateSignature, materialBlueprintResource, shaderLanguage, static_cast<GraphicsShaderType>(i));
 				if (nullptr != shaderCache)

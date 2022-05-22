@@ -82,7 +82,7 @@
 #include <cstdio>  // For printf(). Remove if you don't need the PrintRanges() function (mostly for debugging anyway).
 #endif
 
-#include <cstdint>	// uint32_t
+#include <cstdint>	// RECore::uint32
 #include <limits>	// std::numeric_limits<type>::max()
 #include <cstdlib>
 #include <cstring>

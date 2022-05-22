@@ -44,17 +44,17 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	uint32_t SkeletonResource::getBoneIndexByBoneId(uint32_t boneId) const
+	RECore::uint32 SkeletonResource::getBoneIndexByBoneId(RECore::uint32 boneId) const
 	{
 		// TODO(naetherm) Maybe it makes sense to store the bone IDs in some order to speed up the following
-		for (uint8_t boneIndex = 0; boneIndex < mNumberOfBones; ++boneIndex)
+		for (RECore::uint8 boneIndex = 0; boneIndex < mNumberOfBones; ++boneIndex)
 		{
 			if (mBoneIds[boneIndex] == boneId)
 			{
 				return boneIndex;
 			}
 		}
-		return RECore::getInvalid<uint32_t>();
+		return RECore::getInvalid<RECore::uint32>();
 	}
 
 	void SkeletonResource::localToGlobalPose()
@@ -64,7 +64,7 @@ namespace RERenderer
 
 		// Due to cache friendly depth-first rolled up bone hierarchy, the global parent bone pose is already up-to-date
 		// TODO(naetherm) Ensure that in the end SIMD intrinsics in GLM are used in here
-		for (uint8_t i = 1; i < mNumberOfBones; ++i)
+		for (RECore::uint8 i = 1; i < mNumberOfBones; ++i)
 		{
 			mGlobalBoneMatrices[i] = mGlobalBoneMatrices[mBoneParentIndices[i]] * mLocalBoneMatrices[i];
 		}
@@ -72,7 +72,7 @@ namespace RERenderer
 		/*
 		{ // Linear blend skinning (LBS) using matrices; there's no runtime switch by intent since dual quaternion skinning (DQS) is the way to go, don't remove this reference comment
 			glm::mat3x4* boneSpaceMatrices = reinterpret_cast<glm::mat3x4*>(mBoneSpaceData);
-			for (uint8_t i = 0; i < mNumberOfBones; ++i)
+			for (RECore::uint8 i = 0; i < mNumberOfBones; ++i)
 			{
 				boneSpaceMatrices[i] = glm::transpose(mGlobalBoneMatrices[i] * mBoneOffsetMatrices[i]);
 			}
@@ -81,7 +81,7 @@ namespace RERenderer
 
 		{ // The dual quaternion skinning (DQS) implementation is basing on https://gamedev.stackexchange.com/questions/164423/help-with-dual-quaternion-skinning
 			glm::dualquat* boneSpaceDualQuaternions = reinterpret_cast<glm::dualquat*>(mBoneSpaceData);
-			for (uint8_t i = 0; i < mNumberOfBones; ++i)
+			for (RECore::uint8 i = 0; i < mNumberOfBones; ++i)
 			{
 				const glm::mat4 boneSpaceMatrix = mGlobalBoneMatrices[i] * mBoneOffsetMatrices[i];
 				const glm::quat rotationQuaternion = glm::quat_cast(boneSpaceMatrix);

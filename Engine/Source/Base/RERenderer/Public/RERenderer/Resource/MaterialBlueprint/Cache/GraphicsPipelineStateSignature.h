@@ -52,9 +52,9 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialBlueprintResourceId;		///< POD material blueprint resource identifier
-	typedef uint32_t GraphicsPipelineStateSignatureId;	///< Graphics pipeline state signature identifier, result of hashing the referenced shaders as well as other pipeline state properties
-	typedef uint32_t ShaderCombinationId;				///< Shader combination identifier, result of hashing the shader combination generating shader blueprint resource, shader properties and dynamic shader pieces
+	typedef RECore::uint32 MaterialBlueprintResourceId;		///< POD material blueprint resource identifier
+	typedef RECore::uint32 GraphicsPipelineStateSignatureId;	///< Graphics pipeline state signature identifier, result of hashing the referenced shaders as well as other pipeline state properties
+	typedef RECore::uint32 ShaderCombinationId;				///< Shader combination identifier, result of hashing the shader combination generating shader blueprint resource, shader properties and dynamic shader pieces
 
 
 	//[-------------------------------------------------------]
@@ -88,7 +88,7 @@ namespace RERenderer
 		*/
 		inline GraphicsPipelineStateSignature() :
 			mMaterialBlueprintResourceId(RECore::getInvalid<MaterialBlueprintResourceId>()),
-			mSerializedGraphicsPipelineStateHash(RECore::getInvalid<uint32_t>()),
+			mSerializedGraphicsPipelineStateHash(RECore::getInvalid<RECore::uint32>()),
 			mGraphicsPipelineStateSignatureId(RECore::getInvalid<GraphicsPipelineStateSignatureId>()),
 			mShaderCombinationId{RECore::getInvalid<ShaderCombinationId>(), RECore::getInvalid<ShaderCombinationId>(), RECore::getInvalid<ShaderCombinationId>(), RECore::getInvalid<ShaderCombinationId>(), RECore::getInvalid<ShaderCombinationId>()}
 		{
@@ -106,7 +106,7 @@ namespace RERenderer
 		*  @param[in] shaderProperties
 		*    Shader properties to use, you should ensure that this shader properties are already optimized by using e.g. "RERenderer::MaterialBlueprintResource::optimizeShaderProperties()"
 		*/
-		inline GraphicsPipelineStateSignature(const MaterialBlueprintResource& materialBlueprintResource, uint32_t serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties)
+		inline GraphicsPipelineStateSignature(const MaterialBlueprintResource& materialBlueprintResource, RECore::uint32 serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties)
 		{
 			set(materialBlueprintResource, serializedGraphicsPipelineStateHash, shaderProperties);
 		}
@@ -146,7 +146,7 @@ namespace RERenderer
 		*  @param[in] shaderProperties
 		*    Shader properties to use, you should ensure that this shader properties are already optimized by using e.g. "Renderer::MaterialBlueprintResource::optimizeShaderProperties()"
 		*/
-		void set(const MaterialBlueprintResource& materialBlueprintResource, uint32_t serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties);
+		void set(const MaterialBlueprintResource& materialBlueprintResource, RECore::uint32 serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties);
 
 		//[-------------------------------------------------------]
 		//[ Getter for input data                                 ]
@@ -156,7 +156,7 @@ namespace RERenderer
 			return mMaterialBlueprintResourceId;
 		}
 
-		[[nodiscard]] inline uint32_t getSerializedGraphicsPipelineStateHash() const
+		[[nodiscard]] inline RECore::uint32 getSerializedGraphicsPipelineStateHash() const
 		{
 			return mSerializedGraphicsPipelineStateHash;
 		}
@@ -176,7 +176,7 @@ namespace RERenderer
 
 		[[nodiscard]] inline ShaderCombinationId getShaderCombinationId(GraphicsShaderType graphicsShaderType) const
 		{
-			return mShaderCombinationId[static_cast<uint8_t>(graphicsShaderType)];
+			return mShaderCombinationId[static_cast<RECore::uint8>(graphicsShaderType)];
 		}
 
 
@@ -186,7 +186,7 @@ namespace RERenderer
 	private:
 		// Input data
 		MaterialBlueprintResourceId	mMaterialBlueprintResourceId;
-		uint32_t					mSerializedGraphicsPipelineStateHash;
+		RECore::uint32					mSerializedGraphicsPipelineStateHash;
 		ShaderProperties			mShaderProperties;
 		// Derived data
 		GraphicsPipelineStateSignatureId mGraphicsPipelineStateSignatureId;

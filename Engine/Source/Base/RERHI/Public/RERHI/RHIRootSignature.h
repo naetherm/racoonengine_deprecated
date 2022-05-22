@@ -88,7 +88,7 @@ public:
   *    The created resource group instance, a null pointer on error. Release the returned instance if you no longer need it.
   */
   [[nodiscard]] virtual RHIResourceGroup *
-  createResourceGroup(uint32_t rootParameterIndex, uint32_t numberOfResources, RHIResource **resources,
+  createResourceGroup(RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources, RHIResource **resources,
                       RHISamplerState **samplerStates = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) = 0;
 
   // Protected methods

@@ -33,7 +33,7 @@
 namespace RERHIOpenGLES3 {
 
 
-IndirectBuffer::IndirectBuffer(RHIDynamicRHI& openGLES3Rhi, uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t indirectBufferFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+IndirectBuffer::IndirectBuffer(RHIDynamicRHI& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 indirectBufferFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 RHIIndirectBuffer(openGLES3Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mNumberOfBytes(numberOfBytes),
 mData(nullptr)
@@ -47,7 +47,7 @@ mData(nullptr)
   // Copy data
   if (mNumberOfBytes > 0)
   {
-    mData = RHI_MALLOC_TYPED(openGLES3Rhi.getContext(), uint8_t, mNumberOfBytes);
+    mData = RHI_MALLOC_TYPED(openGLES3Rhi.getContext(), RECore::uint8, mNumberOfBytes);
     if (nullptr != data)
     {
       memcpy(mData, data, mNumberOfBytes);

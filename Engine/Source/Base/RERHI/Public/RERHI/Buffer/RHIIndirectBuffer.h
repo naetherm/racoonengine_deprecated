@@ -75,7 +75,7 @@ public:
   *  @return
   *    Indirect buffer emulation data pointer, can be a null pointer, don't destroy the returned instance
   */
-  [[nodiscard]] virtual const uint8_t *getEmulationData() const = 0;
+  [[nodiscard]] virtual const RECore::uint8 *getEmulationData() const = 0;
 
   // Protected methods
 protected:

@@ -142,7 +142,7 @@ public:
   //[ Public virtual RERHI::RHIRenderTarget methods             ]
   //[-------------------------------------------------------]
 public:
-  virtual void getWidthAndHeight(uint32_t& width, uint32_t& height) const override;
+  virtual void getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const override;
 
 
   //[-------------------------------------------------------]
@@ -154,7 +154,7 @@ public:
     return mNativeWindowHandle;
   }
 
-  inline virtual void setVerticalSynchronizationInterval(uint32_t) override
+  inline virtual void setVerticalSynchronizationInterval(RECore::uint32) override
   {
     // TODO(naetherm) Implement usage of "synchronizationInterval"
   }
@@ -240,7 +240,7 @@ private:
   SwapChainBuffers mSwapChainBuffer;				///< Swap chain buffer for managing the color render targets
   VkSemaphore		 mImageAvailableVkSemaphore;	///< Vulkan semaphore, destroy if no longer needed
   VkSemaphore		 mRenderingFinishedVkSemaphore;	///< Vulkan semaphore, destroy if no longer needed
-  uint32_t		 mCurrentImageIndex;			///< The index of the current Vulkan swap chain image to render into, ~0 if invalid
+  RECore::uint32		 mCurrentImageIndex;			///< The index of the current Vulkan swap chain image to render into, ~0 if invalid
   // Depth render target related
   VkFormat		mDepthVkFormat;	///< Can be "VK_FORMAT_UNDEFINED" if no depth stencil buffer is needed
   VkImage			mDepthVkImage;

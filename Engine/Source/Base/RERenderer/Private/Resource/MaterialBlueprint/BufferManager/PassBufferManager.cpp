@@ -92,7 +92,7 @@ namespace RERenderer
 		if (nullptr != passUniformBuffer)
 		{
 			// Startup the pass uniform buffer update
-			uint8_t* scratchBufferPointer = mScratchBuffer.data();
+			RECore::uint8* scratchBufferPointer = mScratchBuffer.data();
 
 			{ // Fill the pass uniform buffer by using the material blueprint resource
 				const MaterialProperties& globalMaterialProperties = mMaterialBlueprintResourceManager.getGlobalMaterialProperties();
@@ -103,7 +103,7 @@ namespace RERenderer
 					const MaterialProperty& uniformBufferElementProperty = uniformBufferElementProperties[i];
 
 					// Get value type number of bytes
-					const uint32_t valueTypeNumberOfBytes = uniformBufferElementProperty.getValueTypeNumberOfBytes(uniformBufferElementProperty.getValueType());
+					const RECore::uint32 valueTypeNumberOfBytes = uniformBufferElementProperty.getValueTypeNumberOfBytes(uniformBufferElementProperty.getValueType());
 
 					// Handling of packing rules for uniform variables (see "Reference for HLSL - Shader Models vs Shader Profiles - Shader Model 4 - Packing Rules for Constant Variables" at https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632%28v=vs.85%29.aspx )
 					if (0 != numberOfPackageBytes && numberOfPackageBytes + valueTypeNumberOfBytes > 16)
@@ -181,7 +181,7 @@ namespace RERenderer
 			}
 
 			// Create new uniform buffer, if necessary
-			if (mCurrentUniformBufferIndex >= static_cast<uint32_t>(mUniformBuffers.size()))
+			if (mCurrentUniformBufferIndex >= static_cast<RECore::uint32>(mUniformBuffers.size()))
 			{
 				// Don't directly pass along data or the GPU driver might get confused about the usage and might output performance warnings
 				RERHI::RHIResource* uniformBuffer = mBufferManager.createUniformBuffer(passUniformBuffer->uniformBufferNumberOfBytes, nullptr, RERHI::BufferUsage::DYNAMIC_DRAW RHI_RESOURCE_DEBUG_NAME("Pass buffer manager"));
@@ -195,7 +195,7 @@ namespace RERenderer
 				RERHI::RHIDynamicRHI& rhi = mRenderer.getRhi();
 				if (rhi.map(*uniformBuffer, 0, RERHI::MapType::WRITE_DISCARD, 0, mappedSubresource))
 				{
-					memcpy(mappedSubresource.data, mScratchBuffer.data(), static_cast<uint32_t>(mScratchBuffer.size()));
+					memcpy(mappedSubresource.data, mScratchBuffer.data(), static_cast<RECore::uint32>(mScratchBuffer.size()));
 					rhi.unmap(*uniformBuffer, 0);
 				}
 			}

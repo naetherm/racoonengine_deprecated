@@ -61,12 +61,12 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
-	uint32_t CompositorWorkspaceResourceManager::getNumberOfResources() const
+	RECore::uint32 CompositorWorkspaceResourceManager::getNumberOfResources() const
 	{
 		return mInternalResourceManager->getResources().getNumberOfElements();
 	}
 
-RECore::IResource& CompositorWorkspaceResourceManager::getResourceByIndex(uint32_t index) const
+RECore::IResource& CompositorWorkspaceResourceManager::getResourceByIndex(RECore::uint32 index) const
 	{
 		return mInternalResourceManager->getResources().getElementByIndex(index);
 	}

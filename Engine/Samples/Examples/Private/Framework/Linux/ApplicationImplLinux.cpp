@@ -44,7 +44,7 @@
 //[-------------------------------------------------------]
 class ApplicationWindow : public X11Window
 {
-	std::unordered_map<uint32_t, uint32_t> mX11KeySymToKeyMap {
+	std::unordered_map<RECore::uint32, RECore::uint32> mX11KeySymToKeyMap {
 												{XK_a, 'A'}, 
 												{XK_A, 'A'},
 												{XK_w, 'W'}, 
@@ -88,7 +88,7 @@ public:
 
 			case KeyPress:
 			{
-				const uint32_t key = XLookupKeysym(&event.xkey, 0);
+				const RECore::uint32 key = XLookupKeysym(&event.xkey, 0);
 				auto keyIterator = mX11KeySymToKeyMap.find(key);
 				if (keyIterator != mX11KeySymToKeyMap.end() && 27 == keyIterator->second)
 				{

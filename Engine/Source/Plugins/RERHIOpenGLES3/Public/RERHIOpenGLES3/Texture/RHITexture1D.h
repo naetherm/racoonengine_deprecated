@@ -70,7 +70,7 @@ public:
   *  @param[in] textureFlags
   *    Texture flags, see "RERHI::TextureFlag::Enum"
   */
-  Texture1D(RHIDynamicRHI& openGLES3Rhi, uint32_t width, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  Texture1D(RHIDynamicRHI& openGLES3Rhi, RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

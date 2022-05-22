@@ -60,7 +60,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MeshResourceId;	///< POD mesh resource identifier
+	typedef RECore::uint32 MeshResourceId;	///< POD mesh resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -80,7 +80,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("mesh");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("mesh");
 
 
 	//[-------------------------------------------------------]
@@ -131,34 +131,34 @@ namespace RERenderer
 		RECore::MemoryFile		   mMemoryFile;
 
 		// Temporary vertex buffer
-		uint32_t mNumberOfVertexBufferDataBytes;
-		uint32_t mNumberOfUsedVertexBufferDataBytes;
-		uint8_t* mVertexBufferData;
+		RECore::uint32 mNumberOfVertexBufferDataBytes;
+		RECore::uint32 mNumberOfUsedVertexBufferDataBytes;
+		RECore::uint8* mVertexBufferData;
 
 		// Temporary index buffer
-		uint8_t  mIndexBufferFormat;	// "RERHI::IndexBufferFormat", don't want to include the header in here
-		uint32_t mNumberOfIndexBufferDataBytes;
-		uint32_t mNumberOfUsedIndexBufferDataBytes;
-		uint8_t* mIndexBufferData;
+		RECore::uint8  mIndexBufferFormat;	// "RERHI::IndexBufferFormat", don't want to include the header in here
+		RECore::uint32 mNumberOfIndexBufferDataBytes;
+		RECore::uint32 mNumberOfUsedIndexBufferDataBytes;
+		RECore::uint8* mIndexBufferData;
 
 		// Temporary position-only index buffer
-		uint32_t mNumberOfPositionOnlyIndexBufferDataBytes;
-		uint32_t mNumberOfUsedPositionOnlyIndexBufferDataBytes;
-		uint8_t* mPositionOnlyIndexBufferData;
+		RECore::uint32 mNumberOfPositionOnlyIndexBufferDataBytes;
+		RECore::uint32 mNumberOfUsedPositionOnlyIndexBufferDataBytes;
+		RECore::uint8* mPositionOnlyIndexBufferData;
 
 		// Temporary vertex attributes
-		uint32_t			  mNumberOfVertexAttributes;
-		uint32_t			  mNumberOfUsedVertexAttributes;
+		RECore::uint32			  mNumberOfVertexAttributes;
+		RECore::uint32			  mNumberOfUsedVertexAttributes;
 		RERHI::VertexAttribute* mVertexAttributes;
 
 		// Temporary sub-meshes
-		uint32_t		 mNumberOfSubMeshes;
-		uint32_t		 mNumberOfUsedSubMeshes;
+		RECore::uint32		 mNumberOfSubMeshes;
+		RECore::uint32		 mNumberOfUsedSubMeshes;
 		v1Mesh::SubMesh* mSubMeshes;
 
 		// Optional temporary skeleton
-		uint8_t  mNumberOfBones;
-		uint8_t* mSkeletonData;
+		RECore::uint8  mNumberOfBones;
+		RECore::uint8* mSkeletonData;
 
 
 	};

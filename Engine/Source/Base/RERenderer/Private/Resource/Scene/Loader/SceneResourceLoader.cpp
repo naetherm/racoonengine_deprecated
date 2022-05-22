@@ -56,7 +56,7 @@ namespace
 			{
 				// Load in the scene item data
 				// TODO(naetherm) Get rid of the new/delete in here
-				uint8_t* data = new uint8_t[itemHeader.numberOfBytes];
+				RECore::uint8* data = new RECore::uint8[itemHeader.numberOfBytes];
 				file.read(data, itemHeader.numberOfBytes);
 
 				// Deserialize the scene item
@@ -82,7 +82,7 @@ namespace
 			if (nullptr != sceneNode)
 			{
 				// Read in the scene items
-				for (uint32_t i = 0; i < node.numberOfItems; ++i)
+				for (RECore::uint32 i = 0; i < node.numberOfItems; ++i)
 				{
 					itemDeserialization(file, sceneResource, *sceneNode);
 				}
@@ -103,7 +103,7 @@ namespace
 			ASSERT(nodes.numberOfNodes > 0, "Invalid scene asset without any nodes detected")
 
 			// Read in the scene nodes
-			for (uint32_t i = 0; i < nodes.numberOfNodes; ++i)
+			for (RECore::uint32 i = 0; i < nodes.numberOfNodes; ++i)
 			{
 				nodeDeserialization(file, sceneResource);
 			}

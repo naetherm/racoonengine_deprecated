@@ -36,23 +36,23 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	RERHI::RHIResourceGroup* RendererResourceManager::createResourceGroup(RERHI::RHIRootSignature& rootSignature, uint32_t rootParameterIndex, uint32_t numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
+	RERHI::RHIResourceGroup* RendererResourceManager::createResourceGroup(RERHI::RHIRootSignature& rootSignature, RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		// Create hash
-		uint32_t hash = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&rootSignature), sizeof(RERHI::RHIRootSignature&));
-		hash = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&rootParameterIndex), sizeof(uint32_t), hash);
-		hash = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&numberOfResources), sizeof(uint32_t), hash);
-		for (uint32_t i = 0; i < numberOfResources; ++i)
+		RECore::uint32 hash = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&rootSignature), sizeof(RERHI::RHIRootSignature&));
+		hash = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&rootParameterIndex), sizeof(RECore::uint32), hash);
+		hash = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&numberOfResources), sizeof(RECore::uint32), hash);
+		for (RECore::uint32 i = 0; i < numberOfResources; ++i)
 		{
-			hash = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&resources[i]), sizeof(RERHI::RHIResource*), hash);
+			hash = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&resources[i]), sizeof(RERHI::RHIResource*), hash);
 			if (nullptr != samplerStates && nullptr != samplerStates[i])
 			{
-				hash = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&samplerStates[i]), sizeof(RERHI::RHISamplerState*), hash);
+				hash = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&samplerStates[i]), sizeof(RERHI::RHISamplerState*), hash);
 			}
 			else
 			{
-				static const uint32_t NOTHING = 42;	// Not "static constexpr" by intent
-				hash = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&NOTHING), sizeof(uint32_t), hash);
+				static const RECore::uint32 NOTHING = 42;	// Not "static constexpr" by intent
+				hash = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&NOTHING), sizeof(RECore::uint32), hash);
 			}
 		}
 		ResourceGroups::const_iterator iterator = mResourceGroups.find(hash);

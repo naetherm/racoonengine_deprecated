@@ -94,7 +94,7 @@ private:
 
     // Get list of Bluetooth-devices
     const std::vector<BTDevice*> &lstDevices = mBluetooth->getDevices();
-    for (uint32_t i=0; i<lstDevices.size(); ++i) {
+    for (RECore::uint32 i=0; i<lstDevices.size(); ++i) {
       // Get device
       BTDevice *pDevice = lstDevices[i];
 

@@ -41,7 +41,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RERenderer::ISceneItem methods           ]
 	//[-------------------------------------------------------]
-	void MaterialSceneItem::deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
+	void MaterialSceneItem::deserialize([[maybe_unused]] RECore::uint32 numberOfBytes, const RECore::uint8* data)
 	{
 		// Sanity check
 		RHI_ASSERT(sizeof(v1Scene::MaterialData) <= numberOfBytes, "Invalid number of bytes")

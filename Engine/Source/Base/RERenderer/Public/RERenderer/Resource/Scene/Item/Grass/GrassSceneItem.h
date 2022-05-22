@@ -62,7 +62,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("GrassSceneItem");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("GrassSceneItem");
 		struct GrassDataStruct final
 		{
 			float PositionSize[4];	// Object space grass xyz-position, w = grass size
@@ -116,7 +116,7 @@ namespace RERenderer
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t				  mMaximumNumberOfGrass;	///< Maximum number of grass
+		RECore::uint32				  mMaximumNumberOfGrass;	///< Maximum number of grass
 		RERHI::RHIStructuredBufferPtr mStructuredBufferPtr;		///< Structured buffer the data of the individual grass ("RERenderer::GrassSceneItem::GrassDataStruct")
 		RERHI::RHIIndirectBufferPtr   mIndirectBufferPtr;		///< Indirect buffer holding data related to the current grass "RERHI::DrawArguments" draw call
 

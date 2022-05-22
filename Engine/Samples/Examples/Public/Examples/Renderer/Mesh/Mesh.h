@@ -40,8 +40,8 @@
 //[-------------------------------------------------------]
 namespace RERenderer
 {
-	typedef uint32_t MeshResourceId;	///< POD mesh resource identifier
-	typedef uint32_t TextureResourceId;	///< POD texture resource identifier
+	typedef RECore::uint32 MeshResourceId;	///< POD mesh resource identifier
+	typedef RECore::uint32 TextureResourceId;	///< POD texture resource identifier
 }
 
 

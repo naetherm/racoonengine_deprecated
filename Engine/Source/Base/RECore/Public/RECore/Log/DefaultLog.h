@@ -158,14 +158,14 @@ namespace RECore
 	//[ Public virtual RECore::ILog methods                      ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline virtual bool print(Type type, const char* attachment, const char* file, uint32_t line, const char* format, ...) override
+		[[nodiscard]] inline virtual bool print(Type type, const char* attachment, const char* file, uint32 line, const char* format, ...) override
 		{
 			bool requestDebugBreak = false;
 
 			// Get the required buffer length, does not include the terminating zero character
 			va_list vaList;
 			va_start(vaList, format);
-			const uint32_t textLength = static_cast<uint32_t>(vsnprintf(nullptr, 0, format, vaList));
+			const uint32 textLength = static_cast<uint32>(vsnprintf(nullptr, 0, format, vaList));
 			va_end(vaList);
 			if (256 > textLength)
 			{
@@ -227,7 +227,7 @@ namespace RECore
 		*  @return
 		*    "true" to request debug break, else "false"
 		*/
-		[[nodiscard]] inline virtual bool printInternal(Type type, const char*, [[maybe_unused]] const char* file, [[maybe_unused]] uint32_t line, const char* message, uint32_t)
+		[[nodiscard]] inline virtual bool printInternal(Type type, const char*, [[maybe_unused]] const char* file, [[maybe_unused]] uint32 line, const char* message, uint32)
 		{
 			std::lock_guard<std::mutex> mutexLock(mMutex);
 			bool requestDebugBreak = false;

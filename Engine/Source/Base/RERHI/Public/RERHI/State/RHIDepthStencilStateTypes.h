@@ -117,8 +117,8 @@ namespace RERHI
 		DepthWriteMask		depthWriteMask;		///< Default: "Rhi::DepthWriteMask::ALL"
 		ComparisonFunc		depthFunc;			///< Default: "Rhi::ComparisonFunc::GREATER" instead of "Rhi::ComparisonFunc::LESS" due to usage of Reversed-Z (see e.g. https://developer.nvidia.com/content/depth-precision-visualized and https://nlguillemot.wordpress.com/2016/12/07/reversed-z-in-opengl/)
 		int					stencilEnable;		///< Boolean value. Default: "false"
-		uint8_t				stencilReadMask;	///< Default: "0xff"
-		uint8_t				stencilWriteMask;	///< Default: "0xff"
+		RECore::uint8				stencilReadMask;	///< Default: "0xff"
+		RECore::uint8				stencilWriteMask;	///< Default: "0xff"
 		DepthStencilOpDesc	frontFace;			///< Default: See "Rhi::DepthStencilOpDesc"
 		DepthStencilOpDesc	backFace;			///< Default: See "Rhi::DepthStencilOpDesc"
 	};
@@ -147,8 +147,8 @@ namespace RERHI
 				DepthWriteMask::ALL,		// depthWriteMask (Rhi::DepthWriteMask)		"ALL"			"ALL"		"ALL"					TODO(naetherm)
 				ComparisonFunc::GREATER,	// depthFunc (Rhi::ComparisonFunc)			"LESS"			"LESS"		"LESS_EQUAL"			TODO(naetherm)	- Default: "Rhi::ComparisonFunc::GREATER" instead of "Rhi::ComparisonFunc::LESS" due to usage of Reversed-Z (see e.g. https://developer.nvidia.com/content/depth-precision-visualized and https://nlguillemot.wordpress.com/2016/12/07/reversed-z-in-opengl/)
 				false,						// stencilEnable (int)						"false"			"false"		"false"					TODO(naetherm)
-				0xff,						// stencilReadMask (uint8_t)				"0xff"			"0xff"		"0xffffffff"			TODO(naetherm)
-				0xff,						// stencilWriteMask (uint8_t)				"0xff"			"0xff"		"0xffffffff"			TODO(naetherm)
+				0xff,						// stencilReadMask (RECore::uint8)				"0xff"			"0xff"		"0xffffffff"			TODO(naetherm)
+				0xff,						// stencilWriteMask (RECore::uint8)				"0xff"			"0xff"		"0xffffffff"			TODO(naetherm)
 				{ // sFrontFace (Rhi::DepthStencilOpDesc)
 					StencilOp::KEEP,		// stencilFailOp (Rhi::StencilOp			"KEEP"			"KEEP"		"KEEP" (both sides)		TODO(naetherm)
 					StencilOp::KEEP,		// stencilDepthFailOp (Rhi::StencilOp)		"KEEP"			"KEEP"		"KEEP" (both sides)		TODO(naetherm)

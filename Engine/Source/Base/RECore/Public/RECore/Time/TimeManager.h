@@ -74,7 +74,7 @@ public:
     return mGlobalTimeInSeconds;
   }
 
-  [[nodiscard]] inline uint64_t getNumberOfRenderedFrames() const {
+  [[nodiscard]] inline RECore::uint64 getNumberOfRenderedFrames() const {
     return mNumberOfRenderedFrames;
   }
 
@@ -100,7 +100,7 @@ private:
   Stopwatch mPerUpdateStopwatch;
   float mPastSecondsSinceLastFrame;
   float mGlobalTimeInSeconds;
-  uint64_t mNumberOfRenderedFrames;
+  RECore::uint64 mNumberOfRenderedFrames;
   float mFramesPerSecond;
   float mFramerateSecondsPerFrame[120];  // Calculate estimate of framerate over the last two seconds
   int mFramerateSecondsPerFrameIndex;

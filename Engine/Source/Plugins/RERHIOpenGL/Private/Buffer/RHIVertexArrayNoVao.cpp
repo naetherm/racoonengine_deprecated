@@ -45,7 +45,7 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-VertexArrayNoVao::VertexArrayNoVao(RHIDynamicRHI& openGLRhi, const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+VertexArrayNoVao::VertexArrayNoVao(RHIDynamicRHI& openGLRhi, const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 VertexArray(openGLRhi, indexBuffer, InternalResourceType::NO_VAO, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mNumberOfAttributes(vertexAttributes.numberOfAttributes),
 mAttributes(mNumberOfAttributes ? RHI_MALLOC_TYPED(openGLRhi.getContext(), RERHI::VertexAttribute, mNumberOfAttributes) : nullptr),

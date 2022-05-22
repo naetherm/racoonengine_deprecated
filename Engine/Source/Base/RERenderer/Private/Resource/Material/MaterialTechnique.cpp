@@ -47,7 +47,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		#define DEFINE_CONSTANT(name) static constexpr uint32_t name = STRING_ID(#name);
+		#define DEFINE_CONSTANT(name) static constexpr RECore::uint32 name = STRING_ID(#name);
 			// Rasterizer state
       DEFINE_CONSTANT(FillMode)
 			DEFINE_CONSTANT(CullMode)
@@ -98,7 +98,7 @@ namespace RERenderer
 		mMaterialTechniqueId(materialTechniqueId),
 		mMaterialBlueprintResourceId(materialBlueprintResourceId),
 		mStructuredBufferRootParameterIndex(~0u),
-		mSerializedGraphicsPipelineStateHash(RECore::getInvalid<uint32_t>())
+		mSerializedGraphicsPipelineStateHash(RECore::getInvalid<RECore::uint32>())
 	{
 		MaterialBufferManager* materialBufferManager = getMaterialBufferManager();
 		if (nullptr != materialBufferManager)
@@ -121,7 +121,7 @@ namespace RERenderer
 		}
 	}
 
-	void MaterialTechnique::fillGraphicsCommandBuffer(const IRenderer& renderer, RERHI::RHICommandBuffer& commandBuffer, uint32_t& resourceGroupRootParameterIndex, RERHI::RHIResourceGroup** resourceGroup)
+	void MaterialTechnique::fillGraphicsCommandBuffer(const IRenderer& renderer, RERHI::RHICommandBuffer& commandBuffer, RECore::uint32& resourceGroupRootParameterIndex, RERHI::RHIResourceGroup** resourceGroup)
 	{
 		// Sanity check
 		RHI_ASSERT(RECore::isValid(mMaterialBlueprintResourceId), "Invalid material blueprint resource ID")
@@ -139,7 +139,7 @@ namespace RERenderer
 		fillCommandBuffer(renderer, resourceGroupRootParameterIndex, resourceGroup);
 	}
 
-	void MaterialTechnique::fillComputeCommandBuffer(const IRenderer& renderer, RERHI::RHICommandBuffer& commandBuffer, uint32_t& resourceGroupRootParameterIndex, RERHI::RHIResourceGroup** resourceGroup)
+	void MaterialTechnique::fillComputeCommandBuffer(const IRenderer& renderer, RERHI::RHICommandBuffer& commandBuffer, RECore::uint32& resourceGroupRootParameterIndex, RERHI::RHIResourceGroup** resourceGroup)
 	{
 		// Sanity check
 		RHI_ASSERT(RECore::isValid(mMaterialBlueprintResourceId), "Invalid material blueprint resource ID")
@@ -356,7 +356,7 @@ namespace RERenderer
 			}
 
 			// Calculate the FNV1a hash of "RERHI::SerializedGraphicsPipelineState"
-			mSerializedGraphicsPipelineStateHash = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&serializedGraphicsPipelineState), sizeof(RERHI::SerializedGraphicsPipelineState));
+			mSerializedGraphicsPipelineStateHash = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&serializedGraphicsPipelineState), sizeof(RERHI::SerializedGraphicsPipelineState));
 
 			// Register the FNV1a hash of "RERHI::SerializedGraphicsPipelineState" inside the material blueprint resource manager so it's sufficient to pass around the tiny hash instead the over 400 bytes full serialized pipeline state
 			getMaterialResourceManager().getRenderer().getMaterialBlueprintResourceManager().addSerializedGraphicsPipelineState(mSerializedGraphicsPipelineStateHash, serializedGraphicsPipelineState);
@@ -376,7 +376,7 @@ namespace RERenderer
 		}
 	}
 
-	void MaterialTechnique::fillCommandBuffer(const IRenderer& renderer, uint32_t& resourceGroupRootParameterIndex, RERHI::RHIResourceGroup** resourceGroup)
+	void MaterialTechnique::fillCommandBuffer(const IRenderer& renderer, RECore::uint32& resourceGroupRootParameterIndex, RERHI::RHIResourceGroup** resourceGroup)
 	{
 		// Set textures
 		const Textures& textures = getTextures(renderer);
@@ -398,7 +398,7 @@ namespace RERenderer
 					samplerStates.resize(1);
 					resources[0] = mStructuredBufferPtr;
 					samplerStates[0] = nullptr;
-					mResourceGroup = renderer.getRendererResourceManager().createResourceGroup(*materialBlueprintResource->getRootSignaturePtr(), mStructuredBufferRootParameterIndex, static_cast<uint32_t>(resources.size()), resources.data(), samplerStates.data() RHI_RESOURCE_DEBUG_NAME("Material technique"));
+					mResourceGroup = renderer.getRendererResourceManager().createResourceGroup(*materialBlueprintResource->getRootSignaturePtr(), mStructuredBufferRootParameterIndex, static_cast<RECore::uint32>(resources.size()), resources.data(), samplerStates.data() RHI_RESOURCE_DEBUG_NAME("Material technique"));
 				}
 
 				// Tell the caller about the resource group
@@ -449,7 +449,7 @@ namespace RERenderer
 				// Create texture resource group
 				std::vector<RERHI::RHIResource*> resources;
 				std::vector<RERHI::RHISamplerState*> samplerStates;
-				uint32_t textureStartIndex = 0;
+				RECore::uint32 textureStartIndex = 0;
 				if (nullptr != mStructuredBufferPtr)
 				{
 					// Sanity check
@@ -490,7 +490,7 @@ namespace RERenderer
 					}
 				}
 				// TODO(naetherm) All resources need to be inside the same resource group, this needs to be guaranteed by design
-				mResourceGroup = renderer.getRendererResourceManager().createResourceGroup(*materialBlueprintResource->getRootSignaturePtr(), textures[0].rootParameterIndex, static_cast<uint32_t>(resources.size()), resources.data(), samplerStates.data() RHI_RESOURCE_DEBUG_NAME("Material technique"));
+				mResourceGroup = renderer.getRendererResourceManager().createResourceGroup(*materialBlueprintResource->getRootSignaturePtr(), textures[0].rootParameterIndex, static_cast<RECore::uint32>(resources.size()), resources.data(), samplerStates.data() RHI_RESOURCE_DEBUG_NAME("Material technique"));
 			}
 
 			// Tell the caller about the resource group

@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 namespace RERHIVulkan {
 
-QueryPool::QueryPool(RHIDynamicRHI &vulkanRhi, RERHI::QueryType queryType, uint32_t numberOfQueries
+QueryPool::QueryPool(RHIDynamicRHI &vulkanRhi, RERHI::QueryType queryType, RECore::uint32 numberOfQueries
                      RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHIQueryPool(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mQueryType(queryType),
@@ -44,7 +44,7 @@ QueryPool::QueryPool(RHIDynamicRHI &vulkanRhi, RERHI::QueryType queryType, uint3
   vkQueryPoolCreateInfo.sType = VK_STRUCTURE_TYPE_QUERY_POOL_CREATE_INFO;  // VkStructureType
   vkQueryPoolCreateInfo.pNext = nullptr;                    // const void*
   vkQueryPoolCreateInfo.flags = 0;                      // VkQueryPoolCreateFlags
-  vkQueryPoolCreateInfo.queryCount = numberOfQueries;                // uint32_t
+  vkQueryPoolCreateInfo.queryCount = numberOfQueries;                // RECore::uint32
   switch (queryType) {
     case RERHI::QueryType::OCCLUSION:
       vkQueryPoolCreateInfo.queryType = VK_QUERY_TYPE_OCCLUSION;  // VkQueryType
@@ -86,21 +86,21 @@ QueryPool::QueryPool(RHIDynamicRHI &vulkanRhi, RERHI::QueryType queryType, uint3
               case RERHI::QueryType::OCCLUSION:
               {
                 RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Occlusion query", 18)	// 18 = "Occlusion query: " including terminating zero
-                Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT, (uint64_t)mVkQueryPool, detailedDebugName);
+                Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT, (RECore::uint64)mVkQueryPool, detailedDebugName);
                 break;
               }
 
               case RERHI::QueryType::PIPELINE_STATISTICS:
               {
                 RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Pipeline statistics query", 28)	// 28 = "Pipeline statistics query: " including terminating zero
-                Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT, (uint64_t)mVkQueryPool, detailedDebugName);
+                Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT, (RECore::uint64)mVkQueryPool, detailedDebugName);
                 break;
               }
 
               case RERHI::QueryType::TIMESTAMP:
               {
                 RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Timestamp query", 18)	// 18 = "Timestamp query: " including terminating zero
-                Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT, (uint64_t)mVkQueryPool, detailedDebugName);
+                Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT, (RECore::uint64)mVkQueryPool, detailedDebugName);
                 break;
               }
             }

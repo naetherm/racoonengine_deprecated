@@ -244,7 +244,7 @@
 #else
 #define ASSERT(expression, message)	// TODO(naetherm) "RHI_ASSERT()" should be used everywhere
 #endif
-#include <inttypes.h>	// For uint32_t, uint64_t etc.
+#include <inttypes.h>	// For uint32, uint64_t etc.
 #include <type_traits>	// For "std::integral_constant"
 
 

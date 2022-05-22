@@ -78,7 +78,7 @@ public:
   //[ Public virtual RERHI::RHIRenderTarget methods             ]
   //[-------------------------------------------------------]
 public:
-  virtual void getWidthAndHeight(uint32_t& width, uint32_t& height) const override;
+  virtual void getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const override;
 
 
   //[-------------------------------------------------------]
@@ -90,7 +90,7 @@ public:
     return mNativeWindowHandle;
   }
 
-  inline virtual void setVerticalSynchronizationInterval(uint32_t synchronizationInterval) override
+  inline virtual void setVerticalSynchronizationInterval(RECore::uint32 synchronizationInterval) override
   {
     mNewVerticalSynchronizationInterval = synchronizationInterval;
   }
@@ -141,7 +141,7 @@ private:
 private:
   RECore::handle			mNativeWindowHandle;	///< Native window handle window, can be a null handle
   RERHI::IRenderWindow* mRenderWindow;			///< Render window instance, can be a null pointer, don't destroy the instance since we don't own it
-  uint32_t			mNewVerticalSynchronizationInterval;
+  RECore::uint32			mNewVerticalSynchronizationInterval;
 
 
 };

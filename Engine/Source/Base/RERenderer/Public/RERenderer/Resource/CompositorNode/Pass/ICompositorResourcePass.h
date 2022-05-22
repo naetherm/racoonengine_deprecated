@@ -51,7 +51,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId CompositorPassTypeId;	///< Compositor pass type identifier, internally just a POD "uint32_t"
+	typedef RECore::StringId CompositorPassTypeId;	///< Compositor pass type identifier, internally just a POD "RECore::uint32"
 
 
 	//[-------------------------------------------------------]
@@ -71,7 +71,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t MAXIMUM_PASS_NAME_LENGTH = 63 + 1;	// +1 for the terminating zero
+		static constexpr RECore::uint32 MAXIMUM_PASS_NAME_LENGTH = 63 + 1;	// +1 for the terminating zero
 
 
 	//[-------------------------------------------------------]
@@ -119,7 +119,7 @@ namespace RERenderer
 			return mSkipFirstExecution;
 		}
 
-		[[nodiscard]] inline uint32_t getNumberOfExecutions() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfExecutions() const
 		{
 			return mNumberOfExecutions;
 		}
@@ -131,7 +131,7 @@ namespace RERenderer
 	public:
 		[[nodiscard]] virtual CompositorPassTypeId getTypeId() const = 0;
 
-		inline virtual void deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
+		inline virtual void deserialize([[maybe_unused]] RECore::uint32 numberOfBytes, const RECore::uint8* data)
 		{
 			// Keep this in sync with "RERenderer::v1CompositorNode::Pass"
 			// -> Don't include "Renderer/Resource/CompositorNode/Loader/CompositorNodeFileFormat.h" here to keep the header complexity low (compile times matter)
@@ -142,7 +142,7 @@ namespace RERenderer
 					char	 name[MAXIMUM_PASS_NAME_LENGTH] = { "Compositor pass" };	///< Human readable ASCII pass name for debugging and profiling, contains terminating zero
 					float	 minimumDepth					= 0.0f;
 					float	 maximumDepth					= 1.0f;
-					uint32_t numberOfExecutions				= RECore::getInvalid<uint32_t>();
+					RECore::uint32 numberOfExecutions				= RECore::getInvalid<RECore::uint32>();
 					bool	 skipFirstExecution				= false;
 				};
 			#pragma pack(pop)
@@ -177,7 +177,7 @@ namespace RERenderer
 		*  @return
 		*    "true" if this compositor resource pass has a render queue range defined, else "false"
 		*/
-		[[nodiscard]] inline virtual bool getRenderQueueIndexRange([[maybe_unused]] uint8_t& minimumRenderQueueIndex, [[maybe_unused]] uint8_t& maximumRenderQueueIndex) const
+		[[nodiscard]] inline virtual bool getRenderQueueIndexRange([[maybe_unused]] RECore::uint8& minimumRenderQueueIndex, [[maybe_unused]] RECore::uint8& maximumRenderQueueIndex) const
 		{
 			// This compositor resource pass has no render queue range defined
 			return false;
@@ -196,7 +196,7 @@ namespace RERenderer
 			mMinimumDepth(0.0f),
 			mMaximumDepth(1.0f),
 			mSkipFirstExecution(false),
-			mNumberOfExecutions(RECore::getInvalid<uint32_t>())
+			mNumberOfExecutions(RECore::getInvalid<RECore::uint32>())
 		{
 			// Nothing here
 		}
@@ -221,7 +221,7 @@ namespace RERenderer
 		float					mMinimumDepth;
 		float					mMaximumDepth;
 		bool					mSkipFirstExecution;
-		uint32_t				mNumberOfExecutions;
+		RECore::uint32				mNumberOfExecutions;
 
 
 	};

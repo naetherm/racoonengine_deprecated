@@ -157,7 +157,7 @@ public:
   *  @return
   *    Address
   */
-  [[nodiscard]] inline uint8_t getAddress(int8_t nIndex) const
+  [[nodiscard]] inline RECore::uint8 getAddress(RECore::int8 nIndex) const
   {
     return (nIndex >= 0 && nIndex < 6) ? m_nAddress[nIndex] : 0u;
   }
@@ -172,7 +172,7 @@ public:
   *  @return
   *    Class
   */
-  [[nodiscard]] inline uint8_t getClass(int8_t nIndex) const
+  [[nodiscard]] inline RECore::uint8 getClass(RECore::int8 nIndex) const
   {
     return (nIndex >= 0 && nIndex < 3) ? m_nClass[nIndex] : 0u;
   }
@@ -184,8 +184,8 @@ public:
 private:
   // Device data
   std::string	m_sName;		///< Device name
-  uint8_t		m_nAddress[8];	///< Bluetooth address
-  uint8_t		m_nClass[3];	///< Bluetooth device class
+  RECore::uint8		m_nAddress[8];	///< Bluetooth address
+  RECore::uint8		m_nClass[3];	///< Bluetooth device class
 
 
 };

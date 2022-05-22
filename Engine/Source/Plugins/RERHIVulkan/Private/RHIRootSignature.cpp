@@ -41,22 +41,22 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
   mRootSignature(rootSignature),
   mVkPipelineLayout(VK_NULL_HANDLE),
   mVkDescriptorPool(VK_NULL_HANDLE) {
-  static constexpr uint32_t maxSets = 4242;  // TODO(naetherm) We probably need to get this provided from the outside
+  static constexpr RECore::uint32 maxSets = 4242;  // TODO(naetherm) We probably need to get this provided from the outside
 
   // Copy the parameter data
   const RERHI::RHIContext &context = vulkanRhi.getContext();
-  const uint32_t numberOfRootParameters = mRootSignature.numberOfParameters;
+  const RECore::uint32 numberOfRootParameters = mRootSignature.numberOfParameters;
   if (numberOfRootParameters > 0) {
     mRootSignature.parameters = RHI_MALLOC_TYPED(context, RERHI::RootParameter, numberOfRootParameters);
     RERHI::RootParameter *destinationRootParameters = const_cast<RERHI::RootParameter *>(mRootSignature.parameters);
     memcpy(destinationRootParameters, rootSignature.parameters, sizeof(RERHI::RootParameter) * numberOfRootParameters);
 
     // Copy the descriptor table data
-    for (uint32_t rootParameterIndex = 0; rootParameterIndex < numberOfRootParameters; ++rootParameterIndex) {
+    for (RECore::uint32 rootParameterIndex = 0; rootParameterIndex < numberOfRootParameters; ++rootParameterIndex) {
       RERHI::RootParameter &destinationRootParameter = destinationRootParameters[rootParameterIndex];
       const RERHI::RootParameter &sourceRootParameter = rootSignature.parameters[rootParameterIndex];
       if (RERHI::RootParameterType::DESCRIPTOR_TABLE == destinationRootParameter.parameterType) {
-        const uint32_t numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
+        const RECore::uint32 numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
         destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(
           context, RERHI::DescriptorRange, numberOfDescriptorRanges));
         memcpy(reinterpret_cast<RERHI::DescriptorRange *>(destinationRootParameter.descriptorTable.descriptorRanges),
@@ -67,7 +67,7 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
   }
 
   { // Copy the static sampler data
-    const uint32_t numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
+    const RECore::uint32 numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
     if (numberOfStaticSamplers > 0) {
       mRootSignature.staticSamplers = RHI_MALLOC_TYPED(context, RERHI::StaticSampler, numberOfStaticSamplers);
       memcpy(const_cast<RERHI::StaticSampler *>(mRootSignature.staticSamplers), rootSignature.staticSamplers,
@@ -78,12 +78,12 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
   // Create the Vulkan descriptor set layout
   const VkDevice vkDevice = vulkanRhi.getVulkanContext().getVkDevice();
   VkDescriptorSetLayouts vkDescriptorSetLayouts;
-  uint32_t numberOfUniformTexelBuffers = 0;  // "VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER"
-  uint32_t numberOfStorageTexelBuffers = 0;  // "VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER"
-  uint32_t numberOfStorageImage = 0;      // "VK_DESCRIPTOR_TYPE_STORAGE_IMAGE"
-  uint32_t numberOfStorageBuffers = 0;    // "VK_DESCRIPTOR_TYPE_STORAGE_BUFFER"
-  uint32_t numberOfUniformBuffers = 0;    // "VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER"
-  uint32_t numberOfCombinedImageSamplers = 0;  // "VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER"
+  RECore::uint32 numberOfUniformTexelBuffers = 0;  // "VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER"
+  RECore::uint32 numberOfStorageTexelBuffers = 0;  // "VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER"
+  RECore::uint32 numberOfStorageImage = 0;      // "VK_DESCRIPTOR_TYPE_STORAGE_IMAGE"
+  RECore::uint32 numberOfStorageBuffers = 0;    // "VK_DESCRIPTOR_TYPE_STORAGE_BUFFER"
+  RECore::uint32 numberOfUniformBuffers = 0;    // "VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER"
+  RECore::uint32 numberOfCombinedImageSamplers = 0;  // "VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER"
   if (numberOfRootParameters > 0) {
     // Fill the Vulkan descriptor set layout bindings
     vkDescriptorSetLayouts.reserve(numberOfRootParameters);
@@ -93,7 +93,7 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
     typedef std::vector<VkDescriptorSetLayoutBinding> VkDescriptorSetLayoutBindings;
     VkDescriptorSetLayoutBindings vkDescriptorSetLayoutBindings;
     vkDescriptorSetLayoutBindings.reserve(numberOfRootParameters);
-    for (uint32_t rootParameterIndex = 0; rootParameterIndex < numberOfRootParameters; ++rootParameterIndex) {
+    for (RECore::uint32 rootParameterIndex = 0; rootParameterIndex < numberOfRootParameters; ++rootParameterIndex) {
       vkDescriptorSetLayoutBindings.clear();
 
       // TODO(naetherm) For now we only support descriptor tables
@@ -101,7 +101,7 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
       if (RERHI::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType) {
         // Process descriptor ranges
         const RERHI::DescriptorRange *descriptorRange = reinterpret_cast<const RERHI::DescriptorRange *>(rootParameter.descriptorTable.descriptorRanges);
-        for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex <
+        for (RECore::uint32 descriptorRangeIndex = 0; descriptorRangeIndex <
                                                 rootParameter.descriptorTable.numberOfDescriptorRanges; ++descriptorRangeIndex, ++descriptorRange) {
           // Evaluate parameter type
           VkDescriptorType vkDescriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
@@ -233,9 +233,9 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
           if (VK_DESCRIPTOR_TYPE_MAX_ENUM != vkDescriptorType) {
             const VkDescriptorSetLayoutBinding vkDescriptorSetLayoutBinding =
               {
-                descriptorRangeIndex,  // binding (uint32_t)
+                descriptorRangeIndex,  // binding (RECore::uint32)
                 vkDescriptorType,    // descriptorType (VkDescriptorType)
-                1,            // descriptorCount (uint32_t)
+                1,            // descriptorCount (RECore::uint32)
                 vkShaderStageFlags,    // stageFlags (VkShaderStageFlags)
                 nullptr          // pImmutableSamplers (const VkSampler*)
               };
@@ -251,7 +251,7 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
             VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,      // sType (VkStructureType)
             nullptr,                            // pNext (const void*)
             0,                                // flags (VkDescriptorSetLayoutCreateFlags)
-            static_cast<uint32_t>(vkDescriptorSetLayoutBindings.size()),  // bindingCount (uint32_t)
+            static_cast<RECore::uint32>(vkDescriptorSetLayoutBindings.size()),  // bindingCount (RECore::uint32)
             vkDescriptorSetLayoutBindings.data()              // pBindings (const VkDescriptorSetLayoutBinding*)
           };
         if (
@@ -270,10 +270,10 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
         VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,                // sType (VkStructureType)
         nullptr,                                  // pNext (const void*)
         0,                                      // flags (VkPipelineLayoutCreateFlags)
-        static_cast<uint32_t>(vkDescriptorSetLayouts.size()),            // setLayoutCount (uint32_t)
+        static_cast<RECore::uint32>(vkDescriptorSetLayouts.size()),            // setLayoutCount (RECore::uint32)
         vkDescriptorSetLayouts.empty() ? nullptr
                                        : vkDescriptorSetLayouts.data(),  // pSetLayouts (const VkDescriptorSetLayout*)
-        0,                                      // pushConstantRangeCount (uint32_t)
+        0,                                      // pushConstantRangeCount (RECore::uint32)
         nullptr                                    // pPushConstantRanges (const VkPushConstantRange*)
       };
     if (vkCreatePipelineLayout(vkDevice, &vkPipelineLayoutCreateInfo, vulkanRhi.getVkAllocationCallbacks(),
@@ -285,13 +285,13 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
   { // Create the Vulkan descriptor pool
     typedef std::array<VkDescriptorPoolSize, 3> VkDescriptorPoolSizes;
     VkDescriptorPoolSizes vkDescriptorPoolSizes;
-    uint32_t numberOfVkDescriptorPoolSizes = 0;
+    RECore::uint32 numberOfVkDescriptorPoolSizes = 0;
 
     // "VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER"
     if (numberOfCombinedImageSamplers > 0) {
       VkDescriptorPoolSize &vkDescriptorPoolSize = vkDescriptorPoolSizes[numberOfVkDescriptorPoolSizes];
       vkDescriptorPoolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;  // type (VkDescriptorType)
-      vkDescriptorPoolSize.descriptorCount = maxSets * numberOfCombinedImageSamplers;    // descriptorCount (uint32_t)
+      vkDescriptorPoolSize.descriptorCount = maxSets * numberOfCombinedImageSamplers;    // descriptorCount (RECore::uint32)
       ++numberOfVkDescriptorPoolSizes;
     }
 
@@ -299,7 +299,7 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
     if (numberOfUniformTexelBuffers > 0) {
       VkDescriptorPoolSize &vkDescriptorPoolSize = vkDescriptorPoolSizes[numberOfVkDescriptorPoolSizes];
       vkDescriptorPoolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER;  // type (VkDescriptorType)
-      vkDescriptorPoolSize.descriptorCount = maxSets * numberOfUniformTexelBuffers;  // descriptorCount (uint32_t)
+      vkDescriptorPoolSize.descriptorCount = maxSets * numberOfUniformTexelBuffers;  // descriptorCount (RECore::uint32)
       ++numberOfVkDescriptorPoolSizes;
     }
 
@@ -307,7 +307,7 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
     if (numberOfStorageTexelBuffers > 0) {
       VkDescriptorPoolSize &vkDescriptorPoolSize = vkDescriptorPoolSizes[numberOfVkDescriptorPoolSizes];
       vkDescriptorPoolSize.type = VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER;  // type (VkDescriptorType)
-      vkDescriptorPoolSize.descriptorCount = maxSets * numberOfStorageTexelBuffers;  // descriptorCount (uint32_t)
+      vkDescriptorPoolSize.descriptorCount = maxSets * numberOfStorageTexelBuffers;  // descriptorCount (RECore::uint32)
       ++numberOfVkDescriptorPoolSizes;
     }
 
@@ -315,7 +315,7 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
     if (numberOfUniformBuffers > 0) {
       VkDescriptorPoolSize &vkDescriptorPoolSize = vkDescriptorPoolSizes[numberOfVkDescriptorPoolSizes];
       vkDescriptorPoolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;  // type (VkDescriptorType)
-      vkDescriptorPoolSize.descriptorCount = maxSets * numberOfUniformBuffers;  // descriptorCount (uint32_t)
+      vkDescriptorPoolSize.descriptorCount = maxSets * numberOfUniformBuffers;  // descriptorCount (RECore::uint32)
       ++numberOfVkDescriptorPoolSizes;
     }
 
@@ -323,7 +323,7 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
     if (numberOfStorageImage > 0) {
       VkDescriptorPoolSize &vkDescriptorPoolSize = vkDescriptorPoolSizes[numberOfVkDescriptorPoolSizes];
       vkDescriptorPoolSize.type = VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;  // type (VkDescriptorType)
-      vkDescriptorPoolSize.descriptorCount = maxSets * numberOfStorageImage;    // descriptorCount (uint32_t)
+      vkDescriptorPoolSize.descriptorCount = maxSets * numberOfStorageImage;    // descriptorCount (RECore::uint32)
       ++numberOfVkDescriptorPoolSizes;
     }
 
@@ -331,7 +331,7 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
     if (numberOfStorageBuffers > 0) {
       VkDescriptorPoolSize &vkDescriptorPoolSize = vkDescriptorPoolSizes[numberOfVkDescriptorPoolSizes];
       vkDescriptorPoolSize.type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;  // type (VkDescriptorType)
-      vkDescriptorPoolSize.descriptorCount = maxSets * numberOfStorageBuffers;  // descriptorCount (uint32_t)
+      vkDescriptorPoolSize.descriptorCount = maxSets * numberOfStorageBuffers;  // descriptorCount (RECore::uint32)
       ++numberOfVkDescriptorPoolSizes;
     }
 
@@ -342,8 +342,8 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
           VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO,    // sType (VkStructureType)
           nullptr,                      // pNext (const void*)
           VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT,  // flags (VkDescriptorPoolCreateFlags)
-          maxSets,                      // maxSets (uint32_t)
-          numberOfVkDescriptorPoolSizes,            // poolSizeCount (uint32_t)
+          maxSets,                      // maxSets (RECore::uint32)
+          numberOfVkDescriptorPoolSizes,            // poolSizeCount (RECore::uint32)
           vkDescriptorPoolSizes.data()            // pPoolSizes (const VkDescriptorPoolSize*)
         };
       if (vkCreateDescriptorPool(vkDevice, &VkDescriptorPoolCreateInfo, vulkanRhi.getVkAllocationCallbacks(),
@@ -360,10 +360,10 @@ RootSignature::RootSignature(RHIDynamicRHI &vulkanRhi, const RERHI::RootSignatur
           RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Root signature", 17)	// 17 = "Root signature: " including terminating zero
           for (VkDescriptorSetLayout vkDescriptorSetLayout : mVkDescriptorSetLayouts)
           {
-            Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT, (uint64_t)vkDescriptorSetLayout, detailedDebugName);
+            Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT, (RECore::uint64)vkDescriptorSetLayout, detailedDebugName);
           }
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT, (uint64_t)mVkPipelineLayout, detailedDebugName);
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT, (uint64_t)mVkDescriptorPool, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT, (RECore::uint64)mVkPipelineLayout, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT, (RECore::uint64)mVkDescriptorPool, detailedDebugName);
         }
 #endif
 }
@@ -396,7 +396,7 @@ RootSignature::~RootSignature() {
 // Destroy the root signature data
   const RERHI::RHIContext &context = vulkanRhi.getContext();
   if (nullptr != mRootSignature.parameters) {
-    for (uint32_t rootParameterIndex = 0;
+    for (RECore::uint32 rootParameterIndex = 0;
          rootParameterIndex < mRootSignature.numberOfParameters; ++rootParameterIndex) {
       const RERHI::RootParameter &rootParameter = mRootSignature.parameters[rootParameterIndex];
       if (RERHI::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType) {
@@ -410,7 +410,7 @@ RootSignature::~RootSignature() {
 
 
 // TODO(naetherm) Try to somehow simplify the internal dependencies to be able to put this method directly into the class
-RERHI::RHIResourceGroup *RootSignature::createResourceGroup(uint32_t rootParameterIndex, uint32_t numberOfResources,
+RERHI::RHIResourceGroup *RootSignature::createResourceGroup(RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources,
                                                             RERHI::RHIResource **resources,
                                                             RERHI::RHISamplerState **samplerStates
                                                             RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) {
@@ -431,7 +431,7 @@ RERHI::RHIResourceGroup *RootSignature::createResourceGroup(uint32_t rootParamet
         VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO,  // sType (VkStructureType)
         nullptr,                    // pNext (const void*)
         mVkDescriptorPool,                // descriptorPool (VkDescriptorPool)
-        1,                        // descriptorSetCount (uint32_t)
+        1,                        // descriptorSetCount (RECore::uint32)
         &mVkDescriptorSetLayouts[rootParameterIndex]  // pSetLayouts (const VkDescriptorSetLayout*)
       };
     if (vkAllocateDescriptorSets(vulkanRhi.getVulkanContext().getVkDevice(), &vkDescriptorSetAllocateInfo,

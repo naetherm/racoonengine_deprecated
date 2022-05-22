@@ -74,7 +74,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID	  = STRING_ID("CameraSceneItem");
+		static constexpr RECore::uint32 TYPE_ID	  = STRING_ID("CameraSceneItem");
 		static constexpr float DEFAULT_FOV_Y  = glm::radians(45.0f);	///< Default Y field of view in radians
 		static constexpr float DEFAULT_NEAR_Z = 0.1f;
 		static constexpr float DEFAULT_FAR_Z  = 5000.0f;
@@ -175,7 +175,7 @@ namespace RERenderer
 			return TYPE_ID;
 		}
 
-		virtual void deserialize(uint32_t numberOfBytes, const uint8_t* data) override;
+		virtual void deserialize(RECore::uint32 numberOfBytes, const RECore::uint8* data) override;
 
 
 	//[-------------------------------------------------------]

@@ -49,7 +49,7 @@ Texture1DArray::~Texture1DArray() {
   glDeleteTextures(1, &mOpenGLTexture);
 }
 
-Texture1DArray::Texture1DArray(RHIDynamicRHI &openGLRhi, uint32_t width, uint32_t numberOfSlices,
+Texture1DArray::Texture1DArray(RHIDynamicRHI &openGLRhi, RECore::uint32 width, RECore::uint32 numberOfSlices,
                                RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
   RHITexture1DArray(openGLRhi, width, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mOpenGLTexture(0),

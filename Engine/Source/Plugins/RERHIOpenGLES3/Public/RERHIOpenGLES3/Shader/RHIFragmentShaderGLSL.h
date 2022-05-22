@@ -79,7 +79,7 @@ public:
   *  @return
   *    The OpenGL ES 3 shader, can be zero if no resource is allocated, do not destroy the returned resource
   */
-  [[nodiscard]] inline uint32_t getOpenGLES3Shader() const
+  [[nodiscard]] inline RECore::uint32 getOpenGLES3Shader() const
   {
     return mOpenGLES3Shader;
   }
@@ -114,7 +114,7 @@ private:
   //[ Private data                                          ]
   //[-------------------------------------------------------]
 private:
-  uint32_t mOpenGLES3Shader;	///< OpenGL ES 3 shader, can be zero if no resource is allocated
+  RECore::uint32 mOpenGLES3Shader;	///< OpenGL ES 3 shader, can be zero if no resource is allocated
 
 
 };

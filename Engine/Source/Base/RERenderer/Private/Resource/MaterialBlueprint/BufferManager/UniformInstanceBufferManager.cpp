@@ -87,7 +87,7 @@ namespace RERenderer
 			if (nullptr == mCurrentInstanceBuffer->resourceGroup)
 			{
 				RERHI::RHIResource* resources[1] = { mCurrentInstanceBuffer->uniformBuffer };
-				mCurrentInstanceBuffer->resourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(instanceUniformBuffer->rootParameterIndex, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, nullptr RHI_RESOURCE_DEBUG_NAME("Uniform instance buffer manager"));
+				mCurrentInstanceBuffer->resourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(instanceUniformBuffer->rootParameterIndex, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, nullptr RHI_RESOURCE_DEBUG_NAME("Uniform instance buffer manager"));
 				mCurrentInstanceBuffer->resourceGroup->AddReference();
 			}
 
@@ -96,7 +96,7 @@ namespace RERenderer
 		}
 	}
 
-	uint32_t UniformInstanceBufferManager::fillBuffer(const MaterialBlueprintResource& materialBlueprintResource, PassBufferManager* passBufferManager, const MaterialBlueprintResource::UniformBuffer& instanceUniformBuffer, const Renderable& renderable, MaterialTechnique& materialTechnique, RERHI::RHICommandBuffer& commandBuffer)
+	RECore::uint32 UniformInstanceBufferManager::fillBuffer(const MaterialBlueprintResource& materialBlueprintResource, PassBufferManager* passBufferManager, const MaterialBlueprintResource::UniformBuffer& instanceUniformBuffer, const Renderable& renderable, MaterialTechnique& materialTechnique, RERHI::RHICommandBuffer& commandBuffer)
 	{
 		// Sanity checks
 		RHI_ASSERT(nullptr != mCurrentInstanceBuffer, "Invalid current instance buffer")
@@ -117,19 +117,19 @@ namespace RERenderer
 
 		{ // Handle instance buffer overflow
 			// Calculate number of additionally needed uniform buffer bytes
-			uint32_t newNeededUniformBufferSize = 0;
+			RECore::uint32 newNeededUniformBufferSize = 0;
 			for (size_t i = 0, numberOfPackageBytes = 0; i < numberOfUniformBufferElementProperties; ++i)
 			{
 				const MaterialProperty& uniformBufferElementProperty = uniformBufferElementProperties[i];
 
 				// Get value type number of bytes
-				const uint32_t valueTypeNumberOfBytes = uniformBufferElementProperty.getValueTypeNumberOfBytes(uniformBufferElementProperty.getValueType());
+				const RECore::uint32 valueTypeNumberOfBytes = uniformBufferElementProperty.getValueTypeNumberOfBytes(uniformBufferElementProperty.getValueType());
 
 				// Handling of packing rules for uniform variables (see "Reference for HLSL - Shader Models vs Shader Profiles - Shader Model 4 - Packing Rules for Constant Variables" at https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632%28v=vs.85%29.aspx )
 				if (0 != numberOfPackageBytes && numberOfPackageBytes + valueTypeNumberOfBytes > 16)
 				{
 					// Move the buffer pointer to the location of the next aligned package and restart the package bytes counter
-					newNeededUniformBufferSize += static_cast<uint32_t>(sizeof(float) * 4 - numberOfPackageBytes);
+					newNeededUniformBufferSize += static_cast<RECore::uint32>(sizeof(float) * 4 - numberOfPackageBytes);
 					numberOfPackageBytes = 0;
 				}
 				numberOfPackageBytes += valueTypeNumberOfBytes % 16;
@@ -139,7 +139,7 @@ namespace RERenderer
 			}
 
 			// Detect and handle instance buffer overflow
-			const uint32_t totalNeededUniformBufferSize = (static_cast<uint32_t>(mCurrentUniformBufferPointer - mStartUniformBufferPointer) + newNeededUniformBufferSize);
+			const RECore::uint32 totalNeededUniformBufferSize = (static_cast<RECore::uint32>(mCurrentUniformBufferPointer - mStartUniformBufferPointer) + newNeededUniformBufferSize);
 			if (totalNeededUniformBufferSize > mMaximumUniformBufferSize)
 			{
 				createInstanceBuffer();
@@ -153,7 +153,7 @@ namespace RERenderer
 			const MaterialProperty& uniformBufferElementProperty = uniformBufferElementProperties[i];
 
 			// Get value type number of bytes
-			const uint32_t valueTypeNumberOfBytes = uniformBufferElementProperty.getValueTypeNumberOfBytes(uniformBufferElementProperty.getValueType());
+			const RECore::uint32 valueTypeNumberOfBytes = uniformBufferElementProperty.getValueTypeNumberOfBytes(uniformBufferElementProperty.getValueType());
 
 			// Handling of packing rules for uniform variables (see "Reference for HLSL - Shader Models vs Shader Profiles - Shader Model 4 - Packing Rules for Constant Variables" at https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632%28v=vs.85%29.aspx )
 			if (0 != numberOfPackageBytes && numberOfPackageBytes + valueTypeNumberOfBytes > 16)
@@ -273,7 +273,7 @@ namespace RERenderer
 			RERHI::MappedSubresource mappedSubresource;
 			if (rhi.map(*mCurrentInstanceBuffer->uniformBuffer, 0, RERHI::MapType::WRITE_DISCARD, 0, mappedSubresource))
 			{
-				mStartUniformBufferPointer = mCurrentUniformBufferPointer = static_cast<uint8_t*>(mappedSubresource.data);
+				mStartUniformBufferPointer = mCurrentUniformBufferPointer = static_cast<RECore::uint8*>(mappedSubresource.data);
 				mCurrentInstanceBuffer->mapped = true;
 			}
 			RHI_ASSERT(mCurrentInstanceBuffer->mapped, "Current instance buffer isn't mapped")

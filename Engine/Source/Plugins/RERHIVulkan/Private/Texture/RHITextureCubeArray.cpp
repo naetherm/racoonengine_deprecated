@@ -33,8 +33,8 @@
 //[-------------------------------------------------------]
 namespace RERHIVulkan {
 
-TextureCubeArray::TextureCubeArray(RHIDynamicRHI &vulkanRhi, uint32_t width, uint32_t numberOfSlices,
-                                   RERHI::TextureFormat::Enum textureFormat, const void *data, uint32_t textureFlags
+TextureCubeArray::TextureCubeArray(RHIDynamicRHI &vulkanRhi, RECore::uint32 width, RECore::uint32 numberOfSlices,
+                                   RERHI::TextureFormat::Enum textureFormat, const void *data, RECore::uint32 textureFlags
                                    RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHITextureCubeArray(vulkanRhi, width, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mVkImage(VK_NULL_HANDLE),
@@ -51,9 +51,9 @@ TextureCubeArray::TextureCubeArray(RHIDynamicRHI &vulkanRhi, uint32_t width, uin
         {
           RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Cube texture array", 21)	// 21 = "Cube texture array: " including terminating zero
           const VkDevice vkDevice = vulkanRhi.getVulkanContext().getVkDevice();
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT, (uint64_t)mVkImage, detailedDebugName);
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT, (uint64_t)mVkDeviceMemory, detailedDebugName);
-          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT, (uint64_t)mVkImageView, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT, (RECore::uint64)mVkImage, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT, (RECore::uint64)mVkDeviceMemory, detailedDebugName);
+          Helper::setDebugObjectName(vkDevice, VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT, (RECore::uint64)mVkImageView, detailedDebugName);
         }
 #endif
 }

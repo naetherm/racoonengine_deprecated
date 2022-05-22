@@ -75,7 +75,7 @@ void InputManager::update()
   }
 
   // Update devices
-  for (uint32_t i=0; i<m_lstDevices.size(); i++)
+  for (RECore::uint32 i=0; i<m_lstDevices.size(); i++)
     m_lstDevices[i]->update();
 }
 
@@ -113,13 +113,13 @@ void InputManager::detectDevices(bool bReset)
 void InputManager::clear()
 {
   // Destroy all input providers
-  for (uint32_t i=0; i<m_lstProviders.size(); i++)
+  for (RECore::uint32 i=0; i<m_lstProviders.size(); i++)
     delete m_lstProviders[i];
   m_lstProviders.clear();
   m_mapProviders.clear();
 
   // Destroy all left-over input devices (usually, all devices should have been destroyed by their providers)
-  for (uint32_t i=0; i<m_lstDevices.size(); i++)
+  for (RECore::uint32 i=0; i<m_lstDevices.size(); i++)
     delete m_lstDevices[i];
   m_lstDevices.clear();
   m_mapDevices.clear();

@@ -59,11 +59,11 @@ public:
   *  @return
   *    Number of mipmaps
   */
-  [[nodiscard]] static inline uint32_t getNumberOfMipmaps(uint32_t width) {
-    // If "std::log2()" wouldn't be supported, we could write the following: "return static_cast<uint32_t>(1 + std::floor(std::log(width) / 0.69314718055994529));"
+  [[nodiscard]] static inline RECore::uint32 getNumberOfMipmaps(RECore::uint32 width) {
+    // If "std::log2()" wouldn't be supported, we could write the following: "return static_cast<RECore::uint32>(1 + std::floor(std::log(width) / 0.69314718055994529));"
     // -> log2(x) = log(x) / log(2)
     // -> log(2) = 0.69314718055994529
-    return static_cast<uint32_t>(1 + std::floor(std::log2(width)));
+    return static_cast<RECore::uint32>(1 + std::floor(std::log2(width)));
   }
 
   /**
@@ -78,7 +78,7 @@ public:
   *  @return
   *    Number of mipmaps
   */
-  [[nodiscard]] static inline uint32_t getNumberOfMipmaps(uint32_t width, uint32_t height) {
+  [[nodiscard]] static inline RECore::uint32 getNumberOfMipmaps(RECore::uint32 width, RECore::uint32 height) {
     return getNumberOfMipmaps((width > height) ? width : height);
   }
 
@@ -96,7 +96,7 @@ public:
   *  @return
   *    Number of mipmaps
   */
-  [[nodiscard]] static inline uint32_t getNumberOfMipmaps(uint32_t width, uint32_t height, uint32_t depth) {
+  [[nodiscard]] static inline RECore::uint32 getNumberOfMipmaps(RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth) {
     return getNumberOfMipmaps(width, (height > depth) ? height : depth);
   }
 
@@ -110,7 +110,7 @@ public:
   *  @return
   *    Half size, 1 as minimum
   */
-  [[nodiscard]] static inline uint32_t getHalfSize(uint32_t size) {
+  [[nodiscard]] static inline RECore::uint32 getHalfSize(RECore::uint32 size) {
     size = (size >> 1);  // /= 2
     return (0u == size) ? 1u : size;
   }
@@ -124,9 +124,9 @@ public:
   *  @param[in,out] width
   *    Texture width
   */
-  static inline void getMipmapSize(uint32_t mipmapIndex, uint32_t &width) {
+  static inline void getMipmapSize(RECore::uint32 mipmapIndex, RECore::uint32 &width) {
     if (0u != mipmapIndex) {
-      width = static_cast<uint32_t>(static_cast<float>(width) / std::exp2f(static_cast<float>(mipmapIndex)));
+      width = static_cast<RECore::uint32>(static_cast<float>(width) / std::exp2f(static_cast<float>(mipmapIndex)));
       if (0u == width) {
         width = 1u;
       }
@@ -144,7 +144,7 @@ public:
   *  @param[in,out] height
   *    Texture height
   */
-  static inline void getMipmapSize(uint32_t mipmapIndex, uint32_t &width, uint32_t &height) {
+  static inline void getMipmapSize(RECore::uint32 mipmapIndex, RECore::uint32 &width, RECore::uint32 &height) {
     getMipmapSize(mipmapIndex, width);
     getMipmapSize(mipmapIndex, height);
   }
@@ -162,7 +162,7 @@ public:
   *  @param[in,out] depth
   *    Texture depth
   */
-  static inline void getMipmapSize(uint32_t mipmapIndex, uint32_t &width, uint32_t &height, uint32_t &depth) {
+  static inline void getMipmapSize(RECore::uint32 mipmapIndex, RECore::uint32 &width, RECore::uint32 &height, RECore::uint32 &depth) {
     getMipmapSize(mipmapIndex, width);
     getMipmapSize(mipmapIndex, height);
     getMipmapSize(mipmapIndex, depth);

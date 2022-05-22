@@ -46,19 +46,19 @@ mExtensions(&openGLES3Rhi.getOpenGLES3Context().getExtensions())
 {}
 
 
-RERHI::RHIVertexBuffer* BufferManager::createVertexBuffer(uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t bufferFlags, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIVertexBuffer* BufferManager::createVertexBuffer(RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLES3Rhi = static_cast<RHIDynamicRHI&>(getRhi());
   return RHI_NEW(openGLES3Rhi.getContext(), VertexBuffer)(openGLES3Rhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIIndexBuffer* BufferManager::createIndexBuffer(uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t bufferFlags, RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIIndexBuffer* BufferManager::createIndexBuffer(RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLES3Rhi = static_cast<RHIDynamicRHI&>(getRhi());
   return RHI_NEW(openGLES3Rhi.getContext(), IndexBuffer)(openGLES3Rhi, numberOfBytes, data, bufferUsage, indexBufferFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIVertexArray* BufferManager::createVertexArray(const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, RERHI::RHIIndexBuffer* indexBuffer RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIVertexArray* BufferManager::createVertexArray(const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, RERHI::RHIIndexBuffer* indexBuffer RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLES3Rhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -75,7 +75,7 @@ RERHI::RHIVertexArray* BufferManager::createVertexArray(const RERHI::VertexAttri
   RHI_ASSERT(nullptr == indexBuffer || &openGLES3Rhi == &indexBuffer->getRhi(), "OpenGL ES 3 error: The given index buffer resource is owned by another RHI instance")
 
   // Create vertex array
-  uint16_t id;
+  RECore::uint16 id;
   if (openGLES3Rhi.VertexArrayMakeId.createID(id))
   {
     return RHI_NEW(openGLES3Rhi.getContext(), VertexArray)(openGLES3Rhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -96,7 +96,7 @@ RERHI::RHIVertexArray* BufferManager::createVertexArray(const RERHI::VertexAttri
   return nullptr;
 }
 
-RERHI::RHITextureBuffer* BufferManager::createTextureBuffer(uint32_t numberOfBytes, const void* data, uint32_t, RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHITextureBuffer* BufferManager::createTextureBuffer(RECore::uint32 numberOfBytes, const void* data, RECore::uint32, RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLES3Rhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -121,7 +121,7 @@ RERHI::RHITextureBuffer* BufferManager::createTextureBuffer(uint32_t numberOfByt
   return nullptr;
 }
 
-RERHI::RHIStructuredBuffer* BufferManager::createStructuredBuffer([[maybe_unused]] uint32_t numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] uint32_t bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, [[maybe_unused]] uint32_t numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER)
+RERHI::RHIStructuredBuffer* BufferManager::createStructuredBuffer([[maybe_unused]] RECore::uint32 numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage, [[maybe_unused]] RECore::uint32 numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER)
 {
   // Sanity checks
   RHI_ASSERT((numberOfBytes % numberOfStructureBytes) == 0, "The OpenGL ES 3 structured buffer size must be a multiple of the given number of structure bytes")
@@ -131,13 +131,13 @@ RERHI::RHIStructuredBuffer* BufferManager::createStructuredBuffer([[maybe_unused
   return nullptr;
 }
 
-RERHI::RHIIndirectBuffer* BufferManager::createIndirectBuffer(uint32_t numberOfBytes, const void* data, uint32_t indirectBufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIIndirectBuffer* BufferManager::createIndirectBuffer(RECore::uint32 numberOfBytes, const void* data, RECore::uint32 indirectBufferFlags, [[maybe_unused]] RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLES3Rhi = static_cast<RHIDynamicRHI&>(getRhi());
   return RHI_NEW(openGLES3Rhi.getContext(), IndirectBuffer)(openGLES3Rhi, numberOfBytes, data, indirectBufferFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIUniformBuffer* BufferManager::createUniformBuffer(uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHIUniformBuffer* BufferManager::createUniformBuffer(RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLES3Rhi = static_cast<RHIDynamicRHI&>(getRhi());
 

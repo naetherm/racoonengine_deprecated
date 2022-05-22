@@ -142,7 +142,7 @@ namespace RERenderer
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static uint32_t mDrawTextCounter;
+		static RECore::uint32 mDrawTextCounter;
 
 
 	};

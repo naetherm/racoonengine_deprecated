@@ -69,7 +69,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		#define DEFINE_CONSTANT(name) static constexpr uint32_t name = STRING_ID(#name);
+		#define DEFINE_CONSTANT(name) static constexpr RECore::uint32 name = STRING_ID(#name);
 			// Pass data influenced by single pass stereo rendering via instancing as described in "High Performance Stereo Rendering For VR", Timothy Wilson, San Diego, Virtual Reality Meetup
 			DEFINE_CONSTANT(WORLD_SPACE_TO_VIEW_SPACE_MATRIX)				///< "FLOAT_4_4"-type
 			DEFINE_CONSTANT(WORLD_SPACE_TO_VIEW_SPACE_MATRIX_2)				///< "FLOAT_4_4"-type
@@ -143,22 +143,22 @@ namespace
 		*/
 		[[nodiscard]] RERenderer::TextureResourceId createIdentityColorCorrectionLookupTable3D(const RERenderer::IRenderer& renderer)
 		{
-			static constexpr uint8_t SIZE = 16;
-			static constexpr uint8_t NUMBER_OF_COMPONENTS = 4;
-			static constexpr uint32_t NUMBER_OF_BYTES = SIZE * SIZE * SIZE * NUMBER_OF_COMPONENTS;
-			uint8_t data[NUMBER_OF_BYTES];
+			static constexpr RECore::uint8 SIZE = 16;
+			static constexpr RECore::uint8 NUMBER_OF_COMPONENTS = 4;
+			static constexpr RECore::uint32 NUMBER_OF_BYTES = SIZE * SIZE * SIZE * NUMBER_OF_COMPONENTS;
+			RECore::uint8 data[NUMBER_OF_BYTES];
 
 			{ // Create the identity color correction lookup table 3D data
-				uint8_t* currentData = data;
-				for (uint8_t z = 0; z < SIZE; ++z)
+				RECore::uint8* currentData = data;
+				for (RECore::uint8 z = 0; z < SIZE; ++z)
 				{
-					for (uint8_t y = 0; y < SIZE; ++y)
+					for (RECore::uint8 y = 0; y < SIZE; ++y)
 					{
-						for (uint8_t x = 0; x < SIZE; ++x)
+						for (RECore::uint8 x = 0; x < SIZE; ++x)
 						{
-							currentData[0] = static_cast<uint8_t>((static_cast<float>(x) / static_cast<float>(SIZE)) * 255.0f);
-							currentData[1] = static_cast<uint8_t>((static_cast<float>(y) / static_cast<float>(SIZE)) * 255.0f);
-							currentData[2] = static_cast<uint8_t>((static_cast<float>(z) / static_cast<float>(SIZE)) * 255.0f);
+							currentData[0] = static_cast<RECore::uint8>((static_cast<float>(x) / static_cast<float>(SIZE)) * 255.0f);
+							currentData[1] = static_cast<RECore::uint8>((static_cast<float>(y) / static_cast<float>(SIZE)) * 255.0f);
+							currentData[2] = static_cast<RECore::uint8>((static_cast<float>(z) / static_cast<float>(SIZE)) * 255.0f);
 							// currentData[3] = 0;	// Unused
 							currentData += NUMBER_OF_COMPONENTS;
 						}
@@ -189,14 +189,14 @@ namespace
 		*/
 		[[nodiscard]] RERenderer::TextureResourceId createSsaoSampleKernelTexture(const RERenderer::IRenderer& renderer)
 		{
-			static constexpr uint32_t KERNEL_SIZE = 16;
+			static constexpr RECore::uint32 KERNEL_SIZE = 16;
 			glm::vec4 kernel[KERNEL_SIZE];
 
 			{ // Create the kernel
 				std::mt19937 randomGenerator;
 				std::uniform_real_distribution<float> randomDistributionHalf(0.0f, 1.0f);
 				std::uniform_real_distribution<float> randomDistributionFull(-1.0f, 1.0f);
-				for (uint32_t i = 0; i < KERNEL_SIZE; ++i)
+				for (RECore::uint32 i = 0; i < KERNEL_SIZE; ++i)
 				{
 					// Create a sample point on the surface of a hemisphere oriented along the z axis
 					kernel[i] = glm::vec4(randomDistributionFull(randomGenerator), randomDistributionFull(randomGenerator), randomDistributionHalf(randomGenerator), 0.0f);
@@ -235,14 +235,14 @@ namespace
 		*/
 		[[nodiscard]] RERenderer::TextureResourceId createSsaoNoiseTexture4x4(const RERenderer::IRenderer& renderer)
 		{
-			static constexpr uint32_t NOISE_SIZE = 4;
-			static constexpr uint32_t SQUARED_NOISE_SIZE = NOISE_SIZE * NOISE_SIZE;
+			static constexpr RECore::uint32 NOISE_SIZE = 4;
+			static constexpr RECore::uint32 SQUARED_NOISE_SIZE = NOISE_SIZE * NOISE_SIZE;
 			glm::vec4 noise[SQUARED_NOISE_SIZE];
 
 			{ // Create the noise
 				std::mt19937 randomGenerator;
 				std::uniform_real_distribution<float> randomDistribution(-1.0f, 1.0f);
-				for (uint32_t i = 0; i < SQUARED_NOISE_SIZE; ++i)
+				for (RECore::uint32 i = 0; i < SQUARED_NOISE_SIZE; ++i)
 				{
 					noise[i] = glm::vec4(randomDistribution(randomGenerator), randomDistribution(randomGenerator), 0.0f, 0.0f);
 					noise[i] = glm::normalize(noise[i]);
@@ -259,7 +259,7 @@ namespace
 		*  @brief
 		*    Compute a radical inverse with base 2 using crazy bit-twiddling from "Hacker's Delight"
 		*/
-		[[nodiscard]] inline float radicalInverseBase2(uint32_t bits)
+		[[nodiscard]] inline float radicalInverseBase2(RECore::uint32 bits)
 		{
 			bits = (bits << 16u) | (bits >> 16u);
 			bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
@@ -276,9 +276,9 @@ namespace
 		*  @note
 		*    - From "MSAA Resolve + Temporal AA" from https://github.com/TheRealMJP/MSAAFilter with background information at https://mynameismjp.wordpress.com/2012/10/28/msaa-resolve-filters/
 		*/
-		[[nodiscard]] inline glm::vec2 hammersley2D(uint64_t sampleIndex, uint64_t numberOfSamples)
+		[[nodiscard]] inline glm::vec2 hammersley2D(RECore::uint64 sampleIndex, RECore::uint64 numberOfSamples)
 		{
-			return glm::vec2(float(sampleIndex) / float(numberOfSamples), radicalInverseBase2(uint32_t(sampleIndex)));
+			return glm::vec2(float(sampleIndex) / float(numberOfSamples), radicalInverseBase2(RECore::uint32(sampleIndex)));
 		}
 
 
@@ -377,7 +377,7 @@ namespace RERenderer
 			mRenderTargetHeight = compositorContextData.getGlobalComputeSize()[1];
 		}
 		const bool singlePassStereoInstancing = mCompositorContextData->getSinglePassStereoInstancing();
-		const uint32_t renderTargetWidth = singlePassStereoInstancing ? (mRenderTargetWidth / 2) : mRenderTargetWidth;
+		const RECore::uint32 renderTargetWidth = singlePassStereoInstancing ? (mRenderTargetWidth / 2) : mRenderTargetWidth;
 
 		// Get camera settings
 		const CameraSceneItem* cameraSceneItem = compositorContextData.getCameraSceneItem();
@@ -393,8 +393,8 @@ namespace RERenderer
 		#else
 			static constexpr bool vrRendering = false;
 		#endif
-		const uint32_t numberOfEyes = vrRendering ? 2u : 1u;
-		for (uint32_t eyeIndex = 0; eyeIndex < numberOfEyes; ++eyeIndex)
+		const RECore::uint32 numberOfEyes = vrRendering ? 2u : 1u;
+		for (RECore::uint32 eyeIndex = 0; eyeIndex < numberOfEyes; ++eyeIndex)
 		{
 			if (nullptr != cameraSceneItem)
 			{
@@ -453,7 +453,7 @@ namespace RERenderer
 		}
 	}
 
-	bool MaterialBlueprintResourceListener::fillPassValue(uint32_t referenceValue, uint8_t* buffer, uint32_t numberOfBytes)
+	bool MaterialBlueprintResourceListener::fillPassValue(RECore::uint32 referenceValue, RECore::uint8* buffer, RECore::uint32 numberOfBytes)
 	{
 		bool valueFilled = true;
 
@@ -673,7 +673,7 @@ namespace RERenderer
 			case ::detail::GLOBAL_COMPUTE_SIZE:
 			{
 				RHI_ASSERT(mRenderer->getContext(), mIsComputePipeline, "\"GLOBAL_COMPUTE_SIZE\" is only valid for compute pipeline")
-				RHI_ASSERT(mRenderer->getContext(), sizeof(int32_t) * 3 == numberOfBytes, "Invalid number of bytes")
+				RHI_ASSERT(mRenderer->getContext(), sizeof(RECore::int32) * 3 == numberOfBytes, "Invalid number of bytes")
 				memcpy(buffer, mCompositorContextData->getGlobalComputeSize(), numberOfBytes);
 				break;
 			}
@@ -974,10 +974,10 @@ namespace RERenderer
 				RHI_ASSERT(mRenderer->getContext(), sizeof(float) * 2 == numberOfBytes, "Invalid number of bytes")
 
 				// Calculate the jitter offset using "Hammersley 4x" from "MSAA Resolve + Temporal AA" from https://github.com/TheRealMJP/MSAAFilter with background information at https://mynameismjp.wordpress.com/2012/10/28/msaa-resolve-filters/
-				const uint64_t numberOfRenderedFrames = mRenderer->getTimeManager().getNumberOfRenderedFrames();
+				const RECore::uint64 numberOfRenderedFrames = mRenderer->getTimeManager().getNumberOfRenderedFrames();
 				if (numberOfRenderedFrames != mPreviousNumberOfRenderedFrames)
 				{
-					const uint64_t index = (numberOfRenderedFrames % 4);
+					const RECore::uint64 index = (numberOfRenderedFrames % 4);
 					glm::vec2 jitter = ::detail::hammersley2D(index, 4) * 2.0f - glm::vec2(1.0f);
 					jitter *= 0.2f;
 					const glm::vec2 jitterOffset = (jitter - mPreviousJitter) * 0.5f;
@@ -1041,7 +1041,7 @@ namespace RERenderer
 		return valueFilled;
 	}
 
-	bool MaterialBlueprintResourceListener::fillInstanceValue(uint32_t referenceValue, uint8_t* buffer, [[maybe_unused]] uint32_t numberOfBytes, uint32_t instanceTextureBufferStartIndex)
+	bool MaterialBlueprintResourceListener::fillInstanceValue(RECore::uint32 referenceValue, RECore::uint8* buffer, [[maybe_unused]] RECore::uint32 numberOfBytes, RECore::uint32 instanceTextureBufferStartIndex)
 	{
 		bool valueFilled = true;
 
@@ -1050,9 +1050,9 @@ namespace RERenderer
 		{
 			case ::detail::INSTANCE_INDICES:
 			{
-				RHI_ASSERT(mRenderer->getContext(), sizeof(uint32_t) * 4 == numberOfBytes, "Invalid number of bytes")
+				RHI_ASSERT(mRenderer->getContext(), sizeof(RECore::uint32) * 4 == numberOfBytes, "Invalid number of bytes")
 				RHI_ASSERT(mRenderer->getContext(), ~0u != instanceTextureBufferStartIndex, "Invalid instance texture buffer start index")
-				uint32_t* integerBuffer = reinterpret_cast<uint32_t*>(buffer);
+				RECore::uint32* integerBuffer = reinterpret_cast<RECore::uint32*>(buffer);
 
 				// 0 = x = The instance texture buffer start index
 				integerBuffer[0] = instanceTextureBufferStartIndex;
@@ -1070,9 +1070,9 @@ namespace RERenderer
 
 			case ::detail::WORLD_POSITION_MATERIAL_INDEX:
 			{
-				RHI_ASSERT(mRenderer->getContext(), sizeof(uint32_t) * 4 == numberOfBytes, "Invalid number of bytes")
+				RHI_ASSERT(mRenderer->getContext(), sizeof(RECore::uint32) * 4 == numberOfBytes, "Invalid number of bytes")
 				RHI_ASSERT(mRenderer->getContext(), ~0u == instanceTextureBufferStartIndex, "Invalid instance texture buffer start index")
-				uint32_t* integerBuffer = reinterpret_cast<uint32_t*>(buffer);
+				RECore::uint32* integerBuffer = reinterpret_cast<RECore::uint32*>(buffer);
 
 				// xyz world position adjusted for camera relative rendering: While we're using a 64 bit world space position in general, for relative positions 32 bit are sufficient
 				// -> 0 = World space x position

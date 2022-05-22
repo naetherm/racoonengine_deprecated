@@ -69,7 +69,7 @@ namespace RERenderer
 		}
 	}
 
-	void ComputePipelineStateCompiler::setNumberOfCompilerThreads(uint32_t numberOfCompilerThreads)
+	void ComputePipelineStateCompiler::setNumberOfCompilerThreads(RECore::uint32 numberOfCompilerThreads)
 	{
 		if (mNumberOfCompilerThreads != numberOfCompilerThreads)
 		{
@@ -86,7 +86,7 @@ namespace RERenderer
 			mCompilerThreads.clear();
 			mCompilerThreads.reserve(mNumberOfCompilerThreads);
 			mShutdownCompilerThread = false;
-			for (uint32_t i = 0; i < mNumberOfCompilerThreads; ++i)
+			for (RECore::uint32 i = 0; i < mNumberOfCompilerThreads; ++i)
 			{
 				mCompilerThreads.push_back(std::thread(&ComputePipelineStateCompiler::compilerThreadWorker, this));
 			}
@@ -251,7 +251,7 @@ namespace RERenderer
 									// Generate the shader source code ID
 									// -> Especially in complex shaders, there are situations where different shader combinations result in one and the same shader source code
 									// -> Shader compilation is considered to be expensive, so we need to be pretty sure that we really need to perform this heavy work
-									const ShaderSourceCodeId shaderSourceCodeId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(sourceCode.c_str()), static_cast<uint32_t>(sourceCode.size()));
+									const ShaderSourceCodeId shaderSourceCodeId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(sourceCode.c_str()), static_cast<RECore::uint32>(sourceCode.size()));
 									ShaderCacheManager::ShaderCacheByShaderSourceCodeId::const_iterator shaderSourceCodeIdIterator = shaderCacheManager.mShaderCacheByShaderSourceCodeId.find(shaderSourceCodeId);
 									if (shaderSourceCodeIdIterator != shaderCacheManager.mShaderCacheByShaderSourceCodeId.cend())
 									{

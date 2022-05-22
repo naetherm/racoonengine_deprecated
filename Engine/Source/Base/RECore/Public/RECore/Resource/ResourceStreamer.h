@@ -140,7 +140,7 @@ public:
   //[ Public methods                                        ]
   //[-------------------------------------------------------]
 public:
-  [[nodiscard]] inline uint32_t getNumberOfInFlightLoadRequests() const {
+  [[nodiscard]] inline uint32 getNumberOfInFlightLoadRequests() const {
     return mNumberOfInFlightLoadRequests;
   }
 
@@ -184,11 +184,11 @@ private:
   typedef std::vector<IResourceLoader *> ResourceLoaders;
   typedef std::deque<LoadRequest> LoadRequests;
   struct ResourceLoaderType final {
-    uint32_t numberOfInstances;
+    uint32 numberOfInstances;
     ResourceLoaders freeResourceLoaders;
     LoadRequests waitingLoadRequests;
   };
-  typedef std::unordered_map<uint32_t, ResourceLoaderType> ResourceLoaderTypeManager;  ///< Key = "Renderer::ResourceLoaderTypeId"
+  typedef std::unordered_map<uint32, ResourceLoaderType> ResourceLoaderTypeManager;  ///< Key = "Renderer::ResourceLoaderTypeId"
 
 
   //[-------------------------------------------------------]
@@ -197,14 +197,14 @@ private:
 private:
   RECore::IFileManager &mFileManager;  ///< Renderer instance, do not destroy the instance
   std::mutex mResourceManagerMutex;
-  std::atomic<uint32_t> mNumberOfInFlightLoadRequests;
+  std::atomic<uint32> mNumberOfInFlightLoadRequests;
   // Resource streamer stage: 1. Asynchronous deserialization
   std::atomic<bool> mShutdownDeserializationThread;
   std::mutex mDeserializationMutex;
   std::condition_variable mDeserializationConditionVariable;
   LoadRequests mDeserializationQueue;
   ResourceLoaderTypeManager mResourceLoaderTypeManager;  // Do only touch if "mResourceManagerMutex" is locked
-  std::atomic<uint32_t> mDeserializationWaitingQueueRequests;
+  std::atomic<uint32> mDeserializationWaitingQueueRequests;
   std::thread mDeserializationThread;
   // Resource streamer stage: 2. Asynchronous processing
   std::atomic<bool> mShutdownProcessingThread;

@@ -62,8 +62,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t			 TextureResourceId;	///< POD texture resource identifier
-	typedef RECore::StringId			 AssetId;			///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::uint32			 TextureResourceId;	///< POD texture resource identifier
+	typedef RECore::StringId			 AssetId;			///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
 	typedef std::vector<AssetId> AssetIds;
 
 
@@ -126,7 +126,7 @@ namespace RERenderer
 			mNearZ(0.0f),
 			mFarZ(0.0f),
 			mPreviousJitter(0.0f, 0.0f),
-			mPreviousNumberOfRenderedFrames(RECore::getInvalid<uint64_t>()),
+			mPreviousNumberOfRenderedFrames(RECore::getInvalid<RECore::uint64>()),
 			mHosekWilkieSky(nullptr),
 			#ifdef DEBUG
 				mIsComputePipeline(false),
@@ -179,7 +179,7 @@ namespace RERenderer
 			// Nothing here
 		}
 
-		[[nodiscard]] inline virtual bool fillUnknownValue([[maybe_unused]] uint32_t referenceValue, [[maybe_unused]] uint8_t* buffer, [[maybe_unused]] uint32_t numberOfBytes) override
+		[[nodiscard]] inline virtual bool fillUnknownValue([[maybe_unused]] RECore::uint32 referenceValue, [[maybe_unused]] RECore::uint8* buffer, [[maybe_unused]] RECore::uint32 numberOfBytes) override
 		{
 			// Nothing here
 
@@ -188,14 +188,14 @@ namespace RERenderer
 		}
 
 		virtual void beginFillPass(IRenderer& renderer, const RERHI::RHIRenderTarget* renderTarget, const CompositorContextData& compositorContextData, PassBufferManager::PassData& passData) override;
-		[[nodiscard]] virtual bool fillPassValue(uint32_t referenceValue, uint8_t* buffer, uint32_t numberOfBytes) override;
+		[[nodiscard]] virtual bool fillPassValue(RECore::uint32 referenceValue, RECore::uint8* buffer, RECore::uint32 numberOfBytes) override;
 
 		inline virtual void beginFillMaterial() override
 		{
 			// Nothing here
 		}
 
-		[[nodiscard]] inline virtual bool fillMaterialValue([[maybe_unused]] uint32_t referenceValue, [[maybe_unused]] uint8_t* buffer, [[maybe_unused]] uint32_t numberOfBytes) override
+		[[nodiscard]] inline virtual bool fillMaterialValue([[maybe_unused]] RECore::uint32 referenceValue, [[maybe_unused]] RECore::uint8* buffer, [[maybe_unused]] RECore::uint32 numberOfBytes) override
 		{
 			// Nothing here
 
@@ -214,7 +214,7 @@ namespace RERenderer
 			mMaterialTechnique				  = &materialTechnique;
 		}
 
-		[[nodiscard]] virtual bool fillInstanceValue(uint32_t referenceValue, uint8_t* buffer, uint32_t numberOfBytes, uint32_t instanceTextureBufferStartIndex) override;
+		[[nodiscard]] virtual bool fillInstanceValue(RECore::uint32 referenceValue, RECore::uint8* buffer, RECore::uint32 numberOfBytes, RECore::uint32 instanceTextureBufferStartIndex) override;
 
 
 	//[-------------------------------------------------------]
@@ -239,12 +239,12 @@ namespace RERenderer
 		const CompositorContextData* mCompositorContextData;
 		glm::dvec3					 mWorldSpaceCameraPosition;	///< Cached 64 bit world space position of the camera since often accessed due to camera relative rendering
 		glm::vec3					 mCameraRelativeWorldSpaceCameraPosition[2];
-		uint32_t					 mRenderTargetWidth;
-		uint32_t					 mRenderTargetHeight;
+		RECore::uint32					 mRenderTargetWidth;
+		RECore::uint32					 mRenderTargetHeight;
 		float						 mNearZ;
 		float						 mFarZ;
 		glm::vec2					 mPreviousJitter;
-		uint64_t					 mPreviousNumberOfRenderedFrames;
+		RECore::uint64					 mPreviousNumberOfRenderedFrames;
 		HosekWilkieSky*				 mHosekWilkieSky;
 		#ifdef DEBUG
 			bool					 mIsComputePipeline;

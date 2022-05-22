@@ -152,7 +152,7 @@ protected:
   *  @param[in] textureFormat
   *    Texture format
   */
-  Texture3D(RHIDynamicRHI& openGLRhi, uint32_t width, uint32_t height, uint32_t depth, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  Texture3D(RHIDynamicRHI& openGLRhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
 
   //[-------------------------------------------------------]

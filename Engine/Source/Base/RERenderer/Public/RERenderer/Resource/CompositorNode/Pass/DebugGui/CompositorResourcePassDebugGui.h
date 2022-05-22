@@ -62,7 +62,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("DebugGui");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("DebugGui");
 
 
 	//[-------------------------------------------------------]

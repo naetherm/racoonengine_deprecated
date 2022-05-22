@@ -155,7 +155,7 @@ namespace RERenderer
 		const ICompositorResourcePass& mCompositorResourcePass;
 		const CompositorNodeInstance&  mCompositorNodeInstance;
 		RERHI::RHIRenderTarget*			   mRenderTarget;	/// Render target, can be a null pointer, don't destroy the instance
-		uint32_t					   mNumberOfExecutionRequests;
+		RECore::uint32					   mNumberOfExecutionRequests;
 
 
 	};

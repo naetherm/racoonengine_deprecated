@@ -137,8 +137,8 @@ namespace RERenderer
 			typedef std::unordered_set<MaterialBlueprintResource*> MaterialBlueprintResourcePointers;
 			MaterialBlueprintResourcePointers materialBlueprintResourcePointers;
 			const MaterialBlueprintResourceManager& materialBlueprintResourceManager = mRenderer.getMaterialBlueprintResourceManager();
-			const uint32_t numberOfElements = materialBlueprintResourceManager.getNumberOfResources();
-			for (uint32_t i = 0; i < numberOfElements; ++i)
+			const RECore::uint32 numberOfElements = materialBlueprintResourceManager.getNumberOfResources();
+			for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 			{
 				MaterialBlueprintResource& materialBlueprintResource = materialBlueprintResourceManager.getByIndex(i);
 				const ShaderBlueprintResourceId computeShaderBlueprintResourceId = materialBlueprintResource.getComputeShaderBlueprintResourceId();
@@ -153,7 +153,7 @@ namespace RERenderer
 				else
 				{
 					// Graphics pipeline state object (PSO)
-					for (uint8_t graphicsShaderType = 0; graphicsShaderType < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++graphicsShaderType)
+					for (RECore::uint8 graphicsShaderType = 0; graphicsShaderType < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++graphicsShaderType)
 					{
 						if (materialBlueprintResource.getGraphicsShaderBlueprintResourceId(static_cast<GraphicsShaderType>(graphicsShaderType)) == shaderBlueprintResourceId)
 						{

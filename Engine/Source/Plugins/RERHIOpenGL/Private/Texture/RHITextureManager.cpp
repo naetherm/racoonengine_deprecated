@@ -62,7 +62,7 @@ RHITextureManager(openGLRhi),
 mExtensions(&openGLRhi.getExtensions())
 {}
 
-RERHI::RHITexture1D* TextureManager::createTexture1D(uint32_t width, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHITexture1D* TextureManager::createTexture1D(RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -83,7 +83,7 @@ RERHI::RHITexture1D* TextureManager::createTexture1D(uint32_t width, RERHI::Text
   }
 }
 
-RERHI::RHITexture1DArray* TextureManager::createTexture1DArray(uint32_t width, uint32_t numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHITexture1DArray* TextureManager::createTexture1DArray(RECore::uint32 width, RECore::uint32 numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -112,7 +112,7 @@ RERHI::RHITexture1DArray* TextureManager::createTexture1DArray(uint32_t width, u
   }
 }
 
-RERHI::RHITexture2D* TextureManager::createTexture2D(uint32_t width, uint32_t height, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage, uint8_t numberOfMultisamples, [[maybe_unused]] const RERHI::OptimizedTextureClearValue* optimizedTextureClearValue RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHITexture2D* TextureManager::createTexture2D(RECore::uint32 width, RECore::uint32 height, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage, RECore::uint8 numberOfMultisamples, [[maybe_unused]] const RERHI::OptimizedTextureClearValue* optimizedTextureClearValue RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -133,7 +133,7 @@ RERHI::RHITexture2D* TextureManager::createTexture2D(uint32_t width, uint32_t he
   }
 }
 
-RERHI::RHITexture2DArray* TextureManager::createTexture2DArray(uint32_t width, uint32_t height, uint32_t numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHITexture2DArray* TextureManager::createTexture2DArray(RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -162,7 +162,7 @@ RERHI::RHITexture2DArray* TextureManager::createTexture2DArray(uint32_t width, u
   }
 }
 
-RERHI::RHITexture3D* TextureManager::createTexture3D(uint32_t width, uint32_t height, uint32_t depth, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHITexture3D* TextureManager::createTexture3D(RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -183,7 +183,7 @@ RERHI::RHITexture3D* TextureManager::createTexture3D(uint32_t width, uint32_t he
   }
 }
 
-RERHI::RHITextureCube* TextureManager::createTextureCube(uint32_t width, RERHI::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHITextureCube* TextureManager::createTextureCube(RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   RHIDynamicRHI& openGLRhi = static_cast<RHIDynamicRHI&>(getRhi());
 
@@ -205,7 +205,7 @@ RERHI::RHITextureCube* TextureManager::createTextureCube(uint32_t width, RERHI::
   }
 }
 
-RERHI::RHITextureCubeArray* TextureManager::createTextureCubeArray([[maybe_unused]] uint32_t width, [[maybe_unused]] uint32_t numberOfSlices, [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data, [[maybe_unused]] uint32_t textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
+RERHI::RHITextureCubeArray* TextureManager::createTextureCubeArray([[maybe_unused]] RECore::uint32 width, [[maybe_unused]] RECore::uint32 numberOfSlices, [[maybe_unused]] RERHI::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data, [[maybe_unused]] RECore::uint32 textureFlags, [[maybe_unused]] RERHI::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 {
   // TODO(naetherm) Implement me
 #ifdef DEBUG

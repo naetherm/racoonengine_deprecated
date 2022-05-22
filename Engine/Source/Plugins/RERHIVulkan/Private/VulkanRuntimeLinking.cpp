@@ -349,7 +349,7 @@ VkResult VulkanRuntimeLinking::createVulkanInstance(bool enableValidation)
   }
 
   { // Ensure the extensions we need are supported
-    uint32_t propertyCount = 0;
+    RECore::uint32 propertyCount = 0;
     if ((vkEnumerateInstanceExtensionProperties(nullptr, &propertyCount, nullptr) != VK_SUCCESS) || (0 == propertyCount))
     {
       RE_LOG(Critical, "Failed to enumerate Vulkan instance extension properties")
@@ -377,10 +377,10 @@ VkResult VulkanRuntimeLinking::createVulkanInstance(bool enableValidation)
       VK_STRUCTURE_TYPE_APPLICATION_INFO,	// sType (VkStructureType)
       nullptr,							// pNext (const void*)
       "RacoonEngine Application",				// pApplicationName (const char*)
-      VK_MAKE_VERSION(0, 0, 0),			// applicationVersion (uint32_t)
+      VK_MAKE_VERSION(0, 0, 0),			// applicationVersion (RECore::uint32)
       "RacoonEngine",							// pEngineName (const char*)
-      VK_MAKE_VERSION(0, 0, 0),			// engineVersion (uint32_t)
-      VK_API_VERSION_1_0					// apiVersion (uint32_t)
+      VK_MAKE_VERSION(0, 0, 0),			// engineVersion (RECore::uint32)
+      VK_API_VERSION_1_0					// apiVersion (RECore::uint32)
     };
 
   const VkInstanceCreateInfo vkInstanceCreateInfo =
@@ -389,9 +389,9 @@ VkResult VulkanRuntimeLinking::createVulkanInstance(bool enableValidation)
       nullptr,														// pNext (const void*)
       0,																// flags (VkInstanceCreateFlags)
       &vkApplicationInfo,												// pApplicationInfo (const VkApplicationInfo*)
-      enableValidation ? ::detail::NUMBER_OF_VALIDATION_LAYERS : 0,	// enabledLayerCount (uint32_t)
+      enableValidation ? ::detail::NUMBER_OF_VALIDATION_LAYERS : 0,	// enabledLayerCount (RECore::uint32)
       enableValidation ? ::detail::VALIDATION_LAYER_NAMES : nullptr,	// ppEnabledLayerNames (const char* const*)
-      static_cast<uint32_t>(enabledExtensions.size()),				// enabledExtensionCount (uint32_t)
+      static_cast<RECore::uint32>(enabledExtensions.size()),				// enabledExtensionCount (RECore::uint32)
       enabledExtensions.data()										// ppEnabledExtensionNames (const char* const*)
     };
   VkResult vkResult = vkCreateInstance(&vkInstanceCreateInfo, mRHIDynamicRHI.getVkAllocationCallbacks(), &mVkInstance);

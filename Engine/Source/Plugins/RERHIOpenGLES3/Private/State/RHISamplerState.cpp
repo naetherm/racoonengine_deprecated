@@ -40,7 +40,7 @@ SamplerState::SamplerState(RHIDynamicRHI& openGLES3Rhi, const RERHI::SamplerStat
   mOpenGLTextureAddressModeT(Mapping::getOpenGLES3TextureAddressMode(samplerState.addressV)),
   mOpenGLTextureAddressModeR(Mapping::getOpenGLES3TextureAddressMode(samplerState.addressW)),
   mMipLodBias(samplerState.mipLodBias),
-  mMaxAnisotropy(static_cast<float>(samplerState.maxAnisotropy)),	// Maximum anisotropy is "uint32_t" in Direct3D 10 & 11
+  mMaxAnisotropy(static_cast<float>(samplerState.maxAnisotropy)),	// Maximum anisotropy is "RECore::uint32" in Direct3D 10 & 11
   mOpenGLCompareMode(Mapping::getOpenGLES3CompareMode(samplerState.filter)),
   mOpenGLComparisonFunc(Mapping::getOpenGLES3ComparisonFunc(samplerState.comparisonFunc)),
   mMinLod(samplerState.minLod),

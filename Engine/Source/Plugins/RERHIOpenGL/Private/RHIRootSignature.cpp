@@ -43,18 +43,18 @@ RootSignature::RootSignature(RHIDynamicRHI &openGLRhi, const RERHI::RootSignatur
   const RERHI::RHIContext &context = openGLRhi.getContext();
 
   { // Copy the parameter data
-    const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
+    const RECore::uint32 numberOfParameters = mRootSignature.numberOfParameters;
     if (numberOfParameters > 0) {
       mRootSignature.parameters = RHI_MALLOC_TYPED(context, RERHI::RootParameter, numberOfParameters);
       RERHI::RootParameter *destinationRootParameters = const_cast<RERHI::RootParameter *>(mRootSignature.parameters);
       memcpy(destinationRootParameters, rootSignature.parameters, sizeof(RERHI::RootParameter) * numberOfParameters);
 
       // Copy the descriptor table data
-      for (uint32_t i = 0; i < numberOfParameters; ++i) {
+      for (RECore::uint32 i = 0; i < numberOfParameters; ++i) {
         RERHI::RootParameter &destinationRootParameter = destinationRootParameters[i];
         const RERHI::RootParameter &sourceRootParameter = rootSignature.parameters[i];
         if (RERHI::RootParameterType::DESCRIPTOR_TABLE == destinationRootParameter.parameterType) {
-          const uint32_t numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
+          const RECore::uint32 numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
           destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(
             context, RERHI::DescriptorRange, numberOfDescriptorRanges));
           memcpy(reinterpret_cast<RERHI::DescriptorRange *>(destinationRootParameter.descriptorTable.descriptorRanges),
@@ -66,7 +66,7 @@ RootSignature::RootSignature(RHIDynamicRHI &openGLRhi, const RERHI::RootSignatur
   }
 
   { // Copy the static sampler data
-    const uint32_t numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
+    const RECore::uint32 numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
     if (numberOfStaticSamplers > 0) {
       mRootSignature.staticSamplers = RHI_MALLOC_TYPED(context, RERHI::StaticSampler, numberOfStaticSamplers);
       memcpy(const_cast<RERHI::StaticSampler *>(mRootSignature.staticSamplers), rootSignature.staticSamplers,
@@ -83,7 +83,7 @@ RootSignature::~RootSignature() {
   // Destroy the root signature data
   const RERHI::RHIContext &context = getRhi().getContext();
   if (nullptr != mRootSignature.parameters) {
-    for (uint32_t i = 0; i < mRootSignature.numberOfParameters; ++i) {
+    for (RECore::uint32 i = 0; i < mRootSignature.numberOfParameters; ++i) {
       const RERHI::RootParameter &rootParameter = mRootSignature.parameters[i];
       if (RERHI::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType) {
         RHI_FREE(context, reinterpret_cast<RERHI::DescriptorRange *>(rootParameter.descriptorTable.descriptorRanges));
@@ -94,7 +94,7 @@ RootSignature::~RootSignature() {
   RHI_FREE(context, const_cast<RERHI::StaticSampler *>(mRootSignature.staticSamplers));
 }
 
-RERHI::RHIResourceGroup *RootSignature::createResourceGroup(uint32_t rootParameterIndex, uint32_t numberOfResources,
+RERHI::RHIResourceGroup *RootSignature::createResourceGroup(RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources,
                                                             RERHI::RHIResource **resources,
                                                             RERHI::RHISamplerState **samplerStates
                                                             RHI_RESOURCE_DEBUG_NAME_PARAMETER) {

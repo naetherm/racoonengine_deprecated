@@ -44,17 +44,17 @@ namespace RERenderer
 		}
 	}
 
-	RERHI::RHIRenderPass* RenderPassManager::getOrCreateRenderPass(uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples)
+	RERHI::RHIRenderPass* RenderPassManager::getOrCreateRenderPass(RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples)
 	{
 		// Calculate the render pass signature
 		// TODO(naetherm) Tiny performance optimization: It should be possible to pre-calculate a partial render pass signature using "numberOfColorAttachments", "colorAttachmentTextureFormats" and "depthStencilAttachmentTextureFormat" inside the renderer toolkit for the normal use-cases
-		uint32_t renderPassSignature = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&numberOfColorAttachments), sizeof(uint32_t), RECore::Math::FNV1a_INITIAL_HASH_32);
-		for (uint32_t i = 0; i < numberOfColorAttachments; ++i)
+		RECore::uint32 renderPassSignature = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&numberOfColorAttachments), sizeof(RECore::uint32), RECore::Math::FNV1a_INITIAL_HASH_32);
+		for (RECore::uint32 i = 0; i < numberOfColorAttachments; ++i)
 		{
-			renderPassSignature = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&colorAttachmentTextureFormats[i]), sizeof(RERHI::TextureFormat::Enum), renderPassSignature);
+			renderPassSignature = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&colorAttachmentTextureFormats[i]), sizeof(RERHI::TextureFormat::Enum), renderPassSignature);
 		}
-		renderPassSignature = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&depthStencilAttachmentTextureFormat), sizeof(RERHI::TextureFormat::Enum), renderPassSignature);
-		renderPassSignature = RECore::Math::calculateFNV1a32(&numberOfMultisamples, sizeof(uint8_t), renderPassSignature);
+		renderPassSignature = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&depthStencilAttachmentTextureFormat), sizeof(RERHI::TextureFormat::Enum), renderPassSignature);
+		renderPassSignature = RECore::Math::calculateFNV1a32(&numberOfMultisamples, sizeof(RECore::uint8), renderPassSignature);
 
 		// Does the render pass instance already exist?
 		const RenderPasses::const_iterator iterator = mRenderPasses.find(renderPassSignature);

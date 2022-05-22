@@ -42,8 +42,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;				///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
-	typedef RECore::StringId MaterialPropertyId;	///< Material property identifier, internally just a POD "uint32_t", result of hashing the property name
+	typedef RECore::StringId AssetId;				///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::StringId MaterialPropertyId;	///< Material property identifier, internally just a POD "RECore::uint32", result of hashing the property name
 
 
 	//[-------------------------------------------------------]
@@ -77,7 +77,7 @@ namespace RERenderer
 		*  @brief
 		*    Value type
 		*/
-		enum class ValueType : uint8_t
+		enum class ValueType : RECore::uint8
 		{
 			UNKNOWN = 0,						///< Value type not known
 			BOOLEAN,							///< Boolean value
@@ -117,7 +117,7 @@ namespace RERenderer
 	//[ Public static methods                                 ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] static uint32_t getValueTypeNumberOfBytes(ValueType valueType);
+		[[nodiscard]] static RECore::uint32 getValueTypeNumberOfBytes(ValueType valueType);
 
 		[[nodiscard]] static inline MaterialPropertyValue fromUnknown()
 		{
@@ -418,9 +418,9 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Value getter                                          ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] inline const uint8_t* getData() const
+		[[nodiscard]] inline const RECore::uint8* getData() const
 		{
-			return reinterpret_cast<const uint8_t*>(&mValue);
+			return reinterpret_cast<const RECore::uint8*>(&mValue);
 		}
 
 		[[nodiscard]] inline bool getBooleanValue() const
@@ -609,9 +609,9 @@ namespace RERenderer
 			RERHI::FilterMode						FilterMode;
 			RERHI::TextureAddressMode				TextureAddressMode;
 			// For texture property usage
-			uint32_t							TextureAssetId;
+			RECore::uint32							TextureAssetId;
 			// For shader combination property usage
-			uint32_t							GlobalMaterialPropertyId;	///< "uint32_t" instead of "MaterialPropertyId" since there's no default constructor
+			RECore::uint32							GlobalMaterialPropertyId;	///< "RECore::uint32" instead of "MaterialPropertyId" since there's no default constructor
 		} mValue;
 
 

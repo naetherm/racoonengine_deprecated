@@ -74,7 +74,7 @@ public:
   *  @param[in] id
   *    The unique compact vertex array ID
   */
-  VertexArray(RHIDynamicRHI& openGLES3Rhi, const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  VertexArray(RHIDynamicRHI& openGLES3Rhi, const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief
@@ -130,7 +130,7 @@ private:
   //[-------------------------------------------------------]
 private:
   GLuint		   mOpenGLES3VertexArray;	///< OpenGL ES 3 vertex array, can be zero if no resource is allocated
-  uint32_t	   mNumberOfVertexBuffers;	///< Number of vertex buffers
+  RECore::uint32	   mNumberOfVertexBuffers;	///< Number of vertex buffers
   VertexBuffer** mVertexBuffers;			///< Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer
   IndexBuffer*   mIndexBuffer;			///< Optional index buffer to use, can be a null pointer, the vertex array instance keeps a reference to the index buffer
 

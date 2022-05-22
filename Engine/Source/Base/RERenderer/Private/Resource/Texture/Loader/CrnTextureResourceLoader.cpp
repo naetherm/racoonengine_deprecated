@@ -109,12 +109,12 @@ namespace RERenderer
 	bool CrnTextureResourceLoader::onDeserialization(RECore::IFile& file)
 	{
 		// Load the source image file into memory: Get file size and file data
-		mNumberOfUsedFileDataBytes = static_cast<uint32_t>(file.getNumberOfBytes());
+		mNumberOfUsedFileDataBytes = static_cast<RECore::uint32>(file.getNumberOfBytes());
 		if (mNumberOfFileDataBytes < mNumberOfUsedFileDataBytes)
 		{
 			mNumberOfFileDataBytes = mNumberOfUsedFileDataBytes;
 			delete [] mFileData;
-			mFileData = new uint8_t[mNumberOfFileDataBytes];
+			mFileData = new RECore::uint8[mNumberOfFileDataBytes];
 		}
 		file.read(mFileData, mNumberOfUsedFileDataBytes);
 
@@ -145,12 +145,12 @@ namespace RERenderer
 		{
 			// DXT1 compression (known as BC1 in DirectX 10, RGB compression: 8:1, 8 bytes per block)
 			case cCRNFmtDXT1:
-				mTextureFormat = static_cast<uint8_t>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC1_SRGB : RERHI::TextureFormat::BC1);
+				mTextureFormat = static_cast<RECore::uint8>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC1_SRGB : RERHI::TextureFormat::BC1);
 				break;
 
 			// DXT3 compression (known as BC2 in DirectX 10, RGBA compression: 4:1, 16 bytes per block)
 			case cCRNFmtDXT3:
-				mTextureFormat = static_cast<uint8_t>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC2_SRGB : RERHI::TextureFormat::BC2);
+				mTextureFormat = static_cast<RECore::uint8>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC2_SRGB : RERHI::TextureFormat::BC2);
 				break;
 
 			// DXT5 compression (known as BC3 in DirectX 10, RGBA compression: 4:1, 16 bytes per block)
@@ -159,7 +159,7 @@ namespace RERenderer
 			case cCRNFmtDXT5_xGxR:
 			case cCRNFmtDXT5_xGBR:
 			case cCRNFmtDXT5_AGBR:
-				mTextureFormat = static_cast<uint8_t>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC3_SRGB : RERHI::TextureFormat::BC3);
+				mTextureFormat = static_cast<RECore::uint8>(mTextureResource->isRgbHardwareGammaCorrection() ? RERHI::TextureFormat::BC3_SRGB : RERHI::TextureFormat::BC3);
 				break;
 
 			// 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC/ATI2N, known as BC5 in DirectX 10, 16 bytes per block)
@@ -233,7 +233,7 @@ namespace RERenderer
 			{
 				mNumberOfImageDataBytes = mNumberOfUsedImageDataBytes;
 				delete [] mImageData;
-				mImageData = new uint8_t[mNumberOfImageDataBytes];
+				mImageData = new RECore::uint8[mNumberOfImageDataBytes];
 			}
 		}
 
@@ -244,7 +244,7 @@ namespace RERenderer
 
 		{ // Now transcode all face and mipmap levels into memory, one mip level at a time
 			void* decompressedImages[cCRNMaxFaces];
-			uint8_t* currentImageData = mImageData;
+			RECore::uint8* currentImageData = mImageData;
 			for (crn_uint32 levelIndex = static_cast<crn_uint32>(startLevelIndex); levelIndex < crnTextureInfo.m_levels; ++levelIndex)
 			{
 				// Compute the face's width, height, number of DXT blocks per row/col, etc.
@@ -296,7 +296,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	RERHI::RHITexture* CrnTextureResourceLoader::createRhiTexture()
 	{
-		const uint32_t flags = (mDataContainsMipmaps ? (RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS | RERHI::TextureFlag::SHADER_RESOURCE) : RERHI::TextureFlag::SHADER_RESOURCE);
+		const RECore::uint32 flags = (mDataContainsMipmaps ? (RERHI::TextureFlag::DATA_CONTAINS_MIPMAPS | RERHI::TextureFlag::SHADER_RESOURCE) : RERHI::TextureFlag::SHADER_RESOURCE);
 		if (mCubeMap)
 		{
 			// Cube texture

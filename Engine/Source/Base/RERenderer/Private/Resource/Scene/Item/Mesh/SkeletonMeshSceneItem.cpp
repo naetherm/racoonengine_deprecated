@@ -51,7 +51,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RERenderer::ISceneItem methods           ]
 	//[-------------------------------------------------------]
-	void SkeletonMeshSceneItem::deserialize(uint32_t numberOfBytes, const uint8_t* data)
+	void SkeletonMeshSceneItem::deserialize(RECore::uint32 numberOfBytes, const RECore::uint8* data)
 	{
 		// Sanity check
 		RHI_ASSERT(sizeof(v1Scene::SkeletonMeshItem) <= numberOfBytes, "Invalid number of bytes")

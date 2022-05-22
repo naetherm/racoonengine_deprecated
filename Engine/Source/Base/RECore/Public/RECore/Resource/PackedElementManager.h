@@ -50,7 +50,7 @@ namespace RECore {
 *  @note
 *    - Basing on "Managing Decoupling Part 4 -- The ID Lookup Table" https://github.com/niklasfrykholm/blog/blob/master/2011/managing-decoupling-4.md by Niklas Frykholm ( http://www.frykholm.se/ )
 */
-template<class ELEMENT_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
+template<class ELEMENT_TYPE, typename ID_TYPE, uint32 MAXIMUM_NUMBER_OF_ELEMENTS>
 class PackedElementManager final : private RECore::Manager {
 
 
@@ -62,9 +62,9 @@ public:
     mNumberOfElements(0),
     mFreeListEnqueue(MAXIMUM_NUMBER_OF_ELEMENTS - 1),
     mFreeListDequeue(0) {
-    for (uint32_t i = 0; i < MAXIMUM_NUMBER_OF_ELEMENTS; ++i) {
+    for (uint32 i = 0; i < MAXIMUM_NUMBER_OF_ELEMENTS; ++i) {
       mIndices[i].id = i;
-      mIndices[i].next = static_cast<uint16_t>(i + 1);
+      mIndices[i].next = static_cast<RECore::uint16>(i + 1);
     }
   }
 
@@ -75,11 +75,11 @@ public:
     }
   }
 
-  [[nodiscard]] inline uint32_t getNumberOfElements() const {
+  [[nodiscard]] inline uint32 getNumberOfElements() const {
     return mNumberOfElements;
   }
 
-  [[nodiscard]] inline ELEMENT_TYPE &getElementByIndex(uint32_t index) const {
+  [[nodiscard]] inline ELEMENT_TYPE &getElementByIndex(uint32 index) const {
     return mElements[index];
   }
 
@@ -110,7 +110,7 @@ public:
     Index &index = mIndices[mFreeListDequeue];
     mFreeListDequeue = index.next;
     index.id += NEW_OBJECT_ID_ADD;
-    index.index = static_cast<uint16_t>(mNumberOfElements++);
+    index.index = static_cast<RECore::uint16>(mNumberOfElements++);
 
     // Initialize the added element
     // -> "placement new" ("new (static_cast<void*>(&element)) ELEMENT_TYPE(index.id);") is not used by intent to avoid some nasty STL issues
@@ -157,13 +157,13 @@ private:
   //[ Private definitions                                   ]
   //[-------------------------------------------------------]
 private:
-  static constexpr uint32_t INDEX_MASK = 0xffff;
-  static constexpr uint32_t NEW_OBJECT_ID_ADD = 0x10000;
+  static constexpr uint32 INDEX_MASK = 0xffff;
+  static constexpr uint32 NEW_OBJECT_ID_ADD = 0x10000;
 
   struct Index final {
     ID_TYPE id;
-    uint16_t index;
-    uint16_t next;
+    RECore::uint16 index;
+    RECore::uint16 next;
   };
 
 
@@ -171,11 +171,11 @@ private:
   //[ Private data                                          ]
   //[-------------------------------------------------------]
 private:
-  uint32_t mNumberOfElements;
+  uint32 mNumberOfElements;
   mutable ELEMENT_TYPE mElements[MAXIMUM_NUMBER_OF_ELEMENTS];
   Index mIndices[MAXIMUM_NUMBER_OF_ELEMENTS];
-  uint16_t mFreeListEnqueue;
-  uint16_t mFreeListDequeue;
+  RECore::uint16 mFreeListEnqueue;
+  RECore::uint16 mFreeListDequeue;
 
 
 };

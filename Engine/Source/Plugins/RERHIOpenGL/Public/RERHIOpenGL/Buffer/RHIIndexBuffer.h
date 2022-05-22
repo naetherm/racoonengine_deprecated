@@ -96,7 +96,7 @@ public:
   *  @return
   *    The number of bytes of an index
   */
-  [[nodiscard]] inline uint32_t getIndexSizeInBytes() const
+  [[nodiscard]] inline RECore::uint32 getIndexSizeInBytes() const
   {
     return mIndexSizeInBytes;
   }
@@ -134,7 +134,7 @@ protected:
 protected:
   GLuint   mOpenGLElementArrayBuffer;	///< OpenGL element array buffer, can be zero if no resource is allocated
   GLenum   mOpenGLType;				///< OpenGL element array buffer data type
-  uint32_t mIndexSizeInBytes;			///< Number of bytes of an index
+  RECore::uint32 mIndexSizeInBytes;			///< Number of bytes of an index
 
 
   //[-------------------------------------------------------]

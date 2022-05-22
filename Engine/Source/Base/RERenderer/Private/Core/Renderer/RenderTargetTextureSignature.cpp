@@ -36,7 +36,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	RenderTargetTextureSignature::RenderTargetTextureSignature(uint32_t width, uint32_t height, RERHI::TextureFormat::Enum textureFormat, uint8_t flags, float widthScale, float heightScale) :
+	RenderTargetTextureSignature::RenderTargetTextureSignature(RECore::uint32 width, RECore::uint32 height, RERHI::TextureFormat::Enum textureFormat, RECore::uint8 flags, float widthScale, float heightScale) :
 		mWidth(width),
 		mHeight(height),
 		mTextureFormat(textureFormat),
@@ -45,12 +45,12 @@ namespace RERenderer
 		mHeightScale(heightScale),
 		mRenderTargetTextureSignatureId(RECore::Math::FNV1a_INITIAL_HASH_32)
 	{
-		mRenderTargetTextureSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&mWidth), sizeof(uint32_t), mRenderTargetTextureSignatureId);
-		mRenderTargetTextureSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&mHeight), sizeof(uint32_t), mRenderTargetTextureSignatureId);
-		mRenderTargetTextureSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&mTextureFormat), sizeof(RERHI::TextureFormat::Enum), mRenderTargetTextureSignatureId);
-		mRenderTargetTextureSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&mFlags), sizeof(uint8_t), mRenderTargetTextureSignatureId);
-		mRenderTargetTextureSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&mWidthScale), sizeof(float), mRenderTargetTextureSignatureId);
-		mRenderTargetTextureSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&mHeightScale), sizeof(float), mRenderTargetTextureSignatureId);
+		mRenderTargetTextureSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&mWidth), sizeof(RECore::uint32), mRenderTargetTextureSignatureId);
+		mRenderTargetTextureSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&mHeight), sizeof(RECore::uint32), mRenderTargetTextureSignatureId);
+		mRenderTargetTextureSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&mTextureFormat), sizeof(RERHI::TextureFormat::Enum), mRenderTargetTextureSignatureId);
+		mRenderTargetTextureSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&mFlags), sizeof(RECore::uint8), mRenderTargetTextureSignatureId);
+		mRenderTargetTextureSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&mWidthScale), sizeof(float), mRenderTargetTextureSignatureId);
+		mRenderTargetTextureSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&mHeightScale), sizeof(float), mRenderTargetTextureSignatureId);
 	}
 
 

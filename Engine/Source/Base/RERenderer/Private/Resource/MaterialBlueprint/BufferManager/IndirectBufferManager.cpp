@@ -40,7 +40,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		static uint32_t DEFAULT_INDIRECT_BUFFER_NUMBER_OF_BYTES = 128 * 1024;	// 128 KiB
+		static RECore::uint32 DEFAULT_INDIRECT_BUFFER_NUMBER_OF_BYTES = 128 * 1024;	// 128 KiB
 
 
 //[-------------------------------------------------------]
@@ -84,7 +84,7 @@ namespace RERenderer
 		}
 	}
 
-	IndirectBufferManager::IndirectBuffer* IndirectBufferManager::getIndirectBuffer(uint32_t numberOfBytes)
+	IndirectBufferManager::IndirectBuffer* IndirectBufferManager::getIndirectBuffer(RECore::uint32 numberOfBytes)
 	{
 		// Sanity check
 		RHI_ASSERT(numberOfBytes > 0, "Don't call this method if there's no work to be done")
@@ -129,7 +129,7 @@ namespace RERenderer
 				RERHI::MappedSubresource mappedSubresource;
 				if (mRenderer.getRhi().map(*mCurrentIndirectBuffer->indirectBuffer, 0, RERHI::MapType::WRITE_DISCARD, 0, mappedSubresource))
 				{
-					mCurrentIndirectBuffer->mappedData = static_cast<uint8_t*>(mappedSubresource.data);
+					mCurrentIndirectBuffer->mappedData = static_cast<RECore::uint8*>(mappedSubresource.data);
 				}
 				RHI_ASSERT(nullptr != mCurrentIndirectBuffer->mappedData, "Invalid current indirect buffer")
 			}

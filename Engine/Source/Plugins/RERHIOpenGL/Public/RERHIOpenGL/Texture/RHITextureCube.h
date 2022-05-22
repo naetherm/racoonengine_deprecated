@@ -124,7 +124,7 @@ protected:
   *  @param[in] textureFormat
   *    Texture format
   */
-  TextureCube(RHIDynamicRHI& openGLRhi, uint32_t width, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  TextureCube(RHIDynamicRHI& openGLRhi, RECore::uint32 width, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
 
   //[-------------------------------------------------------]

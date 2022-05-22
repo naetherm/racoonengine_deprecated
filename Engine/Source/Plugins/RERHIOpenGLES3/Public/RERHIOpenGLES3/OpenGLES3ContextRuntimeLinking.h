@@ -98,7 +98,7 @@ public:
   //[ Public virtual RHIDynamicRHI::RHIOpenGLES3Context methods ]
   //[-------------------------------------------------------]
 public:
-  [[nodiscard]] virtual bool initialize(uint32_t multisampleAntialiasingSamples) override;
+  [[nodiscard]] virtual bool initialize(RECore::uint32 multisampleAntialiasingSamples) override;
 
   [[nodiscard]] virtual const IExtensions& getExtensions() const override;
 
@@ -107,7 +107,7 @@ public:
   //[ Protected virtual RHIDynamicRHI::RHIOpenGLES3Context methods ]
   //[-------------------------------------------------------]
 protected:
-  [[nodiscard]] virtual EGLConfig chooseConfig(uint32_t multisampleAntialiasingSamples) const override;
+  [[nodiscard]] virtual EGLConfig chooseConfig(RECore::uint32 multisampleAntialiasingSamples) const override;
 
 
   //[-------------------------------------------------------]

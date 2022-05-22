@@ -53,7 +53,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId CompositorPassTypeId;	///< Compositor pass type identifier, internally just a POD "uint32_t"
+	typedef RECore::StringId CompositorPassTypeId;	///< Compositor pass type identifier, internally just a POD "RECore::uint32"
 
 
 	//[-------------------------------------------------------]

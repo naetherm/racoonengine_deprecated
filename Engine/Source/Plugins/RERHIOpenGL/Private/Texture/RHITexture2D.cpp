@@ -50,7 +50,7 @@ Texture2D::~Texture2D()
   glDeleteTextures(1, &mOpenGLTexture);
 }
 
-Texture2D::Texture2D(RHIDynamicRHI& openGLRhi, uint32_t width, uint32_t height, RERHI::TextureFormat::Enum textureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+Texture2D::Texture2D(RHIDynamicRHI& openGLRhi, RECore::uint32 width, RECore::uint32 height, RERHI::TextureFormat::Enum textureFormat, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 RHITexture2D(openGLRhi, width, height RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 mNumberOfMultisamples(numberOfMultisamples),
 mOpenGLTexture(0),

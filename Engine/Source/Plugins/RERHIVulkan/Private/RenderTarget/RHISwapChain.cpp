@@ -108,7 +108,7 @@ SwapChain::~SwapChain() {
   }
 }
 
-void SwapChain::getWidthAndHeight(uint32_t &width, uint32_t &height) const {
+void SwapChain::getWidthAndHeight(RECore::uint32 &width, RECore::uint32 &height) const {
 // Return stored width and height when both valid
   if (nullptr != mRenderWindow) {
     mRenderWindow->getWidthAndHeight(width, height);
@@ -219,12 +219,12 @@ if (nullptr != mRenderWindow)
       {
         VK_STRUCTURE_TYPE_SUBMIT_INFO,  // sType (VkStructureType)
         nullptr,            // pNext (const void*)
-        1,                // waitSemaphoreCount (uint32_t)
+        1,                // waitSemaphoreCount (RECore::uint32)
         &mImageAvailableVkSemaphore,  // pWaitSemaphores (const VkSemaphore*)
         &waitDstStageMask,        // pWaitDstStageMask (const VkPipelineStageFlags*)
-        1,                // commandBufferCount (uint32_t)
+        1,                // commandBufferCount (RECore::uint32)
         &vkCommandBuffer,        // pCommandBuffers (const VkCommandBuffer*)
-        1,                // signalSemaphoreCount (uint32_t)
+        1,                // signalSemaphoreCount (RECore::uint32)
         &mRenderingFinishedVkSemaphore  // pSignalSemaphores (const VkSemaphore*)
       };
     if (vkQueueSubmit(vulkanContext.getGraphicsVkQueue(), 1, &vkSubmitInfo, VK_NULL_HANDLE) != VK_SUCCESS) {
@@ -239,11 +239,11 @@ if (nullptr != mRenderWindow)
       {
         VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,  // sType (VkStructureType)
         nullptr,              // pNext (const void*)
-        1,                  // waitSemaphoreCount (uint32_t)
+        1,                  // waitSemaphoreCount (RECore::uint32)
         &mRenderingFinishedVkSemaphore,    // pWaitSemaphores (const VkSemaphore*)
-        1,                  // swapchainCount (uint32_t)
+        1,                  // swapchainCount (RECore::uint32)
         &mVkSwapchainKHR,          // pSwapchains (const VkSwapchainKHR*)
-        &mCurrentImageIndex,        // pImageIndices (const uint32_t*)
+        &mCurrentImageIndex,        // pImageIndices (const RECore::uint32*)
         nullptr                // pResults (VkResult*)
       };
     const VkResult vkResult = vkQueuePresentKHR(vulkanContext.getPresentVkQueue(), &vkPresentInfoKHR);
@@ -290,7 +290,7 @@ void SwapChain::createVulkanSwapChain() {
   }
 
   // Get Vulkan swap chain settings
-  const uint32_t desiredNumberOfImages = ::detail::getNumberOfSwapChainImages(vkSurfaceCapabilitiesKHR);
+  const RECore::uint32 desiredNumberOfImages = ::detail::getNumberOfSwapChainImages(vkSurfaceCapabilitiesKHR);
   const VkSurfaceFormatKHR desiredVkSurfaceFormatKHR = ::detail::getSwapChainFormat(context, vkPhysicalDevice,
                                                                                     mVkSurfaceKHR);
   const VkExtent2D desiredVkExtent2D = ::detail::getSwapChainExtent(vkSurfaceCapabilitiesKHR);
@@ -325,15 +325,15 @@ void SwapChain::createVulkanSwapChain() {
         nullptr,                    // pNext (const void*)
         0,                        // flags (VkSwapchainCreateFlagsKHR)
         mVkSurfaceKHR,                  // surface (VkSurfaceKHR)
-        desiredNumberOfImages,              // minImageCount (uint32_t)
+        desiredNumberOfImages,              // minImageCount (RECore::uint32)
         desiredVkSurfaceFormatKHR.format,        // imageFormat (VkFormat)
         desiredVkSurfaceFormatKHR.colorSpace,      // imageColorSpace (VkColorSpaceKHR)
         desiredVkExtent2D,                // imageExtent (VkExtent2D)
-        1,                        // imageArrayLayers (uint32_t)
+        1,                        // imageArrayLayers (RECore::uint32)
         desiredVkImageUsageFlags,            // imageUsage (VkImageUsageFlags)
         VK_SHARING_MODE_EXCLUSIVE,            // imageSharingMode (VkSharingMode)
-        0,                        // queueFamilyIndexCount (uint32_t)
-        nullptr,                    // pQueueFamilyIndices (const uint32_t*)
+        0,                        // queueFamilyIndexCount (RECore::uint32)
+        nullptr,                    // pQueueFamilyIndices (const RECore::uint32*)
         desiredVkSurfaceTransformFlagBitsKHR,      // preTransform (VkSurfaceTransformFlagBitsKHR)
         VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,        // compositeAlpha (VkCompositeAlphaFlagBitsKHR)
         desiredVkPresentModeKHR,            // presentMode (VkPresentModeKHR)
@@ -360,7 +360,7 @@ void SwapChain::createVulkanSwapChain() {
   // Vulkan swap chain image handling
   if (VK_NULL_HANDLE != mVkRenderPass) {
     // Get the swap chain images
-    uint32_t swapchainImageCount = 0;
+    RECore::uint32 swapchainImageCount = 0;
     if (vkGetSwapchainImagesKHR(vkDevice, mVkSwapchainKHR, &swapchainImageCount, nullptr) != VK_SUCCESS) {
       RE_LOG(Critical, "Failed to get Vulkan swap chain images")
       return;
@@ -374,7 +374,7 @@ void SwapChain::createVulkanSwapChain() {
     // Get the swap chain buffers containing the image and image view
     mSwapChainBuffer.resize(swapchainImageCount);
     const bool hasDepthStencilAttachment = (VK_FORMAT_UNDEFINED != mDepthVkFormat);
-    for (uint32_t i = 0; i < swapchainImageCount; ++i) {
+    for (RECore::uint32 i = 0; i < swapchainImageCount; ++i) {
       SwapChainBuffer &swapChainBuffer = mSwapChainBuffer[i];
       swapChainBuffer.vkImage = vkImages[i];
 
@@ -395,11 +395,11 @@ void SwapChain::createVulkanSwapChain() {
             nullptr,                  // pNext (const void*)
             0,                      // flags (VkFramebufferCreateFlags)
             mVkRenderPass,                // renderPass (VkRenderPass)
-            hasDepthStencilAttachment ? 2u : 1u,    // attachmentCount (uint32_t)
+            hasDepthStencilAttachment ? 2u : 1u,    // attachmentCount (RECore::uint32)
             vkImageViews.data(),            // pAttachments (const VkImageView*)
-            desiredVkExtent2D.width,          // width (uint32_t)
-            desiredVkExtent2D.height,          // height (uint32_t)
-            1                      // layers (uint32_t)
+            desiredVkExtent2D.width,          // width (RECore::uint32)
+            desiredVkExtent2D.height,          // height (RECore::uint32)
+            1                      // layers (RECore::uint32)
           };
         if (vkCreateFramebuffer(vkDevice, &vkFramebufferCreateInfo, vulkanRhi.getVkAllocationCallbacks(),
                                 &swapChainBuffer.vkFramebuffer) != VK_SUCCESS) {

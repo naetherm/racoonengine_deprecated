@@ -79,19 +79,19 @@ public:
   //[ Public virtual RERHI::RHIBufferManager methods            ]
   //[-------------------------------------------------------]
 public:
-  [[nodiscard]] virtual RERHI::RHIVertexBuffer* createVertexBuffer(uint32_t numberOfBytes, const void* data = nullptr, [[maybe_unused]] uint32_t bufferFlags = 0, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHIVertexBuffer* createVertexBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, [[maybe_unused]] RECore::uint32 bufferFlags = 0, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
-  [[nodiscard]] virtual RERHI::RHIIndexBuffer* createIndexBuffer(uint32_t numberOfBytes, const void* data = nullptr, [[maybe_unused]] uint32_t bufferFlags = 0, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW, RERHI::IndexBufferFormat::Enum indexBufferFormat = RERHI::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHIIndexBuffer* createIndexBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, [[maybe_unused]] RECore::uint32 bufferFlags = 0, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW, RERHI::IndexBufferFormat::Enum indexBufferFormat = RERHI::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
-  [[nodiscard]] virtual RERHI::RHIVertexArray* createVertexArray(const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, RERHI::RHIIndexBuffer* indexBuffer = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHIVertexArray* createVertexArray(const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, RERHI::RHIIndexBuffer* indexBuffer = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
-  [[nodiscard]] virtual RERHI::RHITextureBuffer* createTextureBuffer(uint32_t numberOfBytes, const void* data = nullptr, uint32_t = RERHI::BufferFlag::SHADER_RESOURCE, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW, RERHI::TextureFormat::Enum textureFormat = RERHI::TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHITextureBuffer* createTextureBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, RECore::uint32 = RERHI::BufferFlag::SHADER_RESOURCE, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW, RERHI::TextureFormat::Enum textureFormat = RERHI::TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
-  [[nodiscard]] virtual RERHI::RHIStructuredBuffer* createStructuredBuffer(uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t bufferFlags, RERHI::BufferUsage bufferUsage, [[maybe_unused]] uint32_t numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHIStructuredBuffer* createStructuredBuffer(RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 bufferFlags, RERHI::BufferUsage bufferUsage, [[maybe_unused]] RECore::uint32 numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
-  [[nodiscard]] virtual RERHI::RHIIndirectBuffer* createIndirectBuffer(uint32_t numberOfBytes, const void* data = nullptr, [[maybe_unused]] uint32_t indirectBufferFlags = 0, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHIIndirectBuffer* createIndirectBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, [[maybe_unused]] RECore::uint32 indirectBufferFlags = 0, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
-  [[nodiscard]] virtual RERHI::RHIUniformBuffer* createUniformBuffer(uint32_t numberOfBytes, const void* data = nullptr, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+  [[nodiscard]] virtual RERHI::RHIUniformBuffer* createUniformBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, RERHI::BufferUsage bufferUsage = RERHI::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 
 
   //[-------------------------------------------------------]

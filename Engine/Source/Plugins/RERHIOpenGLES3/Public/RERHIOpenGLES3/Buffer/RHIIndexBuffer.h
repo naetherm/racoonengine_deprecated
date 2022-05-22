@@ -70,7 +70,7 @@ public:
   *  @param[in] indexBufferFormat
   *    Index buffer data format
   */
-  IndexBuffer(RHIDynamicRHI& openGLES3Rhi, uint32_t numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  IndexBuffer(RHIDynamicRHI& openGLES3Rhi, RECore::uint32 numberOfBytes, const void* data, RERHI::BufferUsage bufferUsage, RERHI::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief
@@ -109,12 +109,12 @@ public:
   *  @return
   *    The number of bytes of an index
   */
-  [[nodiscard]] inline uint32_t getIndexSizeInBytes() const
+  [[nodiscard]] inline RECore::uint32 getIndexSizeInBytes() const
   {
     return mIndexSizeInBytes;
   }
 
-  [[nodiscard]] inline uint32_t getBufferSize() const
+  [[nodiscard]] inline RECore::uint32 getBufferSize() const
   {
     return mBufferSize;
   }
@@ -144,8 +144,8 @@ private:
 private:
   GLuint	 mOpenGLES3ElementArrayBuffer;	///< OpenGL ES 3 element array buffer, can be zero if no resource is allocated
   GLenum   mOpenGLES3Type;				///< OpenGL ES 3 element array buffer data type
-  uint32_t mIndexSizeInBytes;				///< Number of bytes of an index
-  uint32_t mBufferSize;					///< Holds the size of the buffer
+  RECore::uint32 mIndexSizeInBytes;				///< Number of bytes of an index
+  RECore::uint32 mBufferSize;					///< Holds the size of the buffer
 
 
 };

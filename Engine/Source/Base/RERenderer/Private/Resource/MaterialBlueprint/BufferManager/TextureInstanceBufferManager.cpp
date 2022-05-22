@@ -105,7 +105,7 @@ namespace RERenderer
 			if (nullptr == mCurrentInstanceBuffer->resourceGroup)
 			{
 				RERHI::RHIResource* resources[2] = { mCurrentInstanceBuffer->uniformBuffer, mCurrentInstanceBuffer->textureBuffer };
-				mCurrentInstanceBuffer->resourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(instanceUniformBuffer->rootParameterIndex, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, nullptr RHI_RESOURCE_DEBUG_NAME("Texture instance buffer manager"));
+				mCurrentInstanceBuffer->resourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(instanceUniformBuffer->rootParameterIndex, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, nullptr RHI_RESOURCE_DEBUG_NAME("Texture instance buffer manager"));
 				mCurrentInstanceBuffer->resourceGroup->AddReference();
 			}
 
@@ -114,7 +114,7 @@ namespace RERenderer
 		}
 	}
 
-	uint32_t TextureInstanceBufferManager::fillBuffer(const glm::dvec3& worldSpaceCameraPosition, const MaterialBlueprintResource& materialBlueprintResource, PassBufferManager* passBufferManager, const MaterialBlueprintResource::UniformBuffer& instanceUniformBuffer, const Renderable& renderable, MaterialTechnique& materialTechnique, RERHI::RHICommandBuffer& commandBuffer)
+	RECore::uint32 TextureInstanceBufferManager::fillBuffer(const glm::dvec3& worldSpaceCameraPosition, const MaterialBlueprintResource& materialBlueprintResource, PassBufferManager* passBufferManager, const MaterialBlueprintResource::UniformBuffer& instanceUniformBuffer, const Renderable& renderable, MaterialTechnique& materialTechnique, RERHI::RHICommandBuffer& commandBuffer)
 	{
 		// Sanity checks
 		RHI_ASSERT(nullptr != mCurrentInstanceBuffer, "Invalid current instance buffer")
@@ -139,19 +139,19 @@ namespace RERenderer
 
 		{ // Handle instance buffer overflow
 			// Calculate number of additionally needed uniform buffer bytes
-			uint32_t newNeededUniformBufferSize = 0;
+			RECore::uint32 newNeededUniformBufferSize = 0;
 			for (size_t i = 0, numberOfPackageBytes = 0; i < numberOfUniformBufferElementProperties; ++i)
 			{
 				const MaterialProperty& uniformBufferElementProperty = uniformBufferElementProperties[i];
 
 				// Get value type number of bytes
-				const uint32_t valueTypeNumberOfBytes = uniformBufferElementProperty.getValueTypeNumberOfBytes(uniformBufferElementProperty.getValueType());
+				const RECore::uint32 valueTypeNumberOfBytes = uniformBufferElementProperty.getValueTypeNumberOfBytes(uniformBufferElementProperty.getValueType());
 
 				// Handling of packing rules for uniform variables (see "Reference for HLSL - Shader Models vs Shader Profiles - Shader Model 4 - Packing Rules for Constant Variables" at https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632%28v=vs.85%29.aspx )
 				if (0 != numberOfPackageBytes && numberOfPackageBytes + valueTypeNumberOfBytes > 16)
 				{
 					// Move the buffer pointer to the location of the next aligned package and restart the package bytes counter
-					newNeededUniformBufferSize += static_cast<uint32_t>(sizeof(float) * 4 - numberOfPackageBytes);
+					newNeededUniformBufferSize += static_cast<RECore::uint32>(sizeof(float) * 4 - numberOfPackageBytes);
 					numberOfPackageBytes = 0;
 				}
 				numberOfPackageBytes += valueTypeNumberOfBytes % 16;
@@ -161,17 +161,17 @@ namespace RERenderer
 			}
 
 			// Calculate number of additionally needed texture buffer bytes
-			uint32_t newNeededTextureBufferSize = sizeof(float) * 4 * 3;	// xyz position (float4) + xyzw rotation quaternion (float4) + xyz scale (float4)
+			RECore::uint32 newNeededTextureBufferSize = sizeof(float) * 4 * 3;	// xyz position (float4) + xyzw rotation quaternion (float4) + xyz scale (float4)
 			if (nullptr != skeletonResource)
 			{
-				const uint32_t numberOfBytes = skeletonResource->getTotalNumberOfBoneSpaceDataBytes();
+				const RECore::uint32 numberOfBytes = skeletonResource->getTotalNumberOfBoneSpaceDataBytes();
 				RHI_ASSERT(numberOfBytes <= mMaximumTextureBufferSize, "The skeleton has too many bones for the available maximum texture buffer size")
 				newNeededTextureBufferSize += numberOfBytes;
 			}
 
 			// Detect and handle instance buffer overflow
-			const uint32_t totalNeededUniformBufferSize = (static_cast<uint32_t>(mCurrentUniformBufferPointer - mStartUniformBufferPointer) + newNeededUniformBufferSize);
-			const uint32_t totalNeededTextureBufferSize = (static_cast<uint32_t>(mCurrentTextureBufferPointer - mStartTextureBufferPointer) * sizeof(float) + newNeededTextureBufferSize);
+			const RECore::uint32 totalNeededUniformBufferSize = (static_cast<RECore::uint32>(mCurrentUniformBufferPointer - mStartUniformBufferPointer) + newNeededUniformBufferSize);
+			const RECore::uint32 totalNeededTextureBufferSize = (static_cast<RECore::uint32>(mCurrentTextureBufferPointer - mStartTextureBufferPointer) * sizeof(float) + newNeededTextureBufferSize);
 			if (totalNeededUniformBufferSize > mMaximumUniformBufferSize || totalNeededTextureBufferSize > mMaximumTextureBufferSize)
 			{
 				createInstanceBuffer();
@@ -185,7 +185,7 @@ namespace RERenderer
 			const MaterialProperty& uniformBufferElementProperty = uniformBufferElementProperties[i];
 
 			// Get value type number of bytes
-			const uint32_t valueTypeNumberOfBytes = uniformBufferElementProperty.getValueTypeNumberOfBytes(uniformBufferElementProperty.getValueType());
+			const RECore::uint32 valueTypeNumberOfBytes = uniformBufferElementProperty.getValueTypeNumberOfBytes(uniformBufferElementProperty.getValueType());
 
 			// Handling of packing rules for uniform variables (see "Reference for HLSL - Shader Models vs Shader Profiles - Shader Model 4 - Packing Rules for Constant Variables" at https://msdn.microsoft.com/en-us/library/windows/desktop/bb509632%28v=vs.85%29.aspx )
 			if (0 != numberOfPackageBytes && numberOfPackageBytes + valueTypeNumberOfBytes > 16)
@@ -200,7 +200,7 @@ namespace RERenderer
 			const MaterialProperty::Usage usage = uniformBufferElementProperty.getUsage();
 			if (MaterialProperty::Usage::INSTANCE_REFERENCE == usage)	// Most likely the case, so check this first
 			{
-				const uint32_t instanceTextureBufferStartIndex = static_cast<uint32_t>(mCurrentTextureBufferPointer - mStartTextureBufferPointer) / 4;	// /4 since the texture buffer is working with float4
+				const RECore::uint32 instanceTextureBufferStartIndex = static_cast<RECore::uint32>(mCurrentTextureBufferPointer - mStartTextureBufferPointer) / 4;	// /4 since the texture buffer is working with float4
 				if (!materialBlueprintResourceListener.fillInstanceValue(uniformBufferElementProperty.getReferenceValue(), mCurrentUniformBufferPointer, valueTypeNumberOfBytes, instanceTextureBufferStartIndex))
 				{
 					// Error!
@@ -274,7 +274,7 @@ namespace RERenderer
 			{
 				const size_t numberOfBytes = skeletonResource->getTotalNumberOfBoneSpaceDataBytes();
 				RHI_ASSERT(numberOfBytes <= mMaximumTextureBufferSize, "The skeleton has too many bones for the available maximum texture buffer size")
-				const uint8_t* boneSpaceData = skeletonResource->getBoneSpaceData();
+				const RECore::uint8* boneSpaceData = skeletonResource->getBoneSpaceData();
 				RHI_ASSERT(nullptr != boneSpaceData, "Invalid bone space data")
 				memcpy(mCurrentTextureBufferPointer, boneSpaceData, numberOfBytes);
 				mCurrentTextureBufferPointer += numberOfBytes / sizeof(float);
@@ -342,7 +342,7 @@ namespace RERenderer
 			RERHI::MappedSubresource mappedSubresource;
 			if (rhi.map(*mCurrentInstanceBuffer->uniformBuffer, 0, RERHI::MapType::WRITE_DISCARD, 0, mappedSubresource))
 			{
-				mStartUniformBufferPointer = mCurrentUniformBufferPointer = static_cast<uint8_t*>(mappedSubresource.data);
+				mStartUniformBufferPointer = mCurrentUniformBufferPointer = static_cast<RECore::uint8*>(mappedSubresource.data);
 			}
 			RHI_ASSERT(nullptr != mStartUniformBufferPointer, "Invalid start uniform buffer pointer")
 			if (rhi.map(*mCurrentInstanceBuffer->textureBuffer, 0, RERHI::MapType::WRITE_DISCARD, 0, mappedSubresource))

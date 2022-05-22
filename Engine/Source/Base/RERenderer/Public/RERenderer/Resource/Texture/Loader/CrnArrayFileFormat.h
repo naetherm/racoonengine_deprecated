@@ -48,12 +48,12 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("crn_array");
-		static constexpr uint32_t FORMAT_VERSION = 1;
+		static constexpr RECore::uint32 FORMAT_TYPE	 = STRING_ID("crn_array");
+		static constexpr RECore::uint32 FORMAT_VERSION = 1;
 
 		struct CrnArrayHeader final
 		{
-			uint32_t numberOfSlices;
+			RECore::uint32 numberOfSlices;
 		};
 
 

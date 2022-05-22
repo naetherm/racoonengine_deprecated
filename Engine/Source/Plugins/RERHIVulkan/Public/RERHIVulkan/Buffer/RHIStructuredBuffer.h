@@ -70,7 +70,7 @@ public:
   *  @param[in] numberOfStructureBytes
   *    Number of structure bytes
   */
-  StructuredBuffer(RHIDynamicRHI& vulkanRhi, uint32_t numberOfBytes, const void* data, [[maybe_unused]] RERHI::BufferUsage bufferUsage, [[maybe_unused]] uint32_t numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  StructuredBuffer(RHIDynamicRHI& vulkanRhi, RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RERHI::BufferUsage bufferUsage, [[maybe_unused]] RECore::uint32 numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

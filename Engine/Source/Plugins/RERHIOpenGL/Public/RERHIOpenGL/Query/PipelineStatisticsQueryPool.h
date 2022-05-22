@@ -70,7 +70,7 @@ public:
   *  @param[in] numberOfQueries
   *    Number of queries
   */
-  PipelineStatisticsQueryPool(RHIDynamicRHI& openGLRhi, RERHI::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  PipelineStatisticsQueryPool(RHIDynamicRHI& openGLRhi, RERHI::QueryType queryType, RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief
@@ -78,11 +78,11 @@ public:
   */
   virtual ~PipelineStatisticsQueryPool() override;
 
-  void beginQuery(uint32_t queryIndex) const;
+  void beginQuery(RECore::uint32 queryIndex) const;
 
   void endQuery() const;
 
-  bool getQueryPoolResults(uint8_t* data, uint32_t firstQueryIndex, uint32_t numberOfQueries, uint32_t strideInBytes, bool waitForResult) const;
+  bool getQueryPoolResults(RECore::uint8* data, RECore::uint32 firstQueryIndex, RECore::uint32 numberOfQueries, RECore::uint32 strideInBytes, bool waitForResult) const;
 
 
   //[-------------------------------------------------------]
@@ -102,7 +102,7 @@ private:
   explicit PipelineStatisticsQueryPool(const PipelineStatisticsQueryPool& source) = delete;
   PipelineStatisticsQueryPool& operator =(const PipelineStatisticsQueryPool& source) = delete;
 
-  bool getQueryPoolResult(GLuint openGLQuery, bool waitForResult, uint64_t& queryResult) const;
+  bool getQueryPoolResult(GLuint openGLQuery, bool waitForResult, RECore::uint64& queryResult) const;
 
 
   //[-------------------------------------------------------]

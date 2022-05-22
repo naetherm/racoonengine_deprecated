@@ -44,8 +44,8 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;			///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
-	typedef uint32_t MeshResourceId;	///< POD mesh resource identifier
+	typedef RECore::StringId AssetId;			///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::uint32 MeshResourceId;	///< POD mesh resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -65,7 +65,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("MeshSceneItem");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("MeshSceneItem");
 
 
 	//[-------------------------------------------------------]
@@ -80,18 +80,18 @@ namespace RERenderer
 		void setMeshResourceId(MeshResourceId meshResourceId);
 		void setMeshResourceIdByAssetId(AssetId meshAssetId);
 
-		[[nodiscard]] inline uint32_t getNumberOfSubMeshes() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfSubMeshes() const
 		{
 			// The renderables contain all LODs, each LOD has the same number of renderables
-			return static_cast<uint32_t>(mRenderableManager.getRenderables().size() / mRenderableManager.getNumberOfLods());
+			return static_cast<RECore::uint32>(mRenderableManager.getRenderables().size() / mRenderableManager.getNumberOfLods());
 		}
 
-		[[nodiscard]] inline uint8_t getNumberOfLods() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfLods() const
 		{
 			return mRenderableManager.getNumberOfLods();
 		}
 
-		[[nodiscard]] inline MaterialResourceId getMaterialResourceIdOfSubMeshLod(uint32_t subMeshIndex, uint8_t lodIndex) const
+		[[nodiscard]] inline MaterialResourceId getMaterialResourceIdOfSubMeshLod(RECore::uint32 subMeshIndex, RECore::uint8 lodIndex) const
 		{
 			// The renderables contain all LODs, each LOD has the same number of renderables
 			RHI_ASSERT(subMeshIndex < getNumberOfSubMeshes(), "Invalid sub mesh index")
@@ -99,7 +99,7 @@ namespace RERenderer
 			return mRenderableManager.getRenderables()[subMeshIndex + lodIndex * getNumberOfSubMeshes()].getMaterialResourceId();
 		}
 
-		void setMaterialResourceIdOfSubMeshLod(uint32_t subMeshIndex, uint8_t lodIndex, MaterialResourceId materialResourceId);
+		void setMaterialResourceIdOfSubMeshLod(RECore::uint32 subMeshIndex, RECore::uint8 lodIndex, MaterialResourceId materialResourceId);
 		void setMaterialResourceIdOfAllSubMeshesAndLods(MaterialResourceId materialResourceId);
 
 
@@ -112,7 +112,7 @@ namespace RERenderer
 			return TYPE_ID;
 		}
 
-		virtual void deserialize(uint32_t numberOfBytes, const uint8_t* data) override;
+		virtual void deserialize(RECore::uint32 numberOfBytes, const RECore::uint8* data) override;
 		virtual void onAttachedToSceneNode(SceneNode& sceneNode) override;
 
 		inline virtual void onDetachedFromSceneNode(SceneNode& sceneNode) override

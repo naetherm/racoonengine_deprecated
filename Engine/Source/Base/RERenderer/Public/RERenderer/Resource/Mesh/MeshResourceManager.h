@@ -43,7 +43,7 @@ class IRenderer;
 class IMeshResourceLoader;
 }
 namespace RECore {
-	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
+	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
 }
 
 
@@ -57,7 +57,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MeshResourceId;	///< POD mesh resource identifier
+	typedef RECore::uint32 MeshResourceId;	///< POD mesh resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -84,12 +84,12 @@ namespace RERenderer
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline uint8_t getNumberOfTopMeshLodsToRemove() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfTopMeshLodsToRemove() const
 		{
 			return mNumberOfTopMeshLodsToRemove;
 		}
 
-		inline void setNumberOfTopMeshLodsToRemove(uint8_t numberOfTopMeshLodsToRemove)
+		inline void setNumberOfTopMeshLodsToRemove(RECore::uint8 numberOfTopMeshLodsToRemove)
 		{
 			mNumberOfTopMeshLodsToRemove = numberOfTopMeshLodsToRemove;
 		}
@@ -114,8 +114,8 @@ namespace RERenderer
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] virtual uint32_t getNumberOfResources() const override;
-		[[nodiscard]] virtual RECore::IResource& getResourceByIndex(uint32_t index) const override;
+		[[nodiscard]] virtual RECore::uint32 getNumberOfResources() const override;
+		[[nodiscard]] virtual RECore::IResource& getResourceByIndex(RECore::uint32 index) const override;
 		[[nodiscard]] virtual RECore::IResource& getResourceByResourceId(RECore::ResourceId resourceId) const override;
 		[[nodiscard]] virtual RECore::IResource* tryGetResourceByResourceId(RECore::ResourceId resourceId) const override;
 		virtual void reloadResourceByAssetId(RECore::AssetId assetId) override;
@@ -144,7 +144,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
     IRenderer& mRenderer;
-		uint8_t				  mNumberOfTopMeshLodsToRemove;	///< The number of top mesh LODs to remove, only has an impact while rendering and not on loading (amount of needed memory is not influenced)
+		RECore::uint8				  mNumberOfTopMeshLodsToRemove;	///< The number of top mesh LODs to remove, only has an impact while rendering and not on loading (amount of needed memory is not influenced)
     RECore::ResourceManagerTemplate<MeshResource, IMeshResourceLoader, MeshResourceId, 4096>* mInternalResourceManager;
 		RERHI::RHIVertexBufferPtr mDrawIdVertexBufferPtr;		///< Draw ID vertex buffer, see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html
 		RERHI::RHIVertexArrayPtr  mDrawIdVertexArrayPtr;		///< Draw ID vertex array, see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html

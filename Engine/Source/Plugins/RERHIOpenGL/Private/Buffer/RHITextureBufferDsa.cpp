@@ -42,7 +42,7 @@ class RHIDynamicRHI;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-TextureBufferDsa::TextureBufferDsa(RHIDynamicRHI &openGLRhi, uint32_t numberOfBytes, const void *data,
+TextureBufferDsa::TextureBufferDsa(RHIDynamicRHI &openGLRhi, RECore::uint32 numberOfBytes, const void *data,
                                    RERHI::BufferUsage bufferUsage, RERHI::TextureFormat::Enum textureFormat
                                    RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   TextureBuffer(openGLRhi, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER) {

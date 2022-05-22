@@ -104,9 +104,9 @@ public:
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
 private:
-	static constexpr uint32_t NUMBER_OF_CHANGED_CUBES = 1000;	///< Number of changed cubes on key interaction
-	static constexpr uint32_t NUMBER_OF_TEXTURES	  = 8;		///< Number of textures
-	static constexpr uint32_t SCENE_RADIUS			  = 10;		///< Scene radius
+	static constexpr RECore::uint32 NUMBER_OF_CHANGED_CUBES = 1000;	///< Number of changed cubes on key interaction
+	static constexpr RECore::uint32 NUMBER_OF_TEXTURES	  = 8;		///< Number of textures
+	static constexpr RECore::uint32 SCENE_RADIUS			  = 10;		///< Scene radius
 
 
 //[-------------------------------------------------------]
@@ -115,7 +115,7 @@ private:
 private:
   REInput::InputManager*	mInputManager;			///< Input manager instance, always valid
 	ICubeRenderer*				mCubeRenderer;			///< Cube renderer instance, can be a null pointer
-	uint32_t					mNumberOfCubeInstances;	///< Number of cube instances
+	RECore::uint32					mNumberOfCubeInstances;	///< Number of cube instances
 	RERHI::RHICommandBuffer			mCommandBuffer;			///< Command buffer
 	// The rest is for timing and statistics
 	#ifdef RENDERER

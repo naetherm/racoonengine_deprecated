@@ -142,7 +142,7 @@ public:
   *  @return
   *    LED states as a bit field
   */
-  [[nodiscard]] inline uint32_t getLedStates() const
+  [[nodiscard]] inline RECore::uint32 getLedStates() const
   {
     return mLedStates;
   }
@@ -154,7 +154,7 @@ public:
   *  @param[in] ledStates
   *    LED states
   */
-  inline void setLedStates(uint32_t ledStates)
+  inline void setLedStates(RECore::uint32 ledStates)
   {
     // Set state of LEDs
     mLedStates = ledStates;
@@ -193,7 +193,7 @@ public:
     if (ledIndex >= 0 && ledIndex < 32)
     {
       // Set LED state
-      const uint32_t mask = (static_cast<uint32_t>(1) << ledIndex);
+      const RECore::uint32 mask = (static_cast<RECore::uint32>(1) << ledIndex);
       if (on)
       {
         mLedStates |= mask;
@@ -213,7 +213,7 @@ public:
   //[ Private data                                          ]
   //[-------------------------------------------------------]
 private:
-  uint32_t mLedStates;	///< State of all LEDs
+  RECore::uint32 mLedStates;	///< State of all LEDs
 
 
 };

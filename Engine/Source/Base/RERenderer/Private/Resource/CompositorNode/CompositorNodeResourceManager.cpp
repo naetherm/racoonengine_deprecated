@@ -92,12 +92,12 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
-	uint32_t CompositorNodeResourceManager::getNumberOfResources() const
+	RECore::uint32 CompositorNodeResourceManager::getNumberOfResources() const
 	{
 		return mInternalResourceManager->getResources().getNumberOfElements();
 	}
 
-RECore::IResource& CompositorNodeResourceManager::getResourceByIndex(uint32_t index) const
+RECore::IResource& CompositorNodeResourceManager::getResourceByIndex(RECore::uint32 index) const
 	{
 		return mInternalResourceManager->getResources().getElementByIndex(index);
 	}
@@ -115,8 +115,8 @@ RECore::IResource* CompositorNodeResourceManager::tryGetResourceByResourceId(REC
 	void CompositorNodeResourceManager::reloadResourceByAssetId(AssetId assetId)
 	{
 		// TODO(naetherm) Experimental implementation (take care of resource cleanup etc.)
-		const uint32_t numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
-		for (uint32_t i = 0; i < numberOfElements; ++i)
+		const RECore::uint32 numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
+		for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 		{
 			const CompositorNodeResource& compositorNodeResource = mInternalResourceManager->getResources().getElementByIndex(i);
 			if (compositorNodeResource.getAssetId() == assetId)
@@ -126,8 +126,8 @@ RECore::IResource* CompositorNodeResourceManager::tryGetResourceByResourceId(REC
 
 				{ // Reload all compositor workspace resources using this compositor node resource
 					CompositorWorkspaceResourceManager& compositorWorkspaceResourceManager = mRenderer.getCompositorWorkspaceResourceManager();
-					const uint32_t numberOfCompositorWorkspaceResources = compositorWorkspaceResourceManager.getNumberOfResources();
-					for (uint32_t compositorWorkspaceResourceIndex = 0; compositorWorkspaceResourceIndex < numberOfCompositorWorkspaceResources; ++compositorWorkspaceResourceIndex)
+					const RECore::uint32 numberOfCompositorWorkspaceResources = compositorWorkspaceResourceManager.getNumberOfResources();
+					for (RECore::uint32 compositorWorkspaceResourceIndex = 0; compositorWorkspaceResourceIndex < numberOfCompositorWorkspaceResources; ++compositorWorkspaceResourceIndex)
 					{
 						const CompositorWorkspaceResource& compositorWorkspaceResource = compositorWorkspaceResourceManager.getByIndex(compositorWorkspaceResourceIndex);
 						const CompositorWorkspaceResource::CompositorNodeAssetIds& compositorNodeAssetIds = compositorWorkspaceResource.getCompositorNodeAssetIds();

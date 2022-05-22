@@ -50,7 +50,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;	///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::StringId AssetId;	///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
 
 
 	// Mesh file format content:
@@ -67,8 +67,8 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("Mesh");
-		static constexpr uint32_t FORMAT_VERSION = 9;
+		static constexpr RECore::uint32 FORMAT_TYPE	 = STRING_ID("Mesh");
+		static constexpr RECore::uint32 FORMAT_VERSION = 9;
 
 		#pragma pack(push)
 		#pragma pack(1)
@@ -80,24 +80,24 @@ namespace RERenderer
 				glm::vec3 boundingSpherePosition;
 				float	  boundingSphereRadius;
 				// Vertex and index data
-				uint8_t  numberOfBytesPerVertex;
-				uint32_t numberOfVertices;
-				uint8_t  indexBufferFormat;
-				uint32_t numberOfIndices;
-				uint8_t  numberOfVertexAttributes;
+				RECore::uint8  numberOfBytesPerVertex;
+				RECore::uint32 numberOfVertices;
+				RECore::uint8  indexBufferFormat;
+				RECore::uint32 numberOfIndices;
+				RECore::uint8  numberOfVertexAttributes;
 				bool	 hasPositionOnlyIndices;
 				// Sub-meshes and LODs
-				uint16_t numberOfSubMeshes;
-				uint8_t  numberOfLods;	// There's always at least one LOD, namely the original none reduced version
+				RECore::uint16 numberOfSubMeshes;
+				RECore::uint8  numberOfLods;	// There's always at least one LOD, namely the original none reduced version
 				// Optional skeleton
-				uint8_t  numberOfBones;
+				RECore::uint8  numberOfBones;
 			};
 
 			struct SubMesh final
 			{
 				AssetId  materialAssetId;
-				uint32_t startIndexLocation;
-				uint32_t numberOfIndices;
+				RECore::uint32 startIndexLocation;
+				RECore::uint32 numberOfIndices;
 			};
 		#pragma pack(pop)
 

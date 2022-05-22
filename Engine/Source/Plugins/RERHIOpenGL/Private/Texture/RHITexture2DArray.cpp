@@ -49,7 +49,7 @@ Texture2DArray::~Texture2DArray() {
   glDeleteTextures(1, &mOpenGLTexture);
 }
 
-Texture2DArray::Texture2DArray(RHIDynamicRHI &openGLRhi, uint32_t width, uint32_t height, uint32_t numberOfSlices,
+Texture2DArray::Texture2DArray(RHIDynamicRHI &openGLRhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices,
                                RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
   RHITexture2DArray(openGLRhi, width, height, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mNumberOfMultisamples(1),  // TODO(naetherm) Currently no MSAA support for 2D array textures

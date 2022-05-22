@@ -39,7 +39,7 @@ namespace RERenderer
 {
 	class IRenderer;
 	class VertexAttributesResource;
-	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
+	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, RECore::uint32 MAXIMUM_NUMBER_OF_ELEMENTS> class ResourceManagerTemplate;
 }
 
 
@@ -53,7 +53,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t VertexAttributesResourceId;	///< POD vertex attributes resource identifier
+	typedef RECore::uint32 VertexAttributesResourceId;	///< POD vertex attributes resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -73,7 +73,7 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("vertex_attributes");
+		static constexpr RECore::uint32 TYPE_ID = STRING_ID("vertex_attributes");
 
 
 	//[-------------------------------------------------------]

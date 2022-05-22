@@ -49,8 +49,8 @@ namespace RERenderer
 		// Fully loaded?
 		const MaterialResourceManager& materialResourceManager = mRenderer.getMaterialResourceManager();
 		const SubMeshes& subMeshes = mMeshResource->getSubMeshes();
-		const uint32_t numberOfUsedSubMeshes = static_cast<uint32_t>(subMeshes.size());
-		for (uint32_t i = 0; i < numberOfUsedSubMeshes; ++i)
+		const RECore::uint32 numberOfUsedSubMeshes = static_cast<RECore::uint32>(subMeshes.size());
+		for (RECore::uint32 i = 0; i < numberOfUsedSubMeshes; ++i)
 		{
 			if (RECore::IResource::LoadingState::LOADED != materialResourceManager.getResourceByResourceId(subMeshes[i].getMaterialResourceId()).getLoadingState())
 			{

@@ -71,7 +71,7 @@ public:
   *  @return
   *    The width of the texture
   */
-  [[nodiscard]] inline uint32_t getWidth() const {
+  [[nodiscard]] inline RECore::uint32 getWidth() const {
     return mWidth;
   }
 
@@ -86,7 +86,7 @@ protected:
   *  @param[in] width
   *    The width of the texture
   */
-  inline RHITextureCube(RHIDynamicRHI &rhi, uint32_t width RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+  inline RHITextureCube(RHIDynamicRHI &rhi, RECore::uint32 width RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
     RHITexture(ResourceType::TEXTURE_CUBE, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
     mWidth(width) {
 #ifdef RHI_STATISTICS
@@ -102,7 +102,7 @@ protected:
 
   // Private data
 private:
-  uint32_t mWidth;  ///< The width of the texture
+  RECore::uint32 mWidth;  ///< The width of the texture
 
 };
 

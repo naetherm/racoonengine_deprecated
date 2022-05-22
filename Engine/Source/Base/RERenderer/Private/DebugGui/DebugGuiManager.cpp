@@ -66,27 +66,27 @@ namespace
 				RERHI::VertexAttributeFormat::FLOAT_4,		// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Position",									// name[32] (char)
 				"POSITION",									// semanticName[32] (char)
-				0,											// semanticIndex (uint32_t)
+				0,											// semanticIndex (RECore::uint32)
 				// Data source
-				0,											// inputSlot (uint32_t)
-				0,											// alignedByteOffset (uint32_t)
-				sizeof(float) * 4 + sizeof(uint8_t) * 4,	// strideInBytes (uint32_t)
-				0											// instancesPerElement (uint32_t)
+				0,											// inputSlot (RECore::uint32)
+				0,											// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 4 + sizeof(RECore::uint8) * 4,	// strideInBytes (RECore::uint32)
+				0											// instancesPerElement (RECore::uint32)
 			},
 			{ // Attribute 1
 				// Data destination
 				RERHI::VertexAttributeFormat::R8G8B8A8_UNORM,	// vertexAttributeFormat (RERHI::VertexAttributeFormat)
 				"Color",									// name[32] (char)
 				"COLOR",									// semanticName[32] (char)
-				0,											// semanticIndex (uint32_t)
+				0,											// semanticIndex (RECore::uint32)
 				// Data source
-				0,											// inputSlot (uint32_t)
-				sizeof(float) * 4,							// alignedByteOffset (uint32_t)
-				sizeof(float) * 4 + sizeof(uint8_t) * 4,	// strideInBytes (uint32_t)
-				0											// instancesPerElement (uint32_t)
+				0,											// inputSlot (RECore::uint32)
+				sizeof(float) * 4,							// alignedByteOffset (RECore::uint32)
+				sizeof(float) * 4 + sizeof(RECore::uint8) * 4,	// strideInBytes (RECore::uint32)
+				0											// instancesPerElement (RECore::uint32)
 			}
 		};
-		const RERHI::VertexAttributes VertexAttributes(static_cast<uint32_t>(GLM_COUNTOF(VertexAttributesLayout)), VertexAttributesLayout);
+		const RERHI::VertexAttributes VertexAttributes(static_cast<RECore::uint32>(GLM_COUNTOF(VertexAttributesLayout)), VertexAttributesLayout);
 
 
 		//[-------------------------------------------------------]
@@ -168,15 +168,15 @@ namespace RERenderer
 
 			{ // Vertex and index buffers
 				// Create and grow vertex/index buffers if needed
-				if (nullptr == mVertexBuffer || mNumberOfAllocatedVertices < static_cast<uint32_t>(imDrawData->TotalVtxCount))
+				if (nullptr == mVertexBuffer || mNumberOfAllocatedVertices < static_cast<RECore::uint32>(imDrawData->TotalVtxCount))
 				{
-					mNumberOfAllocatedVertices = static_cast<uint32_t>(imDrawData->TotalVtxCount + 5000);	// Add some reserve to reduce reallocations
+					mNumberOfAllocatedVertices = static_cast<RECore::uint32>(imDrawData->TotalVtxCount + 5000);	// Add some reserve to reduce reallocations
 					mVertexBuffer = bufferManager.createVertexBuffer(mNumberOfAllocatedVertices * sizeof(ImDrawVert), nullptr, 0, RERHI::BufferUsage::DYNAMIC_DRAW RHI_RESOURCE_DEBUG_NAME("Debug GUI"));
 					mVertexArray = nullptr;
 				}
-				if (nullptr == mIndexBuffer || mNumberOfAllocatedIndices < static_cast<uint32_t>(imDrawData->TotalIdxCount))
+				if (nullptr == mIndexBuffer || mNumberOfAllocatedIndices < static_cast<RECore::uint32>(imDrawData->TotalIdxCount))
 				{
-					mNumberOfAllocatedIndices = static_cast<uint32_t>(imDrawData->TotalIdxCount + 10000);	// Add some reserve to reduce reallocations
+					mNumberOfAllocatedIndices = static_cast<RECore::uint32>(imDrawData->TotalIdxCount + 10000);	// Add some reserve to reduce reallocations
 					mIndexBuffer = bufferManager.createIndexBuffer(mNumberOfAllocatedIndices * sizeof(ImDrawIdx), nullptr, 0, RERHI::BufferUsage::DYNAMIC_DRAW, RERHI::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME("Debug GUI"));
 					mVertexArray = nullptr;
 				}
@@ -187,7 +187,7 @@ namespace RERenderer
 
 					// Create vertex array object (VAO)
 					const RERHI::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { mVertexBuffer };
-					mVertexArray = bufferManager.createVertexArray(::detail::VertexAttributes, static_cast<uint32_t>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, mIndexBuffer RHI_RESOURCE_DEBUG_NAME("Debug GUI"));
+					mVertexArray = bufferManager.createVertexArray(::detail::VertexAttributes, static_cast<RECore::uint32>(GLM_COUNTOF(vertexArrayVertexBuffers)), vertexArrayVertexBuffers, mIndexBuffer RHI_RESOURCE_DEBUG_NAME("Debug GUI"));
 				}
 
 				{ // Copy and convert all vertices and indices into a single contiguous buffer
@@ -308,7 +308,7 @@ namespace RERenderer
 						RERHI::Command::SetGraphicsScissorRectangles::create(commandBuffer, static_cast<long>(pcmd->ClipRect.x), static_cast<long>(pcmd->ClipRect.y), static_cast<long>(pcmd->ClipRect.z), static_cast<long>(pcmd->ClipRect.w));
 
 						// Draw graphics
-						RERHI::Command::DrawIndexedGraphics::create(commandBuffer, static_cast<uint32_t>(pcmd->ElemCount), 1, static_cast<uint32_t>(indexOffset), static_cast<int32_t>(vertexOffset));
+						RERHI::Command::DrawIndexedGraphics::create(commandBuffer, static_cast<RECore::uint32>(pcmd->ElemCount), 1, static_cast<RECore::uint32>(indexOffset), static_cast<RECore::int32>(vertexOffset));
 					}
 					indexOffset += pcmd->ElemCount;
 				}
@@ -401,7 +401,7 @@ namespace RERenderer
       ImGui::GetIO().Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
 			// Upload texture to RHI
-			mTexture2D = mRenderer.getTextureManager().createTexture2D(static_cast<uint32_t>(width), static_cast<uint32_t>(height), RERHI::TextureFormat::R8G8B8A8, pixels, RERHI::TextureFlag::GENERATE_MIPMAPS | RERHI::TextureFlag::SHADER_RESOURCE, RERHI::TextureUsage::DEFAULT, 1, nullptr RHI_RESOURCE_DEBUG_NAME("Debug 2D GUI glyph texture atlas"));
+			mTexture2D = mRenderer.getTextureManager().createTexture2D(static_cast<RECore::uint32>(width), static_cast<RECore::uint32>(height), RERHI::TextureFormat::R8G8B8A8, pixels, RERHI::TextureFlag::GENERATE_MIPMAPS | RERHI::TextureFlag::SHADER_RESOURCE, RERHI::TextureUsage::DEFAULT, 1, nullptr RHI_RESOURCE_DEBUG_NAME("Debug 2D GUI glyph texture atlas"));
 
 			// Tell the texture resource manager about our glyph texture so it can be referenced inside e.g. compositor nodes
 			mRenderer.getTextureResourceManager().createTextureResourceByAssetId(::detail::IMGUI_GLYPH_MAP_2D, *mTexture2D);
@@ -418,7 +418,7 @@ namespace RERenderer
       { // Create resource group
         RERHI::RHIResource *resources[2] = {mVertexShaderUniformBuffer, mTexture2D};
         RERHI::RHISamplerState *samplerStates[2] = {nullptr, static_cast<RERHI::RHISamplerState *>(samplerStateResource)};
-        mResourceGroup = mRootSignature->createResourceGroup(0, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, samplerStates RHI_RESOURCE_DEBUG_NAME("Debug GUI"));
+        mResourceGroup = mRootSignature->createResourceGroup(0, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, samplerStates RHI_RESOURCE_DEBUG_NAME("Debug GUI"));
         this->mTextureMaps.emplace(mTexture2D, mResourceGroup);
       }*/
 		}
@@ -486,7 +486,7 @@ namespace RERenderer
 
 			// Setup
 			RERHI::RootSignatureBuilder rootSignatureBuilder;
-			rootSignatureBuilder.initialize(static_cast<uint32_t>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+			rootSignatureBuilder.initialize(static_cast<RECore::uint32>(GLM_COUNTOF(rootParameters)), rootParameters, 0, nullptr, RERHI::RootSignatureFlags::ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
 			// Create the instance
 			mRootSignature = rhi.createRootSignature(rootSignatureBuilder RHI_RESOURCE_DEBUG_NAME("Debug GUI"));
@@ -555,7 +555,7 @@ namespace RERenderer
 		{ // Create resource group
       RERHI::RHIResource *resources[2] = {mVertexShaderUniformBuffer, mTexture2D};
       RERHI::RHISamplerState *samplerStates[2] = {nullptr, static_cast<RERHI::RHISamplerState *>(samplerStateResource)};
-      mResourceGroup = mRootSignature->createResourceGroup(0, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, samplerStates RHI_RESOURCE_DEBUG_NAME("Debug GUI"));
+      mResourceGroup = mRootSignature->createResourceGroup(0, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, samplerStates RHI_RESOURCE_DEBUG_NAME("Debug GUI"));
       this->mTextureMaps.emplace(mTexture2D, mResourceGroup);
 		}
 	}
@@ -573,7 +573,7 @@ namespace RERenderer
       RERHI::RHIResource* samplerStateResource = this->mRenderer.getRhi().createSamplerState(samplerState RHI_RESOURCE_DEBUG_NAME("Debug GUI"));
       RERHI::RHIResource *resources[2] = {mVertexShaderUniformBuffer, texture};
       RERHI::RHISamplerState *samplerStates[2] = {nullptr, static_cast<RERHI::RHISamplerState *>(samplerStateResource)};
-      RERHI::RHIResourceGroup* resourceGroup = mRootSignature->createResourceGroup(0, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, samplerStates RHI_RESOURCE_DEBUG_NAME("Debug GUI"));
+      RERHI::RHIResourceGroup* resourceGroup = mRootSignature->createResourceGroup(0, static_cast<RECore::uint32>(GLM_COUNTOF(resources)), resources, samplerStates RHI_RESOURCE_DEBUG_NAME("Debug GUI"));
       resourceGroup->AddReference();
       // Add to map
       this->mTextureMaps.emplace(texture, resourceGroup);

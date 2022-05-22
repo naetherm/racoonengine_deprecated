@@ -74,7 +74,7 @@ public:
   *  @param[in] samplerStates
   *    If not a null pointer at least "numberOfResources" sampler state pointers, must be valid if there's at least one texture resource, the resource group will keep a reference to the sampler states
   */
-  ResourceGroup(RERHI::RHIDynamicRHI& rhi, uint32_t rootParameterIndex, uint32_t numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  ResourceGroup(RERHI::RHIDynamicRHI& rhi, RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief
@@ -89,7 +89,7 @@ public:
   *  @return
   *    The number of resources this resource group groups together
   */
-  [[nodiscard]] uint32_t getNumberOfResources() const;
+  [[nodiscard]] RECore::uint32 getNumberOfResources() const;
 
   /**
   *  @brief
@@ -120,8 +120,8 @@ private:
   //[ Private data                                          ]
   //[-------------------------------------------------------]
 private:
-  uint32_t			 mRootParameterIndex;	///< The root parameter index number for binding
-  uint32_t			 mNumberOfResources;	///< Number of resources this resource group groups together
+  RECore::uint32			 mRootParameterIndex;	///< The root parameter index number for binding
+  RECore::uint32			 mNumberOfResources;	///< Number of resources this resource group groups together
   RERHI::RHIResource**	 mResources;			///< RHI resources, we keep a reference to it
   RERHI::RHISamplerState** mSamplerStates;		///< Sampler states, we keep a reference to it
 

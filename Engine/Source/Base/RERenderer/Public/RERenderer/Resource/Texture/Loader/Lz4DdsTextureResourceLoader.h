@@ -56,9 +56,9 @@ namespace RERenderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID		 = STRING_ID("lz4dds");
-		static constexpr uint32_t FORMAT_TYPE	 = TYPE_ID;
-		static constexpr uint32_t FORMAT_VERSION = 1;
+		static constexpr RECore::uint32 TYPE_ID		 = STRING_ID("lz4dds");
+		static constexpr RECore::uint32 FORMAT_TYPE	 = TYPE_ID;
+		static constexpr RECore::uint32 FORMAT_VERSION = 1;
 
 
 	//[-------------------------------------------------------]
@@ -120,17 +120,17 @@ namespace RERenderer
 	private:
 		// Temporary data
 		RECore::MemoryFile mMemoryFile;
-		uint32_t   mWidth;
-		uint32_t   mHeight;
-		uint32_t   mDepth;
-		uint32_t   mNumberOfSlices;
-		uint8_t    mTextureFormat;	// "RERHI::TextureFormat", don't want to include the header in here
+		RECore::uint32   mWidth;
+		RECore::uint32   mHeight;
+		RECore::uint32   mDepth;
+		RECore::uint32   mNumberOfSlices;
+		RECore::uint8    mTextureFormat;	// "RERHI::TextureFormat", don't want to include the header in here
 		bool	   mDataContainsMipmaps;
 
 		// Temporary image data
-		uint32_t mNumberOfImageDataBytes;
-		uint32_t mNumberOfUsedImageDataBytes;
-		uint8_t* mImageData;
+		RECore::uint32 mNumberOfImageDataBytes;
+		RECore::uint32 mNumberOfUsedImageDataBytes;
+		RECore::uint8* mImageData;
 
 
 	};

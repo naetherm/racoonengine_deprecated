@@ -231,7 +231,7 @@ public:
   *  @return
   *    Vulkan sample count flag bits
   */
-  [[nodiscard]] static VkSampleCountFlagBits getVulkanSampleCountFlagBits([[maybe_unused]] const RERHI::RHIContext& context, uint8_t numberOfMultisamples);
+  [[nodiscard]] static VkSampleCountFlagBits getVulkanSampleCountFlagBits([[maybe_unused]] const RERHI::RHIContext& context, RECore::uint8 numberOfMultisamples);
 
 
 };

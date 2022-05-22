@@ -61,7 +61,7 @@ Notes:
 	#include <cstdio>  // For printf(). Remove if you don't need the PrintRanges() function (mostly for debugging anyway).
 #endif
 
-#include <cstdint>	// uint32_t
+#include <cstdint>	// RECore::uint32
 #include <limits>	// std::numeric_limits<type>::max()
 #include <cstdlib>
 #include <cstring>
@@ -69,8 +69,8 @@ Notes:
 class MakeID final
 {
 private:
-	// Change to uint16_t here for a more compact implementation if 16bit or less IDs work for you.
-	typedef uint32_t uint;
+	// Change to RECore::uint16 here for a more compact implementation if 16bit or less IDs work for you.
+	typedef RECore::uint32 uint;
 
 	struct Range
 	{

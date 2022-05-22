@@ -152,8 +152,8 @@ Notes:
 class MakeID final
 {
 private:
-	// Change to uint16_t here for a more compact implementation if 16bit or less IDs work for you.
-	typedef uint16_t uint;
+	// Change to RECore::uint16 here for a more compact implementation if 16bit or less IDs work for you.
+	typedef RECore::uint16 uint;
 
 	struct Range
 	{
@@ -2120,7 +2120,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		void updateWidthHeight(uint32_t mipmapIndex, uint32_t textureWidth, uint32_t textureHeight, uint32_t& width, uint32_t& height)
+		void updateWidthHeight(RECore::uint32 mipmapIndex, RECore::uint32 textureWidth, RECore::uint32 textureHeight, RECore::uint32& width, RECore::uint32& height)
 		{
 			Rhi::ITexture::getMipmapSize(mipmapIndex, textureWidth, textureHeight);
 			if (width > textureWidth)
@@ -2271,14 +2271,14 @@ namespace Direct3D10Rhi
 		//[-------------------------------------------------------]
 		void setGraphicsRootSignature(Rhi::IRootSignature* rootSignature);
 		void setGraphicsPipelineState(Rhi::IGraphicsPipelineState* graphicsPipelineState);
-		void setGraphicsResourceGroup(uint32_t rootParameterIndex, Rhi::IResourceGroup* resourceGroup);
+		void setGraphicsResourceGroup(RECore::uint32 rootParameterIndex, Rhi::IResourceGroup* resourceGroup);
 		void setGraphicsVertexArray(Rhi::IVertexArray* vertexArray);															// Input-assembler (IA) stage
-		void setGraphicsViewports(uint32_t numberOfViewports, const Rhi::Viewport* viewports);									// Rasterizer (RS) stage
-		void setGraphicsScissorRectangles(uint32_t numberOfScissorRectangles, const Rhi::ScissorRectangle* scissorRectangles);	// Rasterizer (RS) stage
+		void setGraphicsViewports(RECore::uint32 numberOfViewports, const Rhi::Viewport* viewports);									// Rasterizer (RS) stage
+		void setGraphicsScissorRectangles(RECore::uint32 numberOfScissorRectangles, const Rhi::ScissorRectangle* scissorRectangles);	// Rasterizer (RS) stage
 		void setGraphicsRenderTarget(Rhi::IRenderTarget* renderTarget);															// Output-merger (OM) stage
-		void clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil);
-		void drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1);
-		void drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1);
+		void clearGraphics(RECore::uint32 clearFlags, const float color[4], float z, RECore::uint32 stencil);
+		void drawGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1);
+		void drawIndexedGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1);
 		//[-------------------------------------------------------]
 		//[ Resource                                              ]
 		//[-------------------------------------------------------]
@@ -2288,10 +2288,10 @@ namespace Direct3D10Rhi
 		//[-------------------------------------------------------]
 		//[ Query                                                 ]
 		//[-------------------------------------------------------]
-		void resetQueryPool(Rhi::IQueryPool& queryPool, uint32_t firstQueryIndex, uint32_t numberOfQueries);
-		void beginQuery(Rhi::IQueryPool& queryPool, uint32_t queryIndex, uint32_t queryControlFlags);
-		void endQuery(Rhi::IQueryPool& queryPool, uint32_t queryIndex);
-		void writeTimestampQuery(Rhi::IQueryPool& queryPool, uint32_t queryIndex);
+		void resetQueryPool(Rhi::IQueryPool& queryPool, RECore::uint32 firstQueryIndex, RECore::uint32 numberOfQueries);
+		void beginQuery(Rhi::IQueryPool& queryPool, RECore::uint32 queryIndex, RECore::uint32 queryControlFlags);
+		void endQuery(Rhi::IQueryPool& queryPool, RECore::uint32 queryIndex);
+		void writeTimestampQuery(Rhi::IQueryPool& queryPool, RECore::uint32 queryIndex);
 		//[-------------------------------------------------------]
 		//[ Debug                                                 ]
 		//[-------------------------------------------------------]
@@ -2321,14 +2321,14 @@ namespace Direct3D10Rhi
 		//[-------------------------------------------------------]
 		//[ Shader language                                       ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] virtual uint32_t getNumberOfShaderLanguages() const override;
-		[[nodiscard]] virtual const char* getShaderLanguageName(uint32_t index) const override;
+		[[nodiscard]] virtual RECore::uint32 getNumberOfShaderLanguages() const override;
+		[[nodiscard]] virtual const char* getShaderLanguageName(RECore::uint32 index) const override;
 		[[nodiscard]] virtual Rhi::IShaderLanguage* getShaderLanguage(const char* shaderLanguageName = nullptr) override;
 		//[-------------------------------------------------------]
 		//[ Resource creation                                     ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] virtual Rhi::IRenderPass* createRenderPass(uint32_t numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat = Rhi::TextureFormat::UNKNOWN, uint8_t numberOfMultisamples = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
-		[[nodiscard]] virtual Rhi::IQueryPool* createQueryPool(Rhi::QueryType queryType, uint32_t numberOfQueries = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+		[[nodiscard]] virtual Rhi::IRenderPass* createRenderPass(RECore::uint32 numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat = Rhi::TextureFormat::UNKNOWN, RECore::uint8 numberOfMultisamples = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
+		[[nodiscard]] virtual Rhi::IQueryPool* createQueryPool(Rhi::QueryType queryType, RECore::uint32 numberOfQueries = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 		[[nodiscard]] virtual Rhi::ISwapChain* createSwapChain(Rhi::IRenderPass& renderPass, Rhi::WindowHandle windowHandle, bool useExternalContext = false RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 		[[nodiscard]] virtual Rhi::IFramebuffer* createFramebuffer(Rhi::IRenderPass& renderPass, const Rhi::FramebufferAttachment* colorFramebufferAttachments, const Rhi::FramebufferAttachment* depthStencilFramebufferAttachment = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override;
 		[[nodiscard]] virtual Rhi::IBufferManager* createBufferManager() override;
@@ -2340,9 +2340,9 @@ namespace Direct3D10Rhi
 		//[-------------------------------------------------------]
 		//[ Resource handling                                     ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] virtual bool map(Rhi::IResource& resource, uint32_t subresource, Rhi::MapType mapType, uint32_t mapFlags, Rhi::MappedSubresource& mappedSubresource) override;
-		virtual void unmap(Rhi::IResource& resource, uint32_t subresource) override;
-		[[nodiscard]] virtual bool getQueryPoolResults(Rhi::IQueryPool& queryPool, uint32_t numberOfDataBytes, uint8_t* data, uint32_t firstQueryIndex = 0, uint32_t numberOfQueries = 1, uint32_t strideInBytes = 0, uint32_t queryResultFlags = 0) override;
+		[[nodiscard]] virtual bool map(Rhi::IResource& resource, RECore::uint32 subresource, Rhi::MapType mapType, RECore::uint32 mapFlags, Rhi::MappedSubresource& mappedSubresource) override;
+		virtual void unmap(Rhi::IResource& resource, RECore::uint32 subresource) override;
+		[[nodiscard]] virtual bool getQueryPoolResults(Rhi::IQueryPool& queryPool, RECore::uint32 numberOfDataBytes, RECore::uint8* data, RECore::uint32 firstQueryIndex = 0, RECore::uint32 numberOfQueries = 1, RECore::uint32 strideInBytes = 0, RECore::uint32 queryResultFlags = 0) override;
 		//[-------------------------------------------------------]
 		//[ Operation                                             ]
 		//[-------------------------------------------------------]
@@ -2996,7 +2996,7 @@ namespace Direct3D10Rhi
 		{
 			if (nullptr != errorD3dBlob)
 			{
-				if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), static_cast<char*>(errorD3dBlob->GetBufferPointer())))
+				if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), static_cast<char*>(errorD3dBlob->GetBufferPointer())))
 				{
 					DEBUG_BREAK;
 				}
@@ -3091,7 +3091,7 @@ namespace Direct3D10Rhi
 		*  @return
 		*    Direct3D 10 usage
 		*/
-		[[nodiscard]] static D3D10_USAGE getDirect3D10UsageAndCPUAccessFlags(Rhi::BufferUsage bufferUsage, uint32_t& cpuAccessFlags)
+		[[nodiscard]] static D3D10_USAGE getDirect3D10UsageAndCPUAccessFlags(Rhi::BufferUsage bufferUsage, RECore::uint32& cpuAccessFlags)
 		{
 			// Direct3D 10 only supports a subset of the OpenGL usage indications
 			// -> See "D3D10_USAGE enumeration "-documentation at http://msdn.microsoft.com/en-us/library/windows/desktop/bb172499%28v=vs.85%29.aspx
@@ -3138,9 +3138,9 @@ namespace Direct3D10Rhi
 		{
 			static constexpr DXGI_FORMAT MAPPING[] =
 			{
-				DXGI_FORMAT_R32_UINT,	// Rhi::IndexBufferFormat::UNSIGNED_CHAR  - One byte per element, uint8_t (may not be supported by each RHI implementation) - Not supported by Direct3D 10
-				DXGI_FORMAT_R16_UINT,	// Rhi::IndexBufferFormat::UNSIGNED_SHORT - Two bytes per element, uint16_t
-				DXGI_FORMAT_R32_UINT	// Rhi::IndexBufferFormat::UNSIGNED_INT   - Four bytes per element, uint32_t (may not be supported by each RHI implementation)
+				DXGI_FORMAT_R32_UINT,	// Rhi::IndexBufferFormat::UNSIGNED_CHAR  - One byte per element, RECore::uint8 (may not be supported by each RHI implementation) - Not supported by Direct3D 10
+				DXGI_FORMAT_R16_UINT,	// Rhi::IndexBufferFormat::UNSIGNED_SHORT - Two bytes per element, RECore::uint16
+				DXGI_FORMAT_R32_UINT	// Rhi::IndexBufferFormat::UNSIGNED_INT   - Four bytes per element, RECore::uint32 (may not be supported by each RHI implementation)
 			};
 			return MAPPING[indexBufferFormat];
 		}
@@ -3297,14 +3297,14 @@ namespace Direct3D10Rhi
 		*  @param[in] samplerStates
 		*    If not a null pointer at least "numberOfResources" sampler state pointers, must be valid if there's at least one texture resource, the resource group will keep a reference to the sampler states
 		*/
-		ResourceGroup(Rhi::IRhi& rhi, uint32_t numberOfResources, Rhi::IResource** resources, Rhi::ISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		ResourceGroup(Rhi::IRhi& rhi, RECore::uint32 numberOfResources, Rhi::IResource** resources, Rhi::ISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IResourceGroup(rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mNumberOfResources(numberOfResources),
 			mResources(RHI_MALLOC_TYPED(rhi.getContext(), Rhi::IResource*, mNumberOfResources)),
 			mSamplerStates(nullptr)
 		{
 			// Process all resources and add our reference to the RHI resource
-			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
+			for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
 			{
 				Rhi::IResource* resource = *resources;
 				RHI_ASSERT(nullptr != resource, "Invalid Direct3D 10 resource")
@@ -3314,7 +3314,7 @@ namespace Direct3D10Rhi
 			if (nullptr != samplerStates)
 			{
 				mSamplerStates = RHI_MALLOC_TYPED(rhi.getContext(), Rhi::ISamplerState*, mNumberOfResources);
-				for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
+				for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
 				{
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
 					if (nullptr != samplerState)
@@ -3335,7 +3335,7 @@ namespace Direct3D10Rhi
 			const Rhi::Context& context = getRhi().getContext();
 			if (nullptr != mSamplerStates)
 			{
-				for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+				for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 				{
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex];
 					if (nullptr != samplerState)
@@ -3345,7 +3345,7 @@ namespace Direct3D10Rhi
 				}
 				RHI_FREE(context, mSamplerStates);
 			}
-			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
+			for (RECore::uint32 resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 			{
 				mResources[resourceIndex]->releaseReference();
 			}
@@ -3359,7 +3359,7 @@ namespace Direct3D10Rhi
 		*  @return
 		*    The number of resources this resource group groups together
 		*/
-		[[nodiscard]] inline uint32_t getNumberOfResources() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfResources() const
 		{
 			return mNumberOfResources;
 		}
@@ -3399,7 +3399,7 @@ namespace Direct3D10Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t			 mNumberOfResources;	///< Number of resources this resource group groups together
+		RECore::uint32			 mNumberOfResources;	///< Number of resources this resource group groups together
 		Rhi::IResource**	 mResources;			///< RHI resources, we keep a reference to it
 		Rhi::ISamplerState** mSamplerStates;		///< Sampler states, we keep a reference to it
 
@@ -3440,7 +3440,7 @@ namespace Direct3D10Rhi
 			const Rhi::Context& context = direct3D10Rhi.getContext();
 
 			{ // Copy the parameter data
-				const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
+				const RECore::uint32 numberOfParameters = mRootSignature.numberOfParameters;
 				if (numberOfParameters > 0)
 				{
 					mRootSignature.parameters = RHI_MALLOC_TYPED(context, Rhi::RootParameter, numberOfParameters);
@@ -3448,13 +3448,13 @@ namespace Direct3D10Rhi
 					memcpy(destinationRootParameters, rootSignature.parameters, sizeof(Rhi::RootParameter) * numberOfParameters);
 
 					// Copy the descriptor table data
-					for (uint32_t i = 0; i < numberOfParameters; ++i)
+					for (RECore::uint32 i = 0; i < numberOfParameters; ++i)
 					{
 						Rhi::RootParameter& destinationRootParameter = destinationRootParameters[i];
 						const Rhi::RootParameter& sourceRootParameter = rootSignature.parameters[i];
 						if (Rhi::RootParameterType::DESCRIPTOR_TABLE == destinationRootParameter.parameterType)
 						{
-							const uint32_t numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
+							const RECore::uint32 numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
 							destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(context, Rhi::DescriptorRange, numberOfDescriptorRanges));
 							memcpy(reinterpret_cast<Rhi::DescriptorRange*>(destinationRootParameter.descriptorTable.descriptorRanges), reinterpret_cast<const Rhi::DescriptorRange*>(sourceRootParameter.descriptorTable.descriptorRanges), sizeof(Rhi::DescriptorRange) * numberOfDescriptorRanges);
 						}
@@ -3463,7 +3463,7 @@ namespace Direct3D10Rhi
 			}
 
 			{ // Copy the static sampler data
-				const uint32_t numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
+				const RECore::uint32 numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
 				if (numberOfStaticSamplers > 0)
 				{
 					mRootSignature.staticSamplers = RHI_MALLOC_TYPED(context, Rhi::StaticSampler, numberOfStaticSamplers);
@@ -3481,7 +3481,7 @@ namespace Direct3D10Rhi
 			const Rhi::Context& context = getRhi().getContext();
 			if (nullptr != mRootSignature.parameters)
 			{
-				for (uint32_t i = 0; i < mRootSignature.numberOfParameters; ++i)
+				for (RECore::uint32 i = 0; i < mRootSignature.numberOfParameters; ++i)
 				{
 					const Rhi::RootParameter& rootParameter = mRootSignature.parameters[i];
 					if (Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
@@ -3511,7 +3511,7 @@ namespace Direct3D10Rhi
 	//[ Public virtual Rhi::IRootSignature methods            ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline virtual Rhi::IResourceGroup* createResourceGroup([[maybe_unused]] uint32_t rootParameterIndex, uint32_t numberOfResources, Rhi::IResource** resources, Rhi::ISamplerState** samplerStates = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IResourceGroup* createResourceGroup([[maybe_unused]] RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources, Rhi::IResource** resources, Rhi::ISamplerState** samplerStates = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Rhi::IRhi& rhi = getRhi();
 
@@ -3583,7 +3583,7 @@ namespace Direct3D10Rhi
 		*  @param[in] bufferUsage
 		*    Indication of the buffer usage
 		*/
-		VertexBuffer(Direct3D10Rhi& direct3D10Rhi, uint32_t numberOfBytes, const void* data, Rhi::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		VertexBuffer(Direct3D10Rhi& direct3D10Rhi, RECore::uint32 numberOfBytes, const void* data, Rhi::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IVertexBuffer(direct3D10Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mD3D10Buffer(nullptr)
 		{
@@ -3708,7 +3708,7 @@ namespace Direct3D10Rhi
 		*  @param[in] indexBufferFormat
 		*    Index buffer data format
 		*/
-		IndexBuffer(Direct3D10Rhi& direct3D10Rhi, uint32_t numberOfBytes, const void* data, Rhi::BufferUsage bufferUsage, Rhi::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		IndexBuffer(Direct3D10Rhi& direct3D10Rhi, RECore::uint32 numberOfBytes, const void* data, Rhi::BufferUsage bufferUsage, Rhi::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IIndexBuffer(direct3D10Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mD3D10Buffer(nullptr),
 			mDXGIFormat(DXGI_FORMAT_UNKNOWN)
@@ -3855,7 +3855,7 @@ namespace Direct3D10Rhi
 		*  @param[in] id
 		*    The unique compact vertex array ID
 		*/
-		VertexArray(Direct3D10Rhi& direct3D10Rhi, const Rhi::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const Rhi::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		VertexArray(Direct3D10Rhi& direct3D10Rhi, const Rhi::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const Rhi::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IVertexArray(direct3D10Rhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mD3D10Device(direct3D10Rhi.getD3D10Device()),
 			mIndexBuffer(indexBuffer),
@@ -4049,7 +4049,7 @@ namespace Direct3D10Rhi
 		*  @param[in] textureFormat
 		*    Texture buffer data format
 		*/
-		TextureBuffer(Direct3D10Rhi& direct3D10Rhi, uint32_t numberOfBytes, const void* data, uint32_t bufferFlags, Rhi::BufferUsage bufferUsage, Rhi::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		TextureBuffer(Direct3D10Rhi& direct3D10Rhi, RECore::uint32 numberOfBytes, const void* data, RECore::uint32 bufferFlags, Rhi::BufferUsage bufferUsage, Rhi::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITextureBuffer(direct3D10Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mD3D10Buffer(nullptr),
 			mD3D10ShaderResourceView(nullptr)
@@ -4220,7 +4220,7 @@ namespace Direct3D10Rhi
 		*  @param[in] indirectBufferFlags
 		*    Indirect buffer flags, see "Rhi::IndirectBufferFlag"
 		*/
-		IndirectBuffer(Direct3D10Rhi& direct3D10Rhi, uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t indirectBufferFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		IndirectBuffer(Direct3D10Rhi& direct3D10Rhi, RECore::uint32 numberOfBytes, const void* data, [[maybe_unused]] RECore::uint32 indirectBufferFlags RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IIndirectBuffer(direct3D10Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mNumberOfBytes(numberOfBytes),
 			mData(nullptr)
@@ -4234,7 +4234,7 @@ namespace Direct3D10Rhi
 			// Copy data
 			if (mNumberOfBytes > 0)
 			{
-				mData = RHI_MALLOC_TYPED(direct3D10Rhi.getContext(), uint8_t, mNumberOfBytes);
+				mData = RHI_MALLOC_TYPED(direct3D10Rhi.getContext(), RECore::uint8, mNumberOfBytes);
 				if (nullptr != data)
 				{
 					memcpy(mData, data, mNumberOfBytes);
@@ -4262,7 +4262,7 @@ namespace Direct3D10Rhi
 		*  @return
 		*    Writable indirect buffer emulation data pointer, can be a null pointer, don't destroy the returned instance
 		*/
-		[[nodiscard]] inline uint8_t* getWritableEmulationData() const
+		[[nodiscard]] inline RECore::uint8* getWritableEmulationData() const
 		{
 			return mData;
 		}
@@ -4272,7 +4272,7 @@ namespace Direct3D10Rhi
 	//[ Public virtual Rhi::IIndirectBuffer methods           ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline virtual const uint8_t* getEmulationData() const override
+		[[nodiscard]] inline virtual const RECore::uint8* getEmulationData() const override
 		{
 			return mData;
 		}
@@ -4300,8 +4300,8 @@ namespace Direct3D10Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t mNumberOfBytes;
-		uint8_t* mData;				///< Indirect buffer data, can be a null pointer
+		RECore::uint32 mNumberOfBytes;
+		RECore::uint8* mData;				///< Indirect buffer data, can be a null pointer
 
 
 	};
@@ -4337,7 +4337,7 @@ namespace Direct3D10Rhi
 		*  @param[in] bufferUsage
 		*    Indication of the buffer usage
 		*/
-		UniformBuffer(Direct3D10Rhi& direct3D10Rhi, uint32_t numberOfBytes, const void* data, Rhi::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		UniformBuffer(Direct3D10Rhi& direct3D10Rhi, RECore::uint32 numberOfBytes, const void* data, Rhi::BufferUsage bufferUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			Rhi::IUniformBuffer(direct3D10Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mD3D10Buffer(nullptr)
 		{
@@ -4345,7 +4345,7 @@ namespace Direct3D10Rhi
 				// Check the given number of bytes, if we don't do this we might get told
 				//   "... the ByteWidth (value = <x>) must be a multiple of 16 and be less than or equal to 65536"
 				// by Direct3D 10
-				const uint32_t leftOverBytes = (numberOfBytes % 16);
+				const RECore::uint32 leftOverBytes = (numberOfBytes % 16);
 				if (0 != leftOverBytes)
 				{
 					// Fix the byte alignment, no assert because other RHI implementations have another alignment (DirectX 12 e.g. 256)
@@ -4483,19 +4483,19 @@ namespace Direct3D10Rhi
 	//[ Public virtual Rhi::IBufferManager methods            ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline virtual Rhi::IVertexBuffer* createVertexBuffer(uint32_t numberOfBytes, const void* data = nullptr, [[maybe_unused]] uint32_t bufferFlags = 0, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IVertexBuffer* createVertexBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, [[maybe_unused]] RECore::uint32 bufferFlags = 0, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D10Rhi& direct3D10Rhi = static_cast<Direct3D10Rhi&>(getRhi());
 			return RHI_NEW(direct3D10Rhi.getContext(), VertexBuffer)(direct3D10Rhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] inline virtual Rhi::IIndexBuffer* createIndexBuffer(uint32_t numberOfBytes, const void* data = nullptr, [[maybe_unused]] uint32_t bufferFlags = 0, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW, Rhi::IndexBufferFormat::Enum indexBufferFormat = Rhi::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IIndexBuffer* createIndexBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, [[maybe_unused]] RECore::uint32 bufferFlags = 0, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW, Rhi::IndexBufferFormat::Enum indexBufferFormat = Rhi::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D10Rhi& direct3D10Rhi = static_cast<Direct3D10Rhi&>(getRhi());
 			return RHI_NEW(direct3D10Rhi.getContext(), IndexBuffer)(direct3D10Rhi, numberOfBytes, data, bufferUsage, indexBufferFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] inline virtual Rhi::IVertexArray* createVertexArray(const Rhi::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const Rhi::VertexArrayVertexBuffer* vertexBuffers, Rhi::IIndexBuffer* indexBuffer = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IVertexArray* createVertexArray(const Rhi::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const Rhi::VertexArrayVertexBuffer* vertexBuffers, Rhi::IIndexBuffer* indexBuffer = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D10Rhi& direct3D10Rhi = static_cast<Direct3D10Rhi&>(getRhi());
 
@@ -4512,7 +4512,7 @@ namespace Direct3D10Rhi
 			RHI_ASSERT(nullptr == indexBuffer || &direct3D10Rhi == &indexBuffer->getRhi(), "Direct3D 10 error: The given index buffer resource is owned by another RHI instance")
 
 			// Create vertex array
-			uint16_t id = 0;
+			RECore::uint16 id = 0;
 			if (direct3D10Rhi.VertexArrayMakeId.CreateID(id))
 			{
 				return RHI_NEW(direct3D10Rhi.getContext(), VertexArray)(direct3D10Rhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -4533,25 +4533,25 @@ namespace Direct3D10Rhi
 			return nullptr;
 		}
 
-		[[nodiscard]] inline virtual Rhi::ITextureBuffer* createTextureBuffer(uint32_t numberOfBytes, const void* data = nullptr, uint32_t bufferFlags = Rhi::BufferFlag::SHADER_RESOURCE, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW, Rhi::TextureFormat::Enum textureFormat = Rhi::TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::ITextureBuffer* createTextureBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, RECore::uint32 bufferFlags = Rhi::BufferFlag::SHADER_RESOURCE, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW, Rhi::TextureFormat::Enum textureFormat = Rhi::TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D10Rhi& direct3D10Rhi = static_cast<Direct3D10Rhi&>(getRhi());
 			return RHI_NEW(direct3D10Rhi.getContext(), TextureBuffer)(direct3D10Rhi, numberOfBytes, data, bufferFlags, bufferUsage, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] inline virtual Rhi::IStructuredBuffer* createStructuredBuffer(uint32_t, const void*, uint32_t, Rhi::BufferUsage, uint32_t RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IStructuredBuffer* createStructuredBuffer(RECore::uint32, const void*, RECore::uint32, Rhi::BufferUsage, RECore::uint32 RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			RHI_ASSERT(false, "Direct3D 10 doesn't support structured buffer")
 			return nullptr;
 		}
 
-		[[nodiscard]] inline virtual Rhi::IIndirectBuffer* createIndirectBuffer(uint32_t numberOfBytes, const void* data = nullptr, uint32_t indirectBufferFlags = 0, [[maybe_unused]] Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IIndirectBuffer* createIndirectBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, RECore::uint32 indirectBufferFlags = 0, [[maybe_unused]] Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D10Rhi& direct3D10Rhi = static_cast<Direct3D10Rhi&>(getRhi());
 			return RHI_NEW(direct3D10Rhi.getContext(), IndirectBuffer)(direct3D10Rhi, numberOfBytes, data, indirectBufferFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] inline virtual Rhi::IUniformBuffer* createUniformBuffer(uint32_t numberOfBytes, const void* data = nullptr, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] inline virtual Rhi::IUniformBuffer* createUniformBuffer(RECore::uint32 numberOfBytes, const void* data = nullptr, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D10Rhi& direct3D10Rhi = static_cast<Direct3D10Rhi&>(getRhi());
 
@@ -4620,7 +4620,7 @@ namespace Direct3D10Rhi
 		*  @param[in] textureUsage
 		*    Indication of the texture usage
 		*/
-		Texture1D(Direct3D10Rhi& direct3D10Rhi, uint32_t width, Rhi::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		Texture1D(Direct3D10Rhi& direct3D10Rhi, RECore::uint32 width, Rhi::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture1D(direct3D10Rhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mTextureFormat(textureFormat),
 			mD3D10Texture1D(nullptr),
@@ -4634,7 +4634,7 @@ namespace Direct3D10Rhi
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
 			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 10 immutable texture usage can't be combined with automatic mipmap generation")
-			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
+			const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
 			const bool isDepthFormat = Rhi::TextureFormat::isDepth(textureFormat);
 
 			// Direct3D 10 1D texture description
@@ -4679,8 +4679,8 @@ namespace Direct3D10Rhi
 						RHI_BEGIN_DEBUG_EVENT_FUNCTION(&direct3D10Rhi)
 
 						{ // Update Direct3D 10 subresource data of the base-map
-							const uint32_t numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-							const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, 1);
+							const RECore::uint32 numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+							const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, 1);
 							direct3D10Rhi.getD3D10Device()->UpdateSubresource(mD3D10Texture1D, 0, nullptr, data, numberOfBytesPerRow, numberOfBytesPerSlice);
 						}
 
@@ -4694,7 +4694,7 @@ namespace Direct3D10Rhi
 				else
 				{
 					// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
-					static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
+					static constexpr RECore::uint32 MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
 					RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 10 number of mipmaps")
 					D3D10_SUBRESOURCE_DATA d3d10SubresourceData[MAXIMUM_NUMBER_OF_MIPMAPS];
 
@@ -4702,7 +4702,7 @@ namespace Direct3D10Rhi
 					if (dataContainsMipmaps)
 					{
 						// Upload all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
 							// Upload the current mipmap
 							D3D10_SUBRESOURCE_DATA& currentD3d10SubresourceData = d3d10SubresourceData[mipmap];
@@ -4711,7 +4711,7 @@ namespace Direct3D10Rhi
 							currentD3d10SubresourceData.SysMemSlicePitch = 0;	// Only relevant for 3D textures
 
 							// Move on to the next mipmap and ensure the size is always at least 1
-							data = static_cast<const uint8_t*>(data) + currentD3d10SubresourceData.SysMemPitch;
+							data = static_cast<const RECore::uint8*>(data) + currentD3d10SubresourceData.SysMemPitch;
 							width = getHalfSize(width);
 						}
 					}
@@ -4892,7 +4892,7 @@ namespace Direct3D10Rhi
 		*  @param[in] textureUsage
 		*    Indication of the texture usage
 		*/
-		Texture1DArray(Direct3D10Rhi& direct3D10Rhi, uint32_t width, uint32_t numberOfSlices, Rhi::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		Texture1DArray(Direct3D10Rhi& direct3D10Rhi, RECore::uint32 width, RECore::uint32 numberOfSlices, Rhi::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture1DArray(direct3D10Rhi, width, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mTextureFormat(textureFormat),
 			mD3D10Texture1D(nullptr),
@@ -4905,7 +4905,7 @@ namespace Direct3D10Rhi
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
 			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 10 immutable texture usage can't be combined with automatic mipmap generation")
-			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
+			const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
 			const bool isDepthFormat = Rhi::TextureFormat::isDepth(textureFormat);
 
 			// Direct3D 10 1D array texture description
@@ -4951,14 +4951,14 @@ namespace Direct3D10Rhi
 						RHI_BEGIN_DEBUG_EVENT_FUNCTION(&direct3D10Rhi)
 
 						{ // Update Direct3D 10 subresource data of the base-map
-							const uint32_t numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-							const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, 1);
-							for (uint32_t arraySlice = 0; arraySlice < numberOfSlices; ++arraySlice)
+							const RECore::uint32 numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+							const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, 1);
+							for (RECore::uint32 arraySlice = 0; arraySlice < numberOfSlices; ++arraySlice)
 							{
 								d3d10Device->UpdateSubresource(mD3D10Texture1D, D3D10CalcSubresource(0, arraySlice, numberOfMipmaps), nullptr, data, numberOfBytesPerRow, numberOfBytesPerSlice);
 
 								// Move on to the next slice
-								data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+								data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 							}
 						}
 
@@ -4972,8 +4972,8 @@ namespace Direct3D10Rhi
 				else
 				{
 					// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
-					static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
-					static constexpr uint32_t MAXIMUM_NUMBER_OF_SLICES = 10;
+					static constexpr RECore::uint32 MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
+					static constexpr RECore::uint32 MAXIMUM_NUMBER_OF_SLICES = 10;
 					RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 10 number of mipmaps")
 					D3D10_SUBRESOURCE_DATA d3d10SubresourceDataStack[MAXIMUM_NUMBER_OF_SLICES * MAXIMUM_NUMBER_OF_MIPMAPS];
 					const Rhi::Context& context = direct3D10Rhi.getContext();
@@ -4993,11 +4993,11 @@ namespace Direct3D10Rhi
 						//     etc.
 
 						// Upload all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
-							const uint32_t numberOfBytesPerRow = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-							const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, 1);
-							for (uint32_t arraySlice = 0; arraySlice < numberOfSlices; ++arraySlice)
+							const RECore::uint32 numberOfBytesPerRow = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+							const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, 1);
+							for (RECore::uint32 arraySlice = 0; arraySlice < numberOfSlices; ++arraySlice)
 							{
 								// Upload the current slice
 								D3D10_SUBRESOURCE_DATA& currentD3d10SubresourceData = d3d10SubresourceData[arraySlice * numberOfMipmaps + mipmap];
@@ -5006,7 +5006,7 @@ namespace Direct3D10Rhi
 								currentD3d10SubresourceData.SysMemSlicePitch = 0;	// Only relevant for 3D textures
 
 								// Move on to the next slice
-								data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+								data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 							}
 
 							// Move on to the next mipmap and ensure the size is always at least 1x1
@@ -5016,9 +5016,9 @@ namespace Direct3D10Rhi
 					else
 					{
 						// The user only provided us with the base texture, no mipmaps
-						const uint32_t numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-						const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, 1);
-						for (uint32_t arraySlice = 0; arraySlice < numberOfSlices; ++arraySlice)
+						const RECore::uint32 numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+						const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, 1);
+						for (RECore::uint32 arraySlice = 0; arraySlice < numberOfSlices; ++arraySlice)
 						{
 							D3D10_SUBRESOURCE_DATA& currentD3d10SubresourceData = d3d10SubresourceData[arraySlice];
 							currentD3d10SubresourceData.pSysMem			 = data;
@@ -5026,7 +5026,7 @@ namespace Direct3D10Rhi
 							currentD3d10SubresourceData.SysMemSlicePitch = 0;	// Only relevant for 3D textures
 
 							// Move on to the next slice
-							data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+							data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 						}
 					}
 					FAILED_DEBUG_BREAK(d3d10Device->CreateTexture1D(&d3d10Texture1DDesc, d3d10SubresourceData, &mD3D10Texture1D))
@@ -5197,7 +5197,7 @@ namespace Direct3D10Rhi
 		*  @param[in] numberOfMultisamples
 		*    The number of multisamples per pixel (valid values: 1, 2, 4, 6, 8)
 		*/
-		Texture2D(Direct3D10Rhi& direct3D10Rhi, uint32_t width, uint32_t height, Rhi::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, Rhi::TextureUsage textureUsage, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		Texture2D(Direct3D10Rhi& direct3D10Rhi, RECore::uint32 width, RECore::uint32 height, Rhi::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, Rhi::TextureUsage textureUsage, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture2D(direct3D10Rhi, width, height RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mTextureFormat(textureFormat),
 			mNumberOfMultisamples(numberOfMultisamples),
@@ -5217,7 +5217,7 @@ namespace Direct3D10Rhi
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
 			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 10 immutable texture usage can't be combined with automatic mipmap generation")
-			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
+			const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
 			const bool isDepthFormat = Rhi::TextureFormat::isDepth(textureFormat);
 
 			// Direct3D 10 2D texture description
@@ -5265,8 +5265,8 @@ namespace Direct3D10Rhi
 						RHI_BEGIN_DEBUG_EVENT_FUNCTION(&direct3D10Rhi)
 
 						{ // Update Direct3D 10 subresource data of the base-map
-							const uint32_t numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-							const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
+							const RECore::uint32 numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+							const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
 							direct3D10Rhi.getD3D10Device()->UpdateSubresource(mD3D10Texture2D, 0, nullptr, data, numberOfBytesPerRow, numberOfBytesPerSlice);
 						}
 
@@ -5280,7 +5280,7 @@ namespace Direct3D10Rhi
 				else
 				{
 					// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
-					static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
+					static constexpr RECore::uint32 MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
 					RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 10 number of mipmaps")
 					D3D10_SUBRESOURCE_DATA d3d10SubresourceData[MAXIMUM_NUMBER_OF_MIPMAPS];
 
@@ -5288,7 +5288,7 @@ namespace Direct3D10Rhi
 					if (dataContainsMipmaps)
 					{
 						// Upload all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
 							// Upload the current mipmap
 							D3D10_SUBRESOURCE_DATA& currentD3d10SubresourceData = d3d10SubresourceData[mipmap];
@@ -5297,7 +5297,7 @@ namespace Direct3D10Rhi
 							currentD3d10SubresourceData.SysMemSlicePitch = 0;	// Only relevant for 3D textures
 
 							// Move on to the next mipmap and ensure the size is always at least 1x1
-							data = static_cast<const uint8_t*>(data) + Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
+							data = static_cast<const RECore::uint8*>(data) + Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
 							width = getHalfSize(width);
 							height = getHalfSize(height);
 						}
@@ -5381,7 +5381,7 @@ namespace Direct3D10Rhi
 		*  @return
 		*    The number of multisamples per pixel (valid values: 1, 2, 4, 8)
 		*/
-		[[nodiscard]] inline uint8_t getNumberOfMultisamples() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfMultisamples() const
 		{
 			return mNumberOfMultisamples;
 		}
@@ -5423,7 +5423,7 @@ namespace Direct3D10Rhi
 		*  @param[in] maximumMipmapIndex
 		*    Maximum mipmap index, the least detailed mipmap, <number of mipmaps> by default
 		*/
-		void setMinimumMaximumMipmapIndex(uint32_t minimumMipmapIndex, uint32_t maximumMipmapIndex)
+		void setMinimumMaximumMipmapIndex(RECore::uint32 minimumMipmapIndex, RECore::uint32 maximumMipmapIndex)
 		{
 			// Re-create the Direct3D 10 shader resource view instance
 			if (nullptr != mD3D10ShaderResourceView)
@@ -5478,7 +5478,7 @@ namespace Direct3D10Rhi
 	//[-------------------------------------------------------]
 	private:
 		Rhi::TextureFormat::Enum  mTextureFormat;
-		uint8_t					  mNumberOfMultisamples;
+		RECore::uint8					  mNumberOfMultisamples;
 		ID3D10Texture2D*		  mD3D10Texture2D;			///< Direct3D 10 texture 2D resource, can be a null pointer
 		ID3D10ShaderResourceView* mD3D10ShaderResourceView;	///< Direct3D 10 shader resource view, can be a null pointer
 
@@ -5524,7 +5524,7 @@ namespace Direct3D10Rhi
 		*  @param[in] textureUsage
 		*    Indication of the texture usage
 		*/
-		Texture2DArray(Direct3D10Rhi& direct3D10Rhi, uint32_t width, uint32_t height, uint32_t numberOfSlices, Rhi::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		Texture2DArray(Direct3D10Rhi& direct3D10Rhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices, Rhi::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture2DArray(direct3D10Rhi, width, height, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mTextureFormat(textureFormat),
 			mNumberOfMultisamples(1),	// TODO(naetherm) Currently no MSAA support for 2D array textures
@@ -5538,7 +5538,7 @@ namespace Direct3D10Rhi
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
 			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 10 immutable texture usage can't be combined with automatic mipmap generation")
-			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
+			const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
 			const bool isDepthFormat = Rhi::TextureFormat::isDepth(textureFormat);
 
 			// Direct3D 10 2D array texture description
@@ -5587,14 +5587,14 @@ namespace Direct3D10Rhi
 						RHI_BEGIN_DEBUG_EVENT_FUNCTION(&direct3D10Rhi)
 
 						{ // Update Direct3D 10 subresource data of the base-map
-							const uint32_t numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-							const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
-							for (uint32_t arraySlice = 0; arraySlice < numberOfSlices; ++arraySlice)
+							const RECore::uint32 numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+							const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
+							for (RECore::uint32 arraySlice = 0; arraySlice < numberOfSlices; ++arraySlice)
 							{
 								d3d10Device->UpdateSubresource(mD3D10Texture2D, D3D10CalcSubresource(0, arraySlice, numberOfMipmaps), nullptr, data, numberOfBytesPerRow, numberOfBytesPerSlice);
 
 								// Move on to the next slice
-								data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+								data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 							}
 						}
 
@@ -5608,8 +5608,8 @@ namespace Direct3D10Rhi
 				else
 				{
 					// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
-					static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
-					static constexpr uint32_t MAXIMUM_NUMBER_OF_SLICES = 10;
+					static constexpr RECore::uint32 MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
+					static constexpr RECore::uint32 MAXIMUM_NUMBER_OF_SLICES = 10;
 					const Rhi::Context& context = direct3D10Rhi.getContext();
 					RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 10 number of mipmaps")
 					D3D10_SUBRESOURCE_DATA d3d10SubresourceDataStack[MAXIMUM_NUMBER_OF_SLICES * MAXIMUM_NUMBER_OF_MIPMAPS];
@@ -5629,11 +5629,11 @@ namespace Direct3D10Rhi
 						//     etc.
 
 						// Upload all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
-							const uint32_t numberOfBytesPerRow = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-							const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
-							for (uint32_t arraySlice = 0; arraySlice < numberOfSlices; ++arraySlice)
+							const RECore::uint32 numberOfBytesPerRow = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+							const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
+							for (RECore::uint32 arraySlice = 0; arraySlice < numberOfSlices; ++arraySlice)
 							{
 								// Upload the current slice
 								D3D10_SUBRESOURCE_DATA& currentD3d10SubresourceData = d3d10SubresourceData[arraySlice * numberOfMipmaps + mipmap];
@@ -5642,7 +5642,7 @@ namespace Direct3D10Rhi
 								currentD3d10SubresourceData.SysMemSlicePitch = 0;	// Only relevant for 3D textures
 
 								// Move on to the next slice
-								data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+								data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 							}
 
 							// Move on to the next mipmap and ensure the size is always at least 1x1
@@ -5653,9 +5653,9 @@ namespace Direct3D10Rhi
 					else
 					{
 						// The user only provided us with the base texture, no mipmaps
-						const uint32_t numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-						const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
-						for (uint32_t arraySlice = 0; arraySlice < numberOfSlices; ++arraySlice)
+						const RECore::uint32 numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+						const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
+						for (RECore::uint32 arraySlice = 0; arraySlice < numberOfSlices; ++arraySlice)
 						{
 							D3D10_SUBRESOURCE_DATA& currentD3d10SubresourceData = d3d10SubresourceData[arraySlice];
 							currentD3d10SubresourceData.pSysMem			 = data;
@@ -5663,7 +5663,7 @@ namespace Direct3D10Rhi
 							currentD3d10SubresourceData.SysMemSlicePitch = 0;	// Only relevant for 3D textures
 
 							// Move on to the next slice
-							data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+							data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 						}
 					}
 					FAILED_DEBUG_BREAK(d3d10Device->CreateTexture2D(&d3d10Texture2DDesc, d3d10SubresourceData, &mD3D10Texture2D))
@@ -5744,7 +5744,7 @@ namespace Direct3D10Rhi
 		*  @return
 		*    The number of multisamples per pixel (valid values: 1, 2, 4, 8)
 		*/
-		[[nodiscard]] inline uint8_t getNumberOfMultisamples() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfMultisamples() const
 		{
 			return mNumberOfMultisamples;
 		}
@@ -5801,7 +5801,7 @@ namespace Direct3D10Rhi
 	//[-------------------------------------------------------]
 	private:
 		Rhi::TextureFormat::Enum  mTextureFormat;
-		uint8_t					  mNumberOfMultisamples;
+		RECore::uint8					  mNumberOfMultisamples;
 		ID3D10Texture2D*		  mD3D10Texture2D;			///< Direct3D 10 texture 2D resource, can be a null pointer
 		ID3D10ShaderResourceView* mD3D10ShaderResourceView;	///< Direct3D 10 shader resource view, can be a null pointer
 
@@ -5847,7 +5847,7 @@ namespace Direct3D10Rhi
 		*  @param[in] textureUsage
 		*    Indication of the texture usage
 		*/
-		Texture3D(Direct3D10Rhi& direct3D10Rhi, uint32_t width, uint32_t height, uint32_t depth, Rhi::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		Texture3D(Direct3D10Rhi& direct3D10Rhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth, Rhi::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITexture3D(direct3D10Rhi, width, height, depth RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mTextureFormat(textureFormat),
 			mD3D10Texture3D(nullptr),
@@ -5861,7 +5861,7 @@ namespace Direct3D10Rhi
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
 			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 10 immutable texture usage can't be combined with automatic mipmap generation")
-			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height, depth) : 1;
+			const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height, depth) : 1;
 			const bool isDepthFormat = Rhi::TextureFormat::isDepth(textureFormat);
 
 			// Direct3D 10 3D texture description
@@ -5907,8 +5907,8 @@ namespace Direct3D10Rhi
 						RHI_BEGIN_DEBUG_EVENT_FUNCTION(&direct3D10Rhi)
 
 						{ // Update Direct3D 10 subresource data of the base-map
-							const uint32_t numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-							const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
+							const RECore::uint32 numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+							const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
 							direct3D10Rhi.getD3D10Device()->UpdateSubresource(mD3D10Texture3D, 0, nullptr, data, numberOfBytesPerRow, numberOfBytesPerSlice);
 						}
 
@@ -5922,7 +5922,7 @@ namespace Direct3D10Rhi
 				else
 				{
 					// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
-					static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
+					static constexpr RECore::uint32 MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
 					RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 10 number of mipmaps")
 					D3D10_SUBRESOURCE_DATA d3d10SubresourceData[MAXIMUM_NUMBER_OF_MIPMAPS];
 
@@ -5935,7 +5935,7 @@ namespace Direct3D10Rhi
 						//   etc.
 
 						// Upload all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
 							// Upload the current mipmap
 							D3D10_SUBRESOURCE_DATA& currentD3d10SubresourceData = d3d10SubresourceData[mipmap];
@@ -5944,7 +5944,7 @@ namespace Direct3D10Rhi
 							currentD3d10SubresourceData.SysMemSlicePitch = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, height);
 
 							// Move on to the next mipmap and ensure the size is always at least 1x1x1
-							data = static_cast<const uint8_t*>(data) + currentD3d10SubresourceData.SysMemSlicePitch * depth;
+							data = static_cast<const RECore::uint8*>(data) + currentD3d10SubresourceData.SysMemSlicePitch * depth;
 							width = getHalfSize(width);
 							height = getHalfSize(height);
 							depth = getHalfSize(depth);
@@ -6125,13 +6125,13 @@ namespace Direct3D10Rhi
 		*  @param[in] textureUsage
 		*    Indication of the texture usage
 		*/
-		TextureCube(Direct3D10Rhi& direct3D10Rhi, uint32_t width, Rhi::TextureFormat::Enum textureFormat, const void* data, uint32_t textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		TextureCube(Direct3D10Rhi& direct3D10Rhi, RECore::uint32 width, Rhi::TextureFormat::Enum textureFormat, const void* data, RECore::uint32 textureFlags, Rhi::TextureUsage textureUsage RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITextureCube(direct3D10Rhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mTextureFormat(textureFormat),
 			mD3D10TextureCube(nullptr),
 			mD3D10ShaderResourceView(nullptr)
 		{
-			static constexpr uint32_t NUMBER_OF_SLICES = 6;	// In Direct3D 10, a cube map is a 2D array texture with six slices
+			static constexpr RECore::uint32 NUMBER_OF_SLICES = 6;	// In Direct3D 10, a cube map is a 2D array texture with six slices
 
 			// Sanity checks
 			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 10 render target textures can't be filled using provided data")
@@ -6140,7 +6140,7 @@ namespace Direct3D10Rhi
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
 			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 10 immutable texture usage can't be combined with automatic mipmap generation")
-			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
+			const RECore::uint32 numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
 
 			// Direct3D 10 2D array texture description
 			D3D10_TEXTURE2D_DESC d3d10Texture2DDesc;
@@ -6181,14 +6181,14 @@ namespace Direct3D10Rhi
 						RHI_BEGIN_DEBUG_EVENT_FUNCTION(&direct3D10Rhi)
 
 						{ // Update Direct3D 10 subresource data of the base-map
-							const uint32_t numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-							const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width);
-							for (uint32_t arraySlice = 0; arraySlice < NUMBER_OF_SLICES; ++arraySlice)
+							const RECore::uint32 numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+							const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width);
+							for (RECore::uint32 arraySlice = 0; arraySlice < NUMBER_OF_SLICES; ++arraySlice)
 							{
 								d3d10Device->UpdateSubresource(mD3D10TextureCube, D3D10CalcSubresource(0, arraySlice, numberOfMipmaps), nullptr, data, numberOfBytesPerRow, numberOfBytesPerSlice);
 
 								// Move on to the next slice
-								data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+								data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 							}
 						}
 
@@ -6202,7 +6202,7 @@ namespace Direct3D10Rhi
 				else
 				{
 					// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
-					static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
+					static constexpr RECore::uint32 MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
 					RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 10 number of mipmaps")
 					D3D10_SUBRESOURCE_DATA d3d10SubresourceData[NUMBER_OF_SLICES * MAXIMUM_NUMBER_OF_MIPMAPS];
 
@@ -6220,11 +6220,11 @@ namespace Direct3D10Rhi
 						//     etc.
 
 						// Upload all mipmaps
-						for (uint32_t mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
+						for (RECore::uint32 mipmap = 0; mipmap < numberOfMipmaps; ++mipmap)
 						{
-							const uint32_t numberOfBytesPerRow = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-							const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width);
-							for (uint32_t arraySlice = 0; arraySlice < NUMBER_OF_SLICES; ++arraySlice)
+							const RECore::uint32 numberOfBytesPerRow = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+							const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width);
+							for (RECore::uint32 arraySlice = 0; arraySlice < NUMBER_OF_SLICES; ++arraySlice)
 							{
 								// Upload the current mipmap
 								D3D10_SUBRESOURCE_DATA& currentD3d10SubresourceData = d3d10SubresourceData[arraySlice * numberOfMipmaps + mipmap];
@@ -6233,7 +6233,7 @@ namespace Direct3D10Rhi
 								currentD3d10SubresourceData.SysMemSlicePitch = 0;	// Only relevant for 3D textures
 
 								// Move on to the cube map face
-								data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+								data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 							}
 
 							// Move on to the next mipmap and ensure the size is always at least 1x1
@@ -6243,9 +6243,9 @@ namespace Direct3D10Rhi
 					else
 					{
 						// The user only provided us with the base texture, no mipmaps
-						const uint32_t numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
-						const uint32_t numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width);
-						for (uint32_t arraySlice = 0; arraySlice < NUMBER_OF_SLICES; ++arraySlice)
+						const RECore::uint32 numberOfBytesPerRow   = Rhi::TextureFormat::getNumberOfBytesPerRow(textureFormat, width);
+						const RECore::uint32 numberOfBytesPerSlice = Rhi::TextureFormat::getNumberOfBytesPerSlice(textureFormat, width, width);
+						for (RECore::uint32 arraySlice = 0; arraySlice < NUMBER_OF_SLICES; ++arraySlice)
 						{
 							D3D10_SUBRESOURCE_DATA& currentD3d10SubresourceData = d3d10SubresourceData[arraySlice];
 							currentD3d10SubresourceData.pSysMem			 = data;
@@ -6253,7 +6253,7 @@ namespace Direct3D10Rhi
 							currentD3d10SubresourceData.SysMemSlicePitch = 0;	// Only relevant for 3D textures
 
 							// Move on to the next slice
-							data = static_cast<const uint8_t*>(data) + numberOfBytesPerSlice;
+							data = static_cast<const RECore::uint8*>(data) + numberOfBytesPerSlice;
 						}
 					}
 					FAILED_DEBUG_BREAK(d3d10Device->CreateTexture2D(&d3d10Texture2DDesc, d3d10SubresourceData, &mD3D10TextureCube))
@@ -6430,7 +6430,7 @@ namespace Direct3D10Rhi
 	//[ Public virtual Rhi::ITextureManager methods           ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] virtual Rhi::ITexture1D* createTexture1D(uint32_t width, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITexture1D* createTexture1D(RECore::uint32 width, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D10Rhi& direct3D10Rhi = static_cast<Direct3D10Rhi&>(getRhi());
 
@@ -6441,7 +6441,7 @@ namespace Direct3D10Rhi
 			return RHI_NEW(direct3D10Rhi.getContext(), Texture1D)(direct3D10Rhi, width, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual Rhi::ITexture1DArray* createTexture1DArray(uint32_t width, uint32_t numberOfSlices, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITexture1DArray* createTexture1DArray(RECore::uint32 width, RECore::uint32 numberOfSlices, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D10Rhi& direct3D10Rhi = static_cast<Direct3D10Rhi&>(getRhi());
 
@@ -6452,7 +6452,7 @@ namespace Direct3D10Rhi
 			return RHI_NEW(direct3D10Rhi.getContext(), Texture1DArray)(direct3D10Rhi, width, numberOfSlices, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual Rhi::ITexture2D* createTexture2D(uint32_t width, uint32_t height, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT, uint8_t numberOfMultisamples = 1, [[maybe_unused]] const Rhi::OptimizedTextureClearValue* optimizedTextureClearValue = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITexture2D* createTexture2D(RECore::uint32 width, RECore::uint32 height, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT, RECore::uint8 numberOfMultisamples = 1, [[maybe_unused]] const Rhi::OptimizedTextureClearValue* optimizedTextureClearValue = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D10Rhi& direct3D10Rhi = static_cast<Direct3D10Rhi&>(getRhi());
 
@@ -6463,7 +6463,7 @@ namespace Direct3D10Rhi
 			return RHI_NEW(direct3D10Rhi.getContext(), Texture2D)(direct3D10Rhi, width, height, textureFormat, data, textureFlags, textureUsage, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual Rhi::ITexture2DArray* createTexture2DArray(uint32_t width, uint32_t height, uint32_t numberOfSlices, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITexture2DArray* createTexture2DArray(RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D10Rhi& direct3D10Rhi = static_cast<Direct3D10Rhi&>(getRhi());
 
@@ -6474,7 +6474,7 @@ namespace Direct3D10Rhi
 			return RHI_NEW(direct3D10Rhi.getContext(), Texture2DArray)(direct3D10Rhi, width, height, numberOfSlices, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual Rhi::ITexture3D* createTexture3D(uint32_t width, uint32_t height, uint32_t depth, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITexture3D* createTexture3D(RECore::uint32 width, RECore::uint32 height, RECore::uint32 depth, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D10Rhi& direct3D10Rhi = static_cast<Direct3D10Rhi&>(getRhi());
 
@@ -6485,7 +6485,7 @@ namespace Direct3D10Rhi
 			return RHI_NEW(direct3D10Rhi.getContext(), Texture3D)(direct3D10Rhi, width, height, depth, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual Rhi::ITextureCube* createTextureCube(uint32_t width, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITextureCube* createTextureCube(RECore::uint32 width, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, RECore::uint32 textureFlags = 0, Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D10Rhi& direct3D10Rhi = static_cast<Direct3D10Rhi&>(getRhi());
 
@@ -6496,7 +6496,7 @@ namespace Direct3D10Rhi
 			return RHI_NEW(direct3D10Rhi.getContext(), TextureCube)(direct3D10Rhi, width, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
-		[[nodiscard]] virtual Rhi::ITextureCubeArray* createTextureCubeArray([[maybe_unused]] uint32_t width, [[maybe_unused]] uint32_t numberOfSlices, [[maybe_unused]] Rhi::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] uint32_t textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
+		[[nodiscard]] virtual Rhi::ITextureCubeArray* createTextureCubeArray([[maybe_unused]] RECore::uint32 width, [[maybe_unused]] RECore::uint32 numberOfSlices, [[maybe_unused]] Rhi::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] RECore::uint32 textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Direct3D 10.1 has support for texture cube arrays ("D3D10_1_SRV_DIMENSION_TEXTURECUBEARRAY"), but supporting it inside this Direct3D 10 RHI implementation isn't really worth it (use Direct3D 11 or another newer RHI)
 			RHI_ASSERT(false, "Direct3D 10 has no texture cube arrays")
@@ -6971,7 +6971,7 @@ namespace Direct3D10Rhi
 		*  @param[in] numberOfMultisamples
 		*    The number of multisamples per pixel (valid values: 1, 2, 4, 8)
 		*/
-		RenderPass(Rhi::IRhi& rhi, uint32_t numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
+		RenderPass(Rhi::IRhi& rhi, RECore::uint32 numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IRenderPass(rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mNumberOfColorAttachments(numberOfColorAttachments),
 			mDepthStencilAttachmentTextureFormat(depthStencilAttachmentTextureFormat),
@@ -6995,7 +6995,7 @@ namespace Direct3D10Rhi
 		*  @return
 		*    The number of color render target textures
 		*/
-		[[nodiscard]] inline uint32_t getNumberOfColorAttachments() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfColorAttachments() const
 		{
 			return mNumberOfColorAttachments;
 		}
@@ -7007,7 +7007,7 @@ namespace Direct3D10Rhi
 		*  @return
 		*    The number of render target textures (color and depth stencil)
 		*/
-		[[nodiscard]] inline uint32_t getNumberOfAttachments() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfAttachments() const
 		{
 			return (mDepthStencilAttachmentTextureFormat != Rhi::TextureFormat::Enum::UNKNOWN) ? (mNumberOfColorAttachments + 1) : mNumberOfColorAttachments;
 		}
@@ -7022,7 +7022,7 @@ namespace Direct3D10Rhi
 		*  @return
 		*    The color attachment texture format
 		*/
-		[[nodiscard]] inline Rhi::TextureFormat::Enum getColorAttachmentTextureFormat(uint32_t colorAttachmentIndex) const
+		[[nodiscard]] inline Rhi::TextureFormat::Enum getColorAttachmentTextureFormat(RECore::uint32 colorAttachmentIndex) const
 		{
 			RHI_ASSERT(colorAttachmentIndex < mNumberOfColorAttachments, "Invalid Direct3D 10 color attachment index")
 			return mColorAttachmentTextureFormats[colorAttachmentIndex];
@@ -7047,7 +7047,7 @@ namespace Direct3D10Rhi
 		*  @return
 		*    The number of multisamples
 		*/
-		[[nodiscard]] inline uint8_t getNumberOfMultisamples() const
+		[[nodiscard]] inline RECore::uint8 getNumberOfMultisamples() const
 		{
 			return mNumberOfMultisamples;
 		}
@@ -7075,10 +7075,10 @@ namespace Direct3D10Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t				 mNumberOfColorAttachments;
+		RECore::uint32				 mNumberOfColorAttachments;
 		Rhi::TextureFormat::Enum mColorAttachmentTextureFormats[8];
 		Rhi::TextureFormat::Enum mDepthStencilAttachmentTextureFormat;
-		uint8_t					 mNumberOfMultisamples;
+		RECore::uint8					 mNumberOfMultisamples;
 
 
 	};
@@ -7112,7 +7112,7 @@ namespace Direct3D10Rhi
 		*  @param[in] numberOfQueries
 		*    Number of queries
 		*/
-		QueryPool(Direct3D10Rhi& direct3D10Rhi, Rhi::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		QueryPool(Direct3D10Rhi& direct3D10Rhi, Rhi::QueryType queryType, RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IQueryPool(direct3D10Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mQueryType(queryType),
 			mNumberOfQueries(numberOfQueries),
@@ -7137,7 +7137,7 @@ namespace Direct3D10Rhi
 
 			{ // Create Direct3D 10 queries
 				ID3D10Device* d3d10Device = direct3D10Rhi.getD3D10Device();
-				for (uint32_t i = 0; i < numberOfQueries; ++i)
+				for (RECore::uint32 i = 0; i < numberOfQueries; ++i)
 				{
 					FAILED_DEBUG_BREAK(d3d10Device->CreateQuery(&d3d10QueryDesc, &mD3D10Queries[i]))
 				}
@@ -7151,7 +7151,7 @@ namespace Direct3D10Rhi
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Occlusion query", 18)	// 18 = "Occlusion query: " including terminating zero
 						const UINT detailedDebugNameLength = static_cast<UINT>(strlen(detailedDebugName));
-						for (uint32_t i = 0; i < mNumberOfQueries; ++i)
+						for (RECore::uint32 i = 0; i < mNumberOfQueries; ++i)
 						{
 							ID3D10Query* d3d10Query = mD3D10Queries[i];
 							if (nullptr != d3d10Query)
@@ -7166,7 +7166,7 @@ namespace Direct3D10Rhi
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Pipeline statistics query", 28)	// 28 = "Pipeline statistics query: " including terminating zero
 						const UINT detailedDebugNameLength = static_cast<UINT>(strlen(detailedDebugName));
-						for (uint32_t i = 0; i < mNumberOfQueries; ++i)
+						for (RECore::uint32 i = 0; i < mNumberOfQueries; ++i)
 						{
 							ID3D10Query* d3d10Query = mD3D10Queries[i];
 							if (nullptr != d3d10Query)
@@ -7181,7 +7181,7 @@ namespace Direct3D10Rhi
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Timestamp query", 18)	// 18 = "Timestamp query: " including terminating zero
 						const UINT detailedDebugNameLength = static_cast<UINT>(strlen(detailedDebugName));
-						for (uint32_t i = 0; i < mNumberOfQueries; ++i)
+						for (RECore::uint32 i = 0; i < mNumberOfQueries; ++i)
 						{
 							ID3D10Query* d3d10Query = mD3D10Queries[i];
 							if (nullptr != d3d10Query)
@@ -7201,7 +7201,7 @@ namespace Direct3D10Rhi
 		*/
 		virtual ~QueryPool() override
 		{
-			for (uint32_t i = 0; i < mNumberOfQueries; ++i)
+			for (RECore::uint32 i = 0; i < mNumberOfQueries; ++i)
 			{
 				mD3D10Queries[i]->Release();
 			}
@@ -7227,7 +7227,7 @@ namespace Direct3D10Rhi
 		*  @return
 		*    The number of queries
 		*/
-		[[nodiscard]] inline uint32_t getNumberOfQueries() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfQueries() const
 		{
 			return mNumberOfQueries;
 		}
@@ -7268,7 +7268,7 @@ namespace Direct3D10Rhi
 	//[-------------------------------------------------------]
 	private:
 		Rhi::QueryType mQueryType;
-		uint32_t	   mNumberOfQueries;
+		RECore::uint32	   mNumberOfQueries;
 		ID3D10Query**  mD3D10Queries;
 
 
@@ -7514,7 +7514,7 @@ namespace Direct3D10Rhi
 	//[ Public virtual Rhi::IRenderTarget methods             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void getWidthAndHeight(uint32_t& width, uint32_t& height) const override
+		virtual void getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const override
 		{
 			// Is there a valid swap chain?
 			if (nullptr != mDxgiSwapChain)
@@ -7582,7 +7582,7 @@ namespace Direct3D10Rhi
 			return NULL_HANDLE;
 		}
 
-		inline virtual void setVerticalSynchronizationInterval(uint32_t synchronizationInterval) override
+		inline virtual void setVerticalSynchronizationInterval(RECore::uint32 synchronizationInterval) override
 		{
 			mSynchronizationInterval = synchronizationInterval;
 		}
@@ -7728,7 +7728,7 @@ namespace Direct3D10Rhi
 		*  @note
 		*    - "mDXGISwapChain" must be valid when calling this method
 		*/
-		void getSafeWidthAndHeight(uint32_t& width, uint32_t& height) const
+		void getSafeWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const
 		{
 			// Get the Direct3D 10 swap chain description
 			DXGI_SWAP_CHAIN_DESC dxgiSwapChainDesc;
@@ -7817,7 +7817,7 @@ namespace Direct3D10Rhi
 		IDXGISwapChain*			mDxgiSwapChain;			///< The DXGI swap chain instance, null pointer on error
 		ID3D10RenderTargetView*	mD3D10RenderTargetView;	///< The Direct3D 10 render target view instance, null pointer on error
 		ID3D10DepthStencilView*	mD3D10DepthStencilView;	///< The Direct3D 10 depth stencil view instance, null pointer on error
-		uint32_t				mSynchronizationInterval;
+		RECore::uint32				mSynchronizationInterval;
 		bool					mAllowTearing;
 
 
@@ -8075,7 +8075,7 @@ namespace Direct3D10Rhi
 					ID3D10RenderTargetView** d3d10RenderTargetViewsEnd = mD3D10RenderTargetViews + mNumberOfColorTextures;
 					for (ID3D10RenderTargetView** d3d10RenderTargetView = mD3D10RenderTargetViews; d3d10RenderTargetView < d3d10RenderTargetViewsEnd; ++d3d10RenderTargetView)
 					{
-						sprintf_s(nameWithIndex, adjustedDetailedDebugNameLength, "%s [%u]", detailedDebugName, static_cast<uint32_t>(d3d10RenderTargetView - mD3D10RenderTargetViews));
+						sprintf_s(nameWithIndex, adjustedDetailedDebugNameLength, "%s [%u]", detailedDebugName, static_cast<RECore::uint32>(d3d10RenderTargetView - mD3D10RenderTargetViews));
 						FAILED_DEBUG_BREAK((*d3d10RenderTargetView)->SetPrivateData(WKPDID_D3DDebugObjectName, static_cast<UINT>(adjustedDetailedDebugNameLength), nameWithIndex))
 					}
 					RHI_FREE(context, nameWithIndex);
@@ -8142,7 +8142,7 @@ namespace Direct3D10Rhi
 		*  @return
 		*    The number of color textures
 		*/
-		[[nodiscard]] inline uint32_t getNumberOfColorTextures() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfColorTextures() const
 		{
 			return mNumberOfColorTextures;
 		}
@@ -8200,7 +8200,7 @@ namespace Direct3D10Rhi
 	//[ Public virtual Rhi::IRenderTarget methods             ]
 	//[-------------------------------------------------------]
 	public:
-		inline virtual void getWidthAndHeight(uint32_t& width, uint32_t& height) const override
+		inline virtual void getWidthAndHeight(RECore::uint32& width, RECore::uint32& height) const override
 		{
 			// No fancy implementation in here, just copy over the internal information
 			width  = mWidth;
@@ -8231,11 +8231,11 @@ namespace Direct3D10Rhi
 	//[-------------------------------------------------------]
 	private:
 		// Generic part
-		uint32_t		mNumberOfColorTextures;	///< Number of color render target textures
+		RECore::uint32		mNumberOfColorTextures;	///< Number of color render target textures
 		Rhi::ITexture** mColorTextures;			///< The color render target textures (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "mNumberOfColorTextures" textures in the provided C-array of pointers
 		Rhi::ITexture*  mDepthStencilTexture;	///< The depth stencil render target texture (we keep a reference to it), can be a null pointer
-		uint32_t		mWidth;					///< The framebuffer width
-		uint32_t		mHeight;				///< The framebuffer height
+		RECore::uint32		mWidth;					///< The framebuffer width
+		RECore::uint32		mHeight;				///< The framebuffer height
 		// Direct3D 10 part
 		ID3D10RenderTargetView** mD3D10RenderTargetViews;	///< The Direct3D 10 render target views (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "mNumberOfColorTextures" views in the provided C-array of pointers
 		ID3D10DepthStencilView*  mD3D10DepthStencilView;	///< The Direct3D 10 depth stencil view (we keep a reference to it), can be a null pointer
@@ -8316,7 +8316,7 @@ namespace Direct3D10Rhi
 				// Return shader bytecode, if requested do to so
 				if (nullptr != shaderBytecode)
 				{
-					shaderBytecode->setBytecodeCopy(static_cast<uint32_t>(mD3DBlobVertexShader->GetBufferSize()), static_cast<uint8_t*>(mD3DBlobVertexShader->GetBufferPointer()));
+					shaderBytecode->setBytecodeCopy(static_cast<RECore::uint32>(mD3DBlobVertexShader->GetBufferSize()), static_cast<RECore::uint8*>(mD3DBlobVertexShader->GetBufferPointer()));
 				}
 			}
 
@@ -8479,7 +8479,7 @@ namespace Direct3D10Rhi
 				// Return shader bytecode, if requested do to so
 				if (nullptr != shaderBytecode)
 				{
-					shaderBytecode->setBytecodeCopy(static_cast<uint32_t>(d3dBlob->GetBufferSize()), static_cast<uint8_t*>(d3dBlob->GetBufferPointer()));
+					shaderBytecode->setBytecodeCopy(static_cast<RECore::uint32>(d3dBlob->GetBufferSize()), static_cast<RECore::uint8*>(d3dBlob->GetBufferPointer()));
 				}
 
 				// Release the Direct3D 10 shader binary large object
@@ -8626,7 +8626,7 @@ namespace Direct3D10Rhi
 				// Return shader bytecode, if requested do to so
 				if (nullptr != shaderBytecode)
 				{
-					shaderBytecode->setBytecodeCopy(static_cast<uint32_t>(d3dBlob->GetBufferSize()), static_cast<uint8_t*>(d3dBlob->GetBufferPointer()));
+					shaderBytecode->setBytecodeCopy(static_cast<RECore::uint32>(d3dBlob->GetBufferSize()), static_cast<RECore::uint8*>(d3dBlob->GetBufferPointer()));
 				}
 
 				// Release the Direct3D 10 shader binary large object
@@ -9094,7 +9094,7 @@ namespace Direct3D10Rhi
 		*  @param[in] id
 		*    The unique compact graphics pipeline state ID
 		*/
-		GraphicsPipelineState(Direct3D10Rhi& direct3D10Rhi, const Rhi::GraphicsPipelineState& graphicsPipelineState, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+		GraphicsPipelineState(Direct3D10Rhi& direct3D10Rhi, const Rhi::GraphicsPipelineState& graphicsPipelineState, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IGraphicsPipelineState(direct3D10Rhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mD3D10Device(direct3D10Rhi.getD3D10Device()),
 			mD3D10PrimitiveTopology(static_cast<D3D10_PRIMITIVE_TOPOLOGY>(graphicsPipelineState.primitiveTopology)),
@@ -9117,7 +9117,7 @@ namespace Direct3D10Rhi
 			mRenderPass->addReference();
 
 			// Create Direct3D 10 input element descriptions with support for attribute-less rendering
-			const uint32_t numberOfAttributes = graphicsPipelineState.vertexAttributes.numberOfAttributes;
+			const RECore::uint32 numberOfAttributes = graphicsPipelineState.vertexAttributes.numberOfAttributes;
 			if (numberOfAttributes > 0)
 			{
 				const VertexShaderHlsl* vertexShaderHlsl = static_cast<GraphicsProgramHlsl*>(mGraphicsProgram)->getVertexShaderHlsl();
@@ -9578,7 +9578,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		static constexpr Rhi::ImplementationDispatchFunction DISPATCH_FUNCTIONS[static_cast<uint8_t>(Rhi::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
+		static constexpr Rhi::ImplementationDispatchFunction DISPATCH_FUNCTIONS[static_cast<RECore::uint8>(Rhi::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
 		{
 			// Command buffer
 			&ImplementationDispatch::DispatchCommandBuffer,
@@ -9757,7 +9757,7 @@ namespace Direct3D10Rhi
 		#ifdef RHI_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
-			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
+			const RECore::uint32 numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
 			if (numberOfCurrentResources > 0)
 			{
 				// Error!
@@ -9807,18 +9807,18 @@ namespace Direct3D10Rhi
 	void Direct3D10Rhi::dispatchCommandBufferInternal(const Rhi::CommandBuffer& commandBuffer)
 	{
 		// Loop through all commands
-		const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
+		const RECore::uint8* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
 		Rhi::ConstCommandPacket constCommandPacket = commandPacketBuffer;
 		while (nullptr != constCommandPacket)
 		{
 			{ // Dispatch command packet
 				const Rhi::CommandDispatchFunctionIndex commandDispatchFunctionIndex = Rhi::CommandPacketHelper::loadCommandDispatchFunctionIndex(constCommandPacket);
 				const void* command = Rhi::CommandPacketHelper::loadCommand(constCommandPacket);
-				detail::DISPATCH_FUNCTIONS[static_cast<uint32_t>(commandDispatchFunctionIndex)](command, *this);
+				detail::DISPATCH_FUNCTIONS[static_cast<RECore::uint32>(commandDispatchFunctionIndex)](command, *this);
 			}
 
 			{ // Next command
-				const uint32_t nextCommandPacketByteIndex = Rhi::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
+				const RECore::uint32 nextCommandPacketByteIndex = Rhi::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
 				constCommandPacket = (~0u != nextCommandPacketByteIndex) ? &commandPacketBuffer[nextCommandPacketByteIndex] : nullptr;
 			}
 		}
@@ -9869,7 +9869,7 @@ namespace Direct3D10Rhi
 		}
 	}
 
-	void Direct3D10Rhi::setGraphicsResourceGroup(uint32_t rootParameterIndex, Rhi::IResourceGroup* resourceGroup)
+	void Direct3D10Rhi::setGraphicsResourceGroup(RECore::uint32 rootParameterIndex, Rhi::IResourceGroup* resourceGroup)
 	{
 		// Security checks
 		#ifdef DEBUG
@@ -9890,10 +9890,10 @@ namespace Direct3D10Rhi
 
 			// Set graphics resource group
 			const ResourceGroup* d3d10ResourceGroup = static_cast<ResourceGroup*>(resourceGroup);
-			const uint32_t numberOfResources = d3d10ResourceGroup->getNumberOfResources();
+			const RECore::uint32 numberOfResources = d3d10ResourceGroup->getNumberOfResources();
 			Rhi::IResource** resources = d3d10ResourceGroup->getResources();
 			const Rhi::RootParameter& rootParameter = mGraphicsRootSignature->getRootSignature().parameters[rootParameterIndex];
-			for (uint32_t resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
+			for (RECore::uint32 resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
 			{
 				const Rhi::IResource* resource = *resources;
 				RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid Direct3D 10 descriptor ranges")
@@ -10184,7 +10184,7 @@ namespace Direct3D10Rhi
 		}
 	}
 
-	void Direct3D10Rhi::setGraphicsViewports(uint32_t numberOfViewports, const Rhi::Viewport* viewports)
+	void Direct3D10Rhi::setGraphicsViewports(RECore::uint32 numberOfViewports, const Rhi::Viewport* viewports)
 	{
 		// Rasterizer (RS) stage
 
@@ -10195,7 +10195,7 @@ namespace Direct3D10Rhi
 		// Set the Direct3D 10 viewports
 		D3D10_VIEWPORT d3dViewports[D3D10_VIEWPORT_AND_SCISSORRECT_MAX_INDEX];
 		D3D10_VIEWPORT* d3dViewport = d3dViewports;
-		for (uint32_t i = 0; i < numberOfViewports; ++i, ++d3dViewport, ++viewports)
+		for (RECore::uint32 i = 0; i < numberOfViewports; ++i, ++d3dViewport, ++viewports)
 		{
 			d3dViewport->TopLeftX = static_cast<INT> (viewports->topLeftX);
 			d3dViewport->TopLeftY = static_cast<INT> (viewports->topLeftY);
@@ -10207,7 +10207,7 @@ namespace Direct3D10Rhi
 		mD3D10Device->RSSetViewports(numberOfViewports, d3dViewports);
 	}
 
-	void Direct3D10Rhi::setGraphicsScissorRectangles(uint32_t numberOfScissorRectangles, const Rhi::ScissorRectangle* scissorRectangles)
+	void Direct3D10Rhi::setGraphicsScissorRectangles(RECore::uint32 numberOfScissorRectangles, const Rhi::ScissorRectangle* scissorRectangles)
 	{
 		// Rasterizer (RS) stage
 
@@ -10318,7 +10318,7 @@ namespace Direct3D10Rhi
 		}
 	}
 
-	void Direct3D10Rhi::clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil)
+	void Direct3D10Rhi::clearGraphics(RECore::uint32 clearFlags, const float color[4], float z, RECore::uint32 stencil)
 	{
 		// Unlike Direct3D 9, OpenGL or OpenGL ES 3, Direct3D 10 clears a given render target view and not the currently bound
 
@@ -10445,7 +10445,7 @@ namespace Direct3D10Rhi
 		RHI_END_DEBUG_EVENT(this)
 	}
 
-	void Direct3D10Rhi::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+	void Direct3D10Rhi::drawGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 	{
 		// Sanity checks
 		RHI_ASSERT(nullptr != emulationData, "The Direct3D 10 emulation data must be valid")
@@ -10461,7 +10461,7 @@ namespace Direct3D10Rhi
 				beginDebugEvent("Multi-draw-indirect emulation");
 			}
 		#endif
-		for (uint32_t i = 0; i < numberOfDraws; ++i)
+		for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
 		{
 			const Rhi::DrawArguments& drawArguments = *reinterpret_cast<const Rhi::DrawArguments*>(emulationData);
 
@@ -10496,7 +10496,7 @@ namespace Direct3D10Rhi
 		#endif
 	}
 
-	void Direct3D10Rhi::drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+	void Direct3D10Rhi::drawIndexedGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 	{
 		// Sanity checks
 		RHI_ASSERT(nullptr != emulationData, "The Direct3D 10 emulation data must be valid")
@@ -10512,7 +10512,7 @@ namespace Direct3D10Rhi
 				beginDebugEvent("Multi-indexed-draw-indirect emulation");
 			}
 		#endif
-		for (uint32_t i = 0; i < numberOfDraws; ++i)
+		for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
 		{
 			const Rhi::DrawIndexedArguments& drawIndexedArguments = *reinterpret_cast<const Rhi::DrawIndexedArguments*>(emulationData);
 
@@ -10579,7 +10579,7 @@ namespace Direct3D10Rhi
 				// Process all Direct3D 10 render target textures
 				if (direct3D10DestinationFramebuffer.getNumberOfColorTextures() > 0 && direct3D10SourceMultisampleFramebuffer.getNumberOfColorTextures() > 0)
 				{
-					const uint32_t numberOfColorTextures = (direct3D10DestinationFramebuffer.getNumberOfColorTextures() < direct3D10SourceMultisampleFramebuffer.getNumberOfColorTextures()) ? direct3D10DestinationFramebuffer.getNumberOfColorTextures() : direct3D10SourceMultisampleFramebuffer.getNumberOfColorTextures();
+					const RECore::uint32 numberOfColorTextures = (direct3D10DestinationFramebuffer.getNumberOfColorTextures() < direct3D10SourceMultisampleFramebuffer.getNumberOfColorTextures()) ? direct3D10DestinationFramebuffer.getNumberOfColorTextures() : direct3D10SourceMultisampleFramebuffer.getNumberOfColorTextures();
 					Rhi::ITexture** destinationTexture = direct3D10DestinationFramebuffer.getColorTextures();
 					Rhi::ITexture** sourceTexture = direct3D10SourceMultisampleFramebuffer.getColorTextures();
 					Rhi::ITexture** sourceTextureEnd = sourceTexture + numberOfColorTextures;
@@ -10719,7 +10719,7 @@ namespace Direct3D10Rhi
 	//[-------------------------------------------------------]
 	//[ Query                                                 ]
 	//[-------------------------------------------------------]
-	void Direct3D10Rhi::resetQueryPool([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] uint32_t firstQueryIndex, [[maybe_unused]] uint32_t numberOfQueries)
+	void Direct3D10Rhi::resetQueryPool([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] RECore::uint32 firstQueryIndex, [[maybe_unused]] RECore::uint32 numberOfQueries)
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -10729,7 +10729,7 @@ namespace Direct3D10Rhi
 		// Nothing to do in here for Direct3D 10
 	}
 
-	void Direct3D10Rhi::beginQuery(Rhi::IQueryPool& queryPool, uint32_t queryIndex, uint32_t)
+	void Direct3D10Rhi::beginQuery(Rhi::IQueryPool& queryPool, RECore::uint32 queryIndex, RECore::uint32)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -10750,7 +10750,7 @@ namespace Direct3D10Rhi
 		}
 	}
 
-	void Direct3D10Rhi::endQuery(Rhi::IQueryPool& queryPool, uint32_t queryIndex)
+	void Direct3D10Rhi::endQuery(Rhi::IQueryPool& queryPool, RECore::uint32 queryIndex)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -10771,7 +10771,7 @@ namespace Direct3D10Rhi
 		}
 	}
 
-	void Direct3D10Rhi::writeTimestampQuery(Rhi::IQueryPool& queryPool, uint32_t queryIndex)
+	void Direct3D10Rhi::writeTimestampQuery(Rhi::IQueryPool& queryPool, RECore::uint32 queryIndex)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -10876,15 +10876,15 @@ namespace Direct3D10Rhi
 	//[-------------------------------------------------------]
 	//[ Shader language                                       ]
 	//[-------------------------------------------------------]
-	uint32_t Direct3D10Rhi::getNumberOfShaderLanguages() const
+	RECore::uint32 Direct3D10Rhi::getNumberOfShaderLanguages() const
 	{
-		uint32_t numberOfShaderLanguages = 1;	// HLSL support is always there
+		RECore::uint32 numberOfShaderLanguages = 1;	// HLSL support is always there
 
 		// Done, return the number of supported shader languages
 		return numberOfShaderLanguages;
 	}
 
-	const char* Direct3D10Rhi::getShaderLanguageName([[maybe_unused]] uint32_t index) const
+	const char* Direct3D10Rhi::getShaderLanguageName([[maybe_unused]] RECore::uint32 index) const
 	{
 		RHI_ASSERT(index < getNumberOfShaderLanguages(), "Direct3D 10: Shader language index is out-of-bounds")
 		return ::detail::HLSL_NAME;
@@ -10921,12 +10921,12 @@ namespace Direct3D10Rhi
 	//[-------------------------------------------------------]
 	//[ Resource creation                                     ]
 	//[-------------------------------------------------------]
-	Rhi::IRenderPass* Direct3D10Rhi::createRenderPass(uint32_t numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
+	Rhi::IRenderPass* Direct3D10Rhi::createRenderPass(RECore::uint32 numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		return RHI_NEW(mContext, RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
-	Rhi::IQueryPool* Direct3D10Rhi::createQueryPool([[maybe_unused]] Rhi::QueryType queryType, [[maybe_unused]] uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
+	Rhi::IQueryPool* Direct3D10Rhi::createQueryPool([[maybe_unused]] Rhi::QueryType queryType, [[maybe_unused]] RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		RHI_ASSERT(numberOfQueries > 0, "Direct3D 10: Number of queries mustn't be zero")
 		return RHI_NEW(mContext, QueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -10974,7 +10974,7 @@ namespace Direct3D10Rhi
 		RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "Direct3D 10: Invalid graphics pipeline state render pass")
 
 		// Create graphics pipeline state
-		uint16_t id = 0;
+		RECore::uint16 id = 0;
 		if (GraphicsPipelineStateMakeId.CreateID(id))
 		{
 			return RHI_NEW(mContext, GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -11015,7 +11015,7 @@ namespace Direct3D10Rhi
 	//[-------------------------------------------------------]
 	//[ Resource handling                                     ]
 	//[-------------------------------------------------------]
-	bool Direct3D10Rhi::map(Rhi::IResource& resource, uint32_t subresource, Rhi::MapType mapType, uint32_t mapFlags, Rhi::MappedSubresource& mappedSubresource)
+	bool Direct3D10Rhi::map(Rhi::IResource& resource, RECore::uint32 subresource, Rhi::MapType mapType, RECore::uint32 mapFlags, Rhi::MappedSubresource& mappedSubresource)
 	{
 		// The "Rhi::MapType" values directly map to Direct3D 10 & 11 constants, do not change them
 		// The "Rhi::MappedSubresource" structure directly maps to Direct3D 11, do not change it
@@ -11137,7 +11137,7 @@ namespace Direct3D10Rhi
 		#undef TEXTURE_RESOURCE
 	}
 
-	void Direct3D10Rhi::unmap(Rhi::IResource& resource, uint32_t subresource)
+	void Direct3D10Rhi::unmap(Rhi::IResource& resource, RECore::uint32 subresource)
 	{
 		// Define helper macro
 		#define TEXTURE_RESOURCE(type, typeClass, d3dClass) \
@@ -11227,7 +11227,7 @@ namespace Direct3D10Rhi
 		#undef TEXTURE_RESOURCE
 	}
 
-	bool Direct3D10Rhi::getQueryPoolResults([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] uint32_t numberOfDataBytes, [[maybe_unused]] uint8_t* data, [[maybe_unused]] uint32_t firstQueryIndex, [[maybe_unused]] uint32_t numberOfQueries, [[maybe_unused]] uint32_t strideInBytes, [[maybe_unused]] uint32_t queryResultFlags)
+	bool Direct3D10Rhi::getQueryPoolResults([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] RECore::uint32 numberOfDataBytes, [[maybe_unused]] RECore::uint8* data, [[maybe_unused]] RECore::uint32 firstQueryIndex, [[maybe_unused]] RECore::uint32 numberOfQueries, [[maybe_unused]] RECore::uint32 strideInBytes, [[maybe_unused]] RECore::uint32 queryResultFlags)
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, queryPool)
@@ -11248,9 +11248,9 @@ namespace Direct3D10Rhi
 			case Rhi::QueryType::OCCLUSION:
 			case Rhi::QueryType::TIMESTAMP:	// TODO(naetherm) Convert time to nanoseconds, see e.g. http://reedbeta.com/blog/gpu-profiling-101/
 			{
-				uint8_t* currentData = data;
+				RECore::uint8* currentData = data;
 				ID3D10Query** d3D10Queries = d3d10QueryPool.getD3D10Queries();
-				for (uint32_t i = 0; i  < numberOfQueries; ++i)
+				for (RECore::uint32 i = 0; i  < numberOfQueries; ++i)
 				{
 					HRESULT d3d10QueryResult = S_FALSE;
 					do
@@ -11273,10 +11273,10 @@ namespace Direct3D10Rhi
 			{
 				RHI_ASSERT(numberOfDataBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "Direct3D 10 out-of-memory query access")
 				RHI_ASSERT(1 == numberOfQueries || strideInBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "Direct3D 10 out-of-memory query access")
-				uint8_t* currentData = data;
+				RECore::uint8* currentData = data;
 				ID3D10Query** d3D10Queries = d3d10QueryPool.getD3D10Queries();
 				D3D10_QUERY_DATA_PIPELINE_STATISTICS d3d10QueryDataPipelineStatistics = {};
-				for (uint32_t i = 0; i  < numberOfQueries; ++i)
+				for (RECore::uint32 i = 0; i  < numberOfQueries; ++i)
 				{
 					HRESULT d3d10QueryResult = S_FALSE;
 					do

@@ -426,9 +426,9 @@ VkIndexType Mapping::getVulkanType([[maybe_unused]] const RERHI::RHIContext& con
   RHI_ASSERT(RERHI::IndexBufferFormat::UNSIGNED_CHAR != indexBufferFormat, "One byte per element index buffer format isn't supported by Vulkan")
   static constexpr VkIndexType MAPPING[] =
     {
-      VK_INDEX_TYPE_MAX_ENUM,	// RERHI::IndexBufferFormat::UNSIGNED_CHAR  - One byte per element, uint8_t (may not be supported by each API) - Not supported by Vulkan
-      VK_INDEX_TYPE_UINT16,	// RERHI::IndexBufferFormat::UNSIGNED_SHORT - Two bytes per element, uint16_t
-      VK_INDEX_TYPE_UINT32	// RERHI::IndexBufferFormat::UNSIGNED_INT   - Four bytes per element, uint32_t (may not be supported by each API)
+      VK_INDEX_TYPE_MAX_ENUM,	// RERHI::IndexBufferFormat::UNSIGNED_CHAR  - One byte per element, RECore::uint8 (may not be supported by each API) - Not supported by Vulkan
+      VK_INDEX_TYPE_UINT16,	// RERHI::IndexBufferFormat::UNSIGNED_SHORT - Two bytes per element, RECore::uint16
+      VK_INDEX_TYPE_UINT32	// RERHI::IndexBufferFormat::UNSIGNED_INT   - Four bytes per element, RECore::uint32 (may not be supported by each API)
     };
   return MAPPING[indexBufferFormat];
 }
@@ -533,7 +533,7 @@ VkFormat Mapping::getVulkanFormat(RERHI::TextureFormat::Enum textureFormat)
 *  @return
 *    Vulkan sample count flag bits
 */
-VkSampleCountFlagBits Mapping::getVulkanSampleCountFlagBits([[maybe_unused]] const RERHI::RHIContext& context, uint8_t numberOfMultisamples)
+VkSampleCountFlagBits Mapping::getVulkanSampleCountFlagBits([[maybe_unused]] const RERHI::RHIContext& context, RECore::uint8 numberOfMultisamples)
 {
   RHI_ASSERT(numberOfMultisamples <= 8, "Invalid number of Vulkan multisamples")
   static constexpr VkSampleCountFlagBits MAPPING[] =

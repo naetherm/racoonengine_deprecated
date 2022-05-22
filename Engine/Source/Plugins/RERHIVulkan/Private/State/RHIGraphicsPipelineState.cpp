@@ -38,7 +38,7 @@
 namespace RERHIVulkan {
 
 GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &vulkanRhi,
-                                             const RERHI::GraphicsPipelineState &graphicsPipelineState, uint16_t id
+                                             const RERHI::GraphicsPipelineState &graphicsPipelineState, RECore::uint16 id
                                              RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHIGraphicsPipelineState(vulkanRhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mRootSignature(graphicsPipelineState.rootSignature),
@@ -51,13 +51,13 @@ GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &vulkanRhi,
   mRenderPass->AddReference();
 
 // Our pipeline state needs to be independent of concrete render targets, so we're using dynamic viewport ("VK_DYNAMIC_STATE_VIEWPORT") and scissor ("VK_DYNAMIC_STATE_SCISSOR") states
-  static constexpr uint32_t WIDTH = 42;
-  static constexpr uint32_t HEIGHT = 42;
+  static constexpr RECore::uint32 WIDTH = 42;
+  static constexpr RECore::uint32 HEIGHT = 42;
 
 // Shaders
   GraphicsProgramGlsl *graphicsProgramGlsl = static_cast<GraphicsProgramGlsl *>(mGraphicsProgram);
   const bool hasMeshShader = (nullptr != graphicsProgramGlsl->getMeshShaderGlsl());
-  uint32_t stageCount = 0;
+  RECore::uint32 stageCount = 0;
   ::detail::VkPipelineShaderStageCreateInfos vkPipelineShaderStageCreateInfos;
   {
 // Define helper macro
@@ -83,12 +83,12 @@ GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &vulkanRhi,
   }
 
 // Vertex attributes
-  const uint32_t numberOfAttributes = graphicsPipelineState.vertexAttributes.numberOfAttributes;
+  const RECore::uint32 numberOfAttributes = graphicsPipelineState.vertexAttributes.numberOfAttributes;
   std::vector<VkVertexInputBindingDescription> vkVertexInputBindingDescriptions;
   std::vector<VkVertexInputAttributeDescription> vkVertexInputAttributeDescriptions(numberOfAttributes);
-  for (uint32_t attribute = 0; attribute < numberOfAttributes; ++attribute) {
+  for (RECore::uint32 attribute = 0; attribute < numberOfAttributes; ++attribute) {
     const RERHI::VertexAttribute *attributes = &graphicsPipelineState.vertexAttributes.attributes[attribute];
-    const uint32_t inputSlot = attributes->inputSlot;
+    const RECore::uint32 inputSlot = attributes->inputSlot;
 
     { // Map to Vulkan vertex input binding description
       if (vkVertexInputBindingDescriptions.size() <= inputSlot) {
@@ -117,9 +117,9 @@ GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &vulkanRhi,
       VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,      // sType (VkStructureType)
       nullptr,                              // pNext (const void*)
       0,                                  // flags (VkPipelineVertexInputStateCreateFlags)
-      static_cast<uint32_t>(vkVertexInputBindingDescriptions.size()),    // vertexBindingDescriptionCount (uint32_t)
+      static_cast<RECore::uint32>(vkVertexInputBindingDescriptions.size()),    // vertexBindingDescriptionCount (RECore::uint32)
       vkVertexInputBindingDescriptions.data(),              // pVertexBindingDescriptions (const VkVertexInputBindingDescription*)
-      static_cast<uint32_t>(vkVertexInputAttributeDescriptions.size()),  // vertexAttributeDescriptionCount (uint32_t)
+      static_cast<RECore::uint32>(vkVertexInputAttributeDescriptions.size()),  // vertexAttributeDescriptionCount (RECore::uint32)
       vkVertexInputAttributeDescriptions.data()              // pVertexAttributeDescriptions (const VkVertexInputAttributeDescription*)
     };
   const VkPipelineInputAssemblyStateCreateInfo vkPipelineInputAssemblyStateCreateInfo =
@@ -142,12 +142,12 @@ GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &vulkanRhi,
   const VkRect2D scissorVkRect2D =
     {
       { // offset (VkOffset2D)
-        0,  // x (int32_t)
-        0  // y (int32_t)
+        0,  // x (RECore::int32)
+        0  // y (RECore::int32)
       },
       { // extent (VkExtent2D)
-        WIDTH,  // width (uint32_t)
-        HEIGHT  // height (uint32_t)
+        WIDTH,  // width (RECore::uint32)
+        HEIGHT  // height (RECore::uint32)
       }
     };
   const VkPipelineTessellationStateCreateInfo vkPipelineTessellationStateCreateInfo =
@@ -156,17 +156,17 @@ GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &vulkanRhi,
       nullptr,                                                                                                          // pNext (const void*)
       0,                                                                                                              // flags (VkPipelineTessellationStateCreateFlags)
       (graphicsPipelineState.primitiveTopology >= RERHI::PrimitiveTopology::PATCH_LIST_1) ?
-      static_cast<uint32_t>(graphicsPipelineState.primitiveTopology) -
-      static_cast<uint32_t>(RERHI::PrimitiveTopology::PATCH_LIST_1) + 1 : 1  // patchControlPoints (uint32_t)
+      static_cast<RECore::uint32>(graphicsPipelineState.primitiveTopology) -
+      static_cast<RECore::uint32>(RERHI::PrimitiveTopology::PATCH_LIST_1) + 1 : 1  // patchControlPoints (RECore::uint32)
     };
   const VkPipelineViewportStateCreateInfo vkPipelineViewportStateCreateInfo =
     {
       VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO,  // sType (VkStructureType)
       nullptr,                        // pNext (const void*)
       0,                            // flags (VkPipelineViewportStateCreateFlags)
-      1,                            // viewportCount (uint32_t)
+      1,                            // viewportCount (RECore::uint32)
       &vkViewport,                      // pViewports (const VkViewport*)
-      1,                            // scissorCount (uint32_t)
+      1,                            // scissorCount (RECore::uint32)
       &scissorVkRect2D                    // pScissors (const VkRect2D*)
     };
   const float depthBias = static_cast<float>(graphicsPipelineState.rasterizerState.depthBias);
@@ -224,28 +224,28 @@ GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &vulkanRhi,
         VK_STENCIL_OP_KEEP,                                            // passOp (VkStencilOp)
         VK_STENCIL_OP_KEEP,                                            // depthFailOp (VkStencilOp)
         VK_COMPARE_OP_NEVER,                                          // compareOp (VkCompareOp)
-        0,                                                    // compareMask (uint32_t)
-        0,                                                    // writeMask (uint32_t)
-        0                                                    // reference (uint32_t)
+        0,                                                    // compareMask (RECore::uint32)
+        0,                                                    // writeMask (RECore::uint32)
+        0                                                    // reference (RECore::uint32)
       },
       { // back (VkStencilOpState)
         VK_STENCIL_OP_KEEP,                                            // failOp (VkStencilOp)
         VK_STENCIL_OP_KEEP,                                            // passOp (VkStencilOp)
         VK_STENCIL_OP_KEEP,                                            // depthFailOp (VkStencilOp)
         VK_COMPARE_OP_NEVER,                                          // compareOp (VkCompareOp)
-        0,                                                    // compareMask (uint32_t)
-        0,                                                    // writeMask (uint32_t)
-        0                                                    // reference (uint32_t)
+        0,                                                    // compareMask (RECore::uint32)
+        0,                                                    // writeMask (RECore::uint32)
+        0                                                    // reference (RECore::uint32)
       },
       0.0f,                                                    // minDepthBounds (float)
       1.0f                                                    // maxDepthBounds (float)
     };
-  const uint32_t numberOfColorAttachments = renderPass->getNumberOfColorAttachments();
+  const RECore::uint32 numberOfColorAttachments = renderPass->getNumberOfColorAttachments();
   RHI_ASSERT(numberOfColorAttachments < 8, "Invalid number of Vulkan color attachments")
   RHI_ASSERT(numberOfColorAttachments == graphicsPipelineState.numberOfRenderTargets,
              "Invalid number of Vulkan color attachments")
   std::array<VkPipelineColorBlendAttachmentState, 8> vkPipelineColorBlendAttachmentStates;
-  for (uint8_t i = 0; i < numberOfColorAttachments; ++i) {
+  for (RECore::uint8 i = 0; i < numberOfColorAttachments; ++i) {
     const RERHI::RenderTargetBlendDesc &renderTargetBlendDesc = graphicsPipelineState.blendState.renderTarget[i];
     VkPipelineColorBlendAttachmentState &vkPipelineColorBlendAttachmentState = vkPipelineColorBlendAttachmentStates[i];
     vkPipelineColorBlendAttachmentState.blendEnable = static_cast<VkBool32>(renderTargetBlendDesc.blendEnable);        // blendEnable (VkBool32)
@@ -270,7 +270,7 @@ GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &vulkanRhi,
       0,                              // flags (VkPipelineColorBlendStateCreateFlags)
       VK_FALSE,                          // logicOpEnable (VkBool32)
       VK_LOGIC_OP_COPY,                      // logicOp (VkLogicOp)
-      numberOfColorAttachments,                  // attachmentCount (uint32_t)
+      numberOfColorAttachments,                  // attachmentCount (RECore::uint32)
       vkPipelineColorBlendAttachmentStates.data(),        // pAttachments (const VkPipelineColorBlendAttachmentState*)
       {0.0f, 0.0f, 0.0f, 0.0f}                  // blendConstants[4] (float)
     };
@@ -284,7 +284,7 @@ GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &vulkanRhi,
       VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO,  // sType (VkStructureType)
       nullptr,                        // pNext (const void*)
       0,                            // flags (VkPipelineDynamicStateCreateFlags)
-      static_cast<uint32_t>(vkDynamicStates.size()),      // dynamicStateCount (uint32_t)
+      static_cast<RECore::uint32>(vkDynamicStates.size()),      // dynamicStateCount (RECore::uint32)
       vkDynamicStates.data()                  // pDynamicStates (const VkDynamicState*)
     };
   const VkGraphicsPipelineCreateInfo vkGraphicsPipelineCreateInfo =
@@ -292,7 +292,7 @@ GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &vulkanRhi,
       VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO,          // sType (VkStructureType)
       nullptr,                              // pNext (const void*)
       0,                                  // flags (VkPipelineCreateFlags)
-      stageCount,                              // stageCount (uint32_t)
+      stageCount,                              // stageCount (RECore::uint32)
       vkPipelineShaderStageCreateInfos.data(),              // pStages (const VkPipelineShaderStageCreateInfo*)
       &vkPipelineVertexInputStateCreateInfo,                // pVertexInputState (const VkPipelineVertexInputStateCreateInfo*)
       hasMeshShader ? nullptr
@@ -307,9 +307,9 @@ GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &vulkanRhi,
       &vkPipelineDynamicStateCreateInfo,                  // pDynamicState (const VkPipelineDynamicStateCreateInfo*)
       static_cast<RootSignature *>(mRootSignature)->getVkPipelineLayout(),  // layout (VkPipelineLayout)
       renderPass->getVkRenderPass(),                    // renderPass (VkRenderPass)
-      0,                                  // subpass (uint32_t)
+      0,                                  // subpass (RECore::uint32)
       VK_NULL_HANDLE,                            // basePipelineHandle (VkPipeline)
-      0                                  // basePipelineIndex (int32_t)
+      0                                  // basePipelineIndex (RECore::int32)
     };
   if (vkCreateGraphicsPipelines(vulkanRhi.getVulkanContext().getVkDevice(), VK_NULL_HANDLE, 1,
                                 &vkGraphicsPipelineCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mVkPipeline) ==
@@ -319,7 +319,7 @@ GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI &vulkanRhi,
     if (nullptr != vkDebugMarkerSetObjectNameEXT)
               {
                 RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Graphics PSO", 15)	// 15 = "Graphics PSO: " including terminating zero
-                Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT, (uint64_t)mVkPipeline, detailedDebugName);
+                Helper::setDebugObjectName(vulkanRhi.getVulkanContext().getVkDevice(), VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT, (RECore::uint64)mVkPipeline, detailedDebugName);
               }
 #endif
   } else {

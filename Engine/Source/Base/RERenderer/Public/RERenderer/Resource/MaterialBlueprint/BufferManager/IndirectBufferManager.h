@@ -78,8 +78,8 @@ namespace RERenderer
 		struct IndirectBuffer final
 		{
 			RERHI::RHIIndirectBuffer* indirectBuffer;		///< RHI indirect buffer instance, always valid
-			uint32_t			  indirectBufferOffset;	///< Current indirect buffer offset
-			uint8_t*			  mappedData;			///< Currently mapped data, don't destroy the data
+			RECore::uint32			  indirectBufferOffset;	///< Current indirect buffer offset
+			RECore::uint8*			  mappedData;			///< Currently mapped data, don't destroy the data
 			explicit IndirectBuffer(RERHI::RHIIndirectBuffer* _indirectBuffer) :
 				indirectBuffer(_indirectBuffer),
 				indirectBufferOffset(0),
@@ -129,7 +129,7 @@ namespace RERenderer
 		*  @return
 		*    The requested indirect buffer, don't destroy the instance, null pointer in case of a horrible nightmare apocalypse scenario
 		*/
-		[[nodiscard]] IndirectBuffer* getIndirectBuffer(uint32_t numberOfBytes);
+		[[nodiscard]] IndirectBuffer* getIndirectBuffer(RECore::uint32 numberOfBytes);
 
 		/**
 		*  @brief
@@ -159,11 +159,11 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	private:
 		const IRenderer& mRenderer;
-		uint32_t		 mMaximumIndirectBufferSize;	///< Maximum indirect buffer size in bytes
+		RECore::uint32		 mMaximumIndirectBufferSize;	///< Maximum indirect buffer size in bytes
 		IndirectBuffers	 mFreeIndirectBuffers;
 		IndirectBuffers	 mUsedIndirectBuffers;
 		IndirectBuffer*	 mCurrentIndirectBuffer;		///< Currently filled indirect buffer, can be a null pointer, don't destroy the instance since it's just a reference
-		uint32_t		 mPreviouslyRequestedNumberOfBytes;
+		RECore::uint32		 mPreviouslyRequestedNumberOfBytes;
 
 
 	};

@@ -72,7 +72,7 @@ public:
   *  @param[in] samplerStates
   *    If not a null pointer at least "numberOfResources" sampler state pointers, must be valid if there's at least one texture resource, the resource group will keep a reference to the sampler states
   */
-  ResourceGroup(RHIDynamicRHI& openGLES3Rhi, const RERHI::RootSignature& rootSignature, uint32_t rootParameterIndex, uint32_t numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  ResourceGroup(RHIDynamicRHI& openGLES3Rhi, const RERHI::RootSignature& rootSignature, RECore::uint32 rootParameterIndex, RECore::uint32 numberOfResources, RERHI::RHIResource** resources, RERHI::RHISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief
@@ -87,7 +87,7 @@ public:
   *  @return
   *    The number of resources this resource group groups together
   */
-  [[nodiscard]] inline uint32_t getNumberOfResources() const
+  [[nodiscard]] inline RECore::uint32 getNumberOfResources() const
   {
     return mNumberOfResources;
   }
@@ -123,7 +123,7 @@ public:
   *  @return
   *    The resource index to uniform block binding index mapping, only valid for uniform buffer resources
   */
-  [[nodiscard]] inline uint32_t* getResourceIndexToUniformBlockBindingIndex() const
+  [[nodiscard]] inline RECore::uint32* getResourceIndexToUniformBlockBindingIndex() const
   {
     return mResourceIndexToUniformBlockBindingIndex;
   }
@@ -151,11 +151,11 @@ private:
   //[ Private data                                          ]
   //[-------------------------------------------------------]
 private:
-  uint32_t			 mRootParameterIndex;						///< The root parameter index number for binding
-  uint32_t			 mNumberOfResources;						///< Number of resources this resource group groups together
+  RECore::uint32			 mRootParameterIndex;						///< The root parameter index number for binding
+  RECore::uint32			 mNumberOfResources;						///< Number of resources this resource group groups together
   RERHI::RHIResource**	 mResources;								///< RHI resources, we keep a reference to it
   RERHI::RHISamplerState** mSamplerStates;							///< Sampler states, we keep a reference to it
-  uint32_t*			 mResourceIndexToUniformBlockBindingIndex;	///< Resource index to uniform block binding index mapping, only valid for uniform buffer resources
+  RECore::uint32*			 mResourceIndexToUniformBlockBindingIndex;	///< Resource index to uniform block binding index mapping, only valid for uniform buffer resources
 
 
 };

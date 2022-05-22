@@ -76,7 +76,7 @@ public:
   *  @note
   *    - The compute pipeline state keeps a reference to the provided compute shader and releases it when no longer required
   */
-  ComputePipelineStateMonolithic(RHIDynamicRHI& openGLRhi, const RERHI::RHIRootSignature& rootSignature, ComputeShaderMonolithic& computeShaderMonolithic, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+  ComputePipelineStateMonolithic(RHIDynamicRHI& openGLRhi, const RERHI::RHIRootSignature& rootSignature, ComputeShaderMonolithic& computeShaderMonolithic, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
   /**
   *  @brief

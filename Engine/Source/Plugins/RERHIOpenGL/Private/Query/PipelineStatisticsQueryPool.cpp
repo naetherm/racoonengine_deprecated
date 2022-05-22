@@ -43,7 +43,7 @@ class RHIDynamicRHI;
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 PipelineStatisticsQueryPool::PipelineStatisticsQueryPool(RHIDynamicRHI &openGLRhi, RERHI::QueryType queryType,
-                                                         uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+                                                         RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   QueryPool(openGLRhi, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mVerticesSubmittedOpenGLQueries(RHI_MALLOC_TYPED(openGLRhi.getContext(), GLuint, numberOfQueries * 11)),
   mPrimitivesSubmittedOpenGLQueries(mVerticesSubmittedOpenGLQueries + numberOfQueries),
@@ -73,7 +73,7 @@ PipelineStatisticsQueryPool::PipelineStatisticsQueryPool(RHIDynamicRHI &openGLRh
               case RERHI::QueryType::PIPELINE_STATISTICS:
               {
                 // Enforce instant query creation so we can set a debug name
-                for (uint32_t i = 0; i < numberOfQueries; ++i)
+                for (RECore::uint32 i = 0; i < numberOfQueries; ++i)
                 {
                   beginQuery(i);
                   endQuery();
@@ -81,7 +81,7 @@ PipelineStatisticsQueryPool::PipelineStatisticsQueryPool(RHIDynamicRHI &openGLRh
 
                 // Set debug name
                 RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Pipeline statistics query", 28)	// 28 = "Pipeline statistics query: " including terminating zero
-                for (uint32_t i = 0; i < mNumberOfQueries * 11; ++i)
+                for (RECore::uint32 i = 0; i < mNumberOfQueries * 11; ++i)
                 {
                   glObjectLabel(GL_QUERY, mVerticesSubmittedOpenGLQueries[i], -1, detailedDebugName);
                 }
@@ -99,7 +99,7 @@ PipelineStatisticsQueryPool::~PipelineStatisticsQueryPool() {
   RHI_FREE(getRhi().getContext(), mVerticesSubmittedOpenGLQueries);
 }
 
-void PipelineStatisticsQueryPool::beginQuery(uint32_t queryIndex) const {
+void PipelineStatisticsQueryPool::beginQuery(RECore::uint32 queryIndex) const {
   glBeginQueryARB(GL_VERTICES_SUBMITTED_ARB, mVerticesSubmittedOpenGLQueries[queryIndex]);
   glBeginQueryARB(GL_PRIMITIVES_SUBMITTED_ARB, mPrimitivesSubmittedOpenGLQueries[queryIndex]);
   glBeginQueryARB(GL_VERTEX_SHADER_INVOCATIONS_ARB, mVertexShaderInvocationsOpenGLQueries[queryIndex]);
@@ -127,8 +127,8 @@ void PipelineStatisticsQueryPool::endQuery() const {
   glEndQueryARB(GL_COMPUTE_SHADER_INVOCATIONS_ARB);
 }
 
-bool PipelineStatisticsQueryPool::getQueryPoolResults(uint8_t *data, uint32_t firstQueryIndex, uint32_t numberOfQueries,
-                                                      uint32_t strideInBytes, bool waitForResult) const {
+bool PipelineStatisticsQueryPool::getQueryPoolResults(RECore::uint8 *data, RECore::uint32 firstQueryIndex, RECore::uint32 numberOfQueries,
+                                                      RECore::uint32 strideInBytes, bool waitForResult) const {
   bool resultAvailable = true;
 
   // Define a helper macro
@@ -141,7 +141,7 @@ bool PipelineStatisticsQueryPool::getQueryPoolResults(uint8_t *data, uint32_t fi
 
   // Get query pool results
   RERHI::PipelineStatisticsQueryResult *currentPipelineStatisticsQueryResult = reinterpret_cast<RERHI::PipelineStatisticsQueryResult *>(data);
-  for (uint32_t i = 0; i < numberOfQueries; ++i) {
+  for (RECore::uint32 i = 0; i < numberOfQueries; ++i) {
     GET_QUERY_RESULT(mVerticesSubmittedOpenGLQueries, numberOfInputAssemblerVertices)
     GET_QUERY_RESULT(mPrimitivesSubmittedOpenGLQueries, numberOfInputAssemblerPrimitives)
     GET_QUERY_RESULT(mVertexShaderInvocationsOpenGLQueries, numberOfVertexShaderInvocations)
@@ -164,7 +164,7 @@ bool PipelineStatisticsQueryPool::getQueryPoolResults(uint8_t *data, uint32_t fi
 }
 
 bool
-PipelineStatisticsQueryPool::getQueryPoolResult(GLuint openGLQuery, bool waitForResult, uint64_t &queryResult) const {
+PipelineStatisticsQueryPool::getQueryPoolResult(GLuint openGLQuery, bool waitForResult, RECore::uint64 &queryResult) const {
   bool resultAvailable = true;
   GLuint openGLQueryResult = GL_FALSE;
   do {
@@ -172,7 +172,7 @@ PipelineStatisticsQueryPool::getQueryPoolResult(GLuint openGLQuery, bool waitFor
   } while (waitForResult && GL_TRUE != openGLQueryResult);
   if (GL_TRUE == openGLQueryResult) {
     glGetQueryObjectuivARB(openGLQuery, GL_QUERY_RESULT_ARB, &openGLQueryResult);
-    queryResult = static_cast<uint64_t>(openGLQueryResult);
+    queryResult = static_cast<RECore::uint64>(openGLQueryResult);
   } else {
     // Result not ready
     resultAvailable = false;

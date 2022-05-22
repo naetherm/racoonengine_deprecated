@@ -125,7 +125,7 @@ public:
   *  @return
   *    Graphics queue family index, ~0u if invalid
   */
-  [[nodiscard]] inline uint32_t getGraphicsQueueFamilyIndex() const
+  [[nodiscard]] inline RECore::uint32 getGraphicsQueueFamilyIndex() const
   {
     return mGraphicsQueueFamilyIndex;
   }
@@ -137,7 +137,7 @@ public:
   *  @return
   *    Present queue family index, ~0u if invalid
   */
-  [[nodiscard]] inline uint32_t getPresentQueueFamilyIndex() const
+  [[nodiscard]] inline RECore::uint32 getPresentQueueFamilyIndex() const
   {
     return mPresentQueueFamilyIndex;
   }
@@ -191,7 +191,7 @@ public:
   }
 
   // TODO(naetherm) Trivial implementation to have something to start with. Need to use more clever memory management and stating buffers later on.
-  [[nodiscard]] uint32_t findMemoryTypeIndex(uint32_t typeFilter, VkMemoryPropertyFlags vkMemoryPropertyFlags) const;
+  [[nodiscard]] RECore::uint32 findMemoryTypeIndex(RECore::uint32 typeFilter, VkMemoryPropertyFlags vkMemoryPropertyFlags) const;
 
   [[nodiscard]] VkCommandBuffer createVkCommandBuffer() const;
 
@@ -213,8 +213,8 @@ private:
   RHIDynamicRHI&		 mRHIDynamicRHI;				///< Owner Vulkan RHI instance
   VkPhysicalDevice mVkPhysicalDevice;			///< Vulkan physical device this context is using
   VkDevice		 mVkDevice;					///< Vulkan device instance this context is using (equivalent of a OpenGL context or Direct3D 11 device)
-  uint32_t		 mGraphicsQueueFamilyIndex;	///< Graphics queue family index, ~0u if invalid
-  uint32_t		 mPresentQueueFamilyIndex;	///< Present queue family index, ~0u if invalid
+  RECore::uint32		 mGraphicsQueueFamilyIndex;	///< Graphics queue family index, ~0u if invalid
+  RECore::uint32		 mPresentQueueFamilyIndex;	///< Present queue family index, ~0u if invalid
   VkQueue			 mGraphicsVkQueue;			///< Handle to the Vulkan device graphics queue that command buffers are submitted to
   VkQueue			 mPresentVkQueue;			///< Handle to the Vulkan device present queue
   VkCommandPool	 mVkCommandPool;			///< Vulkan command buffer pool instance

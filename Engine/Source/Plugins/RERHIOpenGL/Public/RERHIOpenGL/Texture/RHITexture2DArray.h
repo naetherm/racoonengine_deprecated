@@ -71,7 +71,7 @@ public:
   *  @return
   *    The number of multisamples per pixel (valid values: 1, 2, 4, 8)
   */
-  [[nodiscard]] inline uint8_t getNumberOfMultisamples() const
+  [[nodiscard]] inline RECore::uint8 getNumberOfMultisamples() const
   {
     return mNumberOfMultisamples;
   }
@@ -130,14 +130,14 @@ protected:
   *  @param[in] textureFormat
   *    Texture format
   */
-  Texture2DArray(RHIDynamicRHI& openGLRhi, uint32_t width, uint32_t height, uint32_t numberOfSlices, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  Texture2DArray(RHIDynamicRHI& openGLRhi, RECore::uint32 width, RECore::uint32 height, RECore::uint32 numberOfSlices, RERHI::TextureFormat::Enum textureFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
 
   //[-------------------------------------------------------]
   //[ Protected data                                        ]
   //[-------------------------------------------------------]
 protected:
-  uint8_t mNumberOfMultisamples;	///< The number of multisamples per pixel (valid values: 1, 2, 4, 8)
+  RECore::uint8 mNumberOfMultisamples;	///< The number of multisamples per pixel (valid values: 1, 2, 4, 8)
   GLuint  mOpenGLTexture;			///< OpenGL texture, can be zero if no resource is allocated
   GLuint  mOpenGLInternalFormat;	///< OpenGL internal format
 

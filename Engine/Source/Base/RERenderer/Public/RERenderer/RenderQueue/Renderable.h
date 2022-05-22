@@ -59,9 +59,9 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t MaterialResourceId;	///< POD material resource identifier
-	typedef uint32_t SkeletonResourceId;	///< POD skeleton resource identifier
-	typedef uint32_t MaterialTechniqueId;	///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
+	typedef RECore::uint32 MaterialResourceId;	///< POD material resource identifier
+	typedef RECore::uint32 SkeletonResourceId;	///< POD skeleton resource identifier
+	typedef RECore::uint32 MaterialTechniqueId;	///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
 
 
 	//[-------------------------------------------------------]
@@ -90,10 +90,10 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	public:
 		Renderable();
-		Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, uint32_t startIndexLocation, uint32_t numberOfIndices, uint32_t instanceCount = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER);
-		Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, const RERHI::RHIIndirectBufferPtr& indirectBufferPtr, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER);
-		Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const RERHI::RHIVertexArrayPtr& positionOnlyVertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, uint32_t startIndexLocation, uint32_t numberOfIndices, uint32_t instanceCount = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER);
-		Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const RERHI::RHIVertexArrayPtr& positionOnlyVertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, const RERHI::RHIIndirectBufferPtr& indirectBufferPtr, uint32_t indirectBufferOffset = 0, uint32_t numberOfDraws = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+		Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, RECore::uint32 startIndexLocation, RECore::uint32 numberOfIndices, RECore::uint32 instanceCount = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+		Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, const RERHI::RHIIndirectBufferPtr& indirectBufferPtr, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+		Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const RERHI::RHIVertexArrayPtr& positionOnlyVertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, RECore::uint32 startIndexLocation, RECore::uint32 numberOfIndices, RECore::uint32 instanceCount = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER);
+		Renderable(RenderableManager& renderableManager, const RERHI::RHIVertexArrayPtr& vertexArrayPtr, const RERHI::RHIVertexArrayPtr& positionOnlyVertexArrayPtr, const MaterialResourceManager& materialResourceManager, MaterialResourceId materialResourceId, SkeletonResourceId skeletonResourceId, bool drawIndexed, const RERHI::RHIIndirectBufferPtr& indirectBufferPtr, RECore::uint32 indirectBufferOffset = 0, RECore::uint32 numberOfDraws = 1 RHI_RESOURCE_DEBUG_NAME_PARAMETER);
 
 		inline ~Renderable()
 		{
@@ -177,52 +177,52 @@ namespace RERenderer
 			mDrawIndexed = drawIndexed;
 		}
 
-		[[nodiscard]] inline uint32_t getStartIndexLocation() const
+		[[nodiscard]] inline RECore::uint32 getStartIndexLocation() const
 		{
 			return mStartIndexLocation;
 		}
 
-		inline void setStartIndexLocation(uint32_t startIndexLocation)
+		inline void setStartIndexLocation(RECore::uint32 startIndexLocation)
 		{
 			mStartIndexLocation = startIndexLocation;
 		}
 
-		[[nodiscard]] inline uint32_t getIndirectBufferOffset() const
+		[[nodiscard]] inline RECore::uint32 getIndirectBufferOffset() const
 		{
 			return mIndirectBufferOffset;
 		}
 
-		inline void setIndirectBufferOffset(uint32_t indirectBufferOffset)
+		inline void setIndirectBufferOffset(RECore::uint32 indirectBufferOffset)
 		{
 			mIndirectBufferOffset = indirectBufferOffset;
 		}
 
-		[[nodiscard]] inline uint32_t getNumberOfIndices() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfIndices() const
 		{
 			return mNumberOfIndices;
 		}
 
-		inline void setNumberOfIndices(uint32_t numberOfIndices)
+		inline void setNumberOfIndices(RECore::uint32 numberOfIndices)
 		{
 			mNumberOfIndices = numberOfIndices;
 		}
 
-		[[nodiscard]] inline uint32_t getInstanceCount() const
+		[[nodiscard]] inline RECore::uint32 getInstanceCount() const
 		{
 			return mInstanceCount;
 		}
 
-		inline void setInstanceCount(uint32_t instanceCount)
+		inline void setInstanceCount(RECore::uint32 instanceCount)
 		{
 			mInstanceCount = instanceCount;
 		}
 
-		[[nodiscard]] inline uint32_t getNumberOfDraws() const
+		[[nodiscard]] inline RECore::uint32 getNumberOfDraws() const
 		{
 			return mNumberOfDraws;
 		}
 
-		inline void setNumberOfDraws(uint32_t numberOfDraws)
+		inline void setNumberOfDraws(RECore::uint32 numberOfDraws)
 		{
 			mNumberOfDraws = numberOfDraws;
 		}
@@ -252,7 +252,7 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Cached material data                                  ]
 		//[-------------------------------------------------------]
-		[[nodiscard]] inline uint8_t getRenderQueueIndex() const
+		[[nodiscard]] inline RECore::uint8 getRenderQueueIndex() const
 		{
 			return mRenderQueueIndex;
 		}
@@ -283,14 +283,14 @@ namespace RERenderer
 		struct PipelineStateCache
 		{
 			MaterialTechniqueId	   materialTechniqueId;
-			uint32_t			   generationCounter;	// Most simple solution to detect e.g. shader combination changes which make the pipeline state cache invalid
+			RECore::uint32			   generationCounter;	// Most simple solution to detect e.g. shader combination changes which make the pipeline state cache invalid
 			RERHI::RHIPipelineStatePtr pipelineStatePtr;
-			inline PipelineStateCache(MaterialTechniqueId _materialTechniqueId, uint32_t _generationCounter, const RERHI::RHIGraphicsPipelineStatePtr& graphicsPipelineStatePtr) :
+			inline PipelineStateCache(MaterialTechniqueId _materialTechniqueId, RECore::uint32 _generationCounter, const RERHI::RHIGraphicsPipelineStatePtr& graphicsPipelineStatePtr) :
 				materialTechniqueId(_materialTechniqueId),
 				generationCounter(_generationCounter),
 				pipelineStatePtr(graphicsPipelineStatePtr)
 			{};
-			inline PipelineStateCache(MaterialTechniqueId _materialTechniqueId, uint32_t _generationCounter, const RERHI::RHIComputePipelineStatePtr& computePipelineStatePtr) :
+			inline PipelineStateCache(MaterialTechniqueId _materialTechniqueId, RECore::uint32 _generationCounter, const RERHI::RHIComputePipelineStatePtr& computePipelineStatePtr) :
 				materialTechniqueId(_materialTechniqueId),
 				generationCounter(_generationCounter),
 				pipelineStatePtr(computePipelineStatePtr)
@@ -314,20 +314,20 @@ namespace RERenderer
 		RERHI::RHIIndirectBufferPtr			mIndirectBufferPtr;				///< Optional indirect buffer, can be a null pointer
 		union
 		{
-			uint32_t					mStartIndexLocation;			///< Used in case there's no indirect buffer
-			uint32_t					mIndirectBufferOffset;			///< Used in case there's an indirect buffer
+			RECore::uint32					mStartIndexLocation;			///< Used in case there's no indirect buffer
+			RECore::uint32					mIndirectBufferOffset;			///< Used in case there's an indirect buffer
 		};
-		uint32_t						mNumberOfIndices;				///< If there's an indirect buffer set, this value is unused
+		RECore::uint32						mNumberOfIndices;				///< If there's an indirect buffer set, this value is unused
 		union
 		{
-			uint32_t					mInstanceCount;					///< Used in case there's no indirect buffer
-			uint32_t					mNumberOfDraws;					///< Used in case there's an indirect buffer
+			RECore::uint32					mInstanceCount;					///< Used in case there's no indirect buffer
+			RECore::uint32					mNumberOfDraws;					///< Used in case there's an indirect buffer
 		};
 		MaterialResourceId				mMaterialResourceId;
 		SkeletonResourceId				mSkeletonResourceId;
 		bool							mDrawIndexed;					///< Placed at this location due to padding
 		// Cached material data
-		uint8_t							mRenderQueueIndex;
+		RECore::uint8							mRenderQueueIndex;
 		bool							mCastShadows;
 		bool							mUseAlphaMap;					///< Relevant e.g. in combination with cast shadows in which the optional position-only vertex array object (VAO) can't be used in case an alpha mask is used
 		PipelineStateCaches				mPipelineStateCaches;

@@ -93,8 +93,8 @@ public:
 //[ Private definitions                                   ]
 //[-------------------------------------------------------]
 private:
-	static constexpr uint32_t TEXTURE_SIZE		 = 16;	///< Texture size
-	static constexpr uint32_t NUMBER_OF_TEXTURES = 2;	///< Number of textures
+	static constexpr RECore::uint32 TEXTURE_SIZE		 = 16;	///< Texture size
+	static constexpr RECore::uint32 NUMBER_OF_TEXTURES = 2;	///< Number of textures
 
 
 //[-------------------------------------------------------]

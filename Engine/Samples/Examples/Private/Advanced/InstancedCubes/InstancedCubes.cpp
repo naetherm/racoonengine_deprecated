@@ -250,7 +250,7 @@ void InstancedCubes::onDraw(RERHI::RHICommandBuffer& commandBuffer)
 				// Cubes per second
 				// -> In every frame we draw n-cubes...
 				// -> TODO(naetherm) This number can get huge... had over 1 million cubes with >25 FPS... million cubes at ~2.4 FPS...
-				snprintf(text, GLM_COUNTOF(text), "Cubes per second: %u", static_cast<uint32_t>(mFramesPerSecond) * mNumberOfCubeInstances);
+				snprintf(text, GLM_COUNTOF(text), "Cubes per second: %u", static_cast<RECore::uint32>(mFramesPerSecond) * mNumberOfCubeInstances);
 				RERenderer::DebugGuiHelper::drawText(text, 10.0f, 70.0f);
 			}
 			else

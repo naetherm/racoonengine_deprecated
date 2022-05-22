@@ -445,9 +445,9 @@ public:
   [[nodiscard]] static GLenum getOpenGLType(RERHI::IndexBufferFormat::Enum indexBufferFormat) {
     static constexpr GLenum MAPPING[] =
       {
-        GL_UNSIGNED_BYTE,  // RERHI::IndexBufferFormat::UNSIGNED_CHAR  - One byte per element, uint8_t (may not be supported by each API)
-        GL_UNSIGNED_SHORT,  // RERHI::IndexBufferFormat::UNSIGNED_SHORT - Two bytes per element, uint16_t
-        GL_UNSIGNED_INT    // RERHI::IndexBufferFormat::UNSIGNED_INT   - Four bytes per element, uint32_t (may not be supported by each API)
+        GL_UNSIGNED_BYTE,  // RERHI::IndexBufferFormat::UNSIGNED_CHAR  - One byte per element, RECore::uint8 (may not be supported by each API)
+        GL_UNSIGNED_SHORT,  // RERHI::IndexBufferFormat::UNSIGNED_SHORT - Two bytes per element, RECore::uint16
+        GL_UNSIGNED_INT    // RERHI::IndexBufferFormat::UNSIGNED_INT   - Four bytes per element, RECore::uint32 (may not be supported by each API)
       };
     return MAPPING[indexBufferFormat];
   }

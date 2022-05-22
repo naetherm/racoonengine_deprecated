@@ -444,7 +444,7 @@ void EndDebugEvent(const void*, RERHI::RHIDynamicRHI&)
 //[-------------------------------------------------------]
 //[ Global definitions                                    ]
 //[-------------------------------------------------------]
-static constexpr RERHI::ImplementationDispatchFunction DISPATCH_FUNCTIONS[static_cast<uint8_t>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
+static constexpr RERHI::ImplementationDispatchFunction DISPATCH_FUNCTIONS[static_cast<RECore::uint8>(RERHI::CommandDispatchFunctionIndex::NUMBER_OF_FUNCTIONS)] =
   {
     // Command buffer
     &ImplementationDispatch::DispatchCommandBuffer,
@@ -659,7 +659,7 @@ RHIDynamicRHI::~RHIDynamicRHI()
 #ifdef RHI_STATISTICS
   { // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
-			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
+			const RECore::uint32 numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
 			if (numberOfCurrentResources > 0)
 			{
 				// Error!
@@ -697,18 +697,18 @@ RHIDynamicRHI::~RHIDynamicRHI()
 void RHIDynamicRHI::dispatchCommandBufferInternal(const RERHI::RHICommandBuffer& commandBuffer)
 {
   // Loop through all commands
-  const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
+  const RECore::uint8* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
   RERHI::ConstCommandPacket constCommandPacket = commandPacketBuffer;
   while (nullptr != constCommandPacket)
   {
     { // Dispatch command packet
       const RERHI::CommandDispatchFunctionIndex commandDispatchFunctionIndex = RERHI::CommandPacketHelper::loadCommandDispatchFunctionIndex(constCommandPacket);
       const void* command = RERHI::CommandPacketHelper::loadCommand(constCommandPacket);
-      detail::DISPATCH_FUNCTIONS[static_cast<uint32_t>(commandDispatchFunctionIndex)](command, *this);
+      detail::DISPATCH_FUNCTIONS[static_cast<RECore::uint32>(commandDispatchFunctionIndex)](command, *this);
     }
 
     { // Next command
-      const uint32_t nextCommandPacketByteIndex = RERHI::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
+      const RECore::uint32 nextCommandPacketByteIndex = RERHI::CommandPacketHelper::getNextCommandPacketByteIndex(constCommandPacket);
       constCommandPacket = (~0u != nextCommandPacketByteIndex) ? &commandPacketBuffer[nextCommandPacketByteIndex] : nullptr;
     }
   }
@@ -780,7 +780,7 @@ void RHIDynamicRHI::setGraphicsPipelineState(RERHI::RHIGraphicsPipelineState* gr
   }
 }
 
-void RHIDynamicRHI::setGraphicsResourceGroup(uint32_t rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
+void RHIDynamicRHI::setGraphicsResourceGroup(RECore::uint32 rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
 {
   // Security checks
 #ifdef DEBUG
@@ -840,7 +840,7 @@ void RHIDynamicRHI::setGraphicsVertexArray(RERHI::RHIVertexArray* vertexArray)
   }
 }
 
-void RHIDynamicRHI::setGraphicsViewports([[maybe_unused]] uint32_t numberOfViewports, const RERHI::Viewport* viewports)
+void RHIDynamicRHI::setGraphicsViewports([[maybe_unused]] RECore::uint32 numberOfViewports, const RERHI::Viewport* viewports)
 {
   // Rasterizer (RS) stage
 
@@ -852,10 +852,10 @@ void RHIDynamicRHI::setGraphicsViewports([[maybe_unused]] uint32_t numberOfViewp
   // -> This isn't influenced by the "GL_ARB_clip_control"-extension
 
   // Get the width and height of the current render target
-  uint32_t renderTargetHeight = 1;
+  RECore::uint32 renderTargetHeight = 1;
   if (nullptr != mRenderTarget)
   {
-    uint32_t renderTargetWidth = 1;
+    RECore::uint32 renderTargetWidth = 1;
     mRenderTarget->getWidthAndHeight(renderTargetWidth, renderTargetHeight);
   }
 
@@ -867,7 +867,7 @@ void RHIDynamicRHI::setGraphicsViewports([[maybe_unused]] uint32_t numberOfViewp
   glDepthRange(static_cast<GLclampd>(viewports->minDepth), static_cast<GLclampd>(viewports->maxDepth));
 }
 
-void RHIDynamicRHI::setGraphicsScissorRectangles([[maybe_unused]] uint32_t numberOfScissorRectangles, const RERHI::ScissorRectangle* scissorRectangles)
+void RHIDynamicRHI::setGraphicsScissorRectangles([[maybe_unused]] RECore::uint32 numberOfScissorRectangles, const RERHI::ScissorRectangle* scissorRectangles)
 {
   // Rasterizer (RS) stage
 
@@ -879,10 +879,10 @@ void RHIDynamicRHI::setGraphicsScissorRectangles([[maybe_unused]] uint32_t numbe
   // -> This isn't influenced by the "GL_ARB_clip_control"-extension
 
   // Get the width and height of the current render target
-  uint32_t renderTargetHeight = 1;
+  RECore::uint32 renderTargetHeight = 1;
   if (nullptr != mRenderTarget)
   {
-    uint32_t renderTargetWidth = 1;
+    RECore::uint32 renderTargetWidth = 1;
     mRenderTarget->getWidthAndHeight(renderTargetWidth, renderTargetHeight);
   }
 
@@ -892,7 +892,7 @@ void RHIDynamicRHI::setGraphicsScissorRectangles([[maybe_unused]] uint32_t numbe
   RHI_ASSERT(numberOfScissorRectangles <= 1, "OpenGL supports only one scissor rectangle")
   const GLsizei width  = scissorRectangles->bottomRightX - scissorRectangles->topLeftX;
   const GLsizei height = scissorRectangles->bottomRightY - scissorRectangles->topLeftY;
-  glScissor(static_cast<GLint>(scissorRectangles->topLeftX), static_cast<GLint>(renderTargetHeight - static_cast<uint32_t>(scissorRectangles->topLeftY) - height), width, height);
+  glScissor(static_cast<GLint>(scissorRectangles->topLeftX), static_cast<GLint>(renderTargetHeight - static_cast<RECore::uint32>(scissorRectangles->topLeftY) - height), width, height);
 }
 
 void RHIDynamicRHI::setGraphicsRenderTarget(RERHI::RHIRenderTarget* renderTarget)
@@ -1039,13 +1039,13 @@ void RHIDynamicRHI::setGraphicsRenderTarget(RERHI::RHIRenderTarget* renderTarget
   }
 }
 
-void RHIDynamicRHI::clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil)
+void RHIDynamicRHI::clearGraphics(RECore::uint32 clearFlags, const float color[4], float z, RECore::uint32 stencil)
 {
   // Sanity check
   RHI_ASSERT(z >= 0.0f && z <= 1.0f, "The OpenGL clear graphics z value must be between [0, 1] (inclusive)")
 
   // Get API flags
-  uint32_t flagsApi = 0;
+  RECore::uint32 flagsApi = 0;
   if (clearFlags & RERHI::ClearFlag::COLOR)
   {
     flagsApi |= GL_COLOR_BUFFER_BIT;
@@ -1104,7 +1104,7 @@ void RHIDynamicRHI::clearGraphics(uint32_t clearFlags, const float color[4], flo
   }
 }
 
-void RHIDynamicRHI::drawGraphics(const RERHI::RHIIndirectBuffer& indirectBuffer, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+void RHIDynamicRHI::drawGraphics(const RERHI::RHIIndirectBuffer& indirectBuffer, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_MATCH_CHECK(*this, indirectBuffer)
@@ -1140,7 +1140,7 @@ void RHIDynamicRHI::drawGraphics(const RERHI::RHIIndirectBuffer& indirectBuffer,
 #ifdef DEBUG
       beginDebugEvent("Multi-draw-indirect emulation");
 #endif
-      for (uint32_t i = 0; i < numberOfDraws; ++i)
+      for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
       {
         glDrawArraysIndirect(mOpenGLPrimitiveTopology, reinterpret_cast<void*>(static_cast<uintptr_t>(indirectBufferOffset)));
         indirectBufferOffset += sizeof(RERHI::DrawArguments);
@@ -1152,7 +1152,7 @@ void RHIDynamicRHI::drawGraphics(const RERHI::RHIIndirectBuffer& indirectBuffer,
   }
 }
 
-void RHIDynamicRHI::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+void RHIDynamicRHI::drawGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_ASSERT(nullptr != emulationData, "The OpenGL emulation data must be valid")
@@ -1169,7 +1169,7 @@ void RHIDynamicRHI::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t 
 				beginDebugEvent("Multi-draw-indirect emulation");
 			}
 #endif
-  for (uint32_t i = 0; i < numberOfDraws; ++i)
+  for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
   {
     const RERHI::DrawArguments& drawArguments = *reinterpret_cast<const RERHI::DrawArguments*>(emulationData);
     updateGL_ARB_base_instanceEmulation(drawArguments.startInstanceLocation);
@@ -1203,7 +1203,7 @@ void RHIDynamicRHI::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t 
 #endif
 }
 
-void RHIDynamicRHI::drawIndexedGraphics(const RERHI::RHIIndirectBuffer& indirectBuffer, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+void RHIDynamicRHI::drawIndexedGraphics(const RERHI::RHIIndirectBuffer& indirectBuffer, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_MATCH_CHECK(*this, indirectBuffer)
@@ -1240,8 +1240,8 @@ void RHIDynamicRHI::drawIndexedGraphics(const RERHI::RHIIndirectBuffer& indirect
 #ifdef DEBUG
       beginDebugEvent("Multi-indexed-draw-indirect emulation");
 #endif
-      const uint32_t openGLType = mVertexArray->getIndexBuffer()->getOpenGLType();
-      for (uint32_t i = 0; i < numberOfDraws; ++i)
+      const RECore::uint32 openGLType = mVertexArray->getIndexBuffer()->getOpenGLType();
+      for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
       {
         glDrawElementsIndirect(mOpenGLPrimitiveTopology, openGLType, reinterpret_cast<void*>(static_cast<uintptr_t>(indirectBufferOffset)));
         indirectBufferOffset += sizeof(RERHI::DrawIndexedArguments);
@@ -1253,7 +1253,7 @@ void RHIDynamicRHI::drawIndexedGraphics(const RERHI::RHIIndirectBuffer& indirect
   }
 }
 
-void RHIDynamicRHI::drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+void RHIDynamicRHI::drawIndexedGraphicsEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_ASSERT(nullptr != emulationData, "The OpenGL emulation data must be valid")
@@ -1272,7 +1272,7 @@ void RHIDynamicRHI::drawIndexedGraphicsEmulated(const uint8_t* emulationData, ui
 			}
 #endif
   IndexBuffer* indexBuffer = mVertexArray->getIndexBuffer();
-  for (uint32_t i = 0; i < numberOfDraws; ++i)
+  for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
   {
     const RERHI::DrawIndexedArguments& drawIndexedArguments = *reinterpret_cast<const RERHI::DrawIndexedArguments*>(emulationData);
     updateGL_ARB_base_instanceEmulation(drawIndexedArguments.startInstanceLocation);
@@ -1349,7 +1349,7 @@ void RHIDynamicRHI::drawIndexedGraphicsEmulated(const uint8_t* emulationData, ui
 #endif
 }
 
-void RHIDynamicRHI::drawMeshTasks([[maybe_unused]] const RERHI::RHIIndirectBuffer& indirectBuffer, [[maybe_unused]] uint32_t indirectBufferOffset, [[maybe_unused]] uint32_t numberOfDraws)
+void RHIDynamicRHI::drawMeshTasks([[maybe_unused]] const RERHI::RHIIndirectBuffer& indirectBuffer, [[maybe_unused]] RECore::uint32 indirectBufferOffset, [[maybe_unused]] RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
@@ -1367,7 +1367,7 @@ void RHIDynamicRHI::drawMeshTasks([[maybe_unused]] const RERHI::RHIIndirectBuffe
   */
 }
 
-void RHIDynamicRHI::drawMeshTasksEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
+void RHIDynamicRHI::drawMeshTasksEmulated(const RECore::uint8* emulationData, RECore::uint32 indirectBufferOffset, RECore::uint32 numberOfDraws)
 {
   // Sanity checks
   RHI_ASSERT(nullptr != emulationData, "The OpenGL emulation data must be valid")
@@ -1383,7 +1383,7 @@ void RHIDynamicRHI::drawMeshTasksEmulated(const uint8_t* emulationData, uint32_t
 				beginDebugEvent("Multi-indexed-draw-indirect emulation");
 			}
 #endif
-  for (uint32_t i = 0; i < numberOfDraws; ++i)
+  for (RECore::uint32 i = 0; i < numberOfDraws; ++i)
   {
     const RERHI::DrawMeshTasksArguments& drawMeshTasksArguments = *reinterpret_cast<const RERHI::DrawMeshTasksArguments*>(emulationData);
 
@@ -1456,7 +1456,7 @@ void RHIDynamicRHI::setComputePipelineState(RERHI::RHIComputePipelineState* comp
   }
 }
 
-void RHIDynamicRHI::setComputeResourceGroup(uint32_t rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
+void RHIDynamicRHI::setComputeResourceGroup(RECore::uint32 rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
 {
   // Security checks
 #ifdef DEBUG
@@ -1474,7 +1474,7 @@ void RHIDynamicRHI::setComputeResourceGroup(uint32_t rootParameterIndex, RERHI::
   setResourceGroup(*mComputeRootSignature, rootParameterIndex, resourceGroup);
 }
 
-void RHIDynamicRHI::dispatchCompute(uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ)
+void RHIDynamicRHI::dispatchCompute(RECore::uint32 groupCountX, RECore::uint32 groupCountY, RECore::uint32 groupCountZ)
 {
   // "GL_ARB_compute_shader"-extension required
   if (mExtensions->isGL_ARB_compute_shader())
@@ -1515,11 +1515,11 @@ void RHIDynamicRHI::resolveMultisampleFramebuffer(RERHI::RHIRenderTarget& destin
       const Framebuffer& openGLSourceMultisampleFramebuffer = static_cast<const Framebuffer&>(sourceMultisampleFramebuffer);
 
       // Get the width and height of the destination and source framebuffer
-      uint32_t destinationWidth = 1;
-      uint32_t destinationHeight = 1;
+      RECore::uint32 destinationWidth = 1;
+      RECore::uint32 destinationHeight = 1;
       openGLDestinationFramebuffer.getWidthAndHeight(destinationWidth, destinationHeight);
-      uint32_t sourceWidth = 1;
-      uint32_t sourceHeight = 1;
+      RECore::uint32 sourceWidth = 1;
+      RECore::uint32 sourceHeight = 1;
       openGLSourceMultisampleFramebuffer.getWidthAndHeight(sourceWidth, sourceHeight);
 
       // Resolve multisample
@@ -1714,7 +1714,7 @@ void RHIDynamicRHI::generateMipmaps(RERHI::RHIResource& resource)
 //[-------------------------------------------------------]
 //[ Query                                                 ]
 //[-------------------------------------------------------]
-void RHIDynamicRHI::resetQueryPool([[maybe_unused]] RERHI::RHIQueryPool& queryPool, [[maybe_unused]] uint32_t firstQueryIndex, [[maybe_unused]] uint32_t numberOfQueries)
+void RHIDynamicRHI::resetQueryPool([[maybe_unused]] RERHI::RHIQueryPool& queryPool, [[maybe_unused]] RECore::uint32 firstQueryIndex, [[maybe_unused]] RECore::uint32 numberOfQueries)
 {
   // Sanity checks
   RHI_MATCH_CHECK(*this, queryPool)
@@ -1724,7 +1724,7 @@ void RHIDynamicRHI::resetQueryPool([[maybe_unused]] RERHI::RHIQueryPool& queryPo
   // Nothing to do in here for OpenGL
 }
 
-void RHIDynamicRHI::beginQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryIndex, uint32_t)
+void RHIDynamicRHI::beginQuery(RERHI::RHIQueryPool& queryPool, RECore::uint32 queryIndex, RECore::uint32)
 {
   // Sanity check
   RHI_MATCH_CHECK(*this, queryPool)
@@ -1750,7 +1750,7 @@ void RHIDynamicRHI::beginQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryInd
   }
 }
 
-void RHIDynamicRHI::endQuery(RERHI::RHIQueryPool& queryPool, [[maybe_unused]] uint32_t queryIndex)
+void RHIDynamicRHI::endQuery(RERHI::RHIQueryPool& queryPool, [[maybe_unused]] RECore::uint32 queryIndex)
 {
   // Sanity check
   RHI_MATCH_CHECK(*this, queryPool)
@@ -1776,7 +1776,7 @@ void RHIDynamicRHI::endQuery(RERHI::RHIQueryPool& queryPool, [[maybe_unused]] ui
   }
 }
 
-void RHIDynamicRHI::writeTimestampQuery(RERHI::RHIQueryPool& queryPool, uint32_t queryIndex)
+void RHIDynamicRHI::writeTimestampQuery(RERHI::RHIQueryPool& queryPool, RECore::uint32 queryIndex)
 {
   // Sanity check
   RHI_MATCH_CHECK(*this, queryPool)
@@ -1863,9 +1863,9 @@ bool RHIDynamicRHI::isDebugEnabled()
 //[-------------------------------------------------------]
 //[ Shader language                                       ]
 //[-------------------------------------------------------]
-uint32_t RHIDynamicRHI::getNumberOfShaderLanguages() const
+RECore::uint32 RHIDynamicRHI::getNumberOfShaderLanguages() const
 {
-  uint32_t numberOfShaderLanguages = 0;
+  RECore::uint32 numberOfShaderLanguages = 0;
 
   // "GL_ARB_shader_objects" or "GL_ARB_separate_shader_objects" required
   if (mExtensions->isGL_ARB_shader_objects() || mExtensions->isGL_ARB_separate_shader_objects())
@@ -1878,7 +1878,7 @@ uint32_t RHIDynamicRHI::getNumberOfShaderLanguages() const
   return numberOfShaderLanguages;
 }
 
-const char* RHIDynamicRHI::getShaderLanguageName(uint32_t index) const
+const char* RHIDynamicRHI::getShaderLanguageName(RECore::uint32 index) const
 {
   RHI_ASSERT(index < getNumberOfShaderLanguages(), "OpenGL: Shader language index is out-of-bounds")
 
@@ -1949,12 +1949,12 @@ RERHI::RHIShaderLanguage* RHIDynamicRHI::getShaderLanguage(const char* shaderLan
 //[-------------------------------------------------------]
 //[ Resource creation                                     ]
 //[-------------------------------------------------------]
-RERHI::RHIRenderPass* RHIDynamicRHI::createRenderPass(uint32_t numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
+RERHI::RHIRenderPass* RHIDynamicRHI::createRenderPass(RECore::uint32 numberOfColorAttachments, const RERHI::TextureFormat::Enum* colorAttachmentTextureFormats, RERHI::TextureFormat::Enum depthStencilAttachmentTextureFormat, RECore::uint8 numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 {
   return RHI_NEW(mContext, RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 }
 
-RERHI::RHIQueryPool* RHIDynamicRHI::createQueryPool(RERHI::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
+RERHI::RHIQueryPool* RHIDynamicRHI::createQueryPool(RERHI::QueryType queryType, RECore::uint32 numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 {
   RHI_ASSERT(numberOfQueries > 0, "OpenGL: Number of queries mustn't be zero")
   switch (queryType)
@@ -2048,7 +2048,7 @@ RERHI::RHIGraphicsPipelineState* RHIDynamicRHI::createGraphicsPipelineState(cons
   RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "OpenGL: Invalid graphics pipeline state render pass")
 
   // Create graphics pipeline state
-  uint16_t id = 0;
+  RECore::uint16 id = 0;
   if (GraphicsPipelineStateMakeId.createID(id))
   {
     return RHI_NEW(mContext, GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -2071,7 +2071,7 @@ RERHI::RHIComputePipelineState* RHIDynamicRHI::createComputePipelineState(RERHI:
   RHI_MATCH_CHECK(*this, computeShader)
 
   // Create the compute pipeline state
-  uint16_t id = 0;
+  RECore::uint16 id = 0;
   if ((mExtensions->isGL_ARB_separate_shader_objects() || mExtensions->isGL_ARB_shader_objects()) && ComputePipelineStateMakeId.createID(id))
   {
     // Create the compute pipeline state
@@ -2120,7 +2120,7 @@ RERHI::RHISamplerState* RHIDynamicRHI::createSamplerState(const RERHI::SamplerSt
 //[-------------------------------------------------------]
 //[ Resource handling                                     ]
 //[-------------------------------------------------------]
-bool RHIDynamicRHI::map(RERHI::RHIResource& resource, uint32_t, RERHI::MapType mapType, uint32_t, RERHI::MappedSubresource& mappedSubresource)
+bool RHIDynamicRHI::map(RERHI::RHIResource& resource, RECore::uint32, RERHI::MapType mapType, RECore::uint32, RERHI::MappedSubresource& mappedSubresource)
 {
   // Evaluate the resource type
   switch (resource.getResourceType())
@@ -2264,7 +2264,7 @@ bool RHIDynamicRHI::map(RERHI::RHIResource& resource, uint32_t, RERHI::MapType m
   }
 }
 
-void RHIDynamicRHI::unmap(RERHI::RHIResource& resource, uint32_t)
+void RHIDynamicRHI::unmap(RERHI::RHIResource& resource, RECore::uint32)
 {
   // Evaluate the resource type
   switch (resource.getResourceType())
@@ -2348,7 +2348,7 @@ void RHIDynamicRHI::unmap(RERHI::RHIResource& resource, uint32_t)
       // Unmap pixel unpack buffer
       const Texture3D& texture3D = static_cast<Texture3D&>(resource);
       const RERHI::TextureFormat::Enum textureFormat = texture3D.getTextureFormat();
-      const uint32_t openGLPixelUnpackBuffer = texture3D.getOpenGLPixelUnpackBuffer();
+      const RECore::uint32 openGLPixelUnpackBuffer = texture3D.getOpenGLPixelUnpackBuffer();
       ::detail::unmapBuffer(*mExtensions, GL_PIXEL_UNPACK_BUFFER_ARB, GL_PIXEL_UNPACK_BUFFER_BINDING_ARB, openGLPixelUnpackBuffer);
 
       // Backup the currently set alignment and currently bound OpenGL pixel unpack buffer
@@ -2441,11 +2441,11 @@ void RHIDynamicRHI::unmap(RERHI::RHIResource& resource, uint32_t)
   }
 }
 
-bool RHIDynamicRHI::getQueryPoolResults(RERHI::RHIQueryPool& queryPool, [[maybe_unused]] uint32_t numberOfDataBytes, uint8_t* data, uint32_t firstQueryIndex, uint32_t numberOfQueries, uint32_t strideInBytes, uint32_t queryResultFlags)
+bool RHIDynamicRHI::getQueryPoolResults(RERHI::RHIQueryPool& queryPool, [[maybe_unused]] RECore::uint32 numberOfDataBytes, RECore::uint8* data, RECore::uint32 firstQueryIndex, RECore::uint32 numberOfQueries, RECore::uint32 strideInBytes, RECore::uint32 queryResultFlags)
 {
   // Sanity checks
   RHI_MATCH_CHECK(*this, queryPool)
-  RHI_ASSERT(numberOfDataBytes >= sizeof(std::uint64_t), "OpenGL out-of-memory query access")
+  RHI_ASSERT(numberOfDataBytes >= sizeof(std::RECore::uint64), "OpenGL out-of-memory query access")
   RHI_ASSERT(1 == numberOfQueries || strideInBytes > 0, "OpenGL invalid stride in bytes")
   RHI_ASSERT(numberOfDataBytes >= strideInBytes * numberOfQueries, "OpenGL out-of-memory query access")
   RHI_ASSERT(nullptr != data, "OpenGL out-of-memory query access")
@@ -2462,9 +2462,9 @@ bool RHIDynamicRHI::getQueryPoolResults(RERHI::RHIQueryPool& queryPool, [[maybe_
     case RERHI::QueryType::OCCLUSION:
     case RERHI::QueryType::TIMESTAMP:	// OpenGL return the time in nanoseconds
     {
-      uint8_t* currentData = data;
+      RECore::uint8* currentData = data;
       const GLuint* openGLQueries = static_cast<const OcclusionTimestampQueryPool&>(openGLQueryPool).getOpenGLQueries();
-      for (uint32_t i = 0; i  < numberOfQueries; ++i)
+      for (RECore::uint32 i = 0; i  < numberOfQueries; ++i)
       {
         const GLuint openGLQuery = openGLQueries[firstQueryIndex + i];
         GLuint openGLQueryResult = GL_FALSE;
@@ -2476,7 +2476,7 @@ bool RHIDynamicRHI::getQueryPoolResults(RERHI::RHIQueryPool& queryPool, [[maybe_
         if (GL_TRUE == openGLQueryResult)
         {
           glGetQueryObjectuivARB(openGLQuery, GL_QUERY_RESULT_ARB, &openGLQueryResult);
-          *reinterpret_cast<uint64_t*>(currentData) = openGLQueryResult;
+          *reinterpret_cast<RECore::uint64*>(currentData) = openGLQueryResult;
         }
         else
         {
@@ -2518,7 +2518,7 @@ void RHIDynamicRHI::dispatchCommandBuffer(const RERHI::RHICommandBuffer& command
 //[ Private static methods                                ]
 //[-------------------------------------------------------]
 #ifdef DEBUG
-void RHIDynamicRHI::debugMessageCallback(uint32_t source, uint32_t type, uint32_t id, uint32_t severity, int, const char* message, const void* userParam)
+void RHIDynamicRHI::debugMessageCallback(RECore::uint32 source, RECore::uint32 type, RECore::uint32 id, RECore::uint32 severity, int, const char* message, const void* userParam)
 		{
 			// Source to string
 			char debugSource[20 + 1]{0};	// +1 for terminating zero
@@ -2629,13 +2629,13 @@ void RHIDynamicRHI::debugMessageCallback(uint32_t source, uint32_t type, uint32_
 
 			// Print into log
       RE_LOG(Critical, std::string(message))
-			//if (static_cast<const OpenGLRhi*>(userParam)->getContext().getLog().print(logType, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "OpenGL debug message\tSource:\"%s\"\tType:\"%s\"\tID:\"%u\"\tSeverity:\"%s\"\tMessage:\"%s\"", debugSource, debugType, id, debugSeverity, message))
+			//if (static_cast<const OpenGLRhi*>(userParam)->getContext().getLog().print(logType, nullptr, __FILE__, static_cast<RECore::uint32>(__LINE__), "OpenGL debug message\tSource:\"%s\"\tType:\"%s\"\tID:\"%u\"\tSeverity:\"%s\"\tMessage:\"%s\"", debugSource, debugType, id, debugSeverity, message))
 			{
 			//	DEBUG_BREAK;
 			}
 		}
 #else
-void RHIDynamicRHI::debugMessageCallback(uint32_t, uint32_t, uint32_t, uint32_t, int, const char*, const void*)
+void RHIDynamicRHI::debugMessageCallback(RECore::uint32, RECore::uint32, RECore::uint32, RECore::uint32, int, const char*, const void*)
 {
   // Nothing here
 }
@@ -2669,17 +2669,17 @@ void RHIDynamicRHI::initializeCapabilities()
   if (mExtensions->isGL_ARB_draw_buffers())
   {
     glGetIntegerv(GL_MAX_DRAW_BUFFERS_ARB, &openGLValue);
-    mCapabilities.maximumNumberOfSimultaneousRenderTargets = static_cast<uint32_t>(openGLValue);
+    mCapabilities.maximumNumberOfSimultaneousRenderTargets = static_cast<RECore::uint32>(openGLValue);
   }
   else
   {
     // "GL_ARB_framebuffer_object"-extension for render to texture required
-    mCapabilities.maximumNumberOfSimultaneousRenderTargets = static_cast<uint32_t>(mExtensions->isGL_ARB_framebuffer_object());
+    mCapabilities.maximumNumberOfSimultaneousRenderTargets = static_cast<RECore::uint32>(mExtensions->isGL_ARB_framebuffer_object());
   }
 
   // Maximum texture dimension
   glGetIntegerv(GL_MAX_TEXTURE_SIZE, &openGLValue);
-  mCapabilities.maximumTextureDimension = static_cast<uint32_t>(openGLValue);
+  mCapabilities.maximumTextureDimension = static_cast<RECore::uint32>(openGLValue);
 
   // Maximum number of 1D texture array slices (usually 512, in case there's no support for 1D texture arrays it's 0)
   // Maximum number of 2D texture array slices (usually 512, in case there's no support for 2D texture arrays it's 0)
@@ -2687,9 +2687,9 @@ void RHIDynamicRHI::initializeCapabilities()
   if (mExtensions->isGL_EXT_texture_array())
   {
     glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS_EXT, &openGLValue);
-    mCapabilities.maximumNumberOf1DTextureArraySlices = static_cast<uint32_t>(openGLValue);
-    mCapabilities.maximumNumberOf2DTextureArraySlices = static_cast<uint32_t>(openGLValue);
-    mCapabilities.maximumNumberOfCubeTextureArraySlices = 0;	// TODO(naetherm) Implement me		 static_cast<uint32_t>(openGLValue);
+    mCapabilities.maximumNumberOf1DTextureArraySlices = static_cast<RECore::uint32>(openGLValue);
+    mCapabilities.maximumNumberOf2DTextureArraySlices = static_cast<RECore::uint32>(openGLValue);
+    mCapabilities.maximumNumberOfCubeTextureArraySlices = 0;	// TODO(naetherm) Implement me		 static_cast<RECore::uint32>(openGLValue);
   }
   else
   {
@@ -2702,7 +2702,7 @@ void RHIDynamicRHI::initializeCapabilities()
   if (mExtensions->isGL_ARB_texture_buffer_object())
   {
     glGetIntegerv(GL_MAX_TEXTURE_BUFFER_SIZE_EXT, &openGLValue);
-    mCapabilities.maximumTextureBufferSize = static_cast<uint32_t>(openGLValue);
+    mCapabilities.maximumTextureBufferSize = static_cast<RECore::uint32>(openGLValue);
   }
   else
   {
@@ -2713,7 +2713,7 @@ void RHIDynamicRHI::initializeCapabilities()
   if (mExtensions->isGL_ARB_shader_storage_buffer_object())
   {
     glGetIntegerv(GL_MAX_SHADER_STORAGE_BLOCK_SIZE, &openGLValue);
-    mCapabilities.maximumStructuredBufferSize = static_cast<uint32_t>(openGLValue);
+    mCapabilities.maximumStructuredBufferSize = static_cast<RECore::uint32>(openGLValue);
   }
   else
   {
@@ -2735,7 +2735,7 @@ void RHIDynamicRHI::initializeCapabilities()
   if (mExtensions->isGL_ARB_uniform_buffer_object())
   {
     glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &openGLValue);
-    mCapabilities.maximumUniformBufferSize = static_cast<uint32_t>(openGLValue);
+    mCapabilities.maximumUniformBufferSize = static_cast<RECore::uint32>(openGLValue);
   }
   else
   {
@@ -2751,7 +2751,7 @@ void RHIDynamicRHI::initializeCapabilities()
       // Limit to known maximum we can test, even if e.g. GeForce 980m reports 32 here
       openGLValue = 8;
     }
-    mCapabilities.maximumNumberOfMultisamples = static_cast<uint8_t>(openGLValue);
+    mCapabilities.maximumNumberOfMultisamples = static_cast<RECore::uint8>(openGLValue);
   }
   else
   {
@@ -2761,7 +2761,7 @@ void RHIDynamicRHI::initializeCapabilities()
   // Maximum anisotropy (always at least 1, usually 16)
   // -> "GL_EXT_texture_filter_anisotropic"-extension
   glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &openGLValue);
-  mCapabilities.maximumAnisotropy = static_cast<uint8_t>(openGLValue);
+  mCapabilities.maximumAnisotropy = static_cast<RECore::uint8>(openGLValue);
 
   // Coordinate system
   // -> If the "GL_ARB_clip_control"-extension is available: Left-handed coordinate system with clip space depth value range 0..1
@@ -2796,7 +2796,7 @@ void RHIDynamicRHI::initializeCapabilities()
   if (mExtensions->isGL_ARB_tessellation_shader())
   {
     glGetIntegerv(GL_MAX_PATCH_VERTICES, &openGLValue);
-    mCapabilities.maximumNumberOfPatchVertices = static_cast<uint32_t>(openGLValue);
+    mCapabilities.maximumNumberOfPatchVertices = static_cast<RECore::uint32>(openGLValue);
   }
   else
   {
@@ -2807,7 +2807,7 @@ void RHIDynamicRHI::initializeCapabilities()
   if (mExtensions->isGL_ARB_geometry_shader4())
   {
     glGetIntegerv(GL_MAX_GEOMETRY_OUTPUT_VERTICES_ARB, &openGLValue);
-    mCapabilities.maximumNumberOfGsOutputVertices = static_cast<uint32_t>(openGLValue);
+    mCapabilities.maximumNumberOfGsOutputVertices = static_cast<RECore::uint32>(openGLValue);
   }
   else
   {
@@ -2850,7 +2850,7 @@ void RHIDynamicRHI::unsetGraphicsVertexArray()
   }
 }
 
-void RHIDynamicRHI::setResourceGroup(const RootSignature& rootSignature, uint32_t rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
+void RHIDynamicRHI::setResourceGroup(const RootSignature& rootSignature, RECore::uint32 rootParameterIndex, RERHI::RHIResourceGroup* resourceGroup)
 {
   if (nullptr != resourceGroup)
   {
@@ -2859,10 +2859,10 @@ void RHIDynamicRHI::setResourceGroup(const RootSignature& rootSignature, uint32_
 
     // Set resource group
     const ResourceGroup* openGLResourceGroup = static_cast<ResourceGroup*>(resourceGroup);
-    const uint32_t numberOfResources = openGLResourceGroup->getNumberOfResources();
+    const RECore::uint32 numberOfResources = openGLResourceGroup->getNumberOfResources();
     RERHI::RHIResource** resources = openGLResourceGroup->getResources();
     const RERHI::RootParameter& rootParameter = rootSignature.getRootSignature().parameters[rootParameterIndex];
-    for (uint32_t resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
+    for (RECore::uint32 resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
     {
       RERHI::RHIResource* resource = *resources;
       RHI_ASSERT(nullptr != reinterpret_cast<const RERHI::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
@@ -3432,7 +3432,7 @@ void RHIDynamicRHI::setOpenGLGraphicsProgram(RERHI::RHIGraphicsProgram* graphics
     {
       // Bind the graphics program pipeline, if required
       GraphicsProgramSeparate* graphicsProgramSeparate = static_cast<GraphicsProgramSeparate*>(graphicsProgram);
-      const uint32_t openGLProgramPipeline = graphicsProgramSeparate->getOpenGLProgramPipeline();
+      const RECore::uint32 openGLProgramPipeline = graphicsProgramSeparate->getOpenGLProgramPipeline();
       if (openGLProgramPipeline != mOpenGLProgramPipeline)
       {
         mOpenGLProgramPipeline = openGLProgramPipeline;
@@ -3457,7 +3457,7 @@ void RHIDynamicRHI::setOpenGLGraphicsProgram(RERHI::RHIGraphicsProgram* graphics
     {
       // Bind the graphics program, if required
       const GraphicsProgramMonolithic* graphicsProgramMonolithic = static_cast<GraphicsProgramMonolithic*>(graphicsProgram);
-      const uint32_t openGLProgram = graphicsProgramMonolithic->getOpenGLProgram();
+      const RECore::uint32 openGLProgram = graphicsProgramMonolithic->getOpenGLProgram();
       if (openGLProgram != mOpenGLProgram)
       {
         mOpenGLProgram = mOpenGLVertexProgram = openGLProgram;
@@ -3505,7 +3505,7 @@ void RHIDynamicRHI::setOpenGLComputePipelineState(ComputePipelineState* computeP
     if (mExtensions->isGL_ARB_separate_shader_objects())
     {
       // Bind the program pipeline, if required
-      const uint32_t openGLProgramPipeline = static_cast<ComputePipelineStateSeparate*>(computePipelineState)->getOpenGLProgramPipeline();
+      const RECore::uint32 openGLProgramPipeline = static_cast<ComputePipelineStateSeparate*>(computePipelineState)->getOpenGLProgramPipeline();
       if (openGLProgramPipeline != mOpenGLProgramPipeline)
       {
         mOpenGLProgramPipeline = openGLProgramPipeline;
@@ -3518,7 +3518,7 @@ void RHIDynamicRHI::setOpenGLComputePipelineState(ComputePipelineState* computeP
     else if (mExtensions->isGL_ARB_shader_objects())
     {
       // Bind the program, if required
-      const uint32_t openGLProgram = static_cast<ComputePipelineStateMonolithic*>(computePipelineState)->getOpenGLProgram();
+      const RECore::uint32 openGLProgram = static_cast<ComputePipelineStateMonolithic*>(computePipelineState)->getOpenGLProgram();
       if (openGLProgram != mOpenGLProgram)
       {
         mOpenGLProgram = openGLProgram;
@@ -3556,7 +3556,7 @@ void RHIDynamicRHI::setOpenGLComputePipelineState(ComputePipelineState* computeP
   }
 }
 
-void RHIDynamicRHI::updateGL_ARB_base_instanceEmulation(uint32_t startInstanceLocation)
+void RHIDynamicRHI::updateGL_ARB_base_instanceEmulation(RECore::uint32 startInstanceLocation)
 {
   if (mDrawIdUniformLocation != -1 && 0 != mOpenGLVertexProgram && mCurrentStartInstanceLocation != startInstanceLocation)
   {

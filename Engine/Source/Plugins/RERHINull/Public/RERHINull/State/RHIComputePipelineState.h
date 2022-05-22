@@ -72,7 +72,7 @@ public:
   *  @param[in] id
   *    The unique compact compute pipeline state ID
   */
-  ComputePipelineState(RHIDynamicRHI& nullRhi, RERHI::RHIRootSignature& rootSignature, RERHI::RHIComputeShader& computeShader, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  ComputePipelineState(RHIDynamicRHI& nullRhi, RERHI::RHIRootSignature& rootSignature, RERHI::RHIComputeShader& computeShader, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief

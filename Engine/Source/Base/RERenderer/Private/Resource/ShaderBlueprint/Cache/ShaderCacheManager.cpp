@@ -129,7 +129,7 @@ namespace RERenderer
 						// Generate the shader source code ID
 						// -> Especially in complex shaders, there are situations where different shader combinations result in one and the same shader source code
 						// -> Shader compilation is considered to be expensive, so we need to be pretty sure that we really need to perform this heavy work
-						const ShaderSourceCodeId shaderSourceCodeId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(sourceCode.c_str()), static_cast<uint32_t>(sourceCode.size()));
+						const ShaderSourceCodeId shaderSourceCodeId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(sourceCode.c_str()), static_cast<RECore::uint32>(sourceCode.size()));
 						ShaderCacheByShaderSourceCodeId::const_iterator shaderSourceCodeIdIterator = mShaderCacheByShaderSourceCodeId.find(shaderSourceCodeId);
 						if (shaderSourceCodeIdIterator != mShaderCacheByShaderSourceCodeId.cend())
 						{
@@ -258,7 +258,7 @@ namespace RERenderer
 						// Generate the shader source code ID
 						// -> Especially in complex shaders, there are situations where different shader combinations result in one and the same shader source code
 						// -> Shader compilation is considered to be expensive, so we need to be pretty sure that we really need to perform this heavy work
-						const ShaderSourceCodeId shaderSourceCodeId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(sourceCode.c_str()), static_cast<uint32_t>(sourceCode.size()));
+						const ShaderSourceCodeId shaderSourceCodeId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(sourceCode.c_str()), static_cast<RECore::uint32>(sourceCode.size()));
 						ShaderCacheByShaderSourceCodeId::const_iterator shaderSourceCodeIdIterator = mShaderCacheByShaderSourceCodeId.find(shaderSourceCodeId);
 						if (shaderSourceCodeIdIterator != mShaderCacheByShaderSourceCodeId.cend())
 						{
@@ -330,41 +330,41 @@ namespace RERenderer
 		const RECore::AssetManager& assetManager = mShaderBlueprintResourceManager.getRenderer().getAssetManager();
 
 		{ // Load shader caches
-			uint32_t numberOfShaderCaches = RECore::getInvalid<uint32_t>();
-			file.read(&numberOfShaderCaches, sizeof(uint32_t));
+			RECore::uint32 numberOfShaderCaches = RECore::getInvalid<RECore::uint32>();
+			file.read(&numberOfShaderCaches, sizeof(RECore::uint32));
 			mShaderCacheByShaderCacheId.reserve(numberOfShaderCaches);
-			std::vector<uint8_t> bytecode;
+			std::vector<RECore::uint8> bytecode;
 			AssetIds assetIds;
-			for (uint32_t i = 0; i < numberOfShaderCaches; ++i)
+			for (RECore::uint32 i = 0; i < numberOfShaderCaches; ++i)
 			{
 				ShaderCache* shaderCache = nullptr;
 
 				// Load shader cache
 				ShaderCacheId shaderCacheId = RECore::getInvalid<ShaderCacheId>();
 				file.read(&shaderCacheId, sizeof(ShaderCacheId));
-				uint32_t numberOfBytes = RECore::getInvalid<uint32_t>();
-				file.read(&numberOfBytes, sizeof(uint32_t));
+				RECore::uint32 numberOfBytes = RECore::getInvalid<RECore::uint32>();
+				file.read(&numberOfBytes, sizeof(RECore::uint32));
 				if (RECore::isValid(numberOfBytes))
 				{
 					// Master shader cache
 
 					// Load list of IDs of the assets (shader blueprint, shader piece) which took part in the shader cache creation
-					uint32_t numberOfAssetIds = RECore::getInvalid<uint32_t>();
-					file.read(&numberOfAssetIds, sizeof(uint32_t));
+					RECore::uint32 numberOfAssetIds = RECore::getInvalid<RECore::uint32>();
+					file.read(&numberOfAssetIds, sizeof(RECore::uint32));
 					ASSERT(0 != numberOfAssetIds, "Invalid number of asset IDs")
 					assetIds.resize(numberOfAssetIds);
-					file.read(assetIds.data(), sizeof(uint32_t) * numberOfAssetIds);
-					uint64_t combinedAssetFileHashes = RECore::getInvalid<uint64_t>();
-					file.read(&combinedAssetFileHashes, sizeof(uint64_t));
+					file.read(assetIds.data(), sizeof(RECore::uint32) * numberOfAssetIds);
+					RECore::uint64 combinedAssetFileHashes = RECore::getInvalid<RECore::uint64>();
+					file.read(&combinedAssetFileHashes, sizeof(RECore::uint64));
 
 					// Check whether or not the shader cache is still valid
-					uint64_t currentCombinedAssetFileHashes = RECore::Math::FNV1a_INITIAL_HASH_64;
+					RECore::uint64 currentCombinedAssetFileHashes = RECore::Math::FNV1a_INITIAL_HASH_64;
 					for (AssetId assetId : assetIds)
 					{
 						const RECore::Asset* asset = assetManager.tryGetAssetByAssetId(assetId);
 						if (nullptr != asset)
 						{
-							currentCombinedAssetFileHashes = RECore::Math::calculateFNV1a64(reinterpret_cast<const uint8_t*>(&asset->fileHash), sizeof(uint64_t), currentCombinedAssetFileHashes);
+							currentCombinedAssetFileHashes = RECore::Math::calculateFNV1a64(reinterpret_cast<const RECore::uint8*>(&asset->fileHash), sizeof(RECore::uint64), currentCombinedAssetFileHashes);
 						}
 					}
 					if (currentCombinedAssetFileHashes != combinedAssetFileHashes)
@@ -428,10 +428,10 @@ namespace RERenderer
 		}
 
 		{ // Load shader source code ID to shader cache ID mapping
-			uint32_t numberOfElements = RECore::getInvalid<uint32_t>();
-			file.read(&numberOfElements, sizeof(uint32_t));
+			RECore::uint32 numberOfElements = RECore::getInvalid<RECore::uint32>();
+			file.read(&numberOfElements, sizeof(RECore::uint32));
 			mShaderCacheByShaderSourceCodeId.reserve(numberOfElements);
-			for (uint32_t i = 0; i < numberOfElements; ++i)
+			for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 			{
 				ShaderSourceCodeId shaderSourceCodeId = RECore::getInvalid<ShaderSourceCodeId>();
 				file.read(&shaderSourceCodeId, sizeof(ShaderSourceCodeId));
@@ -453,8 +453,8 @@ namespace RERenderer
 	{
 		{ // Save shader caches
 		  // -> Shader caches with a master shader cache must come last to ensure the master is already loaded
-			const uint32_t numberOfShaderCaches = static_cast<uint32_t>(mShaderCacheByShaderCacheId.size());
-			file.write(&numberOfShaderCaches, sizeof(uint32_t));
+			const RECore::uint32 numberOfShaderCaches = static_cast<RECore::uint32>(mShaderCacheByShaderCacheId.size());
+			file.write(&numberOfShaderCaches, sizeof(RECore::uint32));
 			std::vector<const ShaderCache*> shaderCachesWithMaster;
 			for (auto& shaderCacheElement : mShaderCacheByShaderCacheId)
 			{
@@ -463,17 +463,17 @@ namespace RERenderer
 				{
 					// Master shader cache
 					const RERHI::ShaderBytecode& shaderBytecode = shaderCache->mShaderBytecode;
-					const uint32_t numberOfBytes = shaderBytecode.getNumberOfBytes();
+					const RECore::uint32 numberOfBytes = shaderBytecode.getNumberOfBytes();
 					ASSERT(0 != numberOfBytes, "A shader cache must always have a valid shader bytecode, else it's a pointless shader cache. This might be the result of a shader compilation error.")
 					file.write(&shaderCache->mShaderCacheId, sizeof(ShaderCacheId));
-					file.write(&numberOfBytes, sizeof(uint32_t));
+					file.write(&numberOfBytes, sizeof(RECore::uint32));
 
 					// Write list of IDs of the assets (shader blueprint, shader piece) which took part in the shader cache creation
-					const uint32_t numberOfAssetIds = static_cast<uint32_t>(shaderCache->mAssetIds.size());
+					const RECore::uint32 numberOfAssetIds = static_cast<RECore::uint32>(shaderCache->mAssetIds.size());
 					ASSERT(0 != numberOfAssetIds, "Invalid number of asset IDs")
-					file.write(&numberOfAssetIds, sizeof(uint32_t));
-					file.write(shaderCache->mAssetIds.data(), sizeof(uint32_t) * numberOfAssetIds);
-					file.write(&shaderCache->mCombinedAssetFileHashes, sizeof(uint64_t));
+					file.write(&numberOfAssetIds, sizeof(RECore::uint32));
+					file.write(shaderCache->mAssetIds.data(), sizeof(RECore::uint32) * numberOfAssetIds);
+					file.write(&shaderCache->mCombinedAssetFileHashes, sizeof(RECore::uint64));
 
 					// Write shader bytecode
 					if (0 != numberOfBytes)
@@ -491,15 +491,15 @@ namespace RERenderer
 				const ShaderCache* masterShaderCache = shaderCache->getMasterShaderCache();
 				ASSERT(nullptr != masterShaderCache->getShaderPtr().getPointer(), "A shader cache must always have a valid shader instance, else it's a pointless shader cache")
 				file.write(&shaderCache->mShaderCacheId, sizeof(ShaderCacheId));
-				const uint32_t numberOfBytes = RECore::getInvalid<uint32_t>();
-				file.write(&numberOfBytes, sizeof(uint32_t));
+				const RECore::uint32 numberOfBytes = RECore::getInvalid<RECore::uint32>();
+				file.write(&numberOfBytes, sizeof(RECore::uint32));
 				file.write(&masterShaderCache->mShaderCacheId, sizeof(ShaderCacheId));
 			}
 		}
 
 		{ // Save shader source code ID to shader cache ID mapping
-			const uint32_t numberOfElements = static_cast<uint32_t>(mShaderCacheByShaderSourceCodeId.size());
-			file.write(&numberOfElements, sizeof(uint32_t));
+			const RECore::uint32 numberOfElements = static_cast<RECore::uint32>(mShaderCacheByShaderSourceCodeId.size());
+			file.write(&numberOfElements, sizeof(RECore::uint32));
 			for (auto& element : mShaderCacheByShaderSourceCodeId)
 			{
 				file.write(&element.first, sizeof(ShaderSourceCodeId));

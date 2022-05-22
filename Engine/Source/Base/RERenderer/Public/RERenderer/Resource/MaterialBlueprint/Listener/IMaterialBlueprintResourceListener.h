@@ -99,15 +99,15 @@ namespace RERenderer
 		virtual void onStartup(const IRenderer& renderer) = 0;	// Becomes the currently used material blueprint resource listener
 		virtual void onShutdown(const IRenderer& renderer) = 0;	// Is no longer the currently used material blueprint resource listener
 		virtual void beginFillUnknown() = 0;
-		[[nodiscard]] virtual bool fillUnknownValue(uint32_t referenceValue, uint8_t* buffer, uint32_t numberOfBytes) = 0;
+		[[nodiscard]] virtual bool fillUnknownValue(RECore::uint32 referenceValue, RECore::uint8* buffer, RECore::uint32 numberOfBytes) = 0;
 		virtual void beginFillPass(IRenderer& renderer, const RERHI::RHIRenderTarget* renderTarget, const CompositorContextData& compositorContextData, PassBufferManager::PassData& passData) = 0;	// The render target to render into must be valid for graphics pipeline and must be a null pointer for compute pipeline
-		[[nodiscard]] virtual bool fillPassValue(uint32_t referenceValue, uint8_t* buffer, uint32_t numberOfBytes) = 0;
+		[[nodiscard]] virtual bool fillPassValue(RECore::uint32 referenceValue, RECore::uint8* buffer, RECore::uint32 numberOfBytes) = 0;
 		virtual void beginFillMaterial() = 0;
-		[[nodiscard]] virtual bool fillMaterialValue(uint32_t referenceValue, uint8_t* buffer, uint32_t numberOfBytes) = 0;
+		[[nodiscard]] virtual bool fillMaterialValue(RECore::uint32 referenceValue, RECore::uint8* buffer, RECore::uint32 numberOfBytes) = 0;
 
 		// TODO(naetherm) It might make sense to remove those instance methods from the interface and directly hard-code them for performance reasons. Profiling later on with real world scenes will show.
 		virtual void beginFillInstance(const PassBufferManager::PassData& passData, const RECore::Transform& objectSpaceToWorldSpaceTransform, MaterialTechnique& materialTechnique) = 0;
-		[[nodiscard]] virtual bool fillInstanceValue(uint32_t referenceValue, uint8_t* buffer, uint32_t numberOfBytes, uint32_t instanceTextureBufferStartIndex) = 0;
+		[[nodiscard]] virtual bool fillInstanceValue(RECore::uint32 referenceValue, RECore::uint8* buffer, RECore::uint32 numberOfBytes, RECore::uint32 instanceTextureBufferStartIndex) = 0;
 
 
 	};

@@ -74,7 +74,7 @@ public:
   *  @param[in] id
   *    The unique compact vertex array ID
   */
-  VertexArray(RHIDynamicRHI& vulkanRhi, const RERHI::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
+  VertexArray(RHIDynamicRHI& vulkanRhi, const RERHI::VertexAttributes& vertexAttributes, RECore::uint32 numberOfVertexBuffers, const RERHI::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT);
 
   /**
   *  @brief
@@ -128,9 +128,9 @@ private:
 private:
   IndexBuffer*   mIndexBuffer;		///< Optional index buffer to use, can be a null pointer, the vertex array instance keeps a reference to the index buffer
   // Vulkan input slots
-  uint32_t	   mNumberOfSlots;		///< Number of used Vulkan input slots
+  RECore::uint32	   mNumberOfSlots;		///< Number of used Vulkan input slots
   VkBuffer*	   mVertexVkBuffers;	///< Vulkan vertex buffers
-  uint32_t*	   mStrides;			///< Strides in bytes, if "mVertexVkBuffers" is no null pointer this is no null pointer as well
+  RECore::uint32*	   mStrides;			///< Strides in bytes, if "mVertexVkBuffers" is no null pointer this is no null pointer as well
   VkDeviceSize*  mOffsets;			///< Offsets in bytes, if "mVertexVkBuffers" is no null pointer this is no null pointer as well
   // For proper vertex buffer reference counter behaviour
   VertexBuffer** mVertexBuffers;		///< Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer

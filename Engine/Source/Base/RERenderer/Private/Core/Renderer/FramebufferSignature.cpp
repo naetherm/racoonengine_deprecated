@@ -36,18 +36,18 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	FramebufferSignature::FramebufferSignature(uint8_t numberOfColorAttachments, const FramebufferSignatureAttachment colorFramebufferSignatureAttachments[8], const FramebufferSignatureAttachment& depthStencilFramebufferSignatureAttachment) :
+	FramebufferSignature::FramebufferSignature(RECore::uint8 numberOfColorAttachments, const FramebufferSignatureAttachment colorFramebufferSignatureAttachments[8], const FramebufferSignatureAttachment& depthStencilFramebufferSignatureAttachment) :
 		mNumberOfColorAttachments(numberOfColorAttachments),
 		mColorFramebufferSignatureAttachments{colorFramebufferSignatureAttachments[0], colorFramebufferSignatureAttachments[1], colorFramebufferSignatureAttachments[2], colorFramebufferSignatureAttachments[3], colorFramebufferSignatureAttachments[4], colorFramebufferSignatureAttachments[5], colorFramebufferSignatureAttachments[6], colorFramebufferSignatureAttachments[7]},
 		mDepthStencilFramebufferSignatureAttachment(depthStencilFramebufferSignatureAttachment),
 		mFramebufferSignatureId(RECore::Math::FNV1a_INITIAL_HASH_32)
 	{
-		mFramebufferSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&mNumberOfColorAttachments), sizeof(uint32_t), mFramebufferSignatureId);
-		for (uint8_t i = 0; i < mNumberOfColorAttachments; ++i)
+		mFramebufferSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&mNumberOfColorAttachments), sizeof(RECore::uint32), mFramebufferSignatureId);
+		for (RECore::uint8 i = 0; i < mNumberOfColorAttachments; ++i)
 		{
-			mFramebufferSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&mColorFramebufferSignatureAttachments[i]), sizeof(FramebufferSignatureAttachment), mFramebufferSignatureId);
+			mFramebufferSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&mColorFramebufferSignatureAttachments[i]), sizeof(FramebufferSignatureAttachment), mFramebufferSignatureId);
 		}
-		mFramebufferSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&mDepthStencilFramebufferSignatureAttachment), sizeof(FramebufferSignatureAttachment), mFramebufferSignatureId);
+		mFramebufferSignatureId = RECore::Math::calculateFNV1a32(reinterpret_cast<const RECore::uint8*>(&mDepthStencilFramebufferSignatureAttachment), sizeof(FramebufferSignatureAttachment), mFramebufferSignatureId);
 	}
 
 

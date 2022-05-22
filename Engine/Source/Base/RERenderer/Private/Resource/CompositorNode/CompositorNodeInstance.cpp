@@ -80,8 +80,8 @@ namespace RERenderer
 					if (nullptr != currentRenderTarget)
 					{
 						// Get the window size
-						uint32_t width  = 1;
-						uint32_t height = 1;
+						RECore::uint32 width  = 1;
+						RECore::uint32 height = 1;
 						currentRenderTarget->getWidthAndHeight(width, height);
 
 						// Set the graphics viewport and scissor rectangle
@@ -94,7 +94,7 @@ namespace RERenderer
 			}
 
 			// Update the number of compositor instance pass execution requests and don't forget to avoid integer range overflow
-			if (compositorInstancePass->mNumberOfExecutionRequests < std::numeric_limits<uint32_t>::max())
+			if (compositorInstancePass->mNumberOfExecutionRequests < std::numeric_limits<RECore::uint32>::max())
 			{
 				++compositorInstancePass->mNumberOfExecutionRequests;
 			}

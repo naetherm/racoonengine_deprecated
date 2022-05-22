@@ -169,23 +169,23 @@ public:
   //[-------------------------------------------------------]
 public:
   // Capability info
-  uint8_t  m_nReportID;		///< Report ID
-  uint16_t m_nLinkCollection;	///< Link collection
-  uint16_t m_nUsagePage;		///< Usage page ID
-  uint16_t m_nUsage;			///< Usage ID
-  uint16_t m_nUsageMin;		///< Usage ID minimum
-  uint16_t m_nUsageMax;		///< Usage ID maximum
-  uint16_t m_nDataIndex;		///< Data index (index in input report, not byte index)
-  uint16_t m_nDataIndexMin;	///< Data index minimum
-  uint16_t m_nDataIndexMax;	///< Data index maximum
-  uint16_t m_nBitSize;		///< Size of data in bits
-  uint16_t m_nLogicalMin;		///< Logical minimum value (e.g. for axes)
-  uint16_t m_nLogicalMax;		///< Logical maximum value (e.g. for axes)
-  uint16_t m_nPhysicalMin;	///< Physical minimum value (e.g. for axes)
-  uint16_t m_nPhysicalMax;	///< Physical maximum value (e.g. for axes)
+  RECore::uint8  m_nReportID;		///< Report ID
+  RECore::uint16 m_nLinkCollection;	///< Link collection
+  RECore::uint16 m_nUsagePage;		///< Usage page ID
+  RECore::uint16 m_nUsage;			///< Usage ID
+  RECore::uint16 m_nUsageMin;		///< Usage ID minimum
+  RECore::uint16 m_nUsageMax;		///< Usage ID maximum
+  RECore::uint16 m_nDataIndex;		///< Data index (index in input report, not byte index)
+  RECore::uint16 m_nDataIndexMin;	///< Data index minimum
+  RECore::uint16 m_nDataIndexMax;	///< Data index maximum
+  RECore::uint16 m_nBitSize;		///< Size of data in bits
+  RECore::uint16 m_nLogicalMin;		///< Logical minimum value (e.g. for axes)
+  RECore::uint16 m_nLogicalMax;		///< Logical maximum value (e.g. for axes)
+  RECore::uint16 m_nPhysicalMin;	///< Physical minimum value (e.g. for axes)
+  RECore::uint16 m_nPhysicalMax;	///< Physical maximum value (e.g. for axes)
 
   // Current data value
-  uint32_t m_nValue;	///< Current value of input data
+  RECore::uint32 m_nValue;	///< Current value of input data
 
 
 };

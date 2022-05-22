@@ -44,7 +44,7 @@ namespace RERHINull {
 *  @param[in] id
 *    The unique compact compute pipeline state ID
 */
-GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI& nullRhi, const RERHI::GraphicsPipelineState& graphicsPipelineState, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
+GraphicsPipelineState::GraphicsPipelineState(RHIDynamicRHI& nullRhi, const RERHI::GraphicsPipelineState& graphicsPipelineState, RECore::uint16 id RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
   RHIGraphicsPipelineState(nullRhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
   mRootSignature(graphicsPipelineState.rootSignature),
   mGraphicsProgram(graphicsPipelineState.graphicsProgram),

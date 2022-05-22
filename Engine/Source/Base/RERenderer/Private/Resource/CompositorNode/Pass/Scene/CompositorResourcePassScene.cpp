@@ -36,7 +36,7 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RERenderer::ICompositorResourcePass methods ]
 	//[-------------------------------------------------------]
-	void CompositorResourcePassScene::deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
+	void CompositorResourcePassScene::deserialize([[maybe_unused]] RECore::uint32 numberOfBytes, const RECore::uint8* data)
 	{
 		// Sanity check
 		ASSERT(sizeof(v1CompositorNode::PassScene) == numberOfBytes, "Invalid number of bytes")
@@ -55,7 +55,7 @@ namespace RERenderer
 		ASSERT(mMaximumRenderQueueIndex >= mMinimumRenderQueueIndex, "Invalid maximum render queue index")
 	}
 
-	bool CompositorResourcePassScene::getRenderQueueIndexRange(uint8_t& minimumRenderQueueIndex, uint8_t& maximumRenderQueueIndex) const
+	bool CompositorResourcePassScene::getRenderQueueIndexRange(RECore::uint8& minimumRenderQueueIndex, RECore::uint8& maximumRenderQueueIndex) const
 	{
 		// This compositor resource pass has a render queue range defined
 		minimumRenderQueueIndex = mMinimumRenderQueueIndex;

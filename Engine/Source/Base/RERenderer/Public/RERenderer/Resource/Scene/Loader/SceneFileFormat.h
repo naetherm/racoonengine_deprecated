@@ -44,9 +44,9 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef RECore::StringId AssetId;				///< Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
-	typedef RECore::StringId SceneItemTypeId;		///< Scene item type identifier, internally just a POD "uint32_t"
-	typedef uint32_t MaterialTechniqueId;	///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
+	typedef RECore::StringId AssetId;				///< Asset identifier, internally just a POD "RECore::uint32", string ID scheme is "<project name>/<asset directory>/<asset name>"
+	typedef RECore::StringId SceneItemTypeId;		///< Scene item type identifier, internally just a POD "RECore::uint32"
+	typedef RECore::uint32 MaterialTechniqueId;	///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
 
 
 	// Scene file format content:
@@ -59,31 +59,31 @@ namespace RERenderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("Scene");
-		static constexpr uint32_t FORMAT_VERSION = 5;
+		static constexpr RECore::uint32 FORMAT_TYPE	 = STRING_ID("Scene");
+		static constexpr RECore::uint32 FORMAT_VERSION = 5;
 
 		#pragma pack(push)
 		#pragma pack(1)
 			struct SceneHeader final
 			{
-				uint32_t unused;	// TODO(naetherm) Currently the scene header is unused
+				RECore::uint32 unused;	// TODO(naetherm) Currently the scene header is unused
 			};
 
 			struct Nodes final
 			{
-				uint32_t numberOfNodes;
+				RECore::uint32 numberOfNodes;
 			};
 
 			struct Node final
 			{
 				RECore::Transform transform;
-				uint32_t  numberOfItems;
+				RECore::uint32  numberOfItems;
 			};
 
 			struct ItemHeader final
 			{
 				SceneItemTypeId typeId;
-				uint32_t		numberOfBytes;
+				RECore::uint32		numberOfBytes;
 			};
 
 			struct CameraItem final
@@ -98,7 +98,7 @@ namespace RERenderer
 				float					  innerAngle		   = glm::radians(40.0f);
 				float					  outerAngle		   = glm::radians(50.0f);
 				float					  nearClipDistance	   = 0.0f;
-				int32_t					  iesLightProfileIndex = -1;	///< Illuminating Engineering Society (IES) light profile index (<0 = no IES)
+				RECore::int32					  iesLightProfileIndex = -1;	///< Illuminating Engineering Society (IES) light profile index (<0 = no IES)
 			};
 
 			struct SunlightItem final
@@ -114,7 +114,7 @@ namespace RERenderer
 			struct MeshItem final
 			{
 				AssetId  meshAssetId;
-				uint32_t numberOfSubMeshMaterialAssetIds = 0;
+				RECore::uint32 numberOfSubMeshMaterialAssetIds = 0;
 			};
 
 			struct SkeletonMeshItem final	// : public MeshItem -> Not derived by intent to be able to reuse the mesh item serialization 1:1
@@ -127,7 +127,7 @@ namespace RERenderer
 				AssetId				materialAssetId;												///< If material blueprint asset ID is set, material asset ID must be invalid
 				MaterialTechniqueId	materialTechniqueId		   = RECore::getInvalid<MaterialTechniqueId>();	///< Must always be valid
 				AssetId				materialBlueprintAssetId;										///< If material asset ID is set, material blueprint asset ID must be invalid
-				uint32_t			numberOfMaterialProperties = 0;
+				RECore::uint32			numberOfMaterialProperties = 0;
 			};
 
 			struct DebugDrawItem final

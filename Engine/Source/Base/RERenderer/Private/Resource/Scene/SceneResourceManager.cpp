@@ -68,8 +68,8 @@ namespace RERenderer
 		mSceneFactory = (nullptr != sceneFactory) ? sceneFactory : &::detail::defaultSceneFactory;
 
 		// Tell the scene resource instances about the new scene factory in town
-		const uint32_t numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
-		for (uint32_t i = 0; i < numberOfElements; ++i)
+		const RECore::uint32 numberOfElements = mInternalResourceManager->getResources().getNumberOfElements();
+		for (RECore::uint32 i = 0; i < numberOfElements; ++i)
 		{
 			mInternalResourceManager->getResources().getElementByIndex(i).mSceneFactory = mSceneFactory;
 		}
@@ -110,12 +110,12 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Public virtual RECore::IResourceManager methods     ]
 	//[-------------------------------------------------------]
-	uint32_t SceneResourceManager::getNumberOfResources() const
+	RECore::uint32 SceneResourceManager::getNumberOfResources() const
 	{
 		return mInternalResourceManager->getResources().getNumberOfElements();
 	}
 
-RECore::IResource& SceneResourceManager::getResourceByIndex(uint32_t index) const
+RECore::IResource& SceneResourceManager::getResourceByIndex(RECore::uint32 index) const
 	{
 		return mInternalResourceManager->getResources().getElementByIndex(index);
 	}

@@ -61,9 +61,9 @@ namespace RERenderer
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
-	typedef uint32_t TextureResourceId;				///< POD texture resource identifier
-	typedef uint32_t MaterialTechniqueId;			///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
-	typedef uint32_t MaterialBlueprintResourceId;	///< POD material blueprint resource identifier
+	typedef RECore::uint32 TextureResourceId;				///< POD texture resource identifier
+	typedef RECore::uint32 MaterialTechniqueId;			///< Material technique identifier, result of hashing the material technique name via "RERenderer::StringId"
+	typedef RECore::uint32 MaterialBlueprintResourceId;	///< POD material blueprint resource identifier
 
 
 	//[-------------------------------------------------------]
@@ -140,7 +140,7 @@ namespace RERenderer
 		*  @param[in] structuredBufferPtr
 		*    RHI structured buffer pointer
 		*/
-		inline void setStructuredBufferPtr(uint32_t structuredBufferRootParameterIndex, RERHI::RHIStructuredBufferPtr& structuredBufferPtr)
+		inline void setStructuredBufferPtr(RECore::uint32 structuredBufferRootParameterIndex, RERHI::RHIStructuredBufferPtr& structuredBufferPtr)
 		{
 			mStructuredBufferRootParameterIndex = structuredBufferRootParameterIndex;
 			mStructuredBufferPtr = structuredBufferPtr;
@@ -153,7 +153,7 @@ namespace RERenderer
 		*  @return
 		*    The FNV1a hash of "RERHI::SerializedGraphicsPipelineState"
 		*/
-		[[nodiscard]] inline uint32_t getSerializedGraphicsPipelineStateHash() const
+		[[nodiscard]] inline RECore::uint32 getSerializedGraphicsPipelineStateHash() const
 		{
 			return mSerializedGraphicsPipelineStateHash;
 		}
@@ -167,11 +167,11 @@ namespace RERenderer
 		*  @param[out] commandBuffer
 		*    RHI command buffer to fill
 		*  @param[out] resourceGroupRootParameterIndex
-		*    Root parameter index to bind the resource group to, can be "RECore::getInvalid<uint32_t>()"
+		*    Root parameter index to bind the resource group to, can be "RECore::getInvalid<RECore::uint32>()"
 		*  @param[out] resourceGroup
 		*    RHI resource group to set, must be valid
 		*/
-		void fillGraphicsCommandBuffer(const IRenderer& renderer, RERHI::RHICommandBuffer& commandBuffer, uint32_t& resourceGroupRootParameterIndex, RERHI::RHIResourceGroup** resourceGroup);
+		void fillGraphicsCommandBuffer(const IRenderer& renderer, RERHI::RHICommandBuffer& commandBuffer, RECore::uint32& resourceGroupRootParameterIndex, RERHI::RHIResourceGroup** resourceGroup);
 
 		/**
 		*  @brief
@@ -182,11 +182,11 @@ namespace RERenderer
 		*  @param[out] commandBuffer
 		*    RHI command buffer to fill
 		*  @param[out] resourceGroupRootParameterIndex
-		*    Root parameter index to bind the resource group to, can be "RECore::getInvalid<uint32_t>()"
+		*    Root parameter index to bind the resource group to, can be "RECore::getInvalid<RECore::uint32>()"
 		*  @param[out] resourceGroup
 		*    RHI resource group to set, must be valid
 		*/
-		void fillComputeCommandBuffer(const IRenderer& renderer, RERHI::RHICommandBuffer& commandBuffer, uint32_t& resourceGroupRootParameterIndex, RERHI::RHIResourceGroup** resourceGroup);
+		void fillComputeCommandBuffer(const IRenderer& renderer, RERHI::RHICommandBuffer& commandBuffer, RECore::uint32& resourceGroupRootParameterIndex, RERHI::RHIResourceGroup** resourceGroup);
 
 
 	//[-------------------------------------------------------]
@@ -202,7 +202,7 @@ namespace RERenderer
 	private:
 		struct Texture final
 		{
-			uint32_t		  rootParameterIndex;
+			RECore::uint32		  rootParameterIndex;
 			MaterialProperty  materialProperty;
 			TextureResourceId textureResourceId;
 		};
@@ -261,11 +261,11 @@ namespace RERenderer
 		*  @param[in] renderer
 		*    Renderer to use
 		*  @param[out] resourceGroupRootParameterIndex
-		*    Root parameter index to bind the resource group to, can be "RECore::getInvalid<uint32_t>()"
+		*    Root parameter index to bind the resource group to, can be "RECore::getInvalid<RECore::uint32>()"
 		*  @param[out] resourceGroup
 		*    RHI resource group to set, must be valid
 		*/
-		void fillCommandBuffer(const IRenderer& renderer, uint32_t& resourceGroupRootParameterIndex, RERHI::RHIResourceGroup** resourceGroup);
+		void fillCommandBuffer(const IRenderer& renderer, RECore::uint32& resourceGroupRootParameterIndex, RERHI::RHIResourceGroup** resourceGroup);
 
 
 	//[-------------------------------------------------------]
@@ -274,10 +274,10 @@ namespace RERenderer
 	private:
 		MaterialTechniqueId			mMaterialTechniqueId;					///< Material technique ID
 		MaterialBlueprintResourceId	mMaterialBlueprintResourceId;			///< Material blueprint resource ID, can be set to invalid value
-		uint32_t					mStructuredBufferRootParameterIndex;
+		RECore::uint32					mStructuredBufferRootParameterIndex;
 		RERHI::RHIStructuredBufferPtr	mStructuredBufferPtr;
 		Textures					mTextures;
-		uint32_t					mSerializedGraphicsPipelineStateHash;	///< FNV1a hash of "RERHI::SerializedGraphicsPipelineState"
+		RECore::uint32					mSerializedGraphicsPipelineStateHash;	///< FNV1a hash of "RERHI::SerializedGraphicsPipelineState"
 		RERHI::RHIResourceGroupPtr		mResourceGroup;							///< Resource group, can be a null pointer
 
 

@@ -22,6 +22,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <RECore/RECore.h>
 #include "Examples/Framework/Linux/X11Window.h"
 #include "Examples/Framework/Linux/X11Application.h"
 
@@ -43,8 +44,8 @@ X11Window::X11Window() :
 	_NET_WM_NAME		 = XInternAtom(display, "_NET_WM_NAME",			False);
 	_NET_WM_VISIBLE_NAME = XInternAtom(display, "_NET_WM_VISIBLE_NAME",	False);
 
-	const std::uint32_t  width  = 800;
-	const std::uint32_t  height = 600;
+	const RECore::uint32  width  = 800;
+	const RECore::uint32  height = 600;
 	const int       screen = DefaultScreen(display);
 	Visual*         visual = DefaultVisual(display, screen);
 	const int       depth  = DefaultDepth(display, screen);
