@@ -47,7 +47,7 @@ CoreContext::CoreContext()
 CoreContext::~CoreContext() {
   delete this->mpResourceStreamer;
   delete this->mpAssetManager;
-  //delete this->mpFileManager;
+  // Do not delete the file manager as it is managed outside this context!
 }
 
 
