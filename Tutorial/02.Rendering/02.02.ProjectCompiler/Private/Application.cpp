@@ -31,7 +31,6 @@
 #include <RECore/File/IFileManager.h>
 #include <RECore/File/DefaultFileManager.h>
 
-#include <RECore/Log/DefaultLog.h>
 #include <RECore/Core/DefaultAssert.h>
 #ifdef EXAMPLES_MIMALLOC
 #include <RECore/Memory/MimallocAllocator.h>
@@ -53,7 +52,6 @@ Application::~Application() {
 }
 
 void Application::main() {
-  RECore::DefaultLog log;
   RECore::DefaultAssert assert;
 #ifdef EXAMPLES_MIMALLOC
   RECore::MimallocAllocator allocator;

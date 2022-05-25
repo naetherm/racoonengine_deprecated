@@ -46,7 +46,6 @@ namespace REInput
 }
 namespace RERenderer
 {
-	class ImGuiLog;
 	class SceneNode;
 	class CameraSceneItem;
 	class SunlightSceneItem;
@@ -182,7 +181,6 @@ private:
 //[-------------------------------------------------------]
 private:
   REInput::InputManager*			   mInputManager;
-	RERenderer::ImGuiLog*					   mImGuiLog;
 	RERenderer::CompositorWorkspaceInstance* mCompositorWorkspaceInstance;
 	bool								   mFirstFrame;
 	RERenderer::SceneResourceId			   mSceneResourceId;

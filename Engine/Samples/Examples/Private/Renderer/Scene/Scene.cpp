@@ -42,7 +42,6 @@
 	#include <RERenderer/Core/RenderDocGraphicsDebugger.h>
 #endif
 #ifdef RENDERER_IMGUI
-	#include <RERenderer/DebugGui/ImGuiLog.h>
 	#include <RERenderer/DebugGui/DebugGuiManager.h>
 #endif
 #ifdef RENDERER_OPENVR
@@ -73,6 +72,7 @@
 
 #include <RECore/Color/Color4.h>
 #include <REInput/Input/InputManager.h>
+#include <RECore/File/PhysicsFSFileManager.h>
 
 // "ini.h"-library
 #define INI_MALLOC(ctx, size) (RECore::Memory::reallocate(nullptr, 0, size, 1))
@@ -264,7 +264,6 @@ namespace
 //[-------------------------------------------------------]
 Scene::Scene() :
 	mInputManager(new REInput::InputManager()),
-	mImGuiLog(nullptr),
 	mCompositorWorkspaceInstance(nullptr),
 	mFirstFrame(true),
 	mSceneResourceId(RECore::getInvalid<RERenderer::SceneResourceId>()),
@@ -328,8 +327,6 @@ Scene::Scene() :
 {
 	#ifdef RENDERER_IMGUI
 		RERenderer::DebugGuiManager::setImGuiAllocatorFunctions();
-		mImGuiLog = new RERenderer::ImGuiLog();
-		setCustomLog(mImGuiLog);
 	#endif
 }
 
@@ -339,11 +336,6 @@ Scene::~Scene()
 
 	// Destroy our input manager instance
 	delete mInputManager;
-
-	// Destroy our ImGui log instance
-	#ifdef RENDERER_IMGUI
-		delete mImGuiLog;
-	#endif
 }
 
 
@@ -1040,7 +1032,7 @@ void Scene::createDebugGui([[maybe_unused]] RERHI::RHIRenderTarget& mainRenderTa
 				RERenderer::IRenderer& renderer = getRendererSafe();
 				RERenderer::DebugGuiManager& debugGuiManager = renderer.getDebugGuiManager();
 				debugGuiManager.newFrame(((nullptr != compositorInstancePass->getRenderTarget()) ? *compositorInstancePass->getRenderTarget() : mainRenderTarget), mCompositorWorkspaceInstance);
-				mImGuiLog->draw(renderer.getContext().getFileManager());
+
 				if (ImGui::Begin("Options"))
 				{
 					// Status
@@ -1074,10 +1066,7 @@ void Scene::createDebugGui([[maybe_unused]] RERHI::RHIRenderTarget& mainRenderTa
 							ImGui::PopStyleColor();
 						}
 					ImGui::PopStyleColor();
-					if (ImGui::Button("Log"))
-					{
-						mImGuiLog->open();
-					}
+
 					ImGui::SameLine();
 					if (ImGui::Button("Metrics"))
 					{

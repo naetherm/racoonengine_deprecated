@@ -83,7 +83,7 @@ bool X11Window::HandleEvent(XEvent &event)
 		// Window configuration changed
 		case ConfigureNotify:
 			// TODO(naetherm) Anything to do in here?
-			//mX11Application->onResize();
+      //X11Application::instance()->onResize();
 			break;
 
 		case ClientMessage:

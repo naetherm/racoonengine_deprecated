@@ -42,7 +42,6 @@
 	#include <RERenderer/Core/RenderDocGraphicsDebugger.h>
 #endif
 #ifdef RENDERER_IMGUI
-	#include <RERenderer/DebugGui/ImGuiLog.h>
 	#include <RERenderer/DebugGui/DebugGuiManager.h>
 #endif
 #ifdef RENDERER_OPENVR
@@ -70,6 +69,7 @@
 #include <RERenderer/Context.h>
 
 #include <RECore/Memory/Memory.h>
+#include <RECore/File/PhysicsFSFileManager.h>
 
 #include <RECore/Color/Color4.h>
 #include <REInput/Input/InputManager.h>
@@ -266,7 +266,6 @@ namespace
 Scene::Scene(Application& cApplication, const RECore::String& name)
 : ExampleBase(cApplication, name),
 	mInputManager(new REInput::InputManager()),
-	mImGuiLog(nullptr),
 	mCompositorWorkspaceInstance(nullptr),
 	mFirstFrame(true),
 	mSceneResourceId(RECore::getInvalid<RERenderer::SceneResourceId>()),
@@ -341,11 +340,6 @@ Scene::~Scene()
 
 	// Destroy our input manager instance
 	delete mInputManager;
-
-	// Destroy our ImGui log instance
-	#ifdef RENDERER_IMGUI
-		delete mImGuiLog;
-	#endif
 }
 
 
@@ -1042,7 +1036,7 @@ void Scene::createDebugGui([[maybe_unused]] RERHI::RHIRenderTarget& mainRenderTa
 				RERenderer::IRenderer& renderer = getRendererSafe();
 				RERenderer::DebugGuiManager& debugGuiManager = renderer.getDebugGuiManager();
 				debugGuiManager.newFrame(((nullptr != compositorInstancePass->getRenderTarget()) ? *compositorInstancePass->getRenderTarget() : mainRenderTarget), mCompositorWorkspaceInstance);
-				mImGuiLog->draw(renderer.getContext().getFileManager());
+
 				if (ImGui::Begin("Options"))
 				{
 					// Status
@@ -1076,10 +1070,7 @@ void Scene::createDebugGui([[maybe_unused]] RERHI::RHIRenderTarget& mainRenderTa
 							ImGui::PopStyleColor();
 						}
 					ImGui::PopStyleColor();
-					if (ImGui::Button("Log"))
-					{
-						mImGuiLog->open();
-					}
+
 					ImGui::SameLine();
 					if (ImGui::Button("Metrics"))
 					{

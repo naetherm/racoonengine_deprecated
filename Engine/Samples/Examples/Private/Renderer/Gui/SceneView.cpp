@@ -42,7 +42,6 @@
 #include <RERenderer/Core/RenderDocGraphicsDebugger.h>
 #endif
 #ifdef RENDERER_IMGUI
-#include <RERenderer/DebugGui/ImGuiLog.h>
 #include <RERenderer/DebugGui/DebugGuiManager.h>
 #endif
 #ifdef RENDERER_OPENVR
@@ -73,6 +72,7 @@
 
 #include <RECore/Color/Color4.h>
 #include <REInput/Input/InputManager.h>
+#include <RECore/File/PhysicsFSFileManager.h>
 
 // "ini.h"-library
 #define INI_MALLOC(ctx, size) (RECore::Memory::reallocate(nullptr, 0, size, 1))
@@ -264,7 +264,6 @@ void debugDrawExample(const RERHI::RHIRenderTarget& mainRenderTarget, const RERe
 //[-------------------------------------------------------]
 SceneView::SceneView() :
   mInputManager(new REInput::InputManager()),
-  mImGuiLog(nullptr),
   mCompositorWorkspaceInstance(nullptr),
   mFirstFrame(true),
   mSceneResourceId(RECore::getInvalid<RERenderer::SceneResourceId>()),
@@ -331,8 +330,6 @@ SceneView::SceneView() :
 {
 #ifdef RENDERER_IMGUI
   RERenderer::DebugGuiManager::setImGuiAllocatorFunctions();
-  mImGuiLog = new RERenderer::ImGuiLog();
-  setCustomLog(mImGuiLog);
 #endif
 }
 
@@ -342,11 +339,6 @@ SceneView::~SceneView()
 
   // Destroy our input manager instance
   delete mInputManager;
-
-  // Destroy our ImGui log instance
-#ifdef RENDERER_IMGUI
-  delete mImGuiLog;
-#endif
 }
 
 

@@ -36,7 +36,6 @@ PRAGMA_WARNING_PUSH
 	#include <glm/glm.hpp>
 PRAGMA_WARNING_POP
 
-#include <RECore/Log/DefaultLog.h>
 #include <RECore/Core/DefaultAssert.h>
 #include <RECore/Memory/Memory.h>
 #include <RERHI/RhiInstance.h>

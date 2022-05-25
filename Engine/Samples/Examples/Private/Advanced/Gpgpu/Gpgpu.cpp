@@ -37,7 +37,6 @@ PRAGMA_WARNING_PUSH
 	#include <glm/glm.hpp>
 PRAGMA_WARNING_POP
 
-#include <RECore/Log/DefaultLog.h>
 #include <RECore/Core/DefaultAssert.h>
 #include <RECore/Memory/Memory.h>
 #include <RERHI/RhiInstance.h>
@@ -68,7 +67,6 @@ Gpgpu::Gpgpu(ExampleRunner& exampleRunner, const char* rhiName, const std::strin
 int Gpgpu::run()
 {
 	// Create RHI instance
-	RECore::DefaultLog defaultLog;
 	//RECore::DefaultAllocator defaultAllocator;
 	RERHI::RHIContext rhiContext;
 	mRhiInstance = new RERHI::RhiInstance(mRhiName, rhiContext);

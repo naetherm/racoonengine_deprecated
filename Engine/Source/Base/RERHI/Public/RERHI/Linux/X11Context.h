@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include "RERHI/RERHI.h"
 #include "RERHI/RHIContext.h"
-#include <RECore/Log/ILog.h>
+#include <RECore/Log/Log.h>
 #include <RECore/Memory/IAllocator.h>
 
 

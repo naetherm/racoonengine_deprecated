@@ -31,7 +31,6 @@
 #include "Examples/Framework/PlatformTypes.h"
 #include <RECore/Core/IAssert.h>
 #include <RECore/Memory/IAllocator.h>
-#include <RECore/Log/ILog.h>
 #include <RECore/Log/Log.h>
 
 // Disable warnings in external headers, we can't fix them
@@ -91,7 +90,6 @@ public:
 	*/
 	inline explicit ExampleBase(ExampleRunner& exampleRunner) :
 		mExampleRunner(&exampleRunner),
-		mCustomLog(nullptr),
 		mApplicationFrontend(nullptr)
 	{
 		// Nothing here
@@ -129,18 +127,6 @@ public:
 	[[nodiscard]] inline const std::string_view& getExampleName() const
 	{
 		return mExampleName;
-	}
-
-	/**
-	*  @brief
-	*    Return the custom log instance
-	*
-	*  @return
-	*    Custom log instance, can be a null pointer, don't destroy the instance
-	*/
-	[[nodiscard]] inline RECore::ILog* getCustomLog() const
-	{
-		return mCustomLog;
 	}
 
 	/**
@@ -281,22 +267,9 @@ protected:
 	*/
 	inline ExampleBase() :
 		mExampleRunner(nullptr),
-		mCustomLog(nullptr),
 		mApplicationFrontend(nullptr)
 	{
 		// Nothing here
-	}
-
-	/**
-	*  @brief
-	*    Set custom log instance
-	*
-	*  @param[in] customLog
-	*    Optional custom log instance, can be a null pointer, the instance must be valid as long as the example base instance exists
-	*/
-	inline void setCustomLog(RECore::ILog* customLog = nullptr)
-	{
-		mCustomLog = customLog;
 	}
 
 
@@ -306,7 +279,6 @@ protected:
 private:
 	ExampleRunner*		  mExampleRunner;
 	std::string_view	  mExampleName;
-	RECore::ILog*			  mCustomLog;			///< Optional custom log instance, can be a null pointer, don't destroy the instance
 	IApplicationFrontend* mApplicationFrontend;	///< RHI instance, can be a null pointer, do not destroy the instance
 
 

@@ -26,7 +26,6 @@
 #include "Examples/Framework/ExampleBase.h"
 #include "Examples/ExampleRunner.h"
 
-#include <RECore/Log/DefaultLog.h>
 #include <RECore/Core/DefaultAssert.h>
 #ifdef EXAMPLES_MIMALLOC
 	#include <RECore/Memory/MimallocAllocator.h>
@@ -67,7 +66,6 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
-		RECore::DefaultLog	g_DefaultLog;
 		RECore::DefaultAssert g_DefaultAssert;
 
 
@@ -279,7 +277,6 @@ RERHI::RHIDynamicRHI* IApplicationRhi::createRhiInstance(const char* rhiName)
 	if (nullptr != rhiName)
 	{
 		bool loadRhiApiSharedLibrary = false;
-		RECore::ILog& log = (nullptr != mExampleBase.getCustomLog()) ? *mExampleBase.getCustomLog() : ::detail::g_DefaultLog;
 		#ifdef _WIN32
 			mRhiContext = new RERHI::RHIContext(::detail::g_DefaultAssert, g_Allocator, getNativeWindowHandle());
 		#elif LINUX
