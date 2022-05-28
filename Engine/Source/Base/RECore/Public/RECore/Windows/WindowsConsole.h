@@ -45,7 +45,7 @@ namespace RECore {
 *  @brief
 *    Windows 'Console' implementation
 */
-class ConsoleWindows : public Console {
+class WindowsConsole : public Console {
 
 
   //[-------------------------------------------------------]
@@ -62,13 +62,13 @@ public:
   *  @brief
   *    Constructor
   */
-  ConsoleWindows() = default;
+  WindowsConsole() = default;
 
   /**
   *  @brief
   *    Destructor
   */
-  ~ConsoleWindows() override = default;
+  ~WindowsConsole() override = default;
 
   void print(const String &sString) const override;
 
