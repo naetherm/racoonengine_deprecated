@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include "RECore/RECore.h"
 #include "RECore/Platform/IPlatform.h"
-#include "RECore/Linux/ConsoleLinux.h"
+#include "RECore/Linux/LinuxConsole.h"
 #include <sys/utsname.h>
 
 
@@ -187,7 +187,7 @@ public:
   void sleep(uint64 nMilliseconds) const override;
 
 private:
-  ConsoleLinux mConsoleLinux;
+  LinuxConsole mConsoleLinux;
   bool		   m_bSysInfoInit;	/**< Has 'm_sName' a valid value? */
   struct utsname m_sName;			/**< Basic system information */
 

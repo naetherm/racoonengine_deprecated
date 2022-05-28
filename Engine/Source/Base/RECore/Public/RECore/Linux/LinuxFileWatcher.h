@@ -37,7 +37,7 @@ namespace RECore
 {
 	/// Implementation for Linux based on inotify.
 	/// @class FileWatcherLinux
-	class FileWatcherLinux : public FileWatcherImpl
+	class LinuxFileWatcher : public FileWatcherImpl
 	{
 	public:
 		/// type for a map from WatchID to WatchStruct pointer
@@ -46,11 +46,11 @@ namespace RECore
 	public:
 		///
 		///
-		FileWatcherLinux();
+		LinuxFileWatcher();
 
 		///
 		///
-		virtual ~FileWatcherLinux();
+		virtual ~LinuxFileWatcher();
 
 		/// Add a directory watch
 		/// @exception FileNotFoundException Thrown when the requested directory does not exist

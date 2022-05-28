@@ -22,7 +22,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "RECore/Linux/ConsoleLinux.h"
+#include "RECore/Linux/LinuxConsole.h"
 #include <unistd.h>
 
 #ifndef ANDROID
@@ -44,12 +44,12 @@ namespace RECore {
 //[-------------------------------------------------------]
 //[ Public virtual Console functions                      ]
 //[-------------------------------------------------------]
-void ConsoleLinux::print(const String &sString) const {
+void LinuxConsole::print(const String &sString) const {
   fputs(sString, stdout);
   fflush(stdout);
 }
 
-int ConsoleLinux::isKeyHit() const {
+int LinuxConsole::isKeyHit() const {
   // Linux (POSIX) implementation of _kbhit() written by Morgan McGuire, morgan@cs.brown.edu.
   // Published at flipcode's "Developer Toolbox collection": http://www.flipcode.org/archives/_kbhit_for_Linux.shtml
 
@@ -71,7 +71,7 @@ int ConsoleLinux::isKeyHit() const {
   return bytesWaiting;
 }
 
-int ConsoleLinux::getCharacter(bool bEcho) const {
+int LinuxConsole::getCharacter(bool bEcho) const {
   // This code comes from: http://cboard.cprogramming.com/archive/index.php/t-27714.html
   // "This code sets the terminal into non-canonical mode, thus disabling line buffering, reads a character from stdin
   //  and then restores the old terminal status. For more info on what else you can do with termios, see ``man termios''.
@@ -94,7 +94,7 @@ int ConsoleLinux::getCharacter(bool bEcho) const {
   return nCharacter;
 }
 
-void ConsoleLinux::clearScreen() const {
+void LinuxConsole::clearScreen() const {
   // Don't use the curses library for this, go the more portable way below
 //	setupterm(nullptr, 1, nullptr);
 //	putp(clear_screen); 
@@ -104,7 +104,7 @@ void ConsoleLinux::clearScreen() const {
   fflush(stdout);
 }
 
-void ConsoleLinux::getCursorPosition(uint16 &nX, uint16 &nY) const {
+void LinuxConsole::getCursorPosition(uint16 &nX, uint16 &nY) const {
   // There's no native curses library on Android, and compiling one
   // just for this usually never used function would be overkill
 #ifdef ANDROID
@@ -126,7 +126,7 @@ void ConsoleLinux::getCursorPosition(uint16 &nX, uint16 &nY) const {
 #endif
 }
 
-void ConsoleLinux::setCursorPosition(uint16 nX, uint16 nY) const {
+void LinuxConsole::setCursorPosition(uint16 nX, uint16 nY) const {
   // There's no native curses library on Android, and compiling one
   // just for this usually never used function would be overkill
 #ifdef ANDROID

@@ -32,7 +32,7 @@
 	// #include "RECore/Linux&OSWindowLinux.h"	// We can also reuse the X11 implementation from the Linux port
 #elif defined(LINUX)
   #include "RECore/Linux/FrontendOSLinux.h"
-	#include "RECore/Linux/WindowOSLinux.h"
+	#include "RECore/Linux/LinuxWindowOS.h"
 #endif
 
 
@@ -85,7 +85,7 @@ int FrontendOS::run(const String &sExecutableFilename, const std::vector<String>
 #if defined(WIN32)
 
 #elif defined(LINUX)
-  this->m_pActiveTopLevelWindow = new WindowOSLinux(*this);
+  this->m_pActiveTopLevelWindow = new LinuxWindowOS(*this);
 #endif
 
   // The frontend message loop

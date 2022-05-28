@@ -20,7 +20,7 @@
 
 #include "RECore/Linux/FrontendOSLinux.h"
 #include "RECore/Frontend/WindowOS.h"
-#include "RECore/Linux/WindowOSLinux.h"
+#include "RECore/Linux/LinuxWindowOS.h"
 #include <X11/Xlib.h>
 
 namespace RECore {

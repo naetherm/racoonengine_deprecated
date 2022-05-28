@@ -24,7 +24,7 @@
 //[-------------------------------------------------------]
 #include <string.h>
 #include "RECore/String/BasicTokenizer.h"
-#include "RECore/Linux/WindowOSLinux.h"
+#include "RECore/Linux/LinuxWindowOS.h"
 #include "RECore/Linux/Linux_XDnDFileDropHelper.h"
 
 
@@ -41,7 +41,7 @@ namespace RECore {
 *  @brief
 *    Constructor
 */
-Linux_XDnDFileDropHelper::Linux_XDnDFileDropHelper(WindowOSLinux &cOSWindowLinux) :
+Linux_XDnDFileDropHelper::Linux_XDnDFileDropHelper(LinuxWindowOS &cOSWindowLinux) :
 	m_pOSWindowLinux(&cOSWindowLinux),
 	m_pDisplay(cOSWindowLinux.m_pDisplay),
 	m_nDropWindow(cOSWindowLinux.m_nNativeWindowHandle),

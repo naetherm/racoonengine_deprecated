@@ -22,7 +22,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "RECore/Linux/WindowOSLinux.h"
+#include "RECore/Linux/LinuxWindowOS.h"
 #include "RECore/Frontend/REIcon.h"
 #include "RECore/Time/TimeManager.h"
 #include "RECore/Frontend/FrontendOS.h"
@@ -54,7 +54,7 @@ bool g_bSignalSystemQuit = false;	/**< Does the OS asks us to shut down? */
 *  @brief
 *    Constructor
 */
-WindowOSLinux::WindowOSLinux(FrontendOS &cFrontendOS) :
+LinuxWindowOS::LinuxWindowOS(FrontendOS &cFrontendOS) :
   WindowOS(cFrontendOS),
   m_pFrontendOS(&cFrontendOS),
   m_pDisplay(XOpenDisplay(nullptr)),
@@ -77,8 +77,8 @@ WindowOSLinux::WindowOSLinux(FrontendOS &cFrontendOS) :
   m_pFrontendOS->m_pActiveTopLevelWindow = this;
 
   // Connect Linux signals
-  signal(SIGINT,  WindowOSLinux::signalHandler);
-  signal(SIGTERM, WindowOSLinux::signalHandler);
+  signal(SIGINT, LinuxWindowOS::signalHandler);
+  signal(SIGTERM, LinuxWindowOS::signalHandler);
 
   { // Create the native OS window based on information from WindowDescription
     const unsigned int  nWidth  = 800;
@@ -139,7 +139,7 @@ WindowOSLinux::WindowOSLinux(FrontendOS &cFrontendOS) :
 *  @brief
 *    Destructor
 */
-WindowOSLinux::~WindowOSLinux()
+LinuxWindowOS::~LinuxWindowOS()
 {
   // Do the frontend life cycle thing - pause
   // -> "OnPause()" is already handled inside "WindowOSLinux::Ping()"
@@ -173,7 +173,7 @@ WindowOSLinux::~WindowOSLinux()
   XCloseDisplay(m_pDisplay);
 }
 
-::Display *WindowOSLinux::getDisplay() const {
+::Display *LinuxWindowOS::getDisplay() const {
   return this->m_pDisplay;
 }
 
@@ -181,7 +181,7 @@ WindowOSLinux::~WindowOSLinux()
 *  @brief
 *    If the window is not visible yet, make it visible right now
 */
-void WindowOSLinux::makeVisible()
+void LinuxWindowOS::makeVisible()
 {
   if (!m_bVisible && m_nNativeWindowHandle) {
     // The window is now considered to be visible
@@ -199,7 +199,7 @@ void WindowOSLinux::makeVisible()
 *  @brief
 *    Creates an invisible cursor
 */
-void WindowOSLinux::createInvisibleCursor()
+void LinuxWindowOS::createInvisibleCursor()
 {
   // Data of the "invisible" cursor
   XColor sXColorBlack;
@@ -217,7 +217,7 @@ void WindowOSLinux::createInvisibleCursor()
   XFreePixmap(m_pDisplay, sPixmapNoData);
 }
 
-void WindowOSLinux::onDrop(const std::vector<String> &lstFiles) const
+void LinuxWindowOS::onDrop(const std::vector<String> &lstFiles) const
 {
   m_pFrontendOS->onDrop(lstFiles);
 }
@@ -225,12 +225,12 @@ void WindowOSLinux::onDrop(const std::vector<String> &lstFiles) const
 //[-------------------------------------------------------]
 //[ Private virtual OSWindow functions                    ]
 //[-------------------------------------------------------]
-handle WindowOSLinux::getNativeWindowHandle() const
+handle LinuxWindowOS::getNativeWindowHandle() const
 {
   return static_cast<handle>(m_nNativeWindowHandle);
 }
 
-void WindowOSLinux::redraw()
+void LinuxWindowOS::redraw()
 {
   if (m_nNativeWindowHandle) {
     // If the window is not visible yet, make it visible right now
@@ -248,7 +248,7 @@ void WindowOSLinux::redraw()
   }
 }
 
-bool WindowOSLinux::ping()
+bool LinuxWindowOS::ping()
 {
   bool bQuit = g_bSignalSystemQuit ? true : false;
 
@@ -354,7 +354,7 @@ bool WindowOSLinux::ping()
   return bQuit;
 }
 
-String WindowOSLinux::getTitle() const
+String LinuxWindowOS::getTitle() const
 {
   if (m_nNativeWindowHandle) {
     // Request the window title from the OS
@@ -382,7 +382,7 @@ String WindowOSLinux::getTitle() const
   return "";
 }
 
-void WindowOSLinux::setTitle(const String &sTitle)
+void LinuxWindowOS::setTitle(const String &sTitle)
 {
   if (m_nNativeWindowHandle) {
     // We need here the number of bytes of the string because the number of characters (returned by String::Length) and the used number of bytes can differ in an utf-8 string
@@ -399,7 +399,7 @@ void WindowOSLinux::setTitle(const String &sTitle)
   }
 }
 
-int WindowOSLinux::getX() const
+int LinuxWindowOS::getX() const
 {
   if (m_nNativeWindowHandle) {
     // Get X window geometry information
@@ -421,7 +421,7 @@ int WindowOSLinux::getX() const
   }
 }
 
-int WindowOSLinux::getY() const
+int LinuxWindowOS::getY() const
 {
   if (m_nNativeWindowHandle) {
     // Get X window geometry information
@@ -443,7 +443,7 @@ int WindowOSLinux::getY() const
   }
 }
 
-uint32 WindowOSLinux::getWidth() const
+uint32 LinuxWindowOS::getWidth() const
 {
   if (m_nNativeWindowHandle) {
     // Get X window geometry information
@@ -460,7 +460,7 @@ uint32 WindowOSLinux::getWidth() const
   }
 }
 
-uint32 WindowOSLinux::getHeight() const
+uint32 LinuxWindowOS::getHeight() const
 {
   if (m_nNativeWindowHandle) {
     // Get X window geometry information
@@ -477,7 +477,7 @@ uint32 WindowOSLinux::getHeight() const
   }
 }
 
-void WindowOSLinux::setWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+void LinuxWindowOS::setWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
   if (m_nNativeWindowHandle) {
     { // Correct frontend position and size settings
@@ -506,12 +506,12 @@ void WindowOSLinux::setWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 
   }
 }
 
-void WindowOSLinux::setFullscreenAltTab(bool bAllowed)
+void LinuxWindowOS::setFullscreenAltTab(bool bAllowed)
 {
   // Nothing to do in here
 }
 
-void WindowOSLinux::setFullscreen(bool bFullscreen)
+void LinuxWindowOS::setFullscreen(bool bFullscreen)
 {
   // Set/remove _NET_WM_STATE_FULLSCREEN to toggle fullscreen mode.
   // The window manger is responsible to restore the original position and size of the window when the fullscreen mode should be left.
@@ -541,7 +541,7 @@ void WindowOSLinux::setFullscreen(bool bFullscreen)
   m_pFrontendOS->onFullscreenMode();
 }
 
-void WindowOSLinux::refreshFullscreen()
+void LinuxWindowOS::refreshFullscreen()
 {
   // This information is only interesting if we're currently in fullscreen mode, if not, just ignore this method call
   if (m_pFrontendOS->isFullscreen()) {
@@ -575,12 +575,12 @@ void WindowOSLinux::refreshFullscreen()
   }
 }
 
-bool WindowOSLinux::isMouseOver() const
+bool LinuxWindowOS::isMouseOver() const
 {
   return m_bIsMouseOver;
 }
 
-int WindowOSLinux::getMousePositionX() const
+int LinuxWindowOS::getMousePositionX() const
 {
   // Get the absolute mouse cursor position on the screen
   XEvent sXEvent;
@@ -596,7 +596,7 @@ int WindowOSLinux::getMousePositionX() const
   }
 }
 
-int WindowOSLinux::getMousePositionY() const
+int LinuxWindowOS::getMousePositionY() const
 {
   // Get the absolute mouse cursor position on the screen
   XEvent sXEvent;
@@ -612,12 +612,12 @@ int WindowOSLinux::getMousePositionY() const
   }
 }
 
-bool WindowOSLinux::isMouseVisible() const
+bool LinuxWindowOS::isMouseVisible() const
 {
   return m_bMouseVisible;
 }
 
-void WindowOSLinux::setMouseVisible(bool bVisible)
+void LinuxWindowOS::setMouseVisible(bool bVisible)
 {
   // Backup the state
   m_bMouseVisible = bVisible;
@@ -629,7 +629,7 @@ void WindowOSLinux::setMouseVisible(bool bVisible)
     XDefineCursor(m_pDisplay, m_nNativeWindowHandle, m_nInvisibleCursor);
 }
 
-void WindowOSLinux::setTrapMouse(bool bTrap)
+void LinuxWindowOS::setTrapMouse(bool bTrap)
 {
   // Check if the window has already been destroyed
   if (m_nNativeWindowHandle) {
@@ -655,7 +655,7 @@ void WindowOSLinux::setTrapMouse(bool bTrap)
 *  @brief
 *    Signal handler callback
 */
-void WindowOSLinux::signalHandler(int nSignal)
+void LinuxWindowOS::signalHandler(int nSignal)
 {
   // Catch signal
   switch (nSignal) {

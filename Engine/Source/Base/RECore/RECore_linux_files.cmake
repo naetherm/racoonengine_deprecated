@@ -21,9 +21,9 @@
 
 set(FILES
   Private/Linux/LinuxDynLib.cpp
-  Private/Linux/ConsoleLinux.cpp
+  Private/Linux/LinuxConsole.cpp
   Private/Linux/LinuxPlatform.cpp
-  Private/Linux/FileWatcherLinux.cpp
-  Private/Linux/WindowOSLinux.cpp
+  Private/Linux/LinuxFileWatcher.cpp
+  Private/Linux/LinuxWindowOS.cpp
   Private/Linux/Linux_XDnDFileDropHelper.cpp
 )

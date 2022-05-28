@@ -45,7 +45,7 @@ namespace RECore {
 *  @brief
 *    Linux 'Console' implementation
 */
-class ConsoleLinux : public Console {
+class LinuxConsole : public Console {
 
 
   //[-------------------------------------------------------]
@@ -62,13 +62,13 @@ public:
   *  @brief
   *    Constructor
   */
-  ConsoleLinux() = default;
+  LinuxConsole() = default;
 
   /**
   *  @brief
   *    Destructor
   */
-  ~ConsoleLinux() override = default;
+  ~LinuxConsole() override = default;
 
   void print(const String &sString) const override;
 

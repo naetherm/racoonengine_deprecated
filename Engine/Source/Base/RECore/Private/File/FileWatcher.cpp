@@ -30,8 +30,8 @@
 #	include "RECore/Mac/FileWatcherOSX.h"
 #	define FILEWATCHER_IMPL FileWatcherOSX
 #elif defined(LINUX)
-#	include "RECore/Linux/FileWatcherLinux.h"
-#	define FILEWATCHER_IMPL FileWatcherLinux
+#	include "RECore/Linux/LinuxFileWatcher.h"
+#	define FILEWATCHER_IMPL LinuxFileWatcher
 #endif
 
 namespace RECore

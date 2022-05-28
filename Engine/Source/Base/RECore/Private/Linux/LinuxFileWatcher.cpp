@@ -22,7 +22,7 @@
 	James Wynn james@jameswynn.com
 */
 
-#include "RECore/Linux/FileWatcherLinux.h"
+#include "RECore/Linux/LinuxFileWatcher.h"
 
 #if FILEWATCHER_PLATFORM == FILEWATCHER_PLATFORM_LINUX
 
@@ -47,7 +47,7 @@ namespace RECore
 	};
 
 	//--------
-	FileWatcherLinux::FileWatcherLinux()
+	LinuxFileWatcher::LinuxFileWatcher()
 	{
 		mFD = inotify_init();
 		if (mFD < 0)
@@ -60,7 +60,7 @@ namespace RECore
 	}
 
 	//--------
-	FileWatcherLinux::~FileWatcherLinux()
+	LinuxFileWatcher::~LinuxFileWatcher()
 	{
 		WatchMap::iterator iter = mWatches.begin();
 		WatchMap::iterator end = mWatches.end();
@@ -72,7 +72,7 @@ namespace RECore
 	}
 
 	//--------
-	WatchID FileWatcherLinux::addWatch(const String& directory, FileWatchListener* watcher, bool recursive)
+	WatchID LinuxFileWatcher::addWatch(const String& directory, FileWatchListener* watcher, bool recursive)
 	{
 		int wd = inotify_add_watch (mFD, directory.c_str(), 
 			IN_CLOSE_WRITE | IN_MOVED_TO | IN_CREATE | IN_MOVED_FROM | IN_DELETE);
@@ -98,7 +98,7 @@ namespace RECore
 	}
 
 	//--------
-	void FileWatcherLinux::removeWatch(const String& directory)
+	void LinuxFileWatcher::removeWatch(const String& directory)
 	{
 		WatchMap::iterator iter = mWatches.begin();
 		WatchMap::iterator end = mWatches.end();
@@ -113,7 +113,7 @@ namespace RECore
 	}
 
 	//--------
-	void FileWatcherLinux::removeWatch(WatchID watchid)
+	void LinuxFileWatcher::removeWatch(WatchID watchid)
 	{
 		WatchMap::iterator iter = mWatches.find(watchid);
 
@@ -130,7 +130,7 @@ namespace RECore
 	}
 
 	//--------
-	void FileWatcherLinux::update()
+	void LinuxFileWatcher::update()
 	{
 		FD_SET(mFD, &mDescriptorSet);
 
@@ -159,7 +159,7 @@ namespace RECore
 	}
 
 	//--------
-	void FileWatcherLinux::handleAction(WatchStruct* watch, const String& filename, unsigned long action)
+	void LinuxFileWatcher::handleAction(WatchStruct* watch, const String& filename, unsigned long action)
 	{
 		if(!watch->mListener)
 			return;

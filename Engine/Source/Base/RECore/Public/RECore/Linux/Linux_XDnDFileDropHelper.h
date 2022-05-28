@@ -69,7 +69,7 @@ namespace RECore {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class WindowOSLinux;
+class LinuxWindowOS;
 
 
 //[-------------------------------------------------------]
@@ -114,7 +114,7 @@ class Linux_XDnDFileDropHelper {
 		*  @param[in] cWindowOSLinux
 		*    The WindowOSLinux instance which should support drop
 		*/
-		Linux_XDnDFileDropHelper(WindowOSLinux &cOSWindowLinux);
+		Linux_XDnDFileDropHelper(LinuxWindowOS &cOSWindowLinux);
 
 		/**
 		*  @brief
@@ -290,7 +290,7 @@ class Linux_XDnDFileDropHelper {
 	//[ Private Data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		WindowOSLinux	*m_pOSWindowLinux;		/**< Pointer to an OSWindowLinux instance, always valid */
+		LinuxWindowOS	*m_pOSWindowLinux;		/**< Pointer to an OSWindowLinux instance, always valid */
 		Display			*m_pDisplay;			/**< System display, considered to be always valid */
 		Window 			 m_nDropWindow;			/**< The window which has drop support */
 		// Atoms for Xdnd

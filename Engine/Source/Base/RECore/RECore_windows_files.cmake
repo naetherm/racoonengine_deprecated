@@ -20,6 +20,9 @@
 
 
 set(FILES
+  Private/Windows/WindowsConsole.cpp
   Private/Windows/WindowsDynLib.cpp
+  Private/Windows/WindowsFileWatcher.cpp
   Private/Windows/WindowsPlatform.cpp
+  Private/Windows/WindowsWindowOS.cpp
   )

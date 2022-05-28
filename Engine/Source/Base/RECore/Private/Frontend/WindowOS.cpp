@@ -26,7 +26,7 @@
 #include "RECore/Frontend/FrontendOS.h"
 //#include "RECore/Frontend/WindowManager.h"
 #if defined(LINUX)
-#include "RECore/Linux/WindowOSLinux.h"
+#include "RECore/Linux/LinuxWindowOS.h"
 #elif defined(WIN32)
 #include "RECore/Windows/WindowOSWindows.h"
 #endif

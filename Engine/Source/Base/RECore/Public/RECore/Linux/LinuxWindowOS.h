@@ -55,7 +55,7 @@ class WindowOS;
 *  @note
 *    - Implementation of the bridge design pattern, this class is the implementor of the 'System' abstraction
 */
-class RECORE_API WindowOSLinux : public WindowOS {
+class RECORE_API LinuxWindowOS : public WindowOS {
 
 
   //[-------------------------------------------------------]
@@ -77,13 +77,13 @@ public:
   *  @param[in] cFrontendOS
   *    Owner frontend implementation instance
   */
-  WindowOSLinux(FrontendOS &cFrontendOS);
+  LinuxWindowOS(FrontendOS &cFrontendOS);
 
   /**
   *  @brief
   *    Destructor
   */
-  ~WindowOSLinux() override;
+  ~LinuxWindowOS() override;
 
 
   /**

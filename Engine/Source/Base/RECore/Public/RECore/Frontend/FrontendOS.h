@@ -59,7 +59,7 @@ class FrontendOS : public RECore::FrontendImpl {
   //[-------------------------------------------------------]
   // New
   friend class WindowOS;
-  friend class WindowOSLinux;
+  friend class LinuxWindowOS;
   friend class WindowOSWindows;
 
 
