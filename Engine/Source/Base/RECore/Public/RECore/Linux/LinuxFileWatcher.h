@@ -27,61 +27,54 @@
 #pragma once
 
 #include "RECore/File/FileWatcherImpl.h"
-
-#if FILEWATCHER_PLATFORM == FILEWATCHER_PLATFORM_LINUX
-
 #include <map>
 #include <sys/types.h>
 
-namespace RECore
-{
-	/// Implementation for Linux based on inotify.
-	/// @class FileWatcherLinux
-	class LinuxFileWatcher : public FileWatcherImpl
-	{
-	public:
-		/// type for a map from WatchID to WatchStruct pointer
-		typedef std::map<WatchID, WatchStruct*> WatchMap;
+namespace RECore {
+/// Implementation for Linux based on inotify.
+/// @class FileWatcherLinux
+class LinuxFileWatcher : public FileWatcherImpl {
+public:
+  /// type for a map from WatchID to WatchStruct pointer
+  typedef std::map<WatchID, WatchStruct *> WatchMap;
 
-	public:
-		///
-		///
-		LinuxFileWatcher();
+public:
+  ///
+  ///
+  LinuxFileWatcher();
 
-		///
-		///
-		virtual ~LinuxFileWatcher();
+  ///
+  ///
+  virtual ~LinuxFileWatcher();
 
-		/// Add a directory watch
-		/// @exception FileNotFoundException Thrown when the requested directory does not exist
-		WatchID addWatch(const String& directory, FileWatchListener* watcher, bool recursive);
+  /// Add a directory watch
+  /// @exception FileNotFoundException Thrown when the requested directory does not exist
+  WatchID addWatch(const String &directory, FileWatchListener *watcher, bool recursive);
 
-		/// Remove a directory watch. This is a brute force lazy search O(nlogn).
-		void removeWatch(const String& directory);
+  /// Remove a directory watch. This is a brute force lazy search O(nlogn).
+  void removeWatch(const String &directory);
 
-		/// Remove a directory watch. This is a map lookup O(logn).
-		void removeWatch(WatchID watchid);
+  /// Remove a directory watch. This is a map lookup O(logn).
+  void removeWatch(WatchID watchid);
 
-		/// Updates the watcher. Must be called often.
-		void update();
+  /// Updates the watcher. Must be called often.
+  void update();
 
-		/// Handles the action
-		void handleAction(WatchStruct* watch, const String& filename, unsigned long action);
+  /// Handles the action
+  void handleAction(WatchStruct *watch, const String &filename, unsigned long action);
 
-	private:
-		/// Map of WatchID to WatchStruct pointers
-		WatchMap mWatches;
-		/// The last watchid
-		WatchID mLastWatchID;
-		/// inotify file descriptor
-		int mFD;
-		/// time out data
-		struct timeval mTimeOut;
-		/// File descriptor set
-		fd_set mDescriptorSet;
+private:
+  /// Map of WatchID to WatchStruct pointers
+  WatchMap mWatches;
+  /// The last watchid
+  WatchID mLastWatchID;
+  /// inotify file descriptor
+  int mFD;
+  /// time out data
+  struct timeval mTimeOut;
+  /// File descriptor set
+  fd_set mDescriptorSet;
 
-	};//end FileWatcherLinux
+};//end FileWatcherLinux
 
 };//namespace RECore
-
-#endif//FILEWATCHER_PLATFORM_LINUX
