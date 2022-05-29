@@ -61,34 +61,127 @@ public:
    */
   Value();
 
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] rhs
+   * Value.
+   */
   Value(const TType& rhs);
 
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] rhs
+   * Value.
+   */
   Value(TType&& rhs);
 
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] rhs
+   * Value.
+   */
   Value(const Value<TType>& rhs);
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~Value();
 
 
+  /**
+   * @brief
+   * Copy operator.
+   *
+   * @param[in] rhs
+   * Value.
+   *
+   * @return
+   * Reference to this instance.
+   */
   Value<TType>& operator=(const TType& rhs);
 
+  /**
+   * @brief
+   * Copy operator.
+   *
+   * @param[in] rhs
+   * Value.
+   *
+   * @return
+   * Reference to this instance.
+   */
   Value<TType>& operator=(const Value<TType>& rhs);
 
+  /**
+   * @brief
+   * Compare operator.
+   *
+   * @param[in] rhs
+   * Value to compare to.
+   *
+   * @return
+   * True if equal, false otherwise.
+   */
   bool operator==(const Value<TType>& rhs) const;
 
+  /**
+   * @brief
+   * Compare operator.
+   *
+   * @param[in] rhs
+   * Value to compare to.
+   *
+   * @return
+   * True if not equal, false otherwise.
+   */
   bool operator!=(const Value<TType>& rhs) const;
 
 
+  /**
+   * @brief
+   * Returns whether the value was set.
+   *
+   * @return
+   * True if set, false otherwise.
+   */
   bool isSet() const;
 
+  /**
+   * @brief
+   * Returns const value.
+   *
+   * @return
+   * Const value.
+   */
   const TType get() const;
 
+  /**
+   * @brief
+   * Returns value.
+   *
+   * @return
+   * Value.
+   */
   TType get();
 
+  /**
+   * @brief
+   * Sets value.
+   *
+   * @param[in] value
+   * Value.
+   */
   void set(TType value);
 
 private:
-
+  /** Value */
   TType mValue;
 };
 
