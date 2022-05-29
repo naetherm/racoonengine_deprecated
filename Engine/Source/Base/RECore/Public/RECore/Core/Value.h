@@ -20,61 +20,86 @@
 
 
 //[-------------------------------------------------------]
+//[ Header guard                                          ]
+//[-------------------------------------------------------]
+#pragma once
+
+
+//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/Gui/Screen.h"
-#include "REGui/Gui/Gui.h"
+#include "RECore/RECore.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui {
+namespace RECore {
 
 
-Screen::Screen(Gui *gui)
-: mGui(gui) {
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+ * @class
+ * Attribute
+ *
+ * @brief
+ * An attribute is a wrapper around a specific value. This will be used for the gui system where we
+ * can directly observe changes on data types.
+ *
+ * @tparam TType
+ * The type of the attribute.
+ */
+template<typename TType>
+class Value {
+public:
 
-}
+  /**
+   * @brief
+   * Default constructor.
+   */
+  Value();
 
-Screen::~Screen() {
+  Value(const TType& rhs);
 
-}
+  Value(TType&& rhs);
 
-[[nodiscard]] Gui *Screen::getGui() const {
-  return mGui;
-}
+  Value(const Value<TType>& rhs);
 
-[[nodiscard]] const RECore::String &Screen::getName() const {
-  return mName;
-}
+  ~Value();
 
-void Screen::setName(const RECore::String &name) {
-  mName = name;
-}
 
-[[nodiscard]] const RECore::Vec2i &Screen::getPosition() const {
-  return mPosition;
-}
+  Value<TType>& operator=(const TType& rhs);
 
-void Screen::setPosition(const RECore::Vec2i &position) {
-  mPosition = position;
-}
+  Value<TType>& operator=(const Value<TType>& rhs);
 
-[[nodiscard]] const RECore::Vec2i &Screen::getSize() const {
-  return mSize;
-}
+  bool operator==(const Value<TType>& rhs) const;
 
-void Screen::setSize(const RECore::Vec2i &size) {
-  mSize = size;
-}
+  bool operator!=(const Value<TType>& rhs) const;
 
-void Screen::setDefault(bool defaultScreen) {
-  mDefaultScreen = defaultScreen;
-}
+
+  bool isSet() const;
+
+  const TType get() const;
+
+  TType get();
+
+  void set(TType value);
+
+private:
+
+  TType mValue;
+};
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // REGui
+} // RECore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "RECore/Core/Value.inl"
