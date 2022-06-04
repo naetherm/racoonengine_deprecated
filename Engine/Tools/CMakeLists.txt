@@ -22,4 +22,5 @@
 # Current package
 ################################################################################
 #re_add_subdirectory(REHeaderTool)
-re_add_subdirectory(ExampleProjectCompiler)
+#re_add_subdirectory(ExampleProjectCompiler)
+re_add_subdirectory(REFrontend)

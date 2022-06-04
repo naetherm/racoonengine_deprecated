@@ -26,7 +26,5 @@ set(RE_BUILD_DEPENDENCIES
   atomic
   ncurses
   ${LINUX_X11_LIBS}
-  dbus-1
-  stdc++fs
-  openvr_api
-  )
+  ${DBUS_LIBRARIES}
+  stdc++fs)

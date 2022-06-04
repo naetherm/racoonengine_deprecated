@@ -37,16 +37,14 @@ re_add_target(
   BUILD_DEPENDENCIES
     PUBLIC
       RECore
+      REGui
       RERHI
       RERenderer
-      REGui
-      RERendererToolkit
+      External::openvr
   COMPILE_DEFINITIONS
     PUBLIC
       ${${PAL_PLATFORM_NAME_UPPERCASE}_COMPILE_DEFS}
       ${PAL_PLATFORM_NAME_UPPERCASE}
-      #EXAMPLES_MIMALLOC
-      RHI_OPENGL
   TARGET_PROPERTIES
     -fPIC
 )

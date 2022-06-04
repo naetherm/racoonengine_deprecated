@@ -22,8 +22,7 @@ ln -s ${BUILD_PATH}/Engine/Source/Plugins/RERHIOpenGL/libRERHIOpenGL.so ${BUILD_
 echo "Done."
 
 echo "Auto-Generate runtime-compiled resources for OpenGL_440"
-cd Tutorial/02.Rendering/02.02.ProjectCompiler
-./02.02.ProjectCompiler --target OpenGL_440
+cd ${BUILD_PATH}/Tutorial/02.Rendering/02.02.ProjectCompiler && ./02.02.ProjectCompiler --target OpenGL_440
 echo "Done."
 
 cd ${ROOT_PATH}
