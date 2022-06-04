@@ -97,7 +97,11 @@ public:
   *  @param[in] source
   *    Source to copy from
   */
-  inline explicit Color4(const Color4 &source) :
+  inline Color4(const Color4 &source) :
+    value{source[0], source[1], source[2], source[3]} {
+    // Nothing here
+  }
+  inline Color4(Color4& source) :
     value{source[0], source[1], source[2], source[3]} {
     // Nothing here
   }
