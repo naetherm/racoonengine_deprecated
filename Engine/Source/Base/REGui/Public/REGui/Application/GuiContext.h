@@ -29,17 +29,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
+#include <RECore/Core/AbstractContext.h>
 #include <RECore/String/String.h>
 #include <RECore/System/DynLib.h>
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace RERenderer {
-class Context;
-class IRenderer;
-}
 
 
 //[-------------------------------------------------------]
@@ -56,75 +48,74 @@ namespace REGui {
  * GuiContext
  *
  * @brief
- * Gui context implementation.
+ * Basic gui context implementation, containing the rhi name, the corresponding
+ * rhi library name and the loaded dynamic rhi library.
  */
-class GuiContext {
-
-  friend class GuiApplication;
-
+class GuiContext : public RECore::AbstractContext {
 public:
 
   /**
    * @brief
-   * Default constructor
+   * Constructor.
    */
   REGUI_API GuiContext();
 
   /**
    * @brief
-   * Destructor
+   * Destructor.
    */
-  REGUI_API virtual ~GuiContext();
-
-
-  void initialize(const RECore::String& rhiName);
+  ~GuiContext() override;
 
 
   /**
    * @brief
-   * Sets the rhi name.
+   * Initializes the gui context.
+   * This will set all names correctly and that tries to create and load the corresponding
+   * dynamic rhi library.
    *
    * @param[in] rhiName
-   * The rhi name.
+   * The name of the rhi interface to use.
+   *
+   * @return
+   * True if everything went fine, false otherwise.
    */
-  void setRhiName(const RECore::String& rhiName);
+  [[nodiscard]] bool initialize(const RECore::String& rhiName);
+
 
   /**
    * @brief
-   * Returns the rhi name.
+   * Returns the name of the rhi that should be used for rendering.
    *
    * @return
-   * The rhi name.
+   * The name of the rhi interface.
    */
   [[nodiscard]] const RECore::String& getRhiName() const;
 
-  [[nodiscard]] RERHI::RHIContext* getRhiContext() const;
+  /**
+   * @brief
+   * Returns the full rhi library name.
+   *
+   * @return
+   * Full rhi library name.
+   */
+  [[nodiscard]] const RECore::String& getRhiLibraryName() const;
 
-  [[nodiscard]] const RECore::String& getSharedLibraryName() const;
-
-  [[nodiscard]] const RECore::DynLib& getRhiSharedLibrary() const;
-
-  [[nodiscard]] RERHI::RHIDynamicRHI* getRhi() const;
-
-  [[nodiscard]] RERenderer::Context* getRendererContext() const;
-
-  [[nodiscard]] RERenderer::IRenderer* getRenderer() const;
+  /**
+   * @brief
+   * Returns reference to the dynamic library of the rhi interface.
+   *
+   * @return
+   * Reference to dynamic rhi library.
+   */
+  [[nodiscard]] RECore::DynLib& getRhiLibrary() const;
 
 protected:
-  /** The name of the RHI instance */
+  /** The rhi interface name, e.g. "OpenGL", "Vulkan" */
   RECore::String mRhiName;
-  /** RHI context */
-  RERHI::RHIContext* mRhiContext;
-  /** The shared library name of the RHI library */
-  RECore::String mSharedLibraryName;
-  /** The shared library */
-  RECore::DynLib mRhiSharedLibrary;
-  /** RHI instance */
-  RERHI::RHIDynamicRHI* mRhi;
-  /** Renderer context instance */
-  RERenderer::Context* mRendererContext;
-  /** Renderer instance */
-  RERenderer::IRenderer* mRenderer;
+  /** The full rhi library name, e.g. "libRERHIOpenGL.so" for Linux and "RERHIOpenGL.dll" for Windows */
+  RECore::String mRhiLibraryName;
+  /** Pointer to the dynamic rhi library, can be a nullptr if something went wrong. */
+  RECore::DynLib* mRhiLibrary;
 };
 
 

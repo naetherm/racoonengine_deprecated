@@ -30,8 +30,15 @@
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
 #include "REGui/Gui/GuiTypes.h"
-#include "REGui/Gui/MessageTypes.h"
 #include <RECore/Math/Vec2i.h>
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace RERHI {
+class RHICommandBuffer;
+}
 
 
 //[-------------------------------------------------------]
@@ -49,23 +56,29 @@ class NativeWindow;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * GuiMessage
+ *
+ * @brief
+ * Gui message implementation for the platform independent communication.
+ */
 class GuiMessage {
-  //[-------------------------------------------------------]
-  //[ Public named constructors                             ]
-  //[-------------------------------------------------------]
 public:
 
-  static REGUI_API GuiMessage onClose(NativeWindow* nativeWindow);
-
-  static REGUI_API GuiMessage onCreate(NativeWindow* nativeWindow);
-
-  static REGUI_API GuiMessage onDestroy(NativeWindow* nativeWindow);
-
   static REGUI_API GuiMessage onDraw(NativeWindow* nativeWindow);
+
+  static REGUI_API GuiMessage onShow(NativeWindow* nativeWindow);
+
+  static REGUI_API GuiMessage onHide(NativeWindow* nativeWindow);
 
   static REGUI_API GuiMessage onMove(NativeWindow* nativeWindow, const RECore::Vec2i& position);
 
   static REGUI_API GuiMessage onSize(NativeWindow* nativeWindow, const RECore::Vec2i& size);
+
+  static REGUI_API GuiMessage onMouseEnter(NativeWindow* nativeWindow);
+
+  static REGUI_API GuiMessage onMouseLeave(NativeWindow* nativeWindow);
 
   static REGUI_API GuiMessage onMouseMove(NativeWindow* nativeWindow, const RECore::Vec2i& position);
 
@@ -79,9 +92,6 @@ public:
 
   static REGUI_API GuiMessage onKeyUp(NativeWindow* nativeWindow, RECore::uint32 key, RECore::uint32 modifiers);
 
-  //[-------------------------------------------------------]
-  //[ Public functions                                      ]
-  //[-------------------------------------------------------]
 public:
 
   /**
@@ -108,42 +118,123 @@ public:
    * @brief
    * Destructor.
    */
-  REGUI_API ~GuiMessage();
+  ~GuiMessage();
 
 
   REGUI_API bool operator==(const GuiMessage& rhs) const;
 
+  /**
+   * @brief
+   * Copy operator.
+   *
+   * @param[in] rhs
+   * The object to copy.
+   *
+   * @return
+   * Reference to this instance.
+   */
   REGUI_API GuiMessage& operator=(const GuiMessage& rhs);
 
+  /**
+   * @brief
+   * Returns pointer to native window.
+   *
+   * @return
+   * Pointer to native window.
+   */
   inline NativeWindow* getWindow() const;
 
+  /**
+   * @brief
+   * Returns the gui message type.
+   *
+   * @return
+   * Gui message type.
+   */
   inline EMessageType getType() const;
 
+  /**
+   * @brief
+   * Returns data.
+   *
+   * @return
+   * Data.
+   */
   inline RECore::uint32 getData() const;
 
+  /**
+   * @brief
+   * Returns delta value.
+   *
+   * @return
+   * Delta value.
+   */
   inline int getDelta() const;
 
+  /**
+   * @brief
+   * Returns the mouse button.
+   *
+   * @return
+   * Mouse button.
+   */
   inline EMouseButton getMouseButton() const;
 
+  /**
+   * @brief
+   * Returns key.
+   *
+   * @return
+   * Key.
+   */
   inline RECore::uint32 getKey() const;
 
+  /**
+   * @brief
+   * Returns data pointer.
+   *
+   * @return
+   * Data pointer.
+   */
   inline void* getDataPointer() const;
 
+  /**
+   * @brief
+   * Returns ext data.
+   *
+   * @return
+   * Ext data.
+   */
   inline RECore::uint32 getExtData() const;
 
+  /**
+   * @brief
+   * Returns modifiers.
+   *
+   * @return
+   * Modifiers
+   */
   inline RECore::uint32 getModifiers() const;
 
+  /**
+   * @brief
+   * Returns position or size.
+   *
+   * @return
+   * Position or size.
+   */
   inline const RECore::Vec2i& getPositionSize() const;
 
   //[-------------------------------------------------------]
   //[ Protected data                                        ]
   //[-------------------------------------------------------]
 protected:
-  // Window target
+  /** Window target pointer */
   NativeWindow* mNativeWindow;
-  // Message type
+  /** Message type */
   EMessageType mMessageType;
 
+  /** First data block */
   union {
     RECore::int32 mData;
     int mDelta;
@@ -151,14 +242,17 @@ protected:
     RECore::uint32 mKey;
   } mDataBlock1;
 
+  /** Second data block for additional material */
   union {
     void* mDataPtr;
     RECore::uint32 mExtData;
     RECore::uint32 mModifiers;
   } mDataBlock2;
 
+  /** Store for position or size */
   RECore::Vec2i mPositionSize;
 };
+
 
 
 //[-------------------------------------------------------]

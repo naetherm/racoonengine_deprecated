@@ -28,8 +28,38 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui
-{
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+re_class_metadata(MenuBar, "REGui", REGui::Container, "Application class")
+  // Constructors
+re_class_metadata_end(MenuBar)
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+MenuBar::MenuBar() {
+
+}
+
+MenuBar::~MenuBar() {
+
+}
+
+void MenuBar::onUpdate() {
+
+}
+
+void MenuBar::onDraw() {
+  if (ImGui::BeginMenuBar()) {
+
+    ImGui::EndMenuBar();
+  }
+}
 
 
 //[-------------------------------------------------------]

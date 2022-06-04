@@ -28,8 +28,57 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace REGui
-{
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+re_class_metadata(Container, "REGui", REGui::Widget, "Application class")
+  // Constructors
+re_class_metadata_end(Container)
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+Container::Container() {
+
+}
+
+Container::~Container() {
+  // Clears all widgets
+  clear();
+}
+
+void Container::clear() {
+  for (RECore::uint32 i = 0; i < mChildren.size(); ++i) {
+    delete mChildren[i];
+  }
+  mChildren.clear();
+}
+
+void Container::addWidget(Widget *widget) {
+  mChildren.push_back(widget);
+}
+
+void Container::removeWidget(Widget *widget) {
+  auto iter = std::find(mChildren.begin(), mChildren.end(), widget);
+  if (iter != mChildren.end()) {
+    mChildren.erase(iter);
+  }
+}
+
+void Container::onUpdate() {
+
+}
+
+void Container::onDraw() {
+  // Loop through all widgets and call their onDraw-method
+  for (auto iter = mChildren.begin(); iter != mChildren.end(); ++iter) {
+    (*iter)->onDraw();
+  }
+}
 
 
 //[-------------------------------------------------------]

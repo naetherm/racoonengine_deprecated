@@ -30,14 +30,37 @@
 //[-------------------------------------------------------]
 namespace REGui {
 
-Theme::Theme(const RECore::String &themeName)
-: mThemeName(themeName) {
+
+//[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+re_class_metadata(Theme, "REGui", RECore::Object, "Application class")
+  // Constructors
+re_class_metadata_end(Theme)
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+Theme::Theme(const RECore::String& name)
+: mThemeName(name) {
 
 }
 
 Theme::~Theme() {
 
 }
+
+
+const RECore::String& Theme::getName() const {
+  return mThemeName;
+}
+
+
+void Theme::initialize() {
+  // Nothing to do here, but must be implemented in inherited theme!
+}
+
 
 
 //[-------------------------------------------------------]

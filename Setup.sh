@@ -16,6 +16,7 @@ echo "Done."
 
 echo "Building all projects ..."
 make -j $(nproc)
+ln -s ${BUILD_PATH}/Engine/Source/Plugins/RERHIOpenGL/libRERHIOpenGL.so ${BUILD_PATH}/Tutorial/01.Frontends/01.02.Gui/libRERHIOpenGL.so
 ln -s ${BUILD_PATH}/Engine/Source/Plugins/RERHIOpenGL/libRERHIOpenGL.so ${BUILD_PATH}/Tutorial/02.Rendering/02.01.LowLevel/libRERHIOpenGL.so
 ln -s ${BUILD_PATH}/Engine/Source/Plugins/RERHIOpenGL/libRERHIOpenGL.so ${BUILD_PATH}/Tutorial/02.Rendering/02.03.HighLevel/libRERHIOpenGL.so
 echo "Done."

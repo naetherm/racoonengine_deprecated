@@ -29,8 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
-#include <RECore/Math/Vec2i.h>
-#include <RERHI/Rhi.h>
+#include <RECore/String/String.h>
 
 
 //[-------------------------------------------------------]
@@ -43,110 +42,43 @@ namespace REGui {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Gui;
-class GuiMessage;
 class NativeWindowImpl;
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-/**
- * @class
- * NativeWindow
- *
- * @brief
- * Platform independent native window implementation.
- */
 class NativeWindow {
 public:
 
-  /**
-   * @brief
-   * Constructor.
-   *
-   * @param[in] gui
-   * Pointer to platform independent gui implementation.
-   */
   NativeWindow(Gui* gui);
 
-  /**
-   * @brief
-   * Destructor.
-   */
   ~NativeWindow();
 
 
-  /**
-   * @brief
-   * Gets pointer to gui implementations.
-   *
-   * @return
-   * Pointer to gui implementation.
-   */
   [[nodiscard]] Gui* getGui() const;
+
+  [[nodiscard]] NativeWindowImpl* getImpl() const;
 
   [[nodiscard]] RECore::handle getWindowHandle() const;
 
-  void onMessage(const GuiMessage& guiMessage);
+  void redraw();
 
-  /**
-   * @brief
-   * Gets pointer to the internally used swapchain implementation.
-   *
-   * @return
-   * Pointer to swapchain implementation.
-   */
-  [[nodiscard]] RERHI::RHISwapChainPtr getSwapChain() const;
+  void ping();
 
-  void setSwapChain(RERHI::RHISwapChainPtr swapChainPtr);
+  void setTitle(const RECore::String& title);
 
-  /**
-   * @brief
-   * Sets the position of the window.
-   *
-   * @param[in] position
-   * Position of the window.
-   */
-  void setPosition(const RECore::Vec2i& position);
+  void getWindowSize(RECore::int32& width, RECore::int32& height);
 
-  /**
-   * @brief
-   * Returns the position of the window.
-   *
-   * @return
-   * Position of the window.
-   */
-  RECore::Vec2i getPosition() const;
+  void setWindowSize(RECore::int32 width, RECore::int32 height);
 
-  /**
-   * @brief
-   * Sets the size of the window.
-   *
-   * @param[in] size
-   * The size
-   */
-  void setSize(const RECore::Vec2i& size);
-
-  /**
-   * @brief
-   * Get the size of the window.
-   *
-   * @return
-   * Size of window.
-   */
-  RECore::Vec2i getSize() const;
-
-private:
-
-  void initializeSwapChain();
+  [[nodiscard]] bool isDestroyed() const;
 
 protected:
   /** Pointer to gui implementation, always valid! */
   Gui* mGui;
-  /** Pointer to platform dependent native window implementation */
+  /** Pointer to platform dependent native window implementation, always valid! */
   NativeWindowImpl* mImpl;
-  /** Pointer to swapchain implementation, always valid! */
-  RERHI::RHISwapChainPtr mSwapChain;
 };
 
 

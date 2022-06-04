@@ -30,20 +30,21 @@
 //[-------------------------------------------------------]
 namespace REGui {
 
-GuiMessage GuiMessage::onClose(NativeWindow *nativeWindow) {
-  return GuiMessage(nativeWindow, EMessageType::MessageOnClose);
-}
 
-GuiMessage GuiMessage::onCreate(NativeWindow *nativeWindow) {
-  return GuiMessage(nativeWindow, EMessageType::MessageOnCreate);
-}
-
-GuiMessage GuiMessage::onDestroy(NativeWindow *nativeWindow) {
-  return GuiMessage(nativeWindow, EMessageType::MessageOnDestroy);
-}
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
 
 GuiMessage GuiMessage::onDraw(NativeWindow* nativeWindow) {
   return GuiMessage(nativeWindow, EMessageType::MessageOnDraw);
+}
+
+GuiMessage GuiMessage::onShow(NativeWindow* nativeWindow) {
+  return GuiMessage(nativeWindow, EMessageType::MessageOnShow);
+}
+
+GuiMessage GuiMessage::onHide(NativeWindow* nativeWindow) {
+  return GuiMessage(nativeWindow, EMessageType::MessageOnHide);
 }
 
 GuiMessage GuiMessage::onMove(NativeWindow* nativeWindow, const RECore::Vec2i& position) {
@@ -56,6 +57,14 @@ GuiMessage GuiMessage::onSize(NativeWindow* nativeWindow, const RECore::Vec2i& s
   GuiMessage guiMessage(nativeWindow, EMessageType::MessageOnSize);
   guiMessage.mPositionSize = size;
   return guiMessage;
+}
+
+GuiMessage GuiMessage::onMouseEnter(NativeWindow* nativeWindow) {
+  return GuiMessage(nativeWindow, EMessageType::MessageOnMouseEnter);
+}
+
+GuiMessage GuiMessage::onMouseLeave(NativeWindow* nativeWindow) {
+  return GuiMessage(nativeWindow, EMessageType::MessageOnMouseLeave);
 }
 
 GuiMessage GuiMessage::onMouseMove(NativeWindow* nativeWindow, const RECore::Vec2i& position) {
@@ -105,7 +114,10 @@ GuiMessage::GuiMessage(NativeWindow *nativeWindow, EMessageType messageType)
 
 GuiMessage::GuiMessage(const GuiMessage &rhs)
 : mNativeWindow(rhs.mNativeWindow)
-, mMessageType(rhs.mMessageType) {
+, mMessageType(rhs.mMessageType)
+, mDataBlock1(rhs.mDataBlock1)
+, mDataBlock2(rhs.mDataBlock2)
+, mPositionSize(rhs.mPositionSize) {
 
 }
 
@@ -115,12 +127,18 @@ GuiMessage::~GuiMessage() {
 
 bool GuiMessage::operator==(const GuiMessage &rhs) const {
   return ((mNativeWindow == rhs.mNativeWindow) &&
-    (mMessageType == rhs.mMessageType));
+          (mMessageType == rhs.mMessageType) &&
+          (mPositionSize == rhs.mPositionSize));
 }
 
 GuiMessage& GuiMessage::operator=(const GuiMessage &rhs) {
   mNativeWindow = rhs.mNativeWindow;
   mMessageType = rhs.mMessageType;
+
+  mDataBlock1 = rhs.mDataBlock1;
+  mDataBlock2 = rhs.mDataBlock2;
+
+  mPositionSize = rhs.mPositionSize;
 
   return *this;
 }

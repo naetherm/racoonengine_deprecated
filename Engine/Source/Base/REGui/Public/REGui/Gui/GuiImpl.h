@@ -29,8 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
-#include "REGui/Gui/GuiMessage.h"
-#include <RECore/Math/Vec2i.h>
 
 
 //[-------------------------------------------------------]
@@ -43,7 +41,6 @@ namespace REGui {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Gui;
-class Screen;
 
 
 //[-------------------------------------------------------]
@@ -52,9 +49,20 @@ class Screen;
 class GuiImpl {
 public:
 
-  REGUI_API GuiImpl(Gui* gui);
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] gui
+   * Pointer to platform independent gui implementation.
+   */
+  GuiImpl(Gui* gui);
 
-  REGUI_API virtual ~GuiImpl();
+  /**
+   * @brief
+   * Destructor.
+   */
+  virtual ~GuiImpl();
 
 public:
 
@@ -62,14 +70,8 @@ public:
 
   virtual void processMessage() = 0;
 
-  virtual void postMessage(const GuiMessage& guiMessage) = 0;
-
-  virtual void enumerateScreens(std::vector<Screen*>& screens) = 0;
-
-  virtual RECore::Vec2i getScreenSize() const = 0;
-
 protected:
-
+  /** Pointer to platform independent gui implementation */
   Gui* mGui;
 };
 

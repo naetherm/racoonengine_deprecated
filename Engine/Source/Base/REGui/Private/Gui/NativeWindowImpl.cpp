@@ -30,6 +30,15 @@
 //[-------------------------------------------------------]
 namespace REGui {
 
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
 NativeWindowImpl::NativeWindowImpl(NativeWindow *nativeWindow)
 : mNativeWindow(nativeWindow) {
 
@@ -37,10 +46,6 @@ NativeWindowImpl::NativeWindowImpl(NativeWindow *nativeWindow)
 
 NativeWindowImpl::~NativeWindowImpl() {
 
-}
-
-NativeWindow* NativeWindowImpl::getNativeWindow() const {
-  return mNativeWindow;
 }
 
 

@@ -37,15 +37,72 @@
 //[-------------------------------------------------------]
 namespace REGui {
 
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Gui;
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
 class Container : public Widget {
+
+  //[-------------------------------------------------------]
+  //[ RTTI interface                                        ]
+  //[-------------------------------------------------------]
+  re_class_def(REGUI_API)
+  re_class_def_end
+
 public:
 
+  /**
+   * @brief
+   * Constructor.
+   */
   Container();
 
-  virtual ~Container();
+  /**
+   * @brief
+   * Destructor.
+   */
+  ~Container() override;
+
+  /**
+   * @brief
+   * Clears all widgets.
+   */
+  void clear();
+
+public:
+
+  virtual void addWidget(Widget* widget);
+
+  virtual void removeWidget(Widget* widget);
+
+  template<typename TType, typename... TArgs>
+  TType& createWidget(TArgs&&... args);
+
+public:
+
+  void onUpdate() override;
+
+  void onDraw() override;
+
+protected:
+  /** List of all children that should be displayed */
+  std::vector<Widget*> mChildren;
 };
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // REGui
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "REGui/Widget/Container/Container.inl"

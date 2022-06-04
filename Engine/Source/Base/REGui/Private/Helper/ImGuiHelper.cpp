@@ -1,0 +1,57 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2019 - 2022 RacoonStudios
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+// software and associated documentation files (the "Software"), to deal in the Software
+// without restriction, including without limitation the rights to use, copy, modify, merge,
+// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+// to whom the Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+// PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "REGui/Helper/ImGuiHelper.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+ImVec2 ImGuiHelper::ToImVec2(const RECore::Vec2i& v) {
+  return ImVec2(v.getX(), v.getY());
+}
+
+RECore::Vec2i ImGuiHelper::ToVec2i(const ImVec2 &v) {
+  return RECore::Vec2i(v.x, v.y);
+}
+
+ImVec4 ImGuiHelper::ToImVec4(const RECore::Color4 &c) {
+  return ImVec4(c.value[0], c.value[1], c.value[2], c.value[3]);
+}
+
+RECore::Color4 ImGuiHelper::ToColor4(const ImVec4 &c) {
+  return RECore::Color4(c.x, c.y, c.z, c.w);
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // REGui

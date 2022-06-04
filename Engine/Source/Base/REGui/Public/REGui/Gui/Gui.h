@@ -29,9 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
-#include <RECore/String/String.h>
-#include <map>
-#include <vector>
+#include <RECore/Application/CoreContext.h>
 #include <imgui.h>
 
 
@@ -45,26 +43,18 @@ namespace REGui {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class GuiImpl;
-class Screen;
-class GuiContext;
 class GuiMessage;
 class MainWindow;
+class GuiRenderer;
+class GuiContext;
+// Theming
+class Theme;
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-/**
- * @class
- * Gui
- *
- * @brief
- * Platform independent Gui implementation.
- */
 class Gui {
-
-  friend class GuiApplication;
-
 public:
 
   static Gui& instance();
@@ -75,150 +65,75 @@ public:
    * @brief
    * Constructor.
    */
-  REGUI_API Gui();
-
+  Gui();
   /**
    * @brief
    * Destructor.
    */
-  REGUI_API ~Gui();
+  virtual ~Gui();
+
+
+  void initialize(RECore::CoreContext* coreContext, GuiContext* guiContext);
 
 
   /**
    * @brief
-   * Get platform dependent gui implementation.
+   * Returns pointer to platform dependent gui implementation.
    *
    * @return
-   * Platform dependent gui implementation.
+   * Pointer to platform dependent gui implementation;
    */
   [[nodiscard]] GuiImpl* getImpl() const;
 
-  [[nodiscard]] GuiContext* getGuiContext() const;
+  [[nodiscard]] RECore::CoreContext& getCoreContext() const;
+
+  [[nodiscard]] GuiContext& getGuiContext() const;
 
   [[nodiscard]] bool isActive() const;
+
+  [[nodiscard]] bool hasWindows() const;
+
+  void setMainWindow(MainWindow* mainWindow);
+
+  [[nodiscard]] MainWindow* getMainWindow() const;
 
 
   void update();
 
-  //[-------------------------------------------------------]
-  //[ Message processing                                    ]
-  //[-------------------------------------------------------]
-  void processMessages();
-
-
-  //[-------------------------------------------------------]
-  //[ Windows                                               ]
-  //[-------------------------------------------------------]
-  void addWindow(MainWindow* nativeWindow);
-
-  void removeWindow(MainWindow* nativeWindow);
-
-  [[nodiscard]] MainWindow* getWindow(RECore::handle nativeWindowHandle) const;
-
-  MainWindow* getMainWindow() const;
+  void dummy();
 
 
   //[-------------------------------------------------------]
   //[ Gui Messages                                          ]
   //[-------------------------------------------------------]
+  void processMessages();
+
   void sendMessage(const GuiMessage& guiMessage);
-
-
-  //[-------------------------------------------------------]
-  //[ Screens                                               ]
-  //[-------------------------------------------------------]
-  /**
-   * @brief
-   * Gets vector of all screens/monitors.
-   *
-   * @return
-   * Vector of screens.
-   */
-  REGUI_API const std::vector<Screen*>& getScreens() const;
-
-  /**
-   * @brief
-   * Gets pointer to screen by its name.
-   *
-   * @param[in] name
-   * Name of the screen.
-   *
-   * @return
-   * Pointer to screen, this can be a nullptr.
-   */
-  REGUI_API Screen* getScreen(const RECore::String& name) const;
-
-  /**
-   * @brief
-   * Gets pointer to the default screen.
-   *
-   * @return
-   * Pointer to the default screen.
-   */
-  REGUI_API Screen* getDefaultScreen() const;
-
-protected:
-
-  /**
-   * @brief
-   * Responsible for initializing the gui.
-   *
-   * @param[in] guiContext
-   * Pointer to the gui context.
-   */
-  void initialize(GuiContext* guiContext);
 
 private:
 
-  void createFixedBuildInRhiConfigurationResources();
-
-  const RERHI::RHIVertexArrayPtr& getFillVertexArrayPtr(RERHI::RHICommandBuffer* commandBuffer);
-
-  void fillGraphicsCommandBuffer(RERHI::RHICommandBuffer& commandBuffer);
-
-  void fillGraphicsCommandBufferUsingFixedBuildInRhiConfiguration(RERHI::RHICommandBuffer& commandBuffer);
-
-  RERHI::RHIResourceGroupPtr getResourceGroupByTexture(RERHI::RHITexture2D* texture);
-
 protected:
-  /** Platform dependent gui implementation */
-  GuiImpl* mpImpl;
-  /** Pointer to the gui context, always valid! */
-  GuiContext* mGuiContext;
-
+  /** Pointer to platform dependent gui implementation */
+  GuiImpl* mGuiImpl;
+  /** Pointer to core context */
+  RECore::CoreContext* mCoreContext;
+  /** Pointer to imgui context instance, must be valid! */
   ImGuiContext*	   mImGuiContext;
-  /** List of available screens/monitors */
-  std::vector<Screen*> mScreens;
-  /** Pointer to the default screen, always valid! */
-  Screen* mDefaultScreen;
-  /** Map containing all active windows */
-  std::map<RECore::handle, MainWindow*> mWindows;
+  /** Pointer to gui context */
+  GuiContext* mGuiContext;
+  /** Pointer to gui renderer implementation */
+  GuiRenderer* mGuiRenderer;
   /** Pointer to main window */
   MainWindow* mMainWindow;
 
+  RERHI::RHISwapChain* mMainSwapChain;
 
   RERHI::RHICommandBuffer mCommandBuffer;
 
-  // Collected resources
-  std::map<RERHI::RHITexture2D*, RERHI::RHIResourceGroupPtr> mTextures;
-
-  // Fixed builtin RHI Configuration resources
-  /** Pointer to the default font texture for imgui */
-  RERHI::RHITexture2DPtr mDefaultFontTexture;
-  RERHI::RHIRootSignaturePtr mRootSignature;
-  RERHI::RHIGraphicsProgramPtr mGraphicsProgram;
-  RERHI::RHIGraphicsPipelineStatePtr mGraphicsPipelineState;
-  RERHI::RHIUniformBufferPtr mVertexShaderUniformBuffer;
-  RECore::handle mObjectSpaceToClipSpaceMatrixUniformHandle;
-  RERHI::RHIResourceGroupPtr mResourceGroup;
-  RERHI::RHIResourceGroupPtr mSamplerStateGroup;
-  // Vertex and index buffers
-  RERHI::RHIVertexBufferPtr mVertexBuffer;
-  RECore::uint32 mNumberOfAllocatedVertices;
-  RERHI::RHIIndexBufferPtr mIndexBuffer;
-  RECore::uint32 mNumberOfAllocatedIndices;
-  RERHI::RHIVertexArrayPtr mVertexArray;
+  // TODO(naetherm):
+  Theme* mTheme;
 };
+
 
 
 //[-------------------------------------------------------]

@@ -39,14 +39,79 @@
 #include <cstring>
 #include <cassert>
 
+#if defined(LINUX)
+#include <RECore/Linux/X11Includes.h>
+
+/**
+*  @brief
+*    Mouse buttons
+*/
+#ifdef Button1
+namespace PLGuiLinuxIncludes {
+		enum {
+			X11_Button1 = Button1,
+			X11_Button2 = Button2,
+			X11_Button3 = Button3,
+			X11_Button4 = Button4,
+			X11_Button5 = Button5
+		};
+	}
+
+	#undef Button1
+	#undef Button2
+	#undef Button3
+	#undef Button4
+	#undef Button5
+
+	namespace XLib {
+		enum {
+			Button1 = PLGuiLinuxIncludes::X11_Button1,
+			Button2 = PLGuiLinuxIncludes::X11_Button2,
+			Button3 = PLGuiLinuxIncludes::X11_Button3,
+			Button4 = PLGuiLinuxIncludes::X11_Button4,
+			Button5 = PLGuiLinuxIncludes::X11_Button5
+		};
+	}
+#endif
+
+
+/**
+*  @brief
+*    Misc
+*/
+#ifdef None
+namespace PLGuiLinuxIncludes {
+		enum {
+			X11_None = None,
+			X11_Always = Always,
+			X11_Above = Above,
+			X11_Success = Success
+		};
+	}
+
+	#undef None
+	#undef Always
+	#undef Above
+	#undef Success
+
+	namespace XLib {
+		enum {
+			None = PLGuiLinuxIncludes::X11_None,
+			Always = PLGuiLinuxIncludes::X11_Always,
+			Above = PLGuiLinuxIncludes::X11_Above,
+			Success = PLGuiLinuxIncludes::X11_Success
+		};
+	}
+#endif
+#endif
 
 //[-------------------------------------------------------]
 //[ Import/Export                                         ]
 //[-------------------------------------------------------]
 #ifdef REGUI_EXPORTS
-  // To export classes, methods and variables
+// To export classes, methods and variables
   #define REGUI_API			RE_GENERIC_API_EXPORT
 #else
-  // To import classes, methods and variables
-  #define REGUI_API			RE_GENERIC_API_IMPORT
+// To import classes, methods and variables
+#define REGUI_API			RE_GENERIC_API_IMPORT
 #endif

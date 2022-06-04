@@ -23,7 +23,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Widget/Widget.h"
-#include <imgui.h>
 
 
 //[-------------------------------------------------------]
@@ -32,11 +31,26 @@
 namespace REGui {
 
 
-RECore::uint64 Widget::SUniqueWidgetId = 0;
+//[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+re_class_metadata(Widget, "REGui", RECore::Object, "Application class")
+  // Constructors
+  // Signals
+  re_signal_0_metadata(SignalClicked, "Signal that is emitted when an element was clicked", "")
+  re_signal_0_metadata(SignalDoubleClicked, "Signal that is emitted when an element was double-clicked", "")
+  re_signal_0_metadata(SignalContentChanged, "Signal that is emitted when the content changed", "")
+  re_signal_0_metadata(SignalEnterPressed, "Signal that is emitted when enter was pressed", "")
+re_class_metadata_end(Widget)
 
 
+RECore::uint64 Widget::SWidgetID = 0;
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
 Widget::Widget()
-: mWidgetId("##" + Widget::SUniqueWidgetId++){
+: mWidgetId("##" + Widget::SWidgetID++){
 
 }
 
@@ -44,24 +58,11 @@ Widget::~Widget() {
 
 }
 
-void Widget::beginFrame() {
+void Widget::onUpdate() {
 
 }
 
-void Widget::draw() {
-  if (this->mIsEnabled) {
-    this->drawInternal();
-
-    //
-
-    // Line Break?
-    if (!this->mLineBreak) {
-      ImGui::SameLine();
-    }
-  }
-}
-
-void Widget::endFrame() {
+void Widget::onDraw() {
 
 }
 

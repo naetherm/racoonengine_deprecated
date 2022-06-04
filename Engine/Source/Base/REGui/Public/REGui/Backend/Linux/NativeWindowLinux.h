@@ -40,131 +40,52 @@ namespace REGui {
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class NativeWindow;
+
+//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-/**
- * @class
- * NativeWindowLinux
- *
- * @brief
- * Linux native window implementation.
- */
 class NativeWindowLinux : public NativeWindowImpl {
 public:
 
-  /**
-   * @brief
-   * Constructor.
-   *
-   * @param[in] nativeWindow
-   * Pointer to native window.
-   */
-  REGUI_API NativeWindowLinux(NativeWindow* nativeWindow);
+  NativeWindowLinux(NativeWindow* nativeWindow);
 
-  /**
-   * @brief
-   * Destructor
-   */
-  REGUI_API ~NativeWindowLinux() override;
+  ~NativeWindowLinux() override;
+
+
+  [[nodiscard]] ::Window getWindow() const;
+
+  void handleEvent(XEvent& event);
 
 public:
 
+  RECore::handle getWindowHandle() const override;
 
-  /**
-   * @brief
-   * Create native window implementation.
-   *
-   * @param[in] nativeWindowHandle
-   * The native window handle of the system.
-   */
-  void createWindow(RECore::handle nativeWindowHandle) override;
-
-  void createWindow() override;
-
-  /**
-   * @brief
-   * Check if the window has been destroyed.
-   *
-   * @return
-   * True if the windows is destroyed, false otherwise.
-   */
-  bool isDestroyed() const override;
-
-  /**
-   * @brief
-   * Destroy the window.
-   */
-  void destroy() override;
-
-  /**
-   * @brief
-   * Returns the native window handle.
-   *
-   * @return
-   * Native window handle.
-   */
-  RECore::handle getNativeWindowHandle() const override;
-
-  /**
-   * @brief
-   * Sets the position of the window.
-   *
-   * @param[in] position
-   * Position of the window.
-   */
-  void setPosition(const RECore::Vec2i& position) override;
-
-  /**
-   * @brief
-   * Returns the position of the window.
-   *
-   * @return
-   * Position of the window.
-   */
-  RECore::Vec2i getPosition() const override;
-
-  /**
-   * @brief
-   * Sets the size of the window.
-   *
-   * @param[in] size
-   * The size
-   */
-  void setSize(const RECore::Vec2i& size) override;
-
-  /**
-   * @brief
-   * Get the size of the window.
-   *
-   * @return
-   * Size of window.
-   */
-  RECore::Vec2i getSize() const override;
-
-  /**
-   * @brief
-   * Redraw the window.
-   */
   void redraw() override;
 
-private:
+  void ping() override;
 
+  void setTitle(const RECore::String& title) override;
+
+  void getWindowSize(RECore::int32& width, RECore::int32& height) override;
+
+  void setWindowSize(RECore::int32 width, RECore::int32 height) override;
+
+  [[nodiscard]] bool isDestroyed() const override;
+
+protected:
   ::Display* mDisplay;
-  ::Window mNativeWindowHandle;
-  int mScreen;
-  RECore::Vec2i mPosition;
-  RECore::Vec2i mSize;
-
-
-  // Atoms
-  ::Atom					 WM_DELETE_WINDOW;		/**< System atom for delete */
-  ::Atom					 UTF8_STRING;			/**< Atom for the type of a window title */
-  ::Atom 					 WM_NAME;				/**< Window title (old?) */
-  ::Atom 					 _NET_WM_NAME;			/**< Window title */
-  ::Atom 					 _NET_WM_VISIBLE_NAME;	/**< Window title (visible title, can be different) */
-
+  ::Window mWindowHandle;
+  ::Atom WM_DELETE_WINDOW;
+  ::Atom UTF8_STRING;
+  ::Atom WM_NAME;
+  ::Atom _NET_WM_NAME;
+  ::Atom _NET_WM_VISIBLE_NAME;
   bool mDestroyed;
 };
+
 
 
 //[-------------------------------------------------------]

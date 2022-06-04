@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
-#include <RECore/String/String.h>
+#include <RECore/Reflect/Object.h>
 
 
 //[-------------------------------------------------------]
@@ -41,28 +41,50 @@ namespace REGui {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class Theme {
+class Theme : public RECore::Object {
+
+  //[-------------------------------------------------------]
+  //[ Class definition                                      ]
+  //[-------------------------------------------------------]
+  re_class_def(REGUI_API)
+  re_class_def_end
+
 public:
 
   /**
    * @brief
    * Constructor.
    *
-   * @param[in] themeName
-   * The name of the theme.
+   * @param[in] name
+   * The name of the theme
    */
-  REGUI_API Theme(const RECore::String& themeName);
+  Theme(const RECore::String& name = "");
 
   /**
    * @brief
    * Destructor
    */
-  REGUI_API virtual ~Theme();
+  ~Theme() override;
+
+
+  /**
+   * @brief
+   * Returns the name of the theme.
+   *
+   * @return
+   * The name of the theme.
+   */
+  const RECore::String& getName() const;
+
+
+  virtual void initialize();
 
 protected:
-
+  /** The theme name */
   RECore::String mThemeName;
 };
+
+
 
 
 //[-------------------------------------------------------]

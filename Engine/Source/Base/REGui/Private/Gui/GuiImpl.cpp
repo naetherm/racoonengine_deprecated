@@ -22,7 +22,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/Gui/GuiImpl.h"
+#include "REGui/Gui//GuiImpl.h"
+#include "REGui/Gui/Gui.h"
 
 
 //[-------------------------------------------------------]
@@ -31,13 +32,13 @@
 namespace REGui {
 
 
-GuiImpl::GuiImpl(Gui *gui)
+GuiImpl::GuiImpl(Gui* gui)
 : mGui(gui) {
 
 }
 
 GuiImpl::~GuiImpl() {
-  // Nothing to do here
+
 }
 
 

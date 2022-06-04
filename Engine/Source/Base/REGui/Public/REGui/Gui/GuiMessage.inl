@@ -20,6 +20,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "REGui/Gui/GuiMessage.h"
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace REGui {
@@ -64,6 +70,7 @@ RECore::uint32 GuiMessage::getModifiers() const {
 const RECore::Vec2i& GuiMessage::getPositionSize() const {
   return mPositionSize;
 }
+
 
 
 //[-------------------------------------------------------]

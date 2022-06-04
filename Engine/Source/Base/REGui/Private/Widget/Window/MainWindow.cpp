@@ -23,10 +23,11 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Widget/Window/MainWindow.h"
+#include "REGui/Widget/Menu/MainMenuBar.h"
 #include "REGui/Gui/Gui.h"
+#include "REGui/Gui/GuiMessage.h"
 #include "REGui/Gui/NativeWindow.h"
 #include <imgui.h>
-#include <imgui_internal.h>
 
 
 //[-------------------------------------------------------]
@@ -34,29 +35,161 @@
 //[-------------------------------------------------------]
 namespace REGui {
 
-MainWindow::MainWindow()
-: mNativeWindow(nullptr) {
-  Gui& gui = Gui::instance();
 
-  mNativeWindow = new NativeWindow(&gui);
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
 
-  // Add this window to list of all windows
-  gui.addWindow(this);
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+MainWindow::MainWindow(Gui *gui)
+: mGui(gui)
+, mNativeWindow(nullptr)
+, mSwapChain(nullptr)
+, mMainMenuBar(nullptr) {
+  // Create native window
+  mNativeWindow = new NativeWindow(gui);
 }
 
 MainWindow::~MainWindow() {
-
+  if (mMainMenuBar) {
+    delete mMainMenuBar;
+  }
+  delete mSwapChain;
+  delete mNativeWindow;
 }
 
+
+void MainWindow::setSwapChain(RERHI::RHISwapChain *swapChain) {
+  mSwapChain = swapChain;
+  mSwapChain->AddReference();
+}
+
+void MainWindow::setTitle(const RECore::String& title) {
+  mNativeWindow->setTitle(title);
+}
 
 NativeWindow* MainWindow::getNativeWindow() const {
   return mNativeWindow;
 }
 
+RECore::handle MainWindow::getWindowHandle() const {
+  return mNativeWindow->getWindowHandle();
+}
 
-void MainWindow::onUpdate() {
-  // Draw code goes right here
-  ImGui::ShowDemoWindow();
+RERHI::RHISwapChain* MainWindow::getSwapChain() const {
+  return mSwapChain;
+}
+
+void MainWindow::onMessage(const GuiMessage& guiMessage) {
+  switch(guiMessage.getType()) {
+    case MessageOnDraw:
+    {
+      onDraw();
+      break;
+    }
+    case MessageOnMove:
+    {
+
+      break;
+    }
+    case MessageOnSize:
+    {
+      //onSize(guiMessage.getPositionSize());
+      break;
+    }
+    case MessageOnMouseMove:
+    {
+      onMouseMove(guiMessage.getPositionSize());
+      break;
+    }
+    case MessageOnMouseButtonDown:
+    case MessageOnMouseButtonUp:
+    {
+      {
+        ImGui::GetIO().MouseDown[guiMessage.getMouseButton() - 1] = guiMessage.getType() == MessageOnMouseButtonDown;
+      }
+      break;
+    }
+    case MessageOnMouseWheel:
+    {
+      ImGui::GetIO().MouseWheel += guiMessage.getDelta();
+      break;
+    }
+    case MessageOnKeyDown:
+    case MessageOnKeyUp:
+    {
+      ImGui::GetIO().KeysDown[(guiMessage.getKey() & 0x1ff)] = MessageOnKeyDown == guiMessage.getType();
+      if (MessageOnKeyDown == guiMessage.getType()) {
+        ImGui::GetIO().AddInputCharacter(guiMessage.getKey());
+      }
+      break;
+    }
+  }
+}
+
+void MainWindow::redraw() {
+  mNativeWindow->redraw();
+}
+
+
+void MainWindow::onDraw() {
+  // If there is a main menu draw it
+  if (mShowMainMenuBar && mMainMenuBar != nullptr) {
+    mMainMenuBar->onDraw();
+  }
+}
+
+void MainWindow::onMouseMove(const RECore::Vec2i& position) {
+  RECore::int32 windowWidth  = 0;
+  RECore::int32 windowHeight = 0;
+
+  mNativeWindow->getWindowSize(windowWidth, windowHeight);
+
+  {
+    ImGuiIO& imGuiIo = ImGui::GetIO();
+    imGuiIo.MousePos.x = static_cast<float>(position.getX()) * (imGuiIo.DisplaySize.x / (float)windowWidth);
+    imGuiIo.MousePos.y = static_cast<float>(position.getY()) * (imGuiIo.DisplaySize.y / (float)windowHeight);
+  }
+}
+
+void MainWindow::onResize() {
+  mSwapChain->resizeBuffers();
+}
+
+void MainWindow::onMove(const RECore::Vec2i& position) {
+
+}
+
+void MainWindow::onSize(const RECore::Vec2i& size) {
+  mNativeWindow->setWindowSize(size.getX(), size.getY());
+}
+
+bool MainWindow::isDestroyed() const {
+  return mNativeWindow->isDestroyed();
+}
+
+
+bool MainWindow::showMainMenuBar() const {
+  return mShowMainMenuBar;
+}
+
+void MainWindow::makeMainMenuBarVisible(bool visible) {
+  mShowMainMenuBar = visible;
+}
+
+void MainWindow::setMainMenuBar(MenuBar* menuBar) {
+  if (mMainMenuBar) {
+    delete menuBar;
+  }
+
+  mMainMenuBar = menuBar;
+}
+
+void MainWindow::onDrawMainMenuBar() {
+
 }
 
 

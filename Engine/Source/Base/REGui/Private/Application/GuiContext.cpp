@@ -23,11 +23,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Application/GuiContext.h"
+#include <RECore/Log/Log.h>
 #include <RECore/Platform/Platform.h>
-#include <RERHI/Rhi.h>
-#if defined(LINUX)
-#include <RERHI/Linux/X11Context.h>
-#endif
 
 
 //[-------------------------------------------------------]
@@ -37,59 +34,51 @@ namespace REGui {
 
 
 GuiContext::GuiContext()
-: mRhiContext(nullptr)
-, mRhi(nullptr)
-, mRendererContext(nullptr)
-, mRenderer(nullptr) {
+: mRhiLibrary(nullptr) {
 
 }
 
 GuiContext::~GuiContext() {
-  delete mRenderer;
-  delete mRendererContext;
-  delete mRhi;
-  delete mRhiContext;
+  if (mRhiLibrary) {
+    delete mRhiLibrary;
+  }
 }
 
-void GuiContext::initialize(const RECore::String& rhiName) {
+
+bool GuiContext::initialize(const RECore::String &rhiName) {
   mRhiName = rhiName;
+  mRhiLibraryName = RECore::Platform::instance().getSharedLibraryPrefix()
+    + "RERHI" + mRhiName + "."
+    + RECore::Platform::instance().getSharedLibraryExtension();
 
-  this->mSharedLibraryName = RECore::Platform::instance().getSharedLibraryPrefix() + "RERHI" + mRhiName + "." +
-                             RECore::Platform::instance().getSharedLibraryExtension();
+  mRhiLibrary = new RECore::DynLib();
+  // Load shared dynamic library
+  if (mRhiLibrary->load(mRhiLibraryName)) {
+    RE_LOG(Info, std::string("Successfully loaded library") + mRhiLibraryName.cstr())
+    return true;
+  }
 
-  // Create the RHI context
+  RE_LOG(Critical, std::string("Unable to load library") + mRhiLibraryName.cstr())
+
+  // Clean library
+  if (mRhiLibrary) {
+    delete mRhiLibrary;
+    mRhiLibrary = nullptr;
+  }
+
+  return false;
 }
 
-void GuiContext::setRhiName(const RECore::String &rhiName) {
-  mRhiName = rhiName;
-}
-
-const RECore::String &GuiContext::getRhiName() const {
+const RECore::String& GuiContext::getRhiName() const {
   return mRhiName;
 }
 
-RERHI::RHIContext *GuiContext::getRhiContext() const {
-  return mRhiContext;
+const RECore::String & GuiContext::getRhiLibraryName() const {
+  return mRhiLibraryName;
 }
 
-const RECore::String &GuiContext::getSharedLibraryName() const {
-  return mSharedLibraryName;
-}
-
-const RECore::DynLib &GuiContext::getRhiSharedLibrary() const {
-  return mRhiSharedLibrary;
-}
-
-RERHI::RHIDynamicRHI *GuiContext::getRhi() const {
-  return mRhi;
-}
-
-RERenderer::Context *GuiContext::getRendererContext() const {
-  return mRendererContext;
-}
-
-RERenderer::IRenderer *GuiContext::getRenderer() const {
-  return mRenderer;
+RECore::DynLib& GuiContext::getRhiLibrary() const {
+  return *mRhiLibrary;
 }
 
 

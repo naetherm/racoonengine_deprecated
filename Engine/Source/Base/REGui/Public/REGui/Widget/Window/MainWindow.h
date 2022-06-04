@@ -29,7 +29,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
-#include "REGui/Widget/Container/Container.h"
+#include <RECore/Math/Vec2i.h>
+#include <RECore/String/String.h>
+#include <imgui.h>
 
 
 //[-------------------------------------------------------]
@@ -41,36 +43,85 @@ namespace REGui {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+class Gui;
+class GuiMessage;
+class MenuBar;
 class NativeWindow;
+class Widget;
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-/**
- * @class
- * MainWindow
- *
- * @brief
- *
- */
 class MainWindow {
 public:
 
-  MainWindow();
+  MainWindow(Gui* gui);
 
   virtual ~MainWindow();
 
 
-  NativeWindow* getNativeWindow() const;
+  void setSwapChain(RERHI::RHISwapChain* swapChain);
+
+  void setTitle(const RECore::String& title);
+
+  [[nodiscard]] NativeWindow* getNativeWindow() const;
+
+  [[nodiscard]] RECore::handle getWindowHandle() const;
+
+  [[nodiscard]] RERHI::RHISwapChain* getSwapChain() const;
+
+  void redraw();
+
+  [[nodiscard]] bool isDestroyed() const;
 
 
-  virtual void onUpdate();
+//[-------------------------------------------------------]
+//[ Main Menu Bar                                         ]
+//[-------------------------------------------------------]
+
+  [[nodiscard]] bool showMainMenuBar() const;
+
+  void makeMainMenuBarVisible(bool visible);
+
+  void setMainMenuBar(MenuBar* menuBar);
+
+public:
+
+  void onMessage(const GuiMessage& guiMessage);
+
+public:
 
 protected:
 
+  virtual void onDraw();
+
+  void onMouseMove(const RECore::Vec2i& position);
+
+  void onResize();
+
+  void onMove(const RECore::Vec2i& position);
+
+  void onSize(const RECore::Vec2i& size);
+
+protected:
+
+  void onDrawMainMenuBar();
+
+protected:
+  /** Pointer to gui implementation */
+  Gui* mGui;
   /** Pointer to native window implementation */
   NativeWindow* mNativeWindow;
+  /** Pointer to swap chain */
+  RERHI::RHISwapChain* mSwapChain;
+
+  /** List of all widgets of this main window */
+  std::vector<Widget*> mChildren;
+  /** Pointer to main menu bar, this can be a nullptr */
+  MenuBar* mMainMenuBar;
+  /** Determines whether to show the main menu bar */
+  bool mShowMainMenuBar;
 };
 
 

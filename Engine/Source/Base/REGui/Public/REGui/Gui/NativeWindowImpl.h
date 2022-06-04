@@ -29,7 +29,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
-#include <RECore/Math/Vec2i.h>
+#include "RECore/Math/Vec2i.h"
+#include <RECore/String/String.h>
 
 
 //[-------------------------------------------------------]
@@ -52,7 +53,8 @@ class NativeWindow;
  * NativeWindowImpl
  *
  * @brief
- * Native window implementation.
+ * Abstract platform dependent native window implementation.
+ * For each supported platform we must create an implementation of this class.
  */
 class NativeWindowImpl {
 public:
@@ -62,109 +64,85 @@ public:
    * Constructor.
    *
    * @param[in] nativeWindow
-   * Pointer to native window.
+   * Pointer to the platform independent native window implementation.
    */
-  REGUI_API NativeWindowImpl(NativeWindow* nativeWindow);
+  NativeWindowImpl(NativeWindow* nativeWindow);
 
   /**
    * @brief
-   * Destructor
+   * Destructor.
    */
-  REGUI_API virtual ~NativeWindowImpl();
-
-
-  /**
-   * @brief
-   * Returns pointer to platform independent native window.
-   *
-   * @return
-   * Platform independent native window.
-   */
-  REGUI_API NativeWindow* getNativeWindow() const;
+  virtual ~NativeWindowImpl();
 
 public:
 
   /**
    * @brief
-   * Create native window implementation.
-   *
-   * @param[in] nativeWindowHandle
-   * The native window handle of the system.
-   */
-  virtual void createWindow(RECore::handle nativeWindowHandle) = 0;
-  virtual void createWindow() = 0;
-
-  /**
-   * @brief
-   * Check if the window has been destroyed.
+   * Returns the window handle to this window.
    *
    * @return
-   * True if the windows is destroyed, false otherwise.
+   * The window handle to the window.
    */
-  virtual bool isDestroyed() const = 0;
+  virtual RECore::handle getWindowHandle() const = 0;
 
   /**
    * @brief
-   * Destroy the window.
-   */
-  virtual void destroy() = 0;
-
-  /**
-   * @brief
-   * Returns the native window handle.
-   *
-   * @return
-   * Native window handle.
-   */
-  virtual RECore::handle getNativeWindowHandle() const = 0;
-
-  /**
-   * @brief
-   * Sets the position of the window.
-   *
-   * @param[in] position
-   * Position of the window.
-   */
-  virtual void setPosition(const RECore::Vec2i& position) = 0;
-
-  /**
-   * @brief
-   * Returns the position of the window.
-   *
-   * @return
-   * Position of the window.
-   */
-  virtual RECore::Vec2i getPosition() const = 0;
-
-  /**
-   * @brief
-   * Sets the size of the window.
-   *
-   * @param[in] size
-   * The size
-   */
-  virtual void setSize(const RECore::Vec2i& size) = 0;
-
-  /**
-   * @brief
-   * Get the size of the window.
-   *
-   * @return
-   * Size of window.
-   */
-  virtual RECore::Vec2i getSize() const = 0;
-
-  /**
-   * @brief
-   * Redraw the window.
+   * Responsible for redrawing the window.
    */
   virtual void redraw() = 0;
 
+  /// TODO(naetherm): Deprecated?
+  virtual void ping() = 0;
+
+  /**
+   * @brief
+   * Sets the title of the window.
+   *
+   * @param[in] title
+   * The window title.
+   */
+  virtual void setTitle(const RECore::String& title) = 0;
+
+  /**
+   * @brief
+   * Get the window and height of the window itself.
+   *
+   * @param[out] width
+   * The width of the window.
+   * @param[out] height
+   * The height of the window.
+   */
+  virtual void getWindowSize(RECore::int32& width, RECore::int32& height) = 0;
+
+  /**
+   * @brief
+   * Resizes the window.
+   *
+   * @param[in] width
+   * The new width of the window.
+   * @param[in] height
+   * The new height of the window.
+   */
+  virtual void setWindowSize(RECore::int32 width, RECore::int32 height) = 0;
+
+  /**
+   * @brief
+   * Returns whether the windows was destroyed.
+   *
+   * @return
+   * True if window was destroyed, false otherwise.
+   */
+  [[nodiscard]] virtual bool isDestroyed() const = 0;
+
 protected:
-  /** Pointer to platform independent native window object */
+  /** Pointer to the platform independent native window implementation */
   NativeWindow* mNativeWindow;
-private:
+  /** The position of the window */
+  RECore::Vec2i mPosition;
+  /** The size of the window */
+  RECore::Vec2i mSize;
 };
+
 
 
 //[-------------------------------------------------------]

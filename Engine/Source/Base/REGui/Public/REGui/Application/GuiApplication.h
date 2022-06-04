@@ -29,9 +29,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
-#include "REGui/Application/GuiContext.h"
 #include <RECore/Application/CoreApplication.h>
-#include <RECore/Reflect/Event/EventHandler.h>
+#include "REGui/Application/GuiContext.h"
 
 
 //[-------------------------------------------------------]
@@ -54,12 +53,7 @@ class MainWindow;
  * GuiApplication
  *
  * @brief
- * Gui application class
- *
- * @remarks
- * An application class for a typical GUI application. This application runs a main loop
- * that does the necessary message processing and provides methods to manage the windows
- * associated with this application.
+ * Basic gui application, the starting point of all applications that will show a gui for interaction.
  */
 class GuiApplication : public RECore::CoreApplication {
 
@@ -73,37 +67,18 @@ public:
 
   /**
    * @brief
-   * Default constructor.
+   * Constructor.
    */
   REGUI_API GuiApplication();
 
   /**
    * @brief
-   * Destructor
+   * Destructor.
    */
-  REGUI_API virtual ~GuiApplication() override;
-
-
-  /**
-   * @brief
-   * Gets pointer to the main window.
-   *
-   * @return
-   * Main window, can be a nullptr.
-   */
-  REGUI_API MainWindow* getMainWindow() const;
-
-  /**
-   * @brief
-   * Sets the main window.
-   *
-   * @param[in] nativeWindow
-   * Pointer to the main window to set.
-   */
-  REGUI_API void setMainWindow(MainWindow* nativeWindow);
+  ~GuiApplication() override;
 
   //[-------------------------------------------------------]
-  //[ Protected virtual PLCore::AbstractLifecycle functions ]
+  //[ Protected virtual RECore::AbstractLifecycle functions ]
   //[-------------------------------------------------------]
 protected:
   /**
@@ -148,37 +123,28 @@ protected:
   */
   REGUI_API void main() override;
 
+protected:
+
+  /**
+   * @brief
+   * Helper method for creating the main window.
+   *
+   * @return
+   * Returns pointer to created main window.
+   */
+  [[nodiscard]] virtual MainWindow* createMainWindow();
+
 private:
 
-  /**
-   * @brief
-   * Creates the gui context.
-   */
   void createGuiContext();
 
-  /**
-   * @brief
-   * Called when the main window was destroyed.
-   */
-  void onDestroyMainWindow();
-
 protected:
-
-  /**
-   * @brief
-   * Called when application should open it's main window.
-   */
-  REGUI_API virtual void onCreateMainWindow();
-  
-protected:
-  /** Pointer to the gui context */
+  /** File manager instance, can be a null pointer */
+  RECore::IFileManager*		mFileManager;
+  /** Pointer to gui context, always valid! */
   GuiContext* mGuiContext;
-  RECore::IFileManager*		mFileManager;		///< File manager instance, can be a null pointer
-
-  /** Pointer to the main window */
+  /** Pointer to main window */
   MainWindow* mMainWindow;
-  /** Event handler */
-  RECore::EventHandler<> EventHandlerOnDestroy;
 };
 
 

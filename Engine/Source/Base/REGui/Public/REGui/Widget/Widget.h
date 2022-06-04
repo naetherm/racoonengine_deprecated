@@ -29,7 +29,10 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
+#include "REGui/Widget/WidgetCreationSyntax.h"
+#include <RECore/Reflect/Object.h>
 #include <RECore/String/String.h>
+#include <imgui.h>
 
 
 //[-------------------------------------------------------]
@@ -38,49 +41,65 @@
 namespace REGui {
 
 
-class Widget {
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Gui;
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+ * @class
+ * Widget
+ *
+ * @brief
+ * Abstract widget representation. All widgets must inherit in some way from this one.
+ */
+class Widget : public RECore::Object {
+
+  //[-------------------------------------------------------]
+  //[ RTTI interface                                        ]
+  //[-------------------------------------------------------]
+  re_class_def(REGUI_API)
+    // Signals
+  re_signal_0_def(SignalClicked)
+  re_signal_0_def(SignalDoubleClicked)
+  re_signal_0_def(SignalContentChanged)
+  re_signal_0_def(SignalEnterPressed)
+  re_class_def_end
+
+private:
+
+  static RECore::uint64 SWidgetID;
+
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   Widget();
 
   /**
    * @brief
    * Destructor.
    */
-  virtual ~Widget();
+  ~Widget() override;
 
+public:
 
-  /**
-   * @brief
-   * This method is called in the beginning, when the frame starts.
-   */
-  virtual void beginFrame();
+  virtual void onUpdate();
 
-  /**
-   * @brief
-   * This is the main drawing method.
-   */
-  virtual void draw();
-
-  /**
-   * @brief
-   * This is called in the end of frame drawing.
-   */
-  virtual void endFrame();
+  virtual void onDraw();
 
 protected:
 
-  virtual void drawInternal() = 0;
-
-protected:
-
+  /** Unique widget ID */
   RECore::String mWidgetId;
-  bool mIsEnabled;
-  bool mLineBreak;
 
-private:
-
-  static RECore::uint64 SUniqueWidgetId;
+  bool mEnabled;
 };
 
 

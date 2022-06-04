@@ -38,6 +38,62 @@ namespace REGui {
 
 
 //[-------------------------------------------------------]
+//[ GUI messages                                          ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Message type
+*/
+enum EMessageType {
+  MessageOnUnknown = 0,				/**< Unknown message type */
+  MessageOnInternalMessage,			/**< Internal message that is not passed on to widgets and modifiers */
+  MessageOnWakeup,					/**< Wakeup message loop */
+  MessageOnExit,						/**< Exit GUI */
+  MessageOnTimer,						/**< Timer message */
+  MessageOnThemeChanged,				/**< Theme has been changed */
+  MessageOnUpdateContent,				/**< Widget content has been changed */
+  MessageOnUpdateChildWidget,			/**< Child widget has been changed */
+  MessageOnAddChildWidget,			/**< Child widget has been added */
+  MessageOnRemoveChildWidget,			/**< Child widget has been removed */
+  MessageOnClose,						/**< Widget shall be closed (ALT+F4 or X-Button pressed) */
+  MessageOnCreate,					/**< Widget has just been created */
+  MessageOnDestroy,					/**< Widget is going to be destroyed */
+  MessageOnShow,						/**< Widget gets shown */
+  MessageOnHide,						/**< Widget gets hidden */
+  MessageOnEnable,					/**< Widget gets enabled */
+  MessageOnDisable,					/**< Widget gets disabled */
+  MessageOnGetFocus,					/**< Widget gets focus */
+  MessageOnLooseFocus,				/**< Widget looses focus */
+  MessageOnActivate,					/**< Widget has been activated or deactivated (focus-widget has changed) */
+  MessageOnDrawBackground,			/**< Widget background gets drawn, graphics object used for painting as parameter */
+  MessageOnDraw,						/**< Widget gets drawn, graphics object used for painting as parameter */
+  MessageOnMove,						/**< Widget gets moved, new widget position as parameter */
+  MessageOnSize,						/**< Widget gets resized, new widget size as parameter */
+  MessageOnWindowState,				/**< Window state has changed, new window state as parameter */
+  MessageOnEnterFullscreen,			/**< Widget enters fullscreen mode */
+  MessageOnLeaveFullscreen,			/**< Widget leaves fullscreen mode */
+  MessageOnPreferredSize,				/**< Widget has calculated it's preferred size */
+  MessageOnAdjustContent,				/**< Widget content has to be adjusted */
+  MessageOnMouseEnter,				/**< Mouse enters widget */
+  MessageOnMouseLeave,				/**< Mouse leaves widget */
+  MessageOnMouseOver,					/**< Mouse-over widget has changed */
+  MessageOnMouseMove,					/**< Mouse moves inside the widget, mouse position within the widget as parameter */
+  MessageOnMouseHover,				/**< Mouse hovers over the widget */
+  MessageOnMousePosUpdate,			/**< Mouse position inside the widget has changed due to the movement of widget */
+  MessageOnMouseButtonDown,			/**< Mouse button is pressed, mouse button and mouse position within the widget as parameters */
+  MessageOnMouseButtonUp,				/**< Mouse button is released, mouse button and mouse position within the widget as parameters */
+  MessageOnMouseButtonClick,			/**< Mouse button has been clicked, mouse button and mouse position within the widget as parameters */
+  MessageOnMouseButtonDoubleClick,	/**< Mouse button has been double-clicked, mouse button and mouse position within the widget as parameters */
+  MessageOnMouseWheel,				/**< Mouse wheel moved, mouse wheel movement as parameter */
+  MessageOnKeyDown,					/**< Key gets pressed, pressed key and modifier keys pressed as parameters */
+  MessageOnKeyUp,						/**< Key gets released, released key and modifier keys pressed as parameters */
+  MessageOnHotkey,					/**< Hotkey pressed, hotkey ID as parameter */
+  MessageOnDrop,						/**< Data has been dropped onto the widget */
+  MessageOnUserMessage				/**< User message */
+};
+
+
+//[-------------------------------------------------------]
 //[ Mouse definitions                                     ]
 //[-------------------------------------------------------]
 /**
@@ -45,9 +101,9 @@ namespace REGui {
 *    Mouse buttons
 */
 enum EMouseButton {
-  LeftButton = 0,		/**< Left mouse button */
-  RightButton,		/**< Right mouse button */
+  LeftButton = 1,		/**< Left mouse button */
   MiddleButton,		/**< Middle mouse button */
+  RightButton,		/**< Right mouse button */
 };
 
 

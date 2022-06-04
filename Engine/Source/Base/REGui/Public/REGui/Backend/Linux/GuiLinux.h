@@ -43,35 +43,20 @@ namespace REGui {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Gui;
-class Screen;
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-/**
- * @class
- * GuiLinux
- *
- * @brief
- */
 class GuiLinux : public GuiImpl {
-
-  friend class NativeWindowLinux;
 public:
 
-  REGUI_API GuiLinux(Gui* gui);
+  GuiLinux(Gui* gui);
 
-  /**
-   * @brief
-   * Destructor
-   */
-  REGUI_API ~GuiLinux() override;
+  ~GuiLinux() override;
 
 
   [[nodiscard]] ::Display* getDisplay() const;
-
-  [[nodiscard]] ::Window getWindowHandle() const;
 
 public:
 
@@ -79,11 +64,9 @@ public:
 
   void processMessage() override;
 
-  void postMessage(const GuiMessage& guiMessage) override;
+private:
 
-  void enumerateScreens(std::vector<Screen*>& screens) override;
-
-  RECore::Vec2i getScreenSize() const override;
+  void processXEvent(XEvent* event);
 
 private:
 
@@ -101,67 +84,9 @@ private:
    */
   static int errorHandler(Display* display, XErrorEvent* error);
 
-private:
-
-  /**
-   * @brief
-   * X event procedure.
-   *
-   * @param[in] event
-   * Pointer to an x-event.
-   */
-  REGUI_API void processXEvent(XEvent* event);
-
-
-  void onDraw();
-
-  void onResize(RECore::uint32 width, RECore::uint32 height);
-
-  void onKeyInput(uint32_t keySym, char character, bool pressed);
-
-  void onMouseMoveInput(int x, int y);
-
-  void onMouseButtonInput(uint32_t button, bool pressed);
-
-  void onMouseWheelInput(bool scrollUp);
-
-private:
-
-  // System handles
-  /** X display */
+protected:
+  /** Pointer to x11 display, always valid! */
   ::Display* mDisplay;
-  /** Hidden window for internal messages */
-  ::Window mHiddenWindow;
-
-  // Used client protocols
-  struct {
-    ::Atom Close;							/** Message for closing the window */
-    ::Atom Focus;							/** Message for taking the focus */
-    ::Atom Timer;							/** Message for timer events */
-    ::Atom Exit;							/** Message for quitting the GUI */
-    ::Atom Wakeup;							/** Message for waking up the message loop */
-    ::Atom DestroyWidget;					/** Message for destroying a widget (delayed) */
-    ::Atom ThemeChanged;					/** Message for changing the theme of a widget */
-  } mClientProtocols;
-
-  // Other used atoms
-  struct {
-    ::Atom UTF8_STRING;						/** Atom for the type of a window title */
-    ::Atom WM_NAME;							/** Window title (old?) */
-    ::Atom _NET_WM_NAME;					/** Window title */
-    ::Atom _NET_WM_VISIBLE_NAME;			/** Window title (visible title, can be different) */
-    ::Atom _NET_WM_STATE;					/** Window state */
-    ::Atom _NET_WM_STATE_FULLSCREEN;		/** Fullscreen mode */
-    ::Atom _NET_WM_STATE_MAXIMIZED_HORZ;	/** Maximize horizontally */
-    ::Atom _NET_WM_STATE_MAXIMIZED_VERT;	/** Maximize vertically */
-    ::Atom _NET_WM_STATE_HIDDEN;			/** Minimize window */
-    ::Atom _NET_WM_STATE_SKIP_TASKBAR;		/** Do not show window in taskbar */
-    ::Atom _NET_WM_STATE_ABOVE;				/** Topmost state */
-    ::Atom _XEMBED;							/** XEMBED protocol */
-    ::Atom _XEMBED_INFO;					/** XEMBED information */
-    ::Atom _NET_SYSTEM_TRAY_OPCODE;			/** System tray protocol */
-    ::Atom _NET_SYSTEM_TRAY_MESSAGE_DATA;	/** System tray message data */
-  } mAtoms;
 };
 
 
