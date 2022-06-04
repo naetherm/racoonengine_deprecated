@@ -40,6 +40,7 @@ re_add_target(
     PUBLIC
       RECore
       External::glm
+      External::openvr
   RUNTIME_DEPENDENCIES
     PUBLIC
       RECore
