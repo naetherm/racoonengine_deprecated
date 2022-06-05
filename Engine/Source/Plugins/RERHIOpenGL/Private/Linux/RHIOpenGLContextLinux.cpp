@@ -214,7 +214,7 @@ GLXContext OpenGLContextLinux::createOpenGLContext(RERHI::TextureFormat::Enum de
         {
           // We want an OpenGL context
           GLX_CONTEXT_MAJOR_VERSION_ARB, 4,
-          GLX_CONTEXT_MINOR_VERSION_ARB, 6,
+          GLX_CONTEXT_MINOR_VERSION_ARB, 1,
           // -> "GLX_CONTEXT_DEBUG_BIT_ARB" comes from the "GL_ARB_debug_output"-extension
           GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_DEBUG_BIT_ARB,
           // TODO(naetherm) Make it possible to activate "GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB" from the outside
@@ -222,7 +222,7 @@ GLXContext OpenGLContextLinux::createOpenGLContext(RERHI::TextureFormat::Enum de
           //	GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_DEBUG_BIT_ARB,
 							//	GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,	// Error messages like "Implicit version number 110 not supported by GL3 forward compatible context" might occur
 #else
-          	GLX_CONTEXT_FLAGS_ARB        , GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,	// Error messages like "Implicit version number 110 not supported by GL3 forward compatible context" might occur
+          //	GLX_CONTEXT_FLAGS_ARB        , GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,	// Error messages like "Implicit version number 110 not supported by GL3 forward compatible context" might occur
 #endif
           // Done
           0
@@ -231,7 +231,7 @@ GLXContext OpenGLContextLinux::createOpenGLContext(RERHI::TextureFormat::Enum de
       // TODO(naetherm) Use more detailed color and depth/stencil information from render pass
       const int depthBufferBits = 24;//(RERHI::TextureFormat::Enum::UNKNOWN == depthStencilAttachmentTextureFormat) ? 24 : 24;
       int numberOfElements = 0;
-      /*
+      
       int visualAttributes[] =
         {
           GLX_RENDER_TYPE,	GLX_RGBA_BIT,
@@ -244,8 +244,8 @@ GLXContext OpenGLContextLinux::createOpenGLContext(RERHI::TextureFormat::Enum de
           GLX_STENCIL_SIZE,	8,
           XLib::None
         };
-        */
-
+        
+      /*
       int visualAttributes[] = {
         GLX_RGBA_BIT,
         GLX_DOUBLEBUFFER,
@@ -254,7 +254,7 @@ GLXContext OpenGLContextLinux::createOpenGLContext(RERHI::TextureFormat::Enum de
         GLX_BLUE_SIZE, 4,
         GLX_DEPTH_SIZE, 16,
         0};  // = "None"
-
+      */
       GLXFBConfig* fbc = glXChooseFBConfig(mDisplay, DefaultScreen(mDisplay), visualAttributes, &numberOfElements);
       RE_LOG(Debug, "Got %d of OpenGL GLXFBConfig" + std::to_string(numberOfElements))
       GLXContext glxContext = glXCreateContextAttribsARB(mDisplay, *fbc, 0, true, ATTRIBUTES);
