@@ -29,7 +29,7 @@
 #include <RECore/Log/Log.h>
 #include <RERHI/Rhi.h>
 #if defined(LINUX)
-#include <RECore/Linux/WindowOSLinux.h>
+#include <RECore/Linux/LinuxWindowOS.h>
 #endif
 
 #include "Empty/Empty.h"
@@ -183,7 +183,7 @@ void Application::onCreateRendererContext() {
   // Create the RHI context
 #if defined(LINUX)
   this->mpRHIContext = new RERHI::X11Context(
-    reinterpret_cast<RECore::WindowOSLinux*>(reinterpret_cast<RECore::FrontendOS*>(this->getFrontend().getImpl())->getWindow())->getDisplay(),
+    reinterpret_cast<RECore::LinuxWindowOS*>(reinterpret_cast<RECore::FrontendOS*>(this->getFrontend().getImpl())->getWindow())->getDisplay(),
     this->getFrontend().getNativeWindowHandle()
   );
 #endif

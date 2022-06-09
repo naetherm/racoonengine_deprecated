@@ -53,6 +53,7 @@ re_add_target(
 	External::meshoptimizer
 	External::mikktspace
 	External::physfs
+	External::openvr
 	COMPILE_DEFINITIONS
 	PUBLIC
 	${${PAL_PLATFORM_NAME_UPPERCASE}_COMPILE_DEFS}

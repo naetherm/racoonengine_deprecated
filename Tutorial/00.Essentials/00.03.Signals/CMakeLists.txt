@@ -37,6 +37,7 @@ re_add_target(
   BUILD_DEPENDENCIES
     PUBLIC
       RECore
+      External::openvr
   COMPILE_DEFINITIONS
     PUBLIC
       ${${PAL_PLATFORM_NAME_UPPERCASE}_COMPILE_DEFS}
