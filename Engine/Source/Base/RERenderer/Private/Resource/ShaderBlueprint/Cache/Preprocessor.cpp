@@ -76,7 +76,7 @@ namespace RERenderer
 		else
 		{
 			result.assign(preprocessData->output, static_cast<size_t>(preprocessData->output_len));
-			replace_all(result, "# version 430 core", "#version 430 core\n");
+			replace_all(result, "# version 460 core", "#version 460 core\n");
 		}
 		MOJOSHADER_freePreprocessData(preprocessData);
 	}
