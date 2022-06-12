@@ -31,6 +31,7 @@
 #include "RECore/RECore.h"
 #include "RECore/Core/Config.h"
 #include "RECore/Memory/Memory.h"
+#include "RECore/Memory/StdAllocator.h"
 #include "RECore/Utility/CompressedPair.h"
 #include "RECore/String/StringUtils.h"
 #include "RECore/Utility/Iterator.h"

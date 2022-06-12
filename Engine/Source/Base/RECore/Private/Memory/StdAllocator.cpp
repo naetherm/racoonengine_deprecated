@@ -1,4 +1,4 @@
-#////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) 2019 - 2022 RacoonStudios
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
@@ -20,20 +20,47 @@
 
 
 //[-------------------------------------------------------]
-//[ Header guard                                          ]
-//[-------------------------------------------------------]
-#pragma once
-
-
-//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "RECore/RECore.h"
+#include "RECore/Memory/StdAllocator.h"
+#include <cstdlib>
 
 
 //[-------------------------------------------------------]
-//[ Default configurations                                ]
+//[ Namespace                                             ]
 //[-------------------------------------------------------]
-#define DEFAULT_ALLOCATOR RECore::StdAllocator
+namespace RECore {
 
-//RECore::MimallocAllocator
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+StdAllocator &StdAllocator::operator=(const StdAllocator &cSource) {
+  return *this;
+}
+
+bool StdAllocator::operator==(const StdAllocator &cSource) {
+  return true;
+}
+
+bool StdAllocator::operator!=(const StdAllocator &cSource) {
+  return false;
+}
+
+void *StdAllocator::allocate(size_t n, int flags) {
+  return ::malloc(n);
+}
+
+void *StdAllocator::allocate(size_t n, size_t alignment, size_t alignmentOffset, int flags) {
+  return ::malloc(n);
+}
+
+void StdAllocator::deallocate(void *p, size_t n) {
+  ::free(p);
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // RECore

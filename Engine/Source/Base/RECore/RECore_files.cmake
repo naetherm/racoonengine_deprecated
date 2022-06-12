@@ -36,6 +36,10 @@ set(FILES
   # Color
   Private/Color/Color4.cpp
 
+  # Config
+  Private/Config/Config.cpp
+  Private/Config/ConfigSection.cpp
+
   # File
   Private/File/FileSystemHelper.cpp
   Private/File/MemoryFile.cpp
@@ -66,6 +70,7 @@ set(FILES
 
   # Memory
   Private/Memory/Memory.cpp
+  Private/Memory/StdAllocator.cpp
 
   # Null
   Private/Null/FrontendNull.cpp

@@ -1,4 +1,4 @@
-#////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) 2019 - 2022 RacoonStudios
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
@@ -18,10 +18,6 @@
 // DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-//[-------------------------------------------------------]
-//[ Header guard                                          ]
-//[-------------------------------------------------------]
 #pragma once
 
 
@@ -32,8 +28,36 @@
 
 
 //[-------------------------------------------------------]
-//[ Default configurations                                ]
+//[ Namespace                                             ]
 //[-------------------------------------------------------]
-#define DEFAULT_ALLOCATOR RECore::StdAllocator
+namespace RECore {
 
-//RECore::MimallocAllocator
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+class RECORE_API StdAllocator {
+public:
+
+  StdAllocator() = default;
+
+  StdAllocator(const StdAllocator& cSource) = default;
+
+  StdAllocator& operator=(const StdAllocator& cSource);
+
+  bool operator==(const StdAllocator& cSource);
+
+  bool operator!=(const StdAllocator& cSource);
+
+  void* allocate(size_t n, int flags = 0);
+
+  void* allocate(size_t n, size_t alignment, size_t alignmentOffset, int flags = 0);
+
+  void deallocate(void* p, size_t n);
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // RECore
