@@ -118,11 +118,6 @@ TType Value<TType>::get() {
   return mValue;
 }
 
-template<typename TType>
-void Value<TType>::set(TType value) {
-  mValue = value;
-}
-
 
 
 //[-------------------------------------------------------]

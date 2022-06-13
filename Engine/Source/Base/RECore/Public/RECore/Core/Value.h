@@ -193,15 +193,6 @@ public:
    */
   TType get();
 
-  /**
-   * @brief
-   * Sets value.
-   *
-   * @param[in] value
-   * Value.
-   */
-  void set(TType value);
-
 private:
   /** Value */
   TType mValue;
