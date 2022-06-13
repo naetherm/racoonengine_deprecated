@@ -214,6 +214,11 @@ class Functor : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 		}
 
 
+    bool isBound() const {
+      return (m_pFunc != nullptr);
+    }
+
+
 	//[-------------------------------------------------------]
 	//[ Public virtual Func functions                         ]
 	//[-------------------------------------------------------]
@@ -307,6 +312,11 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) override
 		{
 			if (m_pFunc)
@@ -387,6 +397,11 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) override
 		{
@@ -471,6 +486,11 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) override
 		{
 			if (m_pFunc)
@@ -551,6 +571,11 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) override
 		{
@@ -635,6 +660,11 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) override
 		{
 			if (m_pFunc)
@@ -715,6 +745,11 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) override
 		{
@@ -800,6 +835,11 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) override
 		{
 			if (m_pFunc)
@@ -880,6 +920,11 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Func
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) override
 		{
@@ -965,6 +1010,11 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) override
 		{
 			if (m_pFunc)
@@ -1045,6 +1095,11 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R, T
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) override
 		{
@@ -1130,6 +1185,11 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<v
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) override
 		{
 			if (m_pFunc)
@@ -1210,6 +1270,11 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0, T1
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) override
 		{
@@ -1294,6 +1359,11 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<void, 
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) override
 		{
 			if (m_pFunc)
@@ -1374,6 +1444,11 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1, T2
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) override
 		{
@@ -1458,6 +1533,11 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T0, 
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) override
 		{
 			if (m_pFunc)
@@ -1538,6 +1618,11 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2, T3
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) override
 		{
@@ -1622,6 +1707,11 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T1, 
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) override
 		{
 			if (m_pFunc)
@@ -1702,6 +1792,11 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3, T4
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) override
 		{
@@ -1786,6 +1881,11 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T2, 
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) override
 		{
 			if (m_pFunc)
@@ -1866,6 +1966,11 @@ class Functor<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4, T5
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) override
 		{
@@ -1950,6 +2055,11 @@ class Functor<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T3, 
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) override
 		{
 			if (m_pFunc)
@@ -2030,6 +2140,11 @@ class Functor<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4) override
 		{
@@ -2114,6 +2229,11 @@ class Functor<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T4> 
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4) override
 		{
 			if (m_pFunc)
@@ -2194,6 +2314,11 @@ class Functor<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2, T3 t3) override
 		{
@@ -2278,6 +2403,11 @@ class Functor<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2, T3 t3) override
 		{
 			if (m_pFunc)
@@ -2358,6 +2488,11 @@ class Functor<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1, T2 t2) override
 		{
@@ -2442,6 +2577,11 @@ class Functor<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1, T2 t2) override
 		{
 			if (m_pFunc)
@@ -2522,6 +2662,11 @@ class Functor<R, T0, T1> : public Func<R, T0, T1> {
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0, T1 t1) override
 		{
@@ -2606,6 +2751,11 @@ class Functor<void, T0, T1> : public Func<void, T0, T1> {
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0, T1 t1) override
 		{
 			if (m_pFunc)
@@ -2686,6 +2836,11 @@ class Functor<R, T0> : public Func<R, T0> {
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()(T0 t0) override
 		{
@@ -2771,6 +2926,11 @@ class Functor<void, T0> : public Func<void, T0> {
 			return *this;
 		}
 
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
+
 		virtual void operator ()(T0 t0) override
 		{
 			if (m_pFunc)
@@ -2851,6 +3011,11 @@ class Functor<R> : public Func<R> {
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual R operator ()() override
 		{
@@ -2934,6 +3099,11 @@ class Functor<void> : public Func<void> {
 			// Return this object
 			return *this;
 		}
+
+
+  bool isBound() const {
+    return (m_pFunc != nullptr);
+  }
 
 		virtual void operator ()() override
 		{

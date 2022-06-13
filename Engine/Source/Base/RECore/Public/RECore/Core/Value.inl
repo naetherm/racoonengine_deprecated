@@ -48,7 +48,14 @@ Value<TType>::Value(TType&& rhs)
 
 template<typename TType>
 Value<TType>::Value(const Value<TType>& rhs)
-: mValue(rhs.mValue) {
+: mValue(rhs.mValue)
+, mGetter(rhs.mGetter.clone()) {
+
+}
+
+template<typename TType>
+Value<TType>::Value(const Functor<TType>& rhs)
+: mGetter(rhs.clone()) {
 
 }
 
@@ -67,6 +74,13 @@ Value<TType>& Value<TType>::operator=(const TType& rhs) {
 template<typename TType>
 Value<TType>& Value<TType>::operator=(const Value<TType>& rhs) {
   mValue = rhs.mValue;
+  mGetter = rhs.mGetter.clone();
+  return *this;
+}
+
+template<typename TType>
+Value<TType>& Value<TType>::operator=(const Functor<TType>& rhs) {
+  mGetter = rhs.clone();
   return *this;
 }
 
@@ -88,11 +102,19 @@ bool Value<TType>::isSet() const {
 
 template<typename TType>
 const TType Value<TType>::get() const {
+  if (mGetter.isBound()) {
+    mValue = mGetter();
+  }
+
   return mValue;
 }
 
 template<typename TType>
 TType Value<TType>::get() {
+  if (mGetter.isBound()) {
+    mValue = mGetter();
+  }
+
   return mValue;
 }
 

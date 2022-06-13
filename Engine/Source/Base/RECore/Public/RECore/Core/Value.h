@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "RECore/RECore.h"
+#include "RECore/Reflect/Func/Functor.h"
 
 
 //[-------------------------------------------------------]
@@ -90,6 +91,15 @@ public:
 
   /**
    * @brief
+   * Constructor.
+   *
+   * @param[in] rhs
+   * Value.
+   */
+  Value(const Functor<TType>& rhs);
+
+  /**
+   * @brief
    * Destructor.
    */
   ~Value();
@@ -118,6 +128,18 @@ public:
    * Reference to this instance.
    */
   Value<TType>& operator=(const Value<TType>& rhs);
+
+  /**
+   * @brief
+   * Copy operator.
+   *
+   * @param[in] rhs
+   * Value.
+   *
+   * @return
+   * Reference to this instance.
+   */
+  Value<TType>& operator=(const Functor<TType>& rhs);
 
   /**
    * @brief
@@ -183,6 +205,8 @@ public:
 private:
   /** Value */
   TType mValue;
+
+  Functor<TType> mGetter;
 };
 
 
