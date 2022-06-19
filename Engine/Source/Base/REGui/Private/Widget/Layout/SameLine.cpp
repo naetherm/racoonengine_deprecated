@@ -50,7 +50,11 @@ SameLine::~SameLine() {
 
 }
 
-void SameLine::onUpdate() {
+void SameLine::construct(ConstructionArguments args) {
+
+}
+
+void SameLine::onUpdate(float deltaTime) {
   // Nothing to do here
 }
 

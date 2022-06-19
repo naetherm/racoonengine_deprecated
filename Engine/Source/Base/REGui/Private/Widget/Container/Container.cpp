@@ -69,7 +69,7 @@ void Container::removeWidget(Widget *widget) {
   }
 }
 
-void Container::onUpdate() {
+void Container::onUpdate(float deltaTime) {
 
 }
 

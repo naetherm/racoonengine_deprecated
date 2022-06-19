@@ -23,6 +23,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Widget/Button/ColoredButton.h"
+#include "REGui/Helper/ImGuiHelper.h"
 
 
 //[-------------------------------------------------------]
@@ -42,8 +43,7 @@ re_class_metadata_end(ColoredButton)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-ColoredButton::ColoredButton(const RECore::String& label)
-: mLabel(label) {
+ColoredButton::ColoredButton() {
 
 }
 
@@ -51,12 +51,31 @@ ColoredButton::~ColoredButton() {
 
 }
 
-void ColoredButton::onUpdate() {
+void ColoredButton::construct(ConstructionArguments args) {
+  mLabel = args.getText();
+  mColor = args.getColor();
+  mSize = args.getSize();
+  mEnableAlpha = args.getEnableAlpha();
+  SlotOnClicked = args.mEventSlotOnClicked;
+}
+
+void ColoredButton::onUpdate(float deltaTime) {
   // Nothing to do here
+  SignalClicked();
 }
 
 void ColoredButton::onDraw() {
-  // Nothing to do here
+  ImVec4 color = ImGuiHelper::ToImVec4(mColor);
+
+  if (ImGui::ColorButton(
+    mLabel + mWidgetId,
+    color,
+    !mEnableAlpha ? ImGuiColorEditFlags_NoAlpha : 0,
+    ImGuiHelper::ToImVec2(mSize))) {
+    // On Clicked
+  }
+
+  mColor = ImGuiHelper::ToColor4(color);
 }
 
 

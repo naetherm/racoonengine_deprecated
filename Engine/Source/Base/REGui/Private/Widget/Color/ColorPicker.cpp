@@ -50,12 +50,31 @@ ColorPicker::~ColorPicker() {
 
 }
 
-void ColorPicker::onUpdate() {
+
+void ColorPicker::construct(ConstructionArguments args) {
+  mColor = args.getColor();
+  mEnableAlpha = args.getEnableAlpha();
+  SlotOnColorChanged = args.mEventSlotOnColorChanged;
+}
+
+
+void ColorPicker::onUpdate(float deltaTime) {
 
 }
 
 void ColorPicker::onDraw() {
+  int nFlags = !mEnableAlpha ? ImGuiColorEditFlags_NoAlpha : 0;
+  bool nValueChanged = false;
 
+  if (mEnableAlpha) {
+    nValueChanged = ImGui::ColorPicker4(mWidgetId, mColor.value, nFlags);
+  } else {
+    nValueChanged = ImGui::ColorPicker3(mWidgetId, mColor.value, nFlags);
+  }
+
+  if (nValueChanged) {
+    // On Change
+  }
 }
 
 

@@ -182,7 +182,7 @@ void MainWindow::makeMainMenuBarVisible(bool visible) {
 
 void MainWindow::setMainMenuBar(MenuBar* menuBar) {
   if (mMainMenuBar) {
-    delete menuBar;
+    delete mMainMenuBar;
   }
 
   mMainMenuBar = menuBar;

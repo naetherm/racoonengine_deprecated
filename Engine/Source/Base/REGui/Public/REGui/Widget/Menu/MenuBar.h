@@ -47,6 +47,12 @@ class Gui;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * MenuBar
+ *
+ * @brief
+ */
 class MenuBar : public Container {
 
   //[-------------------------------------------------------]
@@ -57,14 +63,33 @@ class MenuBar : public Container {
 
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   MenuBar();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~MenuBar() override;
 
 public:
 
-  void onUpdate() override;
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
 protected:

@@ -40,6 +40,7 @@ re_add_target(
   REGui
   RERHI
   RERenderer
+  External::openvr
   COMPILE_DEFINITIONS
   PUBLIC
   ${${PAL_PLATFORM_NAME_UPPERCASE}_COMPILE_DEFS}

@@ -47,27 +47,77 @@ class Gui;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * ClickableText
+ *
+ * @brief
+ */
 class ClickableText : public Text {
 
   //[-------------------------------------------------------]
   //[ RTTI interface                                        ]
   //[-------------------------------------------------------]
-re_class_def(REGUI_API)
-re_class_def_end
+  re_class_def(REGUI_API)
+  re_class_def_end
+
+
+  regui_begin_construction_args(ClickableText)
+    {}
+    regui_value(RECore::String, Text)
+    regui_event(RECore::EventHandler<>, SlotOnClicked)
+    regui_event(RECore::EventHandler<>, SlotOnDoubleClicked)
+  regui_end_construction_args()
 
 public:
 
-  ClickableText(const RECore::String& text);
+  /**
+   * @brief
+   * Default constructor.
+   */
+  ClickableText();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~ClickableText() override;
 
+
+  /**
+   * @brief
+   * Construct this widget.
+   *
+   * @param[in] args
+   * The declaration data for this widget.
+   */
+  void construct(ConstructionArguments args);
+
 public:
 
-  void onUpdate() override;
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
+public:
+
+  RECore::EventHandler<> SlotOnClicked;
+  RECore::EventHandler<> SlotOnDoubleClicked;
+  
 protected:
+
+  RECore::String mText;
 };
 
 

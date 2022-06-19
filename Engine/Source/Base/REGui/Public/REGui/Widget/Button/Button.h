@@ -52,7 +52,7 @@ class Gui;
 
 /**
  * @class
- * NewLine
+ * Button
  *
  * @brief
  * Widget that adds a newline.
@@ -62,24 +62,59 @@ class Button : public AbstractButton {
   //[-------------------------------------------------------]
   //[ RTTI interface                                        ]
   //[-------------------------------------------------------]
-re_class_def(REGUI_API)
-re_class_def_end
+  re_class_def(REGUI_API)
+  re_class_def_end
+
+
+  regui_begin_construction_args(Button)
+    : mValueSize(RECore::Vec2i(0, 0))
+    , mValueDisabled(false) {}
+    regui_value(RECore::String, Text)
+    regui_value(RECore::Vec2i, Size)
+    regui_value(bool, Disabled)
+    regui_event(RECore::EventHandler<>, SlotOnClicked)
+  regui_end_construction_args()
 
 public:
 
-  Button(const RECore::String& label, const RECore::Vec2i& size = RECore::Vec2i(0, 0), bool disabled = false);
+  /**
+   * @brief
+   * Default constructor.
+   */
+  Button();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~Button() override;
 
+
+  /**
+   * @brief
+   * Construct this widget.
+   *
+   * @param[in] args
+   * The declaration data for this widget.
+   */
+  void construct(ConstructionArguments args);
+
 public:
 
-  void onUpdate() override;
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
-
-public:
-
-  RECore::EventHandler<> SlotOnClicked;
 
 protected:
 

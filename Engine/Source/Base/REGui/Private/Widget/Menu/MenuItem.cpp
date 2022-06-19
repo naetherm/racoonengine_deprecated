@@ -42,18 +42,22 @@ re_class_metadata_end(MenuItem)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-MenuItem::MenuItem(const RECore::String& label, bool checkable, bool checked)
-: mLabel(label)
-, mCheckable(checkable)
-, mChecked(checked) {
-
+MenuItem::MenuItem()
+: Widget() {
 }
 
 MenuItem::~MenuItem() {
 
 }
 
-void MenuItem::onUpdate() {
+void MenuItem::construct(ConstructionArguments args) {
+  mLabel = args.getLabel();
+  mCheckable = args.getCheckable();
+  mChecked = args.getChecked();
+  mEnabled = args.getEnabled();
+}
+
+void MenuItem::onUpdate(float deltaTime) {
 
 }
 

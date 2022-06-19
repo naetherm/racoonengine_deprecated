@@ -53,11 +53,25 @@ class Widget;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * MainWindow
+ *
+ * @brief
+ */
 class MainWindow {
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   MainWindow(Gui* gui);
 
+  /**
+   * @brief
+   * Destructor.
+   */
   virtual ~MainWindow();
 
 
@@ -94,6 +108,10 @@ public:
 
 protected:
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   virtual void onDraw();
 
   void onMouseMove(const RECore::Vec2i& position);

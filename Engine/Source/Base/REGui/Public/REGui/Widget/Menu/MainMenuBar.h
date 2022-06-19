@@ -30,6 +30,9 @@
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
 #include "REGui/Widget/Menu/MenuBar.h"
+#include "REGui/Layout/Slot.h"
+#include "REGui/Layout/PanelChildren.h"
+
 
 
 //[-------------------------------------------------------]
@@ -47,6 +50,12 @@ class Gui;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * MainMenuBar
+ *
+ * @brief
+ */
 class MainMenuBar : public MenuBar {
 
   //[-------------------------------------------------------]
@@ -57,17 +66,67 @@ class MainMenuBar : public MenuBar {
 
 public:
 
-  MainMenuBar();
+  class MainMenuSlot : public TSlot<MainMenuSlot> {
+  public:
 
-  ~MainMenuBar() override;
+    MainMenuSlot();
+
+    ~MainMenuSlot() override;
+
+    MainMenuSlot& operator[](Widget* widget);
+  };
 
 public:
 
-  void onUpdate() override;
+  regui_begin_construction_args(MainMenuBar)
+    {}
+    regui_slots(MainMenuSlot)
+  regui_end_construction_args()
 
+public:
+
+  /**
+   * @brief
+   * Default constructor.
+   */
+  MainMenuBar();
+
+  /**
+   * @brief
+   * Destructor.
+   */
+  ~MainMenuBar() override;
+
+
+  /**
+   * @brief
+   * Construct this widget.
+   *
+   * @param[in] args
+   * The declaration data for this widget.
+   */
+  void construct(ConstructionArguments args);
+
+public:
+
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
+
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
 protected:
+
+  PanelChildren<MainMenuSlot> mChildren;
 };
 
 

@@ -35,7 +35,7 @@ namespace REGui {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-re_class_metadata(ThemeDark, "REGui", RECore::Object, "Application class")
+re_class_metadata(ThemeDark, "REGui", REGui::Theme, "Application class")
   // Constructors
 re_class_metadata_end(ThemeDark)
 

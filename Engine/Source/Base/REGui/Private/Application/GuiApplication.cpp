@@ -109,7 +109,9 @@ MainWindow* GuiApplication::createMainWindow() {
 
 void GuiApplication::createGuiContext() {
   mGuiContext = new GuiContext();
-  mGuiContext->initialize(m_cCommandLine.getValue("RHI"));
+  if (!mGuiContext->initialize(m_cCommandLine.getValue("RHI"))) {
+    RE_LOG(Error, std::string("Unable to initialize the gui context with desired RHI '") + m_cCommandLine.getValue("RHI").cstr() + "'")
+  }
 }
 
 

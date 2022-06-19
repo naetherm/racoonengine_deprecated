@@ -67,5 +67,16 @@ public:
    */
   ~Application() override;
 
+public:
+
 protected:
+
+  /**
+   * @brief
+   * Helper method for creating the main window.
+   *
+   * @return
+   * Returns pointer to created main window.
+   */
+  [[nodiscard]] REGui::MainWindow* createMainWindow() override;
 };

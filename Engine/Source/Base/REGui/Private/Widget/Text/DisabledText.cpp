@@ -42,8 +42,8 @@ re_class_metadata_end(DisabledText)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-DisabledText::DisabledText(const RECore::String& text)
-  : Text(text) {
+DisabledText::DisabledText()
+: Text() {
 
 }
 
@@ -51,7 +51,12 @@ DisabledText::~DisabledText() {
 
 }
 
-void DisabledText::onUpdate() {
+
+void DisabledText::construct(ConstructionArguments args) {
+  mText = args.getText();
+}
+
+void DisabledText::onUpdate(float deltaTime) {
 
 }
 

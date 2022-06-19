@@ -37,10 +37,14 @@ namespace REGui {
 re_class_metadata(Widget, "REGui", RECore::Object, "Application class")
   // Constructors
   // Signals
-  re_signal_0_metadata(SignalClicked, "Signal that is emitted when an element was clicked", "")
-  re_signal_0_metadata(SignalDoubleClicked, "Signal that is emitted when an element was double-clicked", "")
-  re_signal_0_metadata(SignalContentChanged, "Signal that is emitted when the content changed", "")
-  re_signal_0_metadata(SignalEnterPressed, "Signal that is emitted when enter was pressed", "")
+   re_signal_0_metadata(SignalClicked, "Signal that is emitted when an element was clicked", "")
+   re_signal_0_metadata(SignalDoubleClicked, "Signal that is emitted when an element was double-clicked", "")
+   re_signal_0_metadata(SignalContentChanged, "Signal that is emitted when the content changed", "")
+   re_signal_0_metadata(SignalEnterPressed, "Signal that is emitted when enter was pressed", "")
+  //re_signal_0_metadata(SignalClicked, "", "")
+  //re_signal_0_metadata(SignalDoubleClicked, "", "")
+  //re_signal_0_metadata(SignalContentChanged, "", "")
+  //re_signal_0_metadata(SignalEnterPressed, "", "")
 re_class_metadata_end(Widget)
 
 
@@ -58,7 +62,7 @@ Widget::~Widget() {
 
 }
 
-void Widget::onUpdate() {
+void Widget::onUpdate(float deltaTime) {
 
 }
 

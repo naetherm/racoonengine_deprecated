@@ -24,6 +24,7 @@
 //[-------------------------------------------------------]
 #include "REGui/Theme/ThemeManager.h"
 #include "REGui/Theme/Theme.h"
+#include <RECore/Log/Log.h>
 #include <RECore/Reflect/ClassManager.h>
 #include <RECore/Reflect/Class.h>
 
@@ -86,6 +87,7 @@ Theme *ThemeManager::getThemeByName(const RECore::String &name) {
 
 
 void ThemeManager::onClassLoaded(const RECore::Class* c) {
+  printf("puished\n");
   mNewClasses.push_back(c);
 }
 
@@ -95,6 +97,7 @@ void ThemeManager::onClassUnloaded(const RECore::Class* c) {
 }
 
 void ThemeManager::registerClasses() {
+  printf("ffff\n");
   if (mNewClasses.size()) {
     auto iter = mNewClasses.begin();
     while (iter != mNewClasses.end()) {
@@ -106,6 +109,7 @@ void ThemeManager::registerClasses() {
       if (thisClass->isDerivedFrom(BaseClassName) && thisClass->hasConstructor()) {
         // Create instance of class
         Theme* theme = reinterpret_cast<REGui::Theme*>(thisClass->create());
+        RE_LOG(Info, ("Registered Theme with name " + theme->getName()).cstr())
 
         mlstThemes.push_back(theme);
         mmapThemes.emplace(theme->getName(), theme);

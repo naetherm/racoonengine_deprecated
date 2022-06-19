@@ -50,7 +50,7 @@ AbstractButton::~AbstractButton() {
 
 }
 
-void AbstractButton::onUpdate() {
+void AbstractButton::onUpdate(float deltaTime) {
   // Nothing to do here
 }
 

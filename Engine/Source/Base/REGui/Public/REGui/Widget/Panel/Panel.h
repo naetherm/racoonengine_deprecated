@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
-#include "REGui/Widget/Container/Container.h"
+#include "REGui/Widget/Container/Compound.h"
 
 
 //[-------------------------------------------------------]
@@ -42,12 +42,19 @@ namespace REGui {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Gui;
+class Layout;
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class Panel : public Container {
+/**
+ * @class
+ * Panel
+ *
+ * @brief
+ */
+class Panel : public Compound {
 
   //[-------------------------------------------------------]
   //[ RTTI interface                                        ]
@@ -55,19 +62,61 @@ class Panel : public Container {
   re_class_def(REGUI_API)
   re_class_def_end
 
+
+  regui_begin_construction_args(Panel)
+    : mValueShowFullscreen(false) {}
+    regui_value(RECore::String, Title)
+    regui_value(bool, ShowFullscreen)
+    regui_widget(REGui::Layout, Layout)
+  regui_end_construction_args()
+
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   Panel();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~Panel() override;
+
+
+  /**
+   * @brief
+   * Construct this widget.
+   *
+   * @param[in] args
+   * The declaration data for this widget.
+   */
+  void construct(ConstructionArguments args);
 
 public:
 
-  void onUpdate() override;
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
 protected:
+
+  RECore::String mTitle;
+
+  bool mIsFullscreen;
+  bool mIsOpen;
 };
 
 

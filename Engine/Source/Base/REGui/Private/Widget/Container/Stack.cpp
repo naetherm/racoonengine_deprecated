@@ -50,7 +50,7 @@ Stack::~Stack() {
 
 }
 
-void Stack::onUpdate() {
+void Stack::onUpdate(float deltaTime) {
 
 }
 

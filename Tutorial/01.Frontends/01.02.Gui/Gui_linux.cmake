@@ -19,7 +19,7 @@
 #////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-set(PL_BUILD_DEPENDENCIES
+set(RE_BUILD_DEPENDENCIES
   #  PUBLIC
   pthread
   dl
@@ -28,5 +28,5 @@ set(PL_BUILD_DEPENDENCIES
   ${LINUX_X11_LIBS}
   ${DBUS_LIBRARIES}
   stdc++fs
-  openvr_api
+  GL
   )

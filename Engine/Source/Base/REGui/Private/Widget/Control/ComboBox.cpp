@@ -50,12 +50,36 @@ ComboBox::~ComboBox() {
 
 }
 
-void ComboBox::onUpdate() {
+void ComboBox::construct(ConstructionArguments args) {
+  mChoices = args.getChoices();
+  mSelected = args.getSelected();
+}
+
+void ComboBox::onUpdate(float deltaTime) {
 
 }
 
 void ComboBox::onDraw() {
+  // If the selected one is invalid just select the first one
+  if (mSelected < 0 || mSelected >= mChoices.size()) {
+    mSelected = 0;
+  }
 
+  if (ImGui::BeginCombo(mWidgetId, mChoices[mSelected])) {
+    for (RECore::uint32 i = 0; i < mChoices.size(); ++i) {
+      bool isSelected = i == mSelected;
+
+      if (ImGui::Selectable(mChoices[i], isSelected)) {
+        if (!isSelected) {
+          ImGui::SetItemDefaultFocus();
+          mSelected = i;
+          // Notify on change
+        }
+      }
+    }
+
+    ImGui::EndCombo();
+  }
 }
 
 

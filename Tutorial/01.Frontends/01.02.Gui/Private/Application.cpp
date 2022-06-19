@@ -23,6 +23,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "Application.h"
+#include "ExampleWindow.h"
+#include <REGui/Gui/Gui.h>
 
 
 //[-------------------------------------------------------]
@@ -41,4 +43,19 @@ Application::Application()
 
 Application::~Application() {
 
+}
+
+
+
+/**
+ * @brief
+ * Helper method for creating the main window.
+ *
+ * @return
+ * Returns pointer to created main window.
+ */
+REGui::MainWindow* Application::createMainWindow() {
+  ExampleWindow* window = new ExampleWindow(&REGui::Gui::instance());
+  window->setTitle("01.02.Gui");
+  return window;
 }

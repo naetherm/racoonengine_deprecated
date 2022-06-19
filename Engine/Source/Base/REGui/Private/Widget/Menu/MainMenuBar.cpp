@@ -42,6 +42,23 @@ re_class_metadata_end(MainMenuBar)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+MainMenuBar::MainMenuSlot::MainMenuSlot() {
+
+}
+
+MainMenuBar::MainMenuSlot::~MainMenuSlot() {
+
+}
+
+
+
+MainMenuBar::MainMenuSlot& MainMenuBar::MainMenuSlot::operator[](Widget* widget) {
+  TSlot<MainMenuSlot>::operator[](widget);
+
+  return *this;
+}
+
+
 MainMenuBar::MainMenuBar() {
 
 }
@@ -50,14 +67,23 @@ MainMenuBar::~MainMenuBar() {
 
 }
 
-void MainMenuBar::onUpdate() {
+void MainMenuBar::construct(ConstructionArguments args) {
+  for (RECore::uint32 i = 0; i < args.getSlots().size(); ++i) {
+    mChildren.add(args.getSlotByIndex(i));
+  }
+}
+
+void MainMenuBar::onUpdate(float deltaTime) {
 
 }
 
 void MainMenuBar::onDraw() {
   if (ImGui::BeginMainMenuBar()) {
     // Draw all children
-    Container::onDraw();
+    //Container::onDraw();
+    for (RECore::uint32 i = 0; i < mChildren.getNumOfChildren(); ++i) {
+      mChildren[i].getWidget()->onDraw();
+    }
 
     ImGui::EndMainMenuBar();
   }

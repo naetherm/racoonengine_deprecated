@@ -23,6 +23,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Widget/Container/Collapsable.h"
+#include "REGui/Widget/Layout/Layout.h"
 
 
 //[-------------------------------------------------------]
@@ -34,7 +35,7 @@ namespace REGui {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-re_class_metadata(Collapsable, "REGui", REGui::Container, "Application class")
+re_class_metadata(Collapsable, "REGui", REGui::Compound, "Application class")
   // Constructors
 re_class_metadata_end(Collapsable)
 
@@ -42,9 +43,8 @@ re_class_metadata_end(Collapsable)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-Collapsable::Collapsable(const RECore::String& label)
-: Container()
-, mLabel(label) {
+Collapsable::Collapsable()
+: Compound() {
 
 }
 
@@ -52,13 +52,33 @@ Collapsable::~Collapsable() {
 
 }
 
-void Collapsable::onUpdate() {
+void Collapsable::onUpdate(float deltaTime) {
 
 }
 
+void Collapsable::construct(ConstructionArguments args) {
+  mHeader = args.getHeader();
+  mClosable = args.getClosable();
+  mIsOpened = args.getIsOpen();
+  mLayout = args.getLayout();
+}
+
 void Collapsable::onDraw() {
-  if (!ImGui::CollapsingHeader(mLabel)) {
-    return;
+  bool previousOpened = mIsOpened;
+
+  if (ImGui::CollapsingHeader(mHeader, mClosable ? &mIsOpened : nullptr)) {
+    // TODO(naetherm): Draw input
+    if (mLayout) {
+      mLayout->onDraw();
+    }
+  }
+
+  if (mIsOpened != previousOpened) {
+    if (mIsOpened) {
+      // Invoke OnOpened
+    } else {
+      // Invoke OnClosed
+    }
   }
 }
 

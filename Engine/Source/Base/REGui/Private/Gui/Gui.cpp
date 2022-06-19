@@ -28,7 +28,8 @@
 #include "REGui/Gui/GuiRenderer.h"
 #include "REGui/Widget/Window/MainWindow.h"
 #include "REGui/Gui/NativeWindow.h"
-#include <REGui/Theme/ThemeDark.h>
+#include "REGui/Theme/ThemeDark.h"
+#include "REGui/Theme/ThemeManager.h"
 #if defined(LINUX)
 #include "REGui/Backend/Linux/GuiLinux.h"
 #endif
@@ -55,6 +56,7 @@ Gui::Gui()
 , mGuiRenderer(nullptr)
 , mMainWindow(nullptr)
 , mMainSwapChain(nullptr)
+, mThemeManager(nullptr)
 , mTheme(nullptr) {
 #if defined(LINUX)
   mGuiImpl = new GuiLinux(this);
@@ -107,6 +109,9 @@ void Gui::setMainWindow(MainWindow *mainWindow) {
     mGuiRenderer = new GuiRenderer(this);
     mGuiRenderer->startup(mainWindow->getWindowHandle());
 
+
+    mThemeManager = &ThemeManager::instance();
+    //mTheme = mThemeManager->getThemeByName("Dark");
     mTheme = new ThemeDark();
     mTheme->initialize();
   }
@@ -175,29 +180,6 @@ void Gui::sendMessage(const GuiMessage& guiMessage) {
   }
 }
 
-
-void Gui::dummy() {
-  if (mMainWindow != nullptr && mMainWindow->getSwapChain() != nullptr) {
-    printf("Draw\n");
-    RERHI::Command::SetGraphicsRenderTarget::create(mCommandBuffer, mMainWindow->getSwapChain());
-
-    { // Since Direct3D 12 is command list based, the viewport and scissor rectangle must be set in every draw call to work with all supported RHI implementations
-      // Get the window size
-      RECore::uint32 width  = 1;
-      RECore::uint32 height = 1;
-      mMainWindow->getSwapChain()->getWidthAndHeight(width, height);
-
-      // Set the graphics viewport and scissor rectangle
-      RERHI::Command::SetGraphicsViewportAndScissorRectangle::create(mCommandBuffer, 0, 0, width, height);
-    }
-
-    RERHI::Command::ClearGraphics::create(mCommandBuffer, RERHI::ClearFlag::COLOR_DEPTH, RECore::Color4::GRAY);
-
-    mCommandBuffer.dispatchToRhiAndClear(*mGuiRenderer->getRhi());
-
-    mMainWindow->getSwapChain()->present();
-  }
-}
 
 
 //[-------------------------------------------------------]

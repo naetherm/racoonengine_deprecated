@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
 #include "REGui/Widget/WidgetCreationSyntax.h"
+#include "REGui/Widget/WidgetTypes.h"
 #include <RECore/Reflect/Object.h>
 #include <RECore/String/String.h>
 #include <imgui.h>
@@ -64,10 +65,10 @@ class Widget : public RECore::Object {
   //[-------------------------------------------------------]
   re_class_def(REGUI_API)
     // Signals
-  re_signal_0_def(SignalClicked)
-  re_signal_0_def(SignalDoubleClicked)
-  re_signal_0_def(SignalContentChanged)
-  re_signal_0_def(SignalEnterPressed)
+    re_signal_0_def(SignalClicked)
+    re_signal_0_def(SignalDoubleClicked)
+    re_signal_0_def(SignalContentChanged)
+    re_signal_0_def(SignalEnterPressed)
   re_class_def_end
 
 private:
@@ -90,15 +91,25 @@ public:
 
 public:
 
-  virtual void onUpdate();
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  virtual void onUpdate(float deltaTime);
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   virtual void onDraw();
 
 protected:
-
   /** Unique widget ID */
   RECore::String mWidgetId;
-
+  /** Is this widget enabled, true by default */
   bool mEnabled;
 };
 

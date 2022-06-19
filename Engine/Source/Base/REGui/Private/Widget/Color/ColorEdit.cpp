@@ -50,12 +50,32 @@ ColorEdit::~ColorEdit() {
 
 }
 
-void ColorEdit::onUpdate() {
+
+void ColorEdit::construct(ConstructionArguments args) {
+  mColor = args.getColor();
+  mEnableAlpha = args.getEnableAlpha();
+  SlotOnColorChanged = args.mEventSlotOnColorChanged;
+}
+
+void ColorEdit::onUpdate(float deltaTime) {
 
 }
 
 void ColorEdit::onDraw() {
+  int flags = !mEnableAlpha ? ImGuiColorEditFlags_NoAlpha : 0;
+	bool valueChanged = false;
 
+	if (mEnableAlpha) {
+		valueChanged = ImGui::ColorEdit4(mWidgetId, mColor.value, flags);
+	} else {
+		valueChanged = ImGui::ColorEdit3(mWidgetId, mColor.value, flags);
+  }
+	if (valueChanged)
+	{
+		// ColorChangedEvent.Invoke(color);
+		// this->NotifyChange();
+    //SlotOnColorChanged(mColor);
+	}
 }
 
 

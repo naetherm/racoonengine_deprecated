@@ -51,7 +51,7 @@ class Gui;
 
 /**
  * @class
- * NewLine
+ * AbstractButton
  *
  * @brief
  * Widget that adds a newline.
@@ -66,17 +66,38 @@ class AbstractButton : public Widget {
 
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   AbstractButton();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~AbstractButton() override;
 
 public:
 
-  void onUpdate() override;
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
-protected:
+public:
+
+  RECore::EventHandler<> SlotOnClicked;
 };
 //[ Namespace                                             ]
 //[-------------------------------------------------------]

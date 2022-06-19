@@ -47,24 +47,65 @@ class Gui;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * DisabledText
+ *
+ * @brief
+ */
 class DisabledText : public Text {
 
   //[-------------------------------------------------------]
   //[ RTTI interface                                        ]
   //[-------------------------------------------------------]
-re_class_def(REGUI_API)
-re_class_def_end
+  re_class_def(REGUI_API)
+  re_class_def_end
+
+
+  regui_begin_construction_args(DisabledText)
+    {}
+    regui_value(RECore::String, Text)
+  regui_end_construction_args()
 
 public:
 
-  DisabledText(const RECore::String& text);
+  /**
+   * @brief
+   * Default constructor.
+   */
+  DisabledText();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~DisabledText() override;
 
+
+  /**
+   * @brief
+   * Construct this widget.
+   *
+   * @param[in] args
+   * The declaration data for this widget.
+   */
+  void construct(ConstructionArguments args);
+
 public:
 
-  void onUpdate() override;
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
 protected:

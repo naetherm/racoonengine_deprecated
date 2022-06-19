@@ -47,6 +47,12 @@ class Gui;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * Stack
+ *
+ * @brief
+ */
 class Stack : public Container {
 
   //[-------------------------------------------------------]
@@ -57,14 +63,33 @@ class Stack : public Container {
 
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   Stack();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~Stack() override;
 
 public:
 
-  void onUpdate() override;
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
 protected:

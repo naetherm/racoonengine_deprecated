@@ -42,8 +42,7 @@ re_class_metadata_end(SmallButton)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-SmallButton::SmallButton(const RECore::String& label)
-: mLabel(label) {
+SmallButton::SmallButton() {
 
 }
 
@@ -51,7 +50,13 @@ SmallButton::~SmallButton() {
 
 }
 
-void SmallButton::onUpdate() {
+
+void SmallButton::construct(ConstructionArguments args) {
+  mLabel = args.getText();
+  SlotOnClicked = args.mEventSlotOnClicked;
+}
+
+void SmallButton::onUpdate(float deltaTime) {
   // Nothing to do here
 }
 
@@ -61,6 +66,7 @@ void SmallButton::onDraw() {
 
   if (ImGui::SmallButton(mLabel)) {
     // On click
+    SignalClicked();
   }
 }
 

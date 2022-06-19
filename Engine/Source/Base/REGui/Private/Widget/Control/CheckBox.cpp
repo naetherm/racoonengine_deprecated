@@ -42,7 +42,8 @@ re_class_metadata_end(CheckBox)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-CheckBox::CheckBox() {
+CheckBox::CheckBox()
+: mValue(false) {
 
 }
 
@@ -50,11 +51,24 @@ CheckBox::~CheckBox() {
 
 }
 
-void CheckBox::onUpdate() {
+
+void CheckBox::construct(ConstructionArguments args) {
+  mText = args.getText();
+  mValue = args.getValue();
+}
+
+void CheckBox::onUpdate(float deltaTime) {
 
 }
 
 void CheckBox::onDraw() {
+  bool previousValue = mValue;
+
+  if (ImGui::Checkbox(mText, &mValue)) {
+    if (previousValue != mValue) {
+      // Invoice on change
+    }
+  }
 
 }
 

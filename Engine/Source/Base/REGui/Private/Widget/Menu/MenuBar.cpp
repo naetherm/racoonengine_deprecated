@@ -50,7 +50,7 @@ MenuBar::~MenuBar() {
 
 }
 
-void MenuBar::onUpdate() {
+void MenuBar::onUpdate(float deltaTime) {
 
 }
 

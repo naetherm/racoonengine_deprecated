@@ -47,27 +47,72 @@ class Gui;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * ComboBox
+ *
+ * @brief
+ */
 class ComboBox : public Widget {
 
   //[-------------------------------------------------------]
   //[ RTTI interface                                        ]
   //[-------------------------------------------------------]
-re_class_def(REGUI_API)
-re_class_def_end
+  re_class_def(REGUI_API)
+  re_class_def_end
+
+
+  regui_begin_construction_args(ComboBox)
+    : mValueSelected(0) {}
+    regui_value(std::vector<RECore::String>, Choices)
+    regui_value(RECore::int32, Selected)
+  regui_end_construction_args()
 
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   ComboBox();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~ComboBox() override;
+
+
+  /**
+   * @brief
+   * Construct this widget.
+   *
+   * @param[in] args
+   * The declaration data for this widget.
+   */
+  void construct(ConstructionArguments args);
 
 public:
 
-  void onUpdate() override;
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
 protected:
+
+  std::vector<RECore::String> mChoices;
+  RECore::int32 mSelected;
 
 };
 

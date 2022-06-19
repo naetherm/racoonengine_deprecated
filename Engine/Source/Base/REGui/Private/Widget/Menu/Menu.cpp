@@ -42,10 +42,24 @@ re_class_metadata_end(Menu)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-Menu::Menu(const RECore::String& label, bool locked)
-: mLabel(label)
-, mLocked(locked)
-, mOpened(false) {
+Menu::MenuSlot::MenuSlot() {
+
+}
+
+Menu::MenuSlot::~MenuSlot() {
+
+}
+
+
+
+Menu::MenuSlot& Menu::MenuSlot::operator[](Widget* widget) {
+  TSlot<MenuSlot>::operator[](widget);
+
+  return *this;
+}
+
+Menu::Menu()
+: mOpened(false) {
 
 }
 
@@ -53,8 +67,16 @@ Menu::~Menu() {
 
 }
 
-void Menu::onUpdate() {
+void Menu::onUpdate(float deltaTime) {
 
+}
+
+void Menu::construct(ConstructionArguments args) {
+  mLabel = args.getLabel();
+  mLocked = args.getLocked();
+  for (RECore::uint32 i = 0; i < args.getSlots().size(); ++i) {
+    mChildren.add(args.getSlotByIndex(i));
+  }
 }
 
 void Menu::onDraw() {
@@ -64,7 +86,10 @@ void Menu::onDraw() {
       mOpened = true;
     }
     // Draw children
-    Container::onDraw();
+    //Container::onDraw();
+    for (RECore::uint32 i = 0; i < mChildren.getNumOfChildren(); ++i) {
+      mChildren[i].getWidget()->onDraw();
+    }
 
     ImGui::EndMenu();
   } else {

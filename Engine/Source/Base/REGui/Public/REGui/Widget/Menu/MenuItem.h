@@ -47,6 +47,12 @@ class Gui;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * MenuItem
+ *
+ * @brief
+ */
 class MenuItem : public Widget {
 
   //[-------------------------------------------------------]
@@ -57,14 +63,55 @@ class MenuItem : public Widget {
 
 public:
 
-  MenuItem(const RECore::String& label, bool checkable = false, bool checked = false);
-
-  ~MenuItem() override;
+  regui_begin_construction_args(MenuItem)
+    : mValueCheckable(false)
+    , mValueChecked(false)
+    , mValueEnabled(true) {}
+    regui_value(RECore::String, Label)
+    regui_value(bool, Checkable)
+    regui_value(bool, Checked)
+    regui_value(bool, Enabled)
+  regui_end_construction_args()
 
 public:
 
-  void onUpdate() override;
+  /**
+   * @brief
+   * Default constructor.
+   */
+  MenuItem();
 
+  /**
+   * @brief
+   * Destructor.
+   */
+  ~MenuItem() override;
+
+
+  /**
+   * @brief
+   * Construct this widget.
+   *
+   * @param[in] args
+   * The declaration data for this widget.
+   */
+  void construct(ConstructionArguments args);
+
+public:
+
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
+
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
 protected:

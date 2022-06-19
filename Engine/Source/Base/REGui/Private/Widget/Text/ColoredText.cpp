@@ -43,9 +43,9 @@ re_class_metadata_end(ColoredText)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-ColoredText::ColoredText(const RECore::String& text, const RECore::Color4& color)
-: Text(text)
-, mColor(color) {
+ColoredText::ColoredText()
+: Text()
+, mColor(RECore::Color4::WHITE) {
 
 }
 
@@ -53,7 +53,13 @@ ColoredText::~ColoredText() {
 
 }
 
-void ColoredText::onUpdate() {
+
+void ColoredText::construct(ConstructionArguments args) {
+  mText = args.getText();
+  mColor = args.getTextColor();
+}
+
+void ColoredText::onUpdate(float deltaTime) {
 
 }
 

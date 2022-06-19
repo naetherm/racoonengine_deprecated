@@ -42,8 +42,8 @@ re_class_metadata_end(ClickableText)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-ClickableText::ClickableText(const RECore::String& text)
-: Text(text) {
+ClickableText::ClickableText()
+: Text() {
 
 }
 
@@ -51,7 +51,14 @@ ClickableText::~ClickableText() {
 
 }
 
-void ClickableText::onUpdate() {
+
+void ClickableText::construct(ConstructionArguments args) {
+  mText = args.getText();
+  SlotOnClicked = args.mEventSlotOnClicked;
+  SlotOnDoubleClicked = args.mEventSlotOnDoubleClicked;
+}
+
+void ClickableText::onUpdate(float deltaTime) {
 
 }
 
@@ -60,7 +67,7 @@ void ClickableText::onDraw() {
 
   if (ImGui::Selectable(mText, &useless, ImGuiSelectableFlags_AllowDoubleClick)) {
     if (ImGui::IsMouseDoubleClicked(0)) {
-      SignalDoubleClicked();
+      //SignalDoubleClicked();
     } else {
       SignalClicked();
     }

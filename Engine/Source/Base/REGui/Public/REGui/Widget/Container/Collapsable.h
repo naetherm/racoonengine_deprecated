@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
-#include "REGui/Widget/Container/Container.h"
+#include "REGui/Widget/Container/Compound.h"
 
 
 //[-------------------------------------------------------]
@@ -47,13 +47,28 @@ class Gui;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class Collapsable : public Container {
+/**
+ * @class
+ * Collapsable
+ *
+ * @brief
+ */
+class Collapsable : public Compound {
 
   //[-------------------------------------------------------]
   //[ RTTI interface                                        ]
   //[-------------------------------------------------------]
   re_class_def(REGUI_API)
   re_class_def_end
+
+
+  regui_begin_construction_args(Collapsable)
+    {}
+    regui_value(RECore::String, Header)
+    regui_value(bool, Closable)
+    regui_value(bool, IsOpen)
+    regui_widget(REGui::Layout, Layout)
+  regui_end_construction_args()
 
 public:
 
@@ -64,7 +79,7 @@ public:
    * @param[in] label
    * The label of the collapsable.
    */
-  Collapsable(const RECore::String& label);
+  Collapsable();
 
   /**
    * @brief
@@ -72,15 +87,38 @@ public:
    */
   ~Collapsable() override;
 
+
+  /**
+   * @brief
+   * Construct this widget.
+   *
+   * @param[in] args
+   * The declaration data for this widget.
+   */
+  void construct(ConstructionArguments args);
+
 public:
 
-  void onUpdate() override;
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
 protected:
   /** The name of the collapsable. */
-  RECore::String mLabel;
+  RECore::String mHeader;
+  bool mClosable;
+  bool mIsOpened;
 };
 
 

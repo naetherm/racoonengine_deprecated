@@ -44,10 +44,7 @@ re_class_metadata_end(Button)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-Button::Button(const RECore::String& label, const RECore::Vec2i& size, bool disabled)
-: mLabel(label)
-, mSize(size)
-, mDisabled(disabled) {
+Button::Button() {
   SignalClicked.connect(SlotOnClicked);
 }
 
@@ -55,14 +52,27 @@ Button::~Button() {
 
 }
 
-void Button::onUpdate() {
+
+void Button::construct(Button::ConstructionArguments args) {
+  mLabel = args.getText();
+  mSize = args.getSize();
+  mDisabled = args.getDisabled();
+  SlotOnClicked = args.mEventSlotOnClicked;
+}
+
+
+void Button::onUpdate(float deltaTime) {
   // Nothing to do here
 }
 
 void Button::onDraw() {
 
-  if (ImGui::ButtonEx(mLabel, ImGuiHelper::ToImVec2(mSize), mDisabled ? 0 : 0)) {
+  ImGui::BeginDisabled(mDisabled);
+  if (ImGui::ButtonEx(mLabel, ImGuiHelper::ToImVec2(mSize))) {
     SignalClicked();
+  }
+  if (mDisabled) {
+    ImGui::EndDisabled();
   }
 }
 

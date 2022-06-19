@@ -41,9 +41,11 @@ set(FILES
   Private/Config/ConfigSection.cpp
 
   # File
+  Private/File/DefaultFileManager.cpp
   Private/File/FileSystemHelper.cpp
   Private/File/MemoryFile.cpp
   Private/File/FileWatcher.cpp
+  Private/File/PhysicsFSFileManager.cpp
 
   # Frontend
   Private/Frontend/AbstractFrontend.cpp

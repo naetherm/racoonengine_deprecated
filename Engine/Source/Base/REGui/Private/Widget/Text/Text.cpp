@@ -42,8 +42,7 @@ re_class_metadata_end(Text)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-Text::Text(const RECore::String& text)
-: mText(text) {
+Text::Text() {
 
 }
 
@@ -51,7 +50,12 @@ Text::~Text() {
 
 }
 
-void Text::onUpdate() {
+
+void Text::construct(ConstructionArguments args) {
+  mText = args.getText();
+}
+
+void Text::onUpdate(float deltaTime) {
 
 }
 

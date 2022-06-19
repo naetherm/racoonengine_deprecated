@@ -46,15 +46,33 @@ namespace REGui {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * DockableMainWindow
+ *
+ * @brief
+ */
 class DockableMainWindow : public MainWindow {
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   DockableMainWindow(Gui* gui);
 
+  /**
+   * @brief
+   * Destructor.
+   */
   virtual ~DockableMainWindow();
 
 public:
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
 protected:

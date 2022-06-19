@@ -23,6 +23,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Widget/Button/ArrowButton.h"
+#include <imgui_internal.h>
 
 
 //[-------------------------------------------------------]
@@ -50,12 +51,21 @@ ArrowButton::~ArrowButton() {
 
 }
 
-void ArrowButton::onUpdate() {
+
+void ArrowButton::construct(ConstructionArguments args) {
+  mDirection = args.getDirection();
+  SlotOnClicked = args.mEventSlotOnClicked;
+}
+
+void ArrowButton::onUpdate(float deltaTime) {
   // Nothing to do here
 }
 
 void ArrowButton::onDraw() {
-  // Nothing to do here
+  if (ImGui::ArrowButton(mWidgetId, static_cast<ImGuiDir_>(mDirection))) {
+    // On Clicked
+    SignalClicked();
+  }
 }
 
 

@@ -58,6 +58,14 @@ enum class ESliderOrientation {
   VERTICAL
 };
 
+enum class EArrowDirection {
+  NONE = -1,
+  LEFT,
+  RIGHT,
+  UP,
+  DOWN
+};
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

@@ -5,5 +5,5 @@ set(FILES
 
   # Application and example window
   Private/Application.cpp
-  # Private/ExampleWindow.cpp
+  Private/ExampleWindow.cpp
 )

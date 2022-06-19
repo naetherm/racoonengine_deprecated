@@ -50,7 +50,11 @@ NewLine::~NewLine() {
 
 }
 
-void NewLine::onUpdate() {
+void NewLine::construct(ConstructionArguments args) {
+
+}
+
+void NewLine::onUpdate(float deltaTime) {
   // Nothing to do here
 }
 

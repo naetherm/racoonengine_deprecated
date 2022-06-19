@@ -49,6 +49,7 @@ class GuiRenderer;
 class GuiContext;
 // Theming
 class Theme;
+class ThemeManager;
 
 
 //[-------------------------------------------------------]
@@ -100,8 +101,6 @@ public:
 
   void update();
 
-  void dummy();
-
 
   //[-------------------------------------------------------]
   //[ Gui Messages                                          ]
@@ -131,6 +130,8 @@ protected:
   RERHI::RHICommandBuffer mCommandBuffer;
 
   // TODO(naetherm):
+  /** Pointer to the theme manager */
+  ThemeManager* mThemeManager;
   Theme* mTheme;
 };
 

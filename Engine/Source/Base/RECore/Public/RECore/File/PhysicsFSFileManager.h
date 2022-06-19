@@ -32,6 +32,7 @@
 #include "RECore/File/IFile.h"
 #include "RECore/File/IFileManager.h"
 #include "RECore/File/FileSystemHelper.h"
+#include "RECore/Log/Log.h"
 
 // Disable warnings in external headers, we can't fix them
 PRAGMA_WARNING_PUSH

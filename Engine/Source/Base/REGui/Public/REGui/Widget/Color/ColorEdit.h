@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
 #include "REGui/Widget/Widget.h"
+#include <RECore/Color/Color4.h>
 
 
 //[-------------------------------------------------------]
@@ -47,28 +48,77 @@ class Gui;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * ColorEdit
+ *
+ * @brief
+ */
 class ColorEdit : public Widget {
 
   //[-------------------------------------------------------]
   //[ RTTI interface                                        ]
   //[-------------------------------------------------------]
-re_class_def(REGUI_API)
-re_class_def_end
+  re_class_def(REGUI_API)
+  re_class_def_end
+
+  regui_begin_construction_args(ColorEdit)
+    {}
+    regui_value(RECore::Color4, Color)
+    regui_value(bool, EnableAlpha)
+    regui_event(RECore::EventHandler<RECore::Color4&>, SlotOnColorChanged)
+  regui_end_construction_args()
 
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   ColorEdit();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~ColorEdit() override;
+
+
+  /**
+   * @brief
+   * Construct this widget.
+   *
+   * @param[in] args
+   * The declaration data for this widget.
+   */
+  void construct(ConstructionArguments args);
 
 public:
 
-  void onUpdate() override;
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
+
+public:
+
+  RECore::EventHandler<RECore::Color4&> SlotOnColorChanged;
 
 protected:
 
+  RECore::Color4 mColor;
+
+  bool mEnableAlpha;
 };
 
 

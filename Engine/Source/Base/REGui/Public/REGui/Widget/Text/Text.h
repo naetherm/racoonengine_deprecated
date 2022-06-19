@@ -47,6 +47,12 @@ class Gui;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * Text
+ *
+ * @brief
+ */
 class Text : public Widget {
 
   //[-------------------------------------------------------]
@@ -55,16 +61,51 @@ class Text : public Widget {
   re_class_def(REGUI_API)
   re_class_def_end
 
+
+  regui_begin_construction_args(Text)
+   {}
+   regui_value(RECore::String, Text)
+  regui_end_construction_args()
+
 public:
 
-  Text(const RECore::String& text);
+  /**
+   * @brief
+   * Default constructor.
+   */
+  Text();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~Text() override;
 
+
+  /**
+   * @brief
+   * Construct this widget.
+   *
+   * @param[in] args
+   * The declaration data for this widget.
+   */
+  void construct(ConstructionArguments args);
+
 public:
 
-  void onUpdate() override;
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
 
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
 protected:

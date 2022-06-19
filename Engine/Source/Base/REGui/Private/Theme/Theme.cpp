@@ -36,6 +36,7 @@ namespace REGui {
 //[-------------------------------------------------------]
 re_class_metadata(Theme, "REGui", RECore::Object, "Application class")
   // Constructors
+
 re_class_metadata_end(Theme)
 
 

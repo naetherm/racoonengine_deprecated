@@ -23,6 +23,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/Widget/Panel/Panel.h"
+#include "REGui/Widget/Layout/Layout.h"
 
 
 //[-------------------------------------------------------]
@@ -42,7 +43,8 @@ re_class_metadata_end(Panel)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-Panel::Panel() {
+Panel::Panel()
+: mIsOpen(true) {
 
 }
 
@@ -50,12 +52,31 @@ Panel::~Panel() {
 
 }
 
-void Panel::onUpdate() {
+void Panel::construct(ConstructionArguments args) {
+  mTitle = args.getTitle();
+  mIsFullscreen = args.getShowFullscreen();
+  mLayout = args.getLayout();
+}
+
+void Panel::onUpdate(float deltaTime) {
 
 }
 
 void Panel::onDraw() {
-
+  ImGuiWindowFlags panelFlags = ImGuiWindowFlags_AlwaysAutoResize;
+  if (mIsFullscreen) {
+    const ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->WorkPos);
+    ImGui::SetNextWindowSize(viewport->WorkSize);
+    panelFlags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings;
+  }
+  if (ImGui::Begin(mTitle + mWidgetId, &mIsOpen, panelFlags)) {
+    // Draw internal layout
+    if (mLayout) {
+      mLayout->onDraw();
+    }
+    ImGui::End();
+  }
 }
 
 
