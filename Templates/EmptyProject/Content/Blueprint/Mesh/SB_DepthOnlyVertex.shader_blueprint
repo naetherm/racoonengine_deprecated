@@ -1,0 +1,97 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+// For the shadow map depth-only use-case there's no need for single pass stereo rendering via instancing as described in "High Performance Stereo Rendering For VR", Timothy Wilson, San Diego, Virtual Reality Meetup
+
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+@includepiece(./SP_Skinning.asset)
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+	INPUT_VERTEX_POSITION(0, float3, Position)				// Object space vertex position
+	@property(UseAlphaMap)	
+		INPUT_TEXTURE_COORDINATE(1, float2, TexCoord, 0)	// 32 bit texture coordinate
+	@end
+	INPUT_VERTEX_DRAW_ID(3)									// Draw ID
+	@property(UseGpuSkinning)
+		INPUT_VERTEX_BLEND_INDICES(4, uint4, BlendIndices)	// 8 bit bone indices
+		INPUT_VERTEX_BLEND_WEIGHTS(5, uint4, BlendWeights)	// 8 bit bone weights
+	@end
+INPUT_END
+OUTPUT_BEGIN
+	@property(UseAlphaMap)
+		NOINTERPOLATION_INTERPOLATION_MODIFIER OUTPUT_TEXTURE_COORDINATE(1, uint,   MaterialSlotVS, 0)	// The assigned material slot inside the material uniform buffer
+											   OUTPUT_TEXTURE_COORDINATE(2, float2, TexCoordVS,	 	1)	// Texture coordinate
+	@end
+											   OUTPUT_POSITION		 	(0)								// Clip space vertex position as output, left/bottom is (-1,-1) and right/top is (1,1)
+OUTPUT_END
+
+// Uniform buffers
+struct PassDataStruct
+{
+	float4x4 WorldSpaceToClipSpaceMatrix;
+};
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	PassDataStruct PassData;
+UNIFORM_BUFFER_END
+UNIFORM_BUFFER_BEGIN(2, 0, InstanceUniformBuffer, 2)
+	// x = The instance texture buffer start index
+	// y = The assigned material slot inside the material uniform buffer
+	// z = The custom parameters start index inside the instance texture buffer
+	// w = Unused
+	uint4 InstanceIndicesArray[FAST_SHADER_BUILD_HACK(4096)];	// 64 KiB
+UNIFORM_BUFFER_END
+
+// Texture buffers
+TEXTURE_BUFFER(2, 1, float4, InstanceTextureBuffer, 0)	// "POSITION_ROTATION_SCALE"
+
+
+//[-------------------------------------------------------]
+//[ Functions                                             ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Normal.asset)
+	@insertpiece(DefineGetTangentFrame)
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN
+	// Get object space to world space data
+	uint4  instanceIndices	  = InstanceIndicesArray[MAIN_INPUT_DRAW_ID];
+	float3 position			  = TEXTURE_BUFFER_FETCH(InstanceTextureBuffer, instanceIndices.x).xyz;
+	float4 rotationQuaternion = TEXTURE_BUFFER_FETCH(InstanceTextureBuffer, instanceIndices.x + 1u);
+	float3 scale			  = TEXTURE_BUFFER_FETCH(InstanceTextureBuffer, instanceIndices.x + 2u).xyz;
+
+	// Get the object space position
+	float3 objectSpacePosition = MAIN_INPUT(Position);
+
+	// GPU skinning
+	@property(UseGpuSkinning)
+	{
+		@insertpiece(PerformGpuSkinning)
+	}
+	@end
+
+	// Calculate the world space vertex position
+	float3 worldSpacePosition = MultiplyQuaternionVector(rotationQuaternion, objectSpacePosition * scale) + position;
+
+	// Calculate the clip space vertex position, left/bottom is (-1,-1) and right/top is (1,1)
+	MAIN_OUTPUT_POSITION = MATRIX_MUL(PassData.WorldSpaceToClipSpaceMatrix, float4(worldSpacePosition, 1.0f));
+
+	@property(UseAlphaMap)
+		// Pass through the assigned material slot inside the material uniform buffer
+		MAIN_OUTPUT(MaterialSlotVS) = instanceIndices.y;
+
+		// Pass through the 32 bit texture coordinate
+		MAIN_OUTPUT(TexCoordVS) = MAIN_INPUT(TexCoord);
+	@end
+MAIN_END

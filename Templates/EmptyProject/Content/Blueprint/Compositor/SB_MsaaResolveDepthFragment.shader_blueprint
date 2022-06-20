@@ -1,0 +1,53 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+
+@property(NumberOfMultisamples)
+	#define NUMBER_OF_MSAA_SAMPLES @value(NumberOfMultisamples)
+@else
+	#define NUMBER_OF_MSAA_SAMPLES 1
+@end
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+	DECLARE_FRAGMENT_POSITION
+INPUT_END
+OUTPUT_BEGIN
+	OUTPUT_DEPTH	// Resolved depth
+OUTPUT_END
+
+// Textures
+@property(NumberOfMultisamples)
+	TEXTURE_2D_MS(0, 0, DepthMap, NUMBER_OF_MSAA_SAMPLES, 0)
+@else
+	TEXTURE_2D(0, 0, DepthMap, 0)
+@end
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN
+	// Resolve depth
+	@property(NumberOfMultisamples)
+		// Maximum operator due to the usage of Reversed-Z (see e.g. https://developer.nvidia.com/content/depth-precision-visualized and https://nlguillemot.wordpress.com/2016/12/07/reversed-z-in-opengl/)
+		float depth = SAMPLE_2D_MS(DepthMap, int2(FRAGMENT_POSITION.xy), 0).r;
+		UNROLL for (int sampleIndex = 1; sampleIndex < NUMBER_OF_MSAA_SAMPLES; ++sampleIndex)
+		{
+			depth = max(depth, SAMPLE_2D_MS(DepthMap, int2(FRAGMENT_POSITION.xy), sampleIndex).r);
+		}
+	@else
+		float depth = TEXTURE_FETCH_2D(DepthMap, int3(FRAGMENT_POSITION.xy, 0)).r;
+	@end
+
+	// Done
+	MAIN_OUTPUT_DEPTH = depth;
+MAIN_END

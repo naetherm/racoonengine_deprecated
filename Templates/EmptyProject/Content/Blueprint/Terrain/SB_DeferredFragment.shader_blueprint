@@ -1,0 +1,94 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+@includepiece(../Shared/SP_MotionBlur.asset)
+@includepiece(./SP_Terrain.asset)
+	@insertpiece(DefineTerrainPassDataStruct)
+
+ 
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+	INPUT_TEXTURE_COORDINATE(1, float2, TexCoord, 					 0)	// Texture coordinate
+	INPUT_TEXTURE_COORDINATE(2, float3, PreviousClipSpacePositionVS, 1)	// Previous clip space position
+	INPUT_TEXTURE_COORDINATE(3, float3, WorldSpacePosition, 		 2)	// World space position
+	DECLARE_COVERAGE_MASK
+	DECLARE_FRAGMENT_POSITION
+INPUT_END
+OUTPUT_BEGIN
+	OUTPUT_COLOR(0)	// GBuffer 0: rgb = albedo color, a = edge pixel
+	OUTPUT_COLOR(1)	// GBuffer 1: rgb = view space normal, a = roughness
+	OUTPUT_COLOR(2)	// GBuffer 2: rgb = emissive color, a = metallic
+	OUTPUT_COLOR(3)	// 			  rg  = screen space velocity
+OUTPUT_END
+
+// Uniform buffers
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	TerrainPassDataStruct PassData;
+UNIFORM_BUFFER_END
+
+// Texture buffers
+TEXTURE_BUFFER(1, 0, float4, LightTextureBuffer, 0)	// "LIGHT"
+
+// Textures
+TEXTURE_2D		(2, 0, HeightMap,				1)
+TEXTURE_2D		(2, 1, _argb,					2)
+TEXTURE_2D		(2, 2, _aor_rg_mb,				3)
+TEXTURE_2D_ARRAY(2, 3, LayerArray_argb_nxa, 	4)	// Detail layer array texture, RGB channel = Albedo map ("_a"-postfix), A channel = x component of normal map ("_n"-postfix)
+TEXTURE_2D_ARRAY(2, 4, LayerArray_hr_rg_mb_nya,	5)	// Detail layer array texture, R channel = Height map ("_h"-postfix), G channel = Roughness map ("_r"-postfix), B channel = Metallic map ("_m"-postfix), A channel = y component of normal map ("_n"-postfix)
+TEXTURE_2D		(2, 5, SplashMap,				6)
+
+// Samplers
+SAMPLER_STATE(3, 0, SamplerLinear, 0)
+SAMPLER_STATE(3, 1, SamplerLinearClamp, 1)
+
+
+//[-------------------------------------------------------]
+//[ Functions                                             ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Normal.asset)
+	@insertpiece(DefineGetTangentFrame)
+	@insertpiece(DefineUnpackTextureNormalXY)
+	@insertpiece(DefineFilterNormal)
+	@insertpiece(DefineBlendNormalUdn)
+@includepiece(../Shared/SP_Noise.asset)
+	@insertpiece(DefineMultipleOctavesNoise2D)
+	@insertpiece(DefineMultipleOctavesNoise3D)
+// @includepiece(./SP_Terrain.asset) is already included at the top
+	@property(UseTextureNoTile)
+		@insertpiece(DefineTextureNoTile)
+	@else
+		@insertpiece(DefineTextureNoTileDisabled)
+	@end
+	@property(UseTriplanarMapping)
+		@insertpiece(DefineTriplanarMapping)
+	@end
+@includepiece(../Shared/SP_Color.asset)
+	@insertpiece(DefineOverlayColorBlending)
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN
+	@insertpiece(DefineSharedFragmentShading)
+
+	// Complex pixel detection
+	// -> See "Antialiased Deferred Rendering" - https://docs.nvidia.com/gameworks/content/gameworkslibrary/graphicssamples/d3d_samples/antialiaseddeferredrendering.htm
+	float edgePixel = (COVERAGE_MASK != PassData.FullCoverageMask) ? 1.0f : 0.0f;
+
+	// Calculate screen space velocity
+	@insertpiece(DefineCalculateScreenSpaceVelocity)
+
+	// Done
+	MAIN_OUTPUT_COLOR(0) = float4(albedo * ambientOcclusion, edgePixel);
+	MAIN_OUTPUT_COLOR(1) = float4(viewSpaceNormal, roughness);
+	MAIN_OUTPUT_COLOR(2) = float4(0.0f, 0.0f, 0.0f, metallic);
+	MAIN_OUTPUT_COLOR(3) = float4(velocity.x, velocity.y, 0.0f, 0.0f);
+MAIN_END

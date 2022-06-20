@@ -1,0 +1,56 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN_VERTEX
+	INPUT_VERTEX_POSITION(0, float4, PositionTexCoord)	// xy = screen-space vertex xy-position with origin at the top-left corner of the screen, zw = normalized 32 bit glyph vertex texture coordinate
+	INPUT_VERTEX_COLOR	 (1, float4, Color)				// Linear space RGB vertex color, a = only exists for alignment purposes
+INPUT_END_VERTEX
+OUTPUT_BEGIN_VERTEX
+	OUTPUT_TEXTURE_COORDINATE(1, float2, TexCoordVS, 0)	// xy = glyph texture coordinate
+	OUTPUT_TEXTURE_COORDINATE(2, float3, ColorVS, 1)	// sRGB vertex color
+	OUTPUT_POSITION(0)									// Clip space vertex position as output, left/bottom is (-1,-1) and right/top is (1,1)
+OUTPUT_END_VERTEX
+
+// Uniform buffers
+struct PassDataStruct
+{
+	float2 InverseViewportSize;
+};
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	PassDataStruct PassData;
+UNIFORM_BUFFER_END
+
+
+//[-------------------------------------------------------]
+//[ Functions                                             ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Color.asset)
+	@insertpiece(DefineLinearSpaceToGammaSpace3)
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN_VERTEX
+	{ // Map to normalized clip coordinates
+		float x = ((2.0f * (MAIN_INPUT(PositionTexCoord).x - 0.5f)) * PassData.InverseViewportSize.x) - 1.0f;
+		float y = 1.0f - ((2.0f * (MAIN_INPUT(PositionTexCoord).y - 0.5f)) * PassData.InverseViewportSize.y);
+		MAIN_OUTPUT_POSITION = float4(x, y, 0.0f, 1.0f);
+	}
+
+	// Pass through the texture coordinates
+	MAIN_OUTPUT(TexCoordVS) = MAIN_INPUT(PositionTexCoord).zw;
+
+	// Pass through the vertex color
+	MAIN_OUTPUT(ColorVS) = LinearSpaceToGammaSpace3(MAIN_INPUT(Color).rgb);
+MAIN_END_VERTEX(MAIN_OUTPUT_POSITION)

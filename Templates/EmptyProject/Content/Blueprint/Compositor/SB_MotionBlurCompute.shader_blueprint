@@ -1,0 +1,78 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+	DECLARE_GLOBAL_INVOCATION_ID
+INPUT_END
+
+// Uniform buffers
+struct PassDataStruct
+{
+	uint3 GlobalComputeSize;
+	float FramesPerSecond;
+	float Strength;
+	int   NumberOfSamples;
+};
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	PassDataStruct PassData;
+UNIFORM_BUFFER_END
+
+// Textures
+TEXTURE_2D(1, 0, ColorMap, 0)
+TEXTURE_2D(1, 1, VelocityMap, 1)
+RW_TEXTURE_2D(1, 2, OutputTexture2D, 2, r11f_g11f_b10f, writeonly)
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN_COMPUTE(32, 32, 1)
+	// Compute dispatch is using groups of a multiple of the local size, ensure we don't access out of global compute size which mustn't be a multiple of the local size and hence might be smaller
+	BRANCH if (GLOBAL_INVOCATION_ID.x < PassData.GlobalComputeSize.x && GLOBAL_INVOCATION_ID.y < PassData.GlobalComputeSize.y)
+	{
+		int3 globalInvocationId = CAST_TO(GLOBAL_INVOCATION_ID, int3);
+		float2 velocity = TEXTURE_FETCH_2D(VelocityMap, globalInvocationId).xy;
+
+		// Apply strength to velocity
+		velocity *= PassData.Strength;
+
+		// Apply timing to velocity
+		// -> "Motion Blur Tutorial" - "A sly problem" - "mblurScale = currentFps / targeFps" - http://john-chapman-graphics.blogspot.de/2013/01/what-is-motion-blur-motion-pictures-are.html
+		//    "... if the framerate goes up we increase the blur length, if it goes down we decrease the blur length. When I say "goes up" or "goes down" I mean "changes relative to the target framerate.""
+		const float TARGET_FRAMES_PER_SECOND = 120.0f;
+		velocity *= PassData.FramesPerSecond / TARGET_FRAMES_PER_SECOND;
+
+		// Clamp to a maximum velocity: The maximum we can go without artifacts is 1.4f * PassData.NumberOfSamples... but we can fudge things a little
+		// -> Basing on https://mynameismjp.wordpress.com/the-museum/samples-tutorials-tools/motion-blur-sample/ and http://john-chapman-graphics.blogspot.de/2013/01/per-object-motion-blur.html
+		float2 maximumVelocity = float2(2.0f * float(PassData.NumberOfSamples), 2.0f * float(PassData.NumberOfSamples));
+		velocity = clamp(velocity, -maximumVelocity, maximumVelocity);
+		velocity *= PassData.GlobalComputeSize.xy;
+
+		// For each sample, sum up each sample's color in "sum" and then divide to average the color after all the samples are added
+		float4 sum = float4(0.0f, 0.0f, 0.0f, 0.0f);
+		LOOP for (int i = 0; i < PassData.NumberOfSamples; ++i)
+		{
+			// Sample texture in a new spot based on velocity vector and average it with the other samples
+			float2 sampleTexCoord = globalInvocationId.xy + (velocity * (float(i) / float(PassData.NumberOfSamples))) + float2(0.5f, 0.5f);
+
+			// Clamp to border
+			sampleTexCoord = clamp(sampleTexCoord, float2(0.0f, 0.0f), CAST_TO(PassData.GlobalComputeSize.xy - uint2(1, 1), float2));
+
+			// Lookup the color at this new spot and add it with the other samples
+			sum += TEXTURE_FETCH_2D(ColorMap, int3(CAST_TO(sampleTexCoord, int2), 0));
+		}
+
+		// Return the average color of all the samples
+		IMAGE_STORE(OutputTexture2D, globalInvocationId.xy, float4(sum.rgb / float(PassData.NumberOfSamples), 1.0f));
+	}
+MAIN_END_NO_OUTPUT

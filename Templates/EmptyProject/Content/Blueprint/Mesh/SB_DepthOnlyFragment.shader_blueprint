@@ -1,0 +1,65 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+
+
+@property(UseAlphaMap)
+	//[-------------------------------------------------------]
+	//[ Define pieces                                         ]
+	//[-------------------------------------------------------]
+	// TODO(co) Define this outside
+	@piece(MaximumNumberOfMaterials)2@end
+
+
+	//[-------------------------------------------------------]
+	//[ Input / output                                        ]
+	//[-------------------------------------------------------]
+	// Attribute input / output
+	INPUT_BEGIN
+		NOINTERPOLATION_INTERPOLATION_MODIFIER INPUT_TEXTURE_COORDINATE(1, uint,   MaterialSlotVS, 0)	// The assigned material slot inside the material uniform buffer
+											   INPUT_TEXTURE_COORDINATE(2, float2, TexCoordVS,	   1)	// Texture coordinate
+	INPUT_END
+
+	// Uniform buffers
+	struct Material
+	{
+		float AlphaReference;
+	};
+	UNIFORM_BUFFER_BEGIN(1, 0, MaterialUniformBuffer, 1)
+		Material Materials[FAST_SHADER_BUILD_HACK(@insertpiece(MaximumNumberOfMaterials))];
+	UNIFORM_BUFFER_END
+
+	// Textures: We need to start at texture unit 1 instead of texture unit 0 because the vertex shader has an instance texture buffer bound at texture unit 0 (OpenGL shares those bindings across all shader stages while Direct3D doesn't)
+	TEXTURE_2D(3, 0, AlphaMap, 1)
+
+	// Samplers
+	SAMPLER_STATE(4, 0, SamplerLinear, 0)
+@else
+	//[-------------------------------------------------------]
+	//[ Input / output                                        ]
+	//[-------------------------------------------------------]
+	// Attribute input / output
+	INPUT_BEGIN
+	INPUT_END
+@end
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN_NO_OUTPUT
+	@property(UseAlphaMap)
+		// Get the used material
+		Material material = Materials[MAIN_INPUT(MaterialSlotVS)];
+
+		// Perform alpha map based fragment rejection
+		FLATTEN if (material.AlphaReference >= SAMPLE_2D(AlphaMap, SamplerLinear, MAIN_INPUT(TexCoordVS)).r)
+		{
+			discard;	// Performance impact: This disables early-Z and hi-Z
+		}
+	@end
+MAIN_END_NO_OUTPUT

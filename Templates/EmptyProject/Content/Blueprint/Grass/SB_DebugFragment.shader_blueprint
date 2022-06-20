@@ -1,0 +1,69 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+	INPUT_TEXTURE_COORDINATE(1, float3, TexCoordDepthVS,			 0)	// xy = texture coordinate, z = grass depth
+	INPUT_TEXTURE_COORDINATE(2, float4, ColorVS,					 1)	// Color
+	INPUT_TEXTURE_COORDINATE(3, float3, PreviousClipSpacePositionVS, 2)	// Previous clip space position
+	INPUT_TEXTURE_COORDINATE(4, float3, ViewSpaceNormalVS,			 3)	// View space normal TODO(co) Currently unused for debug
+	DECLARE_FRAGMENT_POSITION
+INPUT_END
+OUTPUT_BEGIN
+	OUTPUT_COLOR(0)	// rgb = albedo color, a = alpha
+OUTPUT_END
+
+// Uniform buffers
+struct PassDataStruct
+{
+	float4x4 WorldSpaceToViewSpaceMatrix[2];
+	float4x4 ViewSpaceToClipSpaceMatrix[2];
+	float4x4 PreviousWorldSpaceToViewSpaceMatrix;
+	float4	 WorldSpaceToViewSpaceQuaternion;
+	float4	 WindDirectionStrength;	// xyz = normalized wind direction vector, w = wind strength
+	float2   ViewportSize;
+	float2   InverseViewportSize;
+	float2	 ProjectionParameters;
+	float	 GrassWindHeightFactor;
+	float    GlobalTimeInSeconds;
+	float    PreviousGlobalTimeInSeconds;
+};
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	PassDataStruct PassData;
+UNIFORM_BUFFER_END
+
+// Textures: We need to start at texture unit 1 instead of texture unit 0 because the vertex shader has an instance structured buffer bound at texture unit 0 (OpenGL shares those bindings across all shader stages while Direct3D doesn't)
+TEXTURE_2D(2, 1, _argb_alpha, 1)
+
+// Samplers
+SAMPLER_STATE(3, 0, SamplerLinear, 0)
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN
+	// Fetch texel
+	float4 color = SAMPLE_2D(_argb_alpha, SamplerLinear, MAIN_INPUT(TexCoordDepthVS).xy);
+
+	// Perform alpha map based fragment rejection (no alpha reference material parameter by intent because real shaders use alpha to coverage)
+	FLATTEN if (0.8f >= color.a)
+	{
+		discard;	// Performance impact: This disables early-Z and hi-Z
+	}
+
+	// Apply grass color
+	color *= MAIN_INPUT(ColorVS);
+
+	// Done
+	MAIN_OUTPUT_COLOR(0) = color;
+MAIN_END

@@ -1,0 +1,25 @@
+{
+	"Format":
+	{
+		"Type": "Asset",
+		"Version": "1"
+	},
+	"Asset":
+	{
+		"Metadata":
+		{
+			"Copyright": "'Ground Grass 001' from https://3dtextures.me/2018/12/17/ground-grass-001/ - licensed as CC0"
+		},
+		"Compiler":
+		{
+			"ClassName": "RendererToolkit::TextureAssetCompiler",
+			"TextureSemantic": "PACKED_CHANNELS",
+			"TextureChannelPacking": "_argb_nxa",
+			"InputFiles":
+			{
+				"ALBEDO_MAP": "./T_Grass_a.png",
+				"NORMAL_MAP": "./T_Grass_n.png"
+			}
+		}
+	}
+}

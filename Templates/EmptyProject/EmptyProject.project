@@ -1,0 +1,18 @@
+{
+	"Format":
+	{
+		"Type": "Project",
+		"Version": "1"
+	},
+	"Project":
+	{
+		"ProjectMetadata":
+		{
+			"Copyright": "",
+			"Description": ""
+		},
+		"AssetPackages": ["Content"],
+		"TargetsFilename": "EmptyProject.targets",
+		"QualityStrategy": "PRODUCTION"
+	}
+}

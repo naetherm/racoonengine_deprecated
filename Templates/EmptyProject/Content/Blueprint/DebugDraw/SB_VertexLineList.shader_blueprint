@@ -1,0 +1,67 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN_VERTEX
+	INPUT_VERTEX_POSITION(0, float4, PositionWidth)	// Object space vertex position, w = line width
+	INPUT_VERTEX_COLOR	 (1, float4, Color)			// Linear space RGB vertex color, a = only exists for alignment purposes
+INPUT_END_VERTEX
+OUTPUT_BEGIN_VERTEX
+	OUTPUT_TEXTURE_COORDINATE(0, float4, PositionVS, 0)	// Clip space vertex position as output, left/bottom is (-1,-1) and right/top is (1,1)
+	OUTPUT_TEXTURE_COORDINATE(1, float4, ColorVS,    1)	// sRGB vertex color, a = line width
+OUTPUT_END_VERTEX
+
+// Uniform buffers
+struct PassDataStruct
+{
+	float4x4 WorldSpaceToClipSpaceMatrix[2];
+	float2 ViewportSize;
+};
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	PassDataStruct PassData;
+UNIFORM_BUFFER_END
+struct InstanceDataStruct
+{
+	float3 WorldPosition;
+	uint   MaterialIndex;
+};
+UNIFORM_BUFFER_BEGIN(1, 0, InstanceUniformBuffer, 1)
+	InstanceDataStruct InstanceDataArray[FAST_SHADER_BUILD_HACK(4096)];	// 64 KiB
+UNIFORM_BUFFER_END
+
+
+//[-------------------------------------------------------]
+//[ Functions                                             ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Color.asset)
+	@insertpiece(DefineLinearSpaceToGammaSpace3)
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN_VERTEX
+	// Get object space to world space position
+	float3 worldPosition = InstanceDataArray[0].WorldPosition;
+
+	// Get the object space position
+	float3 objectSpacePosition = MAIN_INPUT(PositionWidth).xyz;
+
+	// Calculate the world space vertex position
+	float3 worldSpacePosition = objectSpacePosition + worldPosition;
+
+	// Calculate the clip space vertex position, left/bottom is (-1,-1) and right/top is (1,1)
+	MAIN_OUTPUT(PositionVS) = MATRIX_MUL(PassData.WorldSpaceToClipSpaceMatrix[MAIN_INPUT_STEREO_EYE_INDEX], float4(worldSpacePosition, 1.0f));
+
+	// Pass through the vertex color and line width
+	MAIN_OUTPUT(ColorVS) = float4(LinearSpaceToGammaSpace3(MAIN_INPUT(Color).rgb), MAIN_INPUT(PositionWidth).w);
+MAIN_END_VERTEX(MAIN_OUTPUT(PositionVS))

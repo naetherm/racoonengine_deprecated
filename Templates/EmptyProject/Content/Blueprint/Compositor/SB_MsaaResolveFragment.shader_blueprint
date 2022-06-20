@@ -1,0 +1,106 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+// Unrimp port of "MSAA Resolve + Temporal AA" from https://github.com/TheRealMJP/MSAAFilter with background information at https://mynameismjp.wordpress.com/2012/10/28/msaa-resolve-filters/
+// -> Have a look at the original MSAA filter example for much more options and a nice GUI for experimenting with settings
+
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+
+@property(NumberOfMultisamples)
+	#define NUMBER_OF_MSAA_SAMPLES @value(NumberOfMultisamples)
+@else
+	#define NUMBER_OF_MSAA_SAMPLES 1
+@end
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+	DECLARE_FRAGMENT_POSITION
+INPUT_END
+OUTPUT_BEGIN
+	OUTPUT_COLOR(0)	// Resolved color: rgb = albedo color, a = alpha
+	OUTPUT_COLOR(1)	// Resolved specular: rgb = specular color, a = roughness
+	OUTPUT_COLOR(2)	// Resolved normal: rgb = view space normal
+	OUTPUT_COLOR(3)	// Resolved velocity: rg  = screen space velocity
+	OUTPUT_DEPTH	// Resolved depth
+OUTPUT_END
+
+// Textures
+@property(NumberOfMultisamples)
+	TEXTURE_2D_MS(0, 0, ColorMap, NUMBER_OF_MSAA_SAMPLES, 0)
+	TEXTURE_2D_MS(0, 1, DepthMap, NUMBER_OF_MSAA_SAMPLES, 1)
+	TEXTURE_2D_MS(0, 2, SpecularMap, NUMBER_OF_MSAA_SAMPLES, 2)
+	TEXTURE_2D_MS(0, 3, NormalMap, NUMBER_OF_MSAA_SAMPLES, 3)
+	TEXTURE_2D_MS(0, 4, VelocityMap, NUMBER_OF_MSAA_SAMPLES, 4)
+@else
+	TEXTURE_2D(0, 0, ColorMap, 0)
+	TEXTURE_2D(0, 1, DepthMap, 1)
+	TEXTURE_2D(0, 2, SpecularMap, 2)
+	TEXTURE_2D(0, 3, NormalMap, 3)
+	TEXTURE_2D(0, 4, VelocityMap, 4)
+@end
+
+
+//[-------------------------------------------------------]
+//[ Functions                                             ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Color.asset)
+	@insertpiece(DefineColorToLuminance)
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN
+	// - Resolve color using inverse luminance filtering
+	//   -> See "Custom resolve" by Emil Persson published on Thursday, March 27, 2008 at http://www.humus.name/index.php?page=3D&ID=77
+	//   -> See "Tone mapping" by Brian Karis published on Sunday, December 15, 2013 at http://graphicrants.blogspot.com/2013/12/tone-mapping.html
+	// - Resolve depth by using maximum operator due to the usage of Reversed-Z (see e.g. https://developer.nvidia.com/content/depth-precision-visualized and https://nlguillemot.wordpress.com/2016/12/07/reversed-z-in-opengl/)
+	@property(NumberOfMultisamples)
+		float4 color = SAMPLE_2D_MS(ColorMap, int2(FRAGMENT_POSITION.xy), 0);
+		float4 specular = SAMPLE_2D_MS(SpecularMap, int2(FRAGMENT_POSITION.xy), 0);
+		float3 normal = SAMPLE_2D_MS(NormalMap, int2(FRAGMENT_POSITION.xy), 0).rgb;
+		float2 velocity = SAMPLE_2D_MS(VelocityMap, int2(FRAGMENT_POSITION.xy), 0).rg;
+		float depth = SAMPLE_2D_MS(DepthMap, int2(FRAGMENT_POSITION.xy), 0).r;
+		float edgePixel = color.a = 1;	// TODO(co) Fix edge pixel issue
+		if (0 != edgePixel)
+		{
+			color.rgb /= 1.0f + ColorToLuminance(color.rgb);	// Inverse luminance filtering
+			UNROLL for (int sampleIndex = 1; sampleIndex < NUMBER_OF_MSAA_SAMPLES; ++sampleIndex)
+			{
+				float4 colorValue = SAMPLE_2D_MS(ColorMap, int2(FRAGMENT_POSITION.xy), sampleIndex);
+				color += colorValue / (1.0f + ColorToLuminance(colorValue.rgb));	// Inverse luminance filtering
+				specular += SAMPLE_2D_MS(SpecularMap, int2(FRAGMENT_POSITION.xy), sampleIndex);
+				normal += SAMPLE_2D_MS(NormalMap, int2(FRAGMENT_POSITION.xy), sampleIndex).rgb;
+				velocity += SAMPLE_2D_MS(VelocityMap, int2(FRAGMENT_POSITION.xy), sampleIndex).rg;
+				depth = max(depth, SAMPLE_2D_MS(DepthMap, int2(FRAGMENT_POSITION.xy), sampleIndex).r);
+			}
+			color /= NUMBER_OF_MSAA_SAMPLES;
+			color /= 1.0f - ColorToLuminance(color.rgb);	// Inverse luminance filtering
+			specular /= NUMBER_OF_MSAA_SAMPLES;
+			normal = normalize(normal);
+			velocity /= NUMBER_OF_MSAA_SAMPLES;
+		}
+	@else
+		float4 color = TEXTURE_FETCH_2D(ColorMap, int3(FRAGMENT_POSITION.xy, 0));
+		float4 specular = TEXTURE_FETCH_2D(SpecularMap, int3(FRAGMENT_POSITION.xy, 0));
+		float3 normal = TEXTURE_FETCH_2D(NormalMap, int3(FRAGMENT_POSITION.xy, 0)).rgb;
+		float2 velocity = TEXTURE_FETCH_2D(VelocityMap, int3(FRAGMENT_POSITION.xy, 0)).rg;
+		float depth = TEXTURE_FETCH_2D(DepthMap, int3(FRAGMENT_POSITION.xy, 0)).r;
+		float edgePixel = color.a;
+	@end
+
+	// Done
+	MAIN_OUTPUT_COLOR(0) = float4(color.rgb, 0.0f);			// Resolved color: rgb = albedo color, a = unused
+	MAIN_OUTPUT_COLOR(1) = specular;						// Resolved specular: rgb = specular color, a = roughness
+	MAIN_OUTPUT_COLOR(2) = float4(normal, 0.0f);			// Resolved normal: rgb = view space normal
+	MAIN_OUTPUT_COLOR(3) = float4(velocity, 0.0f, 0.0f);	// Resolved velocity: rg  = screen space velocity
+	MAIN_OUTPUT_DEPTH = depth;								// Resolved depth
+MAIN_END

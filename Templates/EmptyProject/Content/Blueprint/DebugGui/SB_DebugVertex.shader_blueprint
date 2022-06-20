@@ -1,0 +1,51 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+	INPUT_VERTEX_POSITION(0, float4, PositionTexCoord)	// xy = GUI space vertex position as input, zw = normalized 32 bit texture coordinate
+	INPUT_VERTEX_COLOR	 (1, float4, Color)				// sRGB vertex color
+INPUT_END
+OUTPUT_BEGIN
+	OUTPUT_TEXTURE_COORDINATE(1, float4, TexCoordVS, 0)	// xy = normalized glyph texture coordinate, zw = normalized background texture coordinate
+	OUTPUT_TEXTURE_COORDINATE(2, float4, ColorVS, 1)	// sRGB vertex color
+	OUTPUT_POSITION			 (0)						// Clip space vertex position as output, left/bottom is (-1,-1) and right/top is (1,1)
+OUTPUT_END
+
+// Uniform buffers
+struct PassDataStruct
+{
+	float4x4 ObjectSpaceToClipSpaceMatrix;
+};
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	PassDataStruct PassData;
+UNIFORM_BUFFER_END
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN
+	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	MAIN_OUTPUT_POSITION = MATRIX_MUL(PassData.ObjectSpaceToClipSpaceMatrix, float4(MAIN_INPUT(PositionTexCoord).xy, 0.5f, 1.0f));
+
+	// Pass through the texture coordinates
+	@property(UpperLeftOrigin)
+		float y = -MAIN_OUTPUT_POSITION.y;
+	@else
+		float y = MAIN_OUTPUT_POSITION.y;
+	@end
+	MAIN_OUTPUT(TexCoordVS) = float4(MAIN_INPUT(PositionTexCoord).zw, MAIN_OUTPUT_POSITION.x * 0.5f + 0.5f, y * 0.5f + 0.5f);
+
+	// Pass through the vertex color
+	MAIN_OUTPUT(ColorVS) = MAIN_INPUT(Color);
+MAIN_END

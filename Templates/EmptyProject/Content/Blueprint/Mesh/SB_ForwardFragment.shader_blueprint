@@ -1,0 +1,267 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Definitions                                           ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Core.asset)
+	@insertpiece(SetCrossPlatformSettings)
+@includepiece(../Shared/SP_MotionBlur.asset)
+@includepiece(./SP_ComplexPixel.asset)
+
+
+//[-------------------------------------------------------]
+//[ Define pieces                                         ]
+//[-------------------------------------------------------]
+// TODO(co) Define this outside
+@piece(MaximumNumberOfMaterials)2@end
+
+
+//[-------------------------------------------------------]
+//[ Input / output                                        ]
+//[-------------------------------------------------------]
+// Attribute input / output
+INPUT_BEGIN
+	NOINTERPOLATION_INTERPOLATION_MODIFIER INPUT_TEXTURE_COORDINATE(1, uint2,  MaterialSlotStereoEyeIndexVS, 0)	// x = The assigned material slot inside the material uniform buffer, y = Stereo eye index
+										   INPUT_TEXTURE_COORDINATE(2, float2, TexCoordVS,					 1)	// Texture coordinate
+										   INPUT_TEXTURE_COORDINATE(3, float3, TangentFrame0VS,				 2)	// Tangent frame
+										   INPUT_TEXTURE_COORDINATE(4, float3, TangentFrame1VS,				 3)	// Tangent frame
+										   INPUT_TEXTURE_COORDINATE(5, float3, TangentFrame2VS,				 4)	// Tangent frame
+										   INPUT_TEXTURE_COORDINATE(6, float3, WorldSpacePositionVS,		 5)	// World space position
+										   INPUT_TEXTURE_COORDINATE(7, float3, PreviousClipSpacePositionVS,	 6)	// Previous clip space position
+										   DECLARE_FRAGMENT_POSITION
+										   DECLARE_COVERAGE_MASK
+										   DECLARE_IS_FRONT_FACE
+INPUT_END
+OUTPUT_BEGIN
+	OUTPUT_COLOR(0)	// rgb = albedo color, a = edge pixel
+	OUTPUT_COLOR(1)	// rgb = specular color, a = roughness
+	OUTPUT_COLOR(2)	// rgb = view space normal
+	OUTPUT_COLOR(3)	// rg  = screen space velocity
+OUTPUT_END
+
+// Uniform buffers
+struct PassDataStruct
+{
+	float4x4 WorldSpaceToClipSpaceMatrix[2];
+	float4x4 PreviousWorldSpaceToClipSpaceMatrix[2];
+	float4x4 ShadowMatrix;
+	float4   ShadowCascadeOffsets[4];
+	float4   ShadowCascadeScales[4];
+	float4   ShadowCascadeSplits;
+	float4	 ViewSpaceToWorldSpaceQuaternion[2];
+	float4	 WorldSpaceToViewSpaceQuaternion[2];
+	float4	 WetSurfaces;	// x=wet level, y=hole/cracks flood level, z=puddle flood level, w=rain intensity
+	float3	 WorldSpaceCameraPosition[2];
+	float3	 WrappedWorldSpaceCameraPosition;
+	float3	 ViewSpaceSunlightDirection;
+	float3	 AmbientColor;
+	float3	 SunlightColor;
+	float3	 LightClustersScale;
+	float3	 LightClustersBias;
+	uint	 FullCoverageMask;
+	float2   ViewportSize;
+	float2   ProjectionParametersReversedZ;
+	float2   JitterOffset;
+	float    GlobalTimeInSeconds;
+};
+UNIFORM_BUFFER_BEGIN(0, 0, PassUniformBuffer, 0)
+	PassDataStruct PassData;
+UNIFORM_BUFFER_END
+struct Material
+{
+	float3 AlbedoColor;
+	float  Roughness;
+	float  Metallic;
+	float  AlphaReference;
+	float  EmissiveIntensity;
+	float  PomHeightMapScale;		// Parallax occlusion mapping (POM) height map scale
+	int    MinimumNumberOfPomSteps;	// Minimum number of parallax occlusion mapping (POM) steps
+	int    MaximumNumberOfPomSteps;	// Maximum number of parallax occlusion mapping (POM) steps
+};
+UNIFORM_BUFFER_BEGIN(1, 0, MaterialUniformBuffer, 1)
+	Material Materials[FAST_SHADER_BUILD_HACK(@insertpiece(MaximumNumberOfMaterials))];
+UNIFORM_BUFFER_END
+
+// Texture buffers: We need to start at texture unit 1 instead of texture unit 0 because the vertex shader has an instance texture buffer bound at texture unit 0 (OpenGL shares those bindings across all shader stages while Direct3D doesn't)
+TEXTURE_BUFFER(3, 0, float4, LightTextureBuffer, 1)	// "LIGHT"
+
+// Textures
+@property(ReceiveShadows)
+	TEXTURE_2D_ARRAY(4, 0, ShadowMap, 2)
+@end
+TEXTURE_3D_UINT(4, 1, LightClustersMap3D, 3)
+TEXTURE_1D_ARRAY(4, 2, IesLightProfileMap, 4)
+TEXTURE_2D(4, 3, _argb_nxa, 5)		// RGB channel = Albedo map ("_a"-postfix), A channel = x component of normal map ("_n"-postfix)
+TEXTURE_2D(4, 4, _hr_rg_mb_nya, 6)	// R channel = Height map ("_h"-postfix), G channel = Roughness map ("_r"-postfix), B channel = Metallic map ("_m"-postfix), A channel = y component of normal map ("_n"-postfix)
+@property(UseAlphaMap)
+	TEXTURE_2D(4, 5, AlphaMap, 7)
+@end
+@property(UseEmissiveMap)
+	TEXTURE_2D(4, 6, EmissiveMap, 8)
+@end
+@property(UseWetSurfaces)
+	TEXTURE_2D(4, 7, WaterRipplesMap, 9)	// r = droplet mask, gb = ripples xy normal map, a = random grey value constant
+	TEXTURE_2D(4, 8, WaterStreaksMap, 10)	// r = streak pattern, g = gradient, ba = streak xy normal map
+@end
+
+// Samplers
+SAMPLER_STATE(5, 0, SamplerLinear, 0)
+
+
+//[-------------------------------------------------------]
+//[ Functions                                             ]
+//[-------------------------------------------------------]
+@includepiece(../Shared/SP_Normal.asset)
+	@insertpiece(DefineGetTangentFrame)
+	@insertpiece(DefineUnpackTextureNormalXY)
+@includepiece(../Shared/SP_PhysicallyBasedShading.asset)
+	@property(HighQualityLighting)
+		@insertpiece(DefinePhysicallyBasedShading)
+	@else
+		@insertpiece(DefineBlinnPhongBasedShading)
+	@end
+@includepiece(../Shared/SP_Depth.asset)
+	@insertpiece(DefineGetLinearDepthReversedZ)
+@property(ReceiveShadows)
+	@includepiece(../Shared/SP_ExponentialShadow.asset)
+		@insertpiece(DefineExponentialShadow)
+	@includepiece(../Shared/SP_Shadow.asset)
+		@insertpiece(DefineCalculateShadowVisibility)
+		@insertpiece(DefineShadowDebugging)
+@end
+@includepiece(../Shared/SP_Noise.asset)
+	@insertpiece(DefineMultipleOctavesNoise3D)
+@property(UseParallaxOcclusionMapping)
+	@includepiece(../Shared/SP_ParallaxOcclusionMapping.asset)
+		@insertpiece(DefineParallaxOcclusionMapping)
+		@insertpiece(DefineParallaxOcclusionMappingSelfShadowing)
+@end
+@property(UseWetSurfaces)
+	@includepiece(../Shared/SP_WetSurfaces.asset)
+		@insertpiece(DefineWetSurfaces)
+@end
+
+
+//[-------------------------------------------------------]
+//[ Main                                                  ]
+//[-------------------------------------------------------]
+MAIN_BEGIN
+	float2 texCoord = MAIN_INPUT(TexCoordVS);
+	float shadowVisibility = 1.0f;
+
+	// Get the used material and stereo eye index
+	Material material = Materials[MAIN_INPUT(MaterialSlotStereoEyeIndexVS).x];
+	uint stereoEyeIndex = MAIN_INPUT(MaterialSlotStereoEyeIndexVS).y;
+
+	// Get unnormalized camera incident vector
+	float3 worldSpacePosition = MAIN_INPUT(WorldSpacePositionVS);
+	@property(SinglePassStereoInstancing)
+		float3 worldSpaceIncident = PassData.WorldSpaceCameraPosition[stereoEyeIndex] - worldSpacePosition;
+	@else
+		// Possible optimization when not using stereo rendering: Since we're using camera relative rendering, "PassData.WorldSpaceCameraPosition - worldSpacePosition" becomes just "-worldSpacePosition"
+		float3 worldSpaceIncident = -worldSpacePosition;
+	@end
+	float3 viewSpaceIncident = MultiplyQuaternionVector(PassData.WorldSpaceToViewSpaceQuaternion[stereoEyeIndex], worldSpaceIncident);
+
+	// Get TBN
+	@property(UseParallaxOcclusionMapping || UseWetSurfaces)
+		float3x3 TBN = ROW_MATRIX_3x3(MAIN_INPUT(TangentFrame0VS), MAIN_INPUT(TangentFrame1VS), MAIN_INPUT(TangentFrame2VS));
+	@end
+
+	// Parallax occlusion mapping (POM)
+	@property(UseParallaxOcclusionMapping)
+	{
+		float pomHeightMapScale = ParallaxOcclusionMappingHeightMapScale(material.PomHeightMapScale, worldSpacePosition);
+		BRANCH if (pomHeightMapScale > 0.0f)
+		{
+			// Apply jitter offset for dither temporal anti aliasing
+			// -> The jitter offset is using "Hammersley 4x" from "MSAA Resolve + Temporal AA" from https://github.com/TheRealMJP/MSAAFilter with background information at https://mynameismjp.wordpress.com/2012/10/28/msaa-resolve-filters/
+			// -> Approach as seen inside a material graph at https://wiki.unrealengine.com/Parallax_Occlusion_Mapping
+			float maximumNumberOfSteps = LERP(material.MinimumNumberOfPomSteps, material.MaximumNumberOfPomSteps, PassData.JitterOffset.x * PassData.JitterOffset.y);
+
+			// Get new texture coordinates from parallax occlusion mapping
+			float parallaxHeight = 0.0f;
+			ParallaxOcclusionMapping(MATRIX_MUL(TBN, viewSpaceIncident), pomHeightMapScale, material.MinimumNumberOfPomSteps, maximumNumberOfSteps, texCoord, parallaxHeight);
+
+			// Get self-shadowing factor for elements of parallax
+			float shadowSampleFactor = 0.5f;	// Reduce sample rate for shadow
+			shadowVisibility = ParallaxOcclusionMappingSelfShadowing(normalize(MATRIX_MUL(TBN, PassData.ViewSpaceSunlightDirection)), pomHeightMapScale, min(1, material.MinimumNumberOfPomSteps * shadowSampleFactor), min(1, maximumNumberOfSteps * shadowSampleFactor), texCoord, parallaxHeight);
+		}
+	}
+	@end
+
+	// Get normalized camera incident vector
+	worldSpaceIncident = normalize(worldSpaceIncident);
+	viewSpaceIncident = normalize(viewSpaceIncident);
+
+	// Read channel packed texture data
+	// -> "_argb_nxa" = RGB channel = Albedo map ("_a"-postfix), A channel = x component of normal map ("_n"-postfix)
+	// -> "_hr_rg_mb_nya" = R channel = Height map ("_h"-postfix), G channel = Roughness map ("_r"-postfix), B channel = Metallic map ("_m"-postfix), A channel = y component of normal map ("_n"-postfix)
+	float4 value_argb_nxa = SAMPLE_2D(_argb_nxa, SamplerLinear, texCoord);
+	float4 value_hr_rg_mb_nya = SAMPLE_2D(_hr_rg_mb_nya, SamplerLinear, texCoord);
+
+	// Get albedo, roughness and metallic
+	float3 albedo = material.AlbedoColor * value_argb_nxa.rgb;
+	float roughness = material.Roughness * value_hr_rg_mb_nya.g;
+	float metallic = SATURATE(material.Metallic + value_hr_rg_mb_nya.b);
+
+	// Transform the tangent space normal into view space
+	float3 viewSpaceNormal = UnpackTextureNormalXY(value_argb_nxa.a, value_hr_rg_mb_nya.a);
+	viewSpaceNormal = normalize(viewSpaceNormal.x * MAIN_INPUT(TangentFrame0VS) + viewSpaceNormal.y * MAIN_INPUT(TangentFrame1VS) + viewSpaceNormal.z * MAIN_INPUT(TangentFrame2VS));
+
+	// Handle two sided lighting
+	// -> It's not worth to add additional expensive shader combinations just for this tiny thing
+	viewSpaceNormal = IS_FRONT_FACE ? viewSpaceNormal : -viewSpaceNormal;
+
+	// Shadow mapping
+	@property(ReceiveShadows)
+		shadowVisibility *= CalculateShadowVisibility(worldSpacePosition, GetLinearDepthReversedZ(FRAGMENT_POSITION.z));
+	@end
+
+	// Water influence on material BRDF
+	// -> Wet surfaces parameter layout: x=wet level, y=hole/cracks flood level, z=puddle flood level, w=rain intensity
+	float specularFactor = 1.0f;
+	@property(UseWetSurfaces)
+		BRANCH if (0.0f != PassData.WetSurfaces.x)
+		{
+			// Handle camera relative rendering
+			float3 wrappedWorldSpacePosition = worldSpacePosition + PassData.WrappedWorldSpaceCameraPosition;
+			specularFactor = DoWaterProcess(wrappedWorldSpacePosition, TBN, PassData.GlobalTimeInSeconds, PassData.WorldSpaceToViewSpaceQuaternion[stereoEyeIndex], shadowVisibility, value_hr_rg_mb_nya.r, multipleOctavesNoise3D(wrappedWorldSpacePosition), PassData.WetSurfaces.x, PassData.WetSurfaces.y, PassData.WetSurfaces.z, PassData.WetSurfaces.w, albedo, roughness, metallic, viewSpaceNormal);
+		}
+	@end
+
+	// Calculate screen space velocity
+	@insertpiece(DefineCalculateScreenSpaceVelocity)
+
+	// Ambient term
+	float3 worldSpaceNormal = MultiplyQuaternionVector(PassData.ViewSpaceToWorldSpaceQuaternion[stereoEyeIndex], viewSpaceNormal);
+	float3 color = albedo * (PassData.AmbientColor.rgb + CalculateHemisphereLighting(worldSpaceNormal.xyz, PassData.AmbientColor.rgb * 0.7f, PassData.AmbientColor.rgb * 0.2f));
+
+	// Directional sunlight, our primary light
+	BRANCH if (shadowVisibility > 0.0f)
+	{
+		color += shadowVisibility * CalculateLighting(albedo, roughness, metallic, viewSpaceNormal, viewSpaceIncident, PassData.ViewSpaceSunlightDirection, PassData.SunlightColor);
+	}
+
+	// Perform clustered shading
+	@insertpiece(PerformClusteredShading)
+
+	// Emissive term
+	@property(UseEmissiveMap)
+		color += SAMPLE_2D(EmissiveMap, SamplerLinear, texCoord).rgb * material.EmissiveIntensity;
+	@end
+
+	// Complex pixel detection and alpha test using alpha to coverage
+	@insertpiece(PerformComplexPixelDetection)
+
+	// Don't remove the following commented code: Shadow map debugging
+	// @property(ReceiveShadows)
+	//	color *= GetShadowCascadeColor(GetLinearDepthReversedZ(FRAGMENT_POSITION.z));
+	// @end
+
+	// Done
+	MAIN_OUTPUT_COLOR(0) = float4(color, edgePixel);															// rgb = albedo color, a = edge pixel
+	MAIN_OUTPUT_COLOR(1) = float4(specularFactor * ALBEDO_METALLIC_TO_SPECULAR(albedo, metallic), roughness);	// rgb = specular color, a = roughness
+	MAIN_OUTPUT_COLOR(2) = float4(viewSpaceNormal, 0.0f);														// rgb = view space normal
+	MAIN_OUTPUT_COLOR(3) = float4(velocity.x, velocity.y, 0.0f, 0.0f);											// rg  = screen space velocity
+MAIN_END

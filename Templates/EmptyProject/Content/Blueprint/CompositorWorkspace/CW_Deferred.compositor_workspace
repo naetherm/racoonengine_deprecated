@@ -1,0 +1,17 @@
+{
+	"Format":
+	{
+		"Type": "CompositorWorkspaceAsset",
+		"Version": "1"
+	},
+	"CompositorWorkspaceAsset":
+	{
+		"Description": "Deferred rendering compositor workspace",
+		"Nodes":
+		{
+			"${PROJECT_NAME}/Blueprint/CompositorNode/CN_Deferred.asset":
+			{
+			}
+		}
+	}
+}

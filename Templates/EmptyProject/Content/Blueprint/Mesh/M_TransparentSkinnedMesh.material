@@ -1,0 +1,15 @@
+{
+	"Format":
+	{
+		"Type": "MaterialAsset",
+		"Version": "1"
+	},
+	"MaterialAsset":
+	{
+		"Techniques":
+		{
+			"Transparent": "./MB_TransparentSkinned.asset",
+			"Distortion": "./MB_DistortionSkinned.asset"
+		}
+	}
+}

@@ -1,0 +1,16 @@
+// Copyright (c) 2019 - 2022 RacoonStudios
+
+//[-------------------------------------------------------]
+//[ Pieces                                                ]
+//[-------------------------------------------------------]
+@piece(DefineCalculateScreenSpaceVelocity)
+	float2 previousClipSpacePosition = (MAIN_INPUT(PreviousClipSpacePositionVS).xy / MAIN_INPUT(PreviousClipSpacePositionVS).z);
+	@property(UpperLeftOrigin)
+		previousClipSpacePosition = previousClipSpacePosition * float2(0.5f, -0.5f) + 0.5f;
+	@else
+		previousClipSpacePosition = previousClipSpacePosition * float2(0.5f, 0.5f) + 0.5f;
+	@end
+	previousClipSpacePosition *= PassData.ViewportSize;
+	float2 velocity = FRAGMENT_POSITION.xy - previousClipSpacePosition;
+	velocity /= PassData.ViewportSize;
+@end
