@@ -47,44 +47,177 @@ class Widget;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * Slot
+ *
+ * @brief
+ * Foundation implementation of a slot containing a multiple widgets.
+ */
 class MultiSlot {
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   MultiSlot();
 
+  /**
+   * @brief
+   * Copy constructor.
+   *
+   * @param[in] rhs
+   * Object to copy.
+   */
   MultiSlot(const MultiSlot& rhs);
 
+  /**
+   * @brief
+   * Destructor.
+   */
   virtual ~MultiSlot();
 
 
+  /**
+   * @brief
+   * Copy operator.
+   *
+   * @param[in] rhs
+   * Object to copy.
+   *
+   * @return
+   * Reference to this.
+   */
   MultiSlot& operator=(const MultiSlot& rhs);
 
+  /**
+   * @brief
+   * Equality operator.
+   *
+   * @param[in] rhs
+   * Object to compare to.
+   *
+   * @return
+   * True if both are equal, false otherwise.
+   */
   bool operator==(const MultiSlot& rhs) const;
 
+  /**
+   * @brief
+   * Equality operator.
+   *
+   * @param[in] rhs
+   * Object to compare to.
+   *
+   * @return
+   * True if both are not equal, false otherwise.
+   */
   bool operator!=(const MultiSlot& rhs) const;
 };
 
+/**
+ * @class
+ * TMultiSlot
+ *
+ * @tparam TType
+ *
+ * @brief
+ * A TMultiSlot contains multiple widgets and describes how that children should be arranged on the screen.
+ */
 template<typename TType, typename TContainer = std::vector<Widget*>>
 class TMultiSlot : public MultiSlot {
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   TMultiSlot();
 
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] widget
+   * Pointer to widget.
+   */
   TMultiSlot(const TMultiSlot<TType, TContainer>& rhs);
 
 
+  /**
+   * @brief
+   * Copy operator.
+   *
+   * @param[in] rhs
+   * Object to copy.
+   *
+   * @return
+   * Reference to this.
+   */
   TMultiSlot& operator=(const TMultiSlot<TType, TContainer>& rhs);
 
+  /**
+   * @brief
+   * Equality operator.
+   *
+   * @param[in] rhs
+   * Object to compare to.
+   *
+   * @return
+   * True if both are equal, false otherwise.
+   */
   bool operator==(const TMultiSlot<TType, TContainer>& rhs) const;
 
 
+  /**
+   * @brief
+   * Assign operator.
+   *
+   * @param[in] widget
+   * Pointer to widget to assign to this slot.
+   * @return
+   */
   TType& operator[](Widget* widget);
 
 
+  /**
+   * @brief
+   * Attaches a widget to the slot.
+   *
+   * @param[in] widget
+   * Pointer to the widget to attach.
+   *
+   * @note
+   * Keep in mind that you have to keep track about the pointers by yourself!
+   *
+   * @return
+   * Reference to the attached widget.
+   */
   Widget& attachWidget(Widget* widget);
 
+  /**
+   * @brief
+   * Returns pointer to the widget at index position @p index.
+   *
+   * @param[in] index
+   * Index position.
+   *
+   * @return
+   * Pointer to widget.
+   */
   Widget* getWidget(RECore::uint32 index = 0) const;
 
+  /**
+   * @brief
+   * Helper method for exposing the slot.
+   *
+   * @param[in,out] outType
+   * The output variable.
+   *
+   * @return
+   * Reference to this, casted to TType.
+   */
   virtual TType& exposeThis(TType*& outType);
 
 protected:

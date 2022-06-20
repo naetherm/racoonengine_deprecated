@@ -46,17 +46,59 @@ class Widget;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * Children
+ *
+ * @brief
+ * Abstract Children representation.
+ */
 class Children {
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   Children();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   virtual ~Children();
 
+  /**
+   * @brief
+   * Returns pointer to child widget at index position @p index.
+   *
+   * @param[in] index
+   * Index position.
+   *
+   * @return
+   * Pointer to widget.
+   */
   virtual Widget* getChildAtIndex(RECore::uint32 index);
 
+  /**
+   * @brief
+   * Returns pointer to child widget at index position @p index.
+   *
+   * @param[in] index
+   * Index position.
+   *
+   * @return
+   * Pointer to widget.
+   */
   virtual const Widget* getChildAtIndex(RECore::uint32 index) const;
 
+  /**
+   * @brief
+   * Returns number of child widgets.
+   *
+   * @return
+   * Number of child widgets.
+   */
   virtual RECore::int32 getNumOfChildren() const;
 };
 

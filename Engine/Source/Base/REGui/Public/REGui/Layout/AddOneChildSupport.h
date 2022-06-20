@@ -51,17 +51,59 @@ template<typename TSlotType>
 class AddOneChildSupport : public Children, public TSlot<TSlotType> {
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   AddOneChildSupport();
 
+  /**
+   * @brief
+   * Copy constructor.
+   *
+   * @param[in] rhs
+   * Object to copy.
+   */
   AddOneChildSupport(const AddOneChildSupport& rhs);
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~AddOneChildSupport() override;
 
 
+  /**
+   * @brief
+   * Returns pointer to child widget at index position @p index.
+   *
+   * @param[in] index
+   * Index position.
+   *
+   * @return
+   * Pointer to widget.
+   */
   Widget* getChildAtIndex(RECore::uint32 index) override;
 
+  /**
+   * @brief
+   * Returns pointer to child widget at index position @p index.
+   *
+   * @param[in] index
+   * Index position.
+   *
+   * @return
+   * Pointer to widget.
+   */
   const Widget* getChildAtIndex(RECore::uint32 index) const override;
 
+  /**
+   * @brief
+   * Returns number of child widgets.
+   *
+   * @return
+   * Number of child widgets.
+   */
   RECore::int32 getNumOfChildren() const override;
 };
 

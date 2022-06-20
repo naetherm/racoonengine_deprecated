@@ -46,27 +46,86 @@ class Widget;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * Slot
+ *
+ * @brief
+ * Foundation implementation of a slot containing a single widget.
+ */
 class Slot {
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   Slot();
 
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] widget
+   * Pointer to widget.
+   */
   Slot(Widget* widget);
 
+  /**
+   * @brief
+   * Copy constructor.
+   *
+   * @param[in] rhs
+   * Object to copy.
+   */
   Slot(const Slot& rhs);
 
+  /**
+   * @brief
+   * Destructor.
+   */
   virtual ~Slot();
 
 
+  /**
+   * @brief
+   * Copy operator.
+   *
+   * @param[in] rhs
+   * Object to copy.
+   *
+   * @return
+   * Reference to this.
+   */
   Slot& operator=(const Slot& rhs);
 
+  /**
+   * @brief
+   * Equality operator.
+   *
+   * @param[in] rhs
+   * Object to compare to.
+   *
+   * @return
+   * True if both are equal, false otherwise.
+   */
   bool operator==(const Slot& rhs) const;
 
+  /**
+   * @brief
+   * Equality operator.
+   *
+   * @param[in] rhs
+   * Object to compare to.
+   *
+   * @return
+   * True if both are not equal, false otherwise.
+   */
   bool operator!=(const Slot& rhs) const;
 
   /**
    * @brief
-   * Attachs a widget to the slot.
+   * Attaches a widget to the slot.
    *
    * @param[in] widget
    * Pointer to the widget to attach.
@@ -91,32 +150,107 @@ public:
    */
   Widget& detachWidget();
 
+  /**
+   * @brief
+   * Returns pointer to the widget of the slot. This can be a nullptr.
+   *
+   * @return
+   * Pointer to widget of slot.
+   */
   Widget* getWidget() const;
 
 protected:
 
+  /** Pointer to widget, can be a nullptr */
   Widget* mWidget;
 };
 
+/**
+ * @class
+ * TSlot
+ *
+ * @tparam TType
+ *
+ * @brief
+ * A TSlot contains one child widget and describes how that child should be arranged on the screen.
+ */
 template<typename TType>
 class TSlot : public Slot {
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   TSlot();
 
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] widget
+   * Pointer to widget.
+   */
   TSlot(const Widget* widget);
 
+  /**
+   * @brief
+   * Copy constructor.
+   *
+   * @param[in] rhs
+   * Object to copy.
+   */
   TSlot(const TSlot& rhs);
 
 
+  /**
+   * @brief
+   * Copy operator.
+   *
+   * @param[in] rhs
+   * Object to copy.
+   *
+   * @return
+   * Reference to this.
+   */
   TSlot& operator=(const TSlot& rhs);
 
+  /**
+   * @brief
+   * Equality operator.
+   *
+   * @param[in] rhs
+   * Object to compare to.
+   *
+   * @return
+   * True if both are equal, false otherwise.
+   */
   bool operator==(const TSlot<TType>& rhs) const;
 
 
+  /**
+   * @brief
+   * Assign operator.
+   *
+   * @param[in] widget
+   * Pointer to widget to assign to this slot.
+   *
+   * @return
+   * Reference to this slot implementation.
+   */
   TType& operator[](Widget* widget);
 
 
+  /**
+   * @brief
+   * Helper method for exposing the slot.
+   *
+   * @param[in,out] outType
+   * The output variable.
+   *
+   * @return
+   * Reference to this, casted to TType.
+   */
   virtual TType& exposeThis(TType*& outType);
 };
 

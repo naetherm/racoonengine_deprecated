@@ -47,35 +47,129 @@ namespace REGui {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * PanelChildren
+ *
+ * @tparam TSlotType
+ *
+ * @brief
+ * PanelChildren is a implementation that can contain multiple child widgets.
+ */
 template<typename TSlotType>
 class PanelChildren : public Children {
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   PanelChildren();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~PanelChildren() override;
 
 
+  /**
+   * @brief
+   * Assign operator.
+   *
+   * @param[in] widget
+   * Pointer to widget to assign to this slot.
+   *
+   * @return
+   * Reference to this slot implementation.
+   */
   const TSlotType& operator[](RECore::uint32 index) const;
 
+  /**
+   * @brief
+   * Assign operator.
+   *
+   * @param[in] widget
+   * Pointer to widget to assign to this slot.
+   *
+   * @return
+   * Reference to this slot implementation.
+   */
   TSlotType& operator[](RECore::uint32 index);
 
+  /**
+   * @brief
+   * Returns number of child widgets.
+   *
+   * @return
+   * Number of child widgets.
+   */
   RECore::int32 getNumOfChildren() const;
 
+  /**
+   * @brief
+   * Adds another slot to this.
+   *
+   * @param[in] slot
+   * Pointer to slot to add.
+   */
   void add(TSlotType* slot);
 
+  /**
+   * @brief
+   * Clears the internal structured.
+   */
   void clear();
 
+  /**
+   * @brief
+   * Adds another slot at the given position.
+   *
+   * @param[in] slot
+   * Pointer o slot to add.
+   * @param[in] index
+   * Index position where the slot should be added
+   */
   void insert(TSlotType* slot, RECore::int32 index);
 
+  /**
+   * @brief
+   * Returns pointer to child widget at index position @p index.
+   *
+   * @param[in] index
+   * Index position.
+   *
+   * @return
+   * Pointer to widget.
+   */
   const Widget* getChildAtIndex(RECore::uint32 index) const override;
 
+  /**
+   * @brief
+   * Returns pointer to child widget at index position @p index.
+   *
+   * @param[in] index
+   * Index position.
+   *
+   * @return
+   * Pointer to widget.
+   */
   Widget* getChildAtIndex(RECore::uint32 index) override;
 
+  /**
+   * @brief
+   * Removes child widget at index position @p index.
+   *
+   * @param[in] index
+   * Index position.
+   *
+   * @return
+   * True if element was removed, false otherwise.
+   */
   bool removeAtIndex(RECore::int32 index);
 
 private:
-
+  /** Internal container for hilding all slots */
   std::vector<TSlotType> mChildren;
 };
 

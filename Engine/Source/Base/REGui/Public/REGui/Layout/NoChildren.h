@@ -46,17 +46,62 @@ namespace REGui {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * NoChildren
+ *
+ * @brief
+ * Specialized implementation, containing no children.
+ * Every method, responsible for returning child-information, will either return
+ * a nullptr or 0.
+ */
 class NoChildren : public Children {
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   NoChildren();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~NoChildren() override;
 
+
+  /**
+   * @brief
+   * Returns pointer to child widget at index position @p index.
+   *
+   * @param[in] index
+   * Index position.
+   *
+   * @return
+   * Pointer to widget.
+   */
   Widget* getChildAtIndex(RECore::uint32 index) override;
 
+  /**
+   * @brief
+   * Returns pointer to child widget at index position @p index.
+   *
+   * @param[in] index
+   * Index position.
+   *
+   * @return
+   * Pointer to widget.
+   */
   const Widget* getChildAtIndex(RECore::uint32 index) const override;
 
+  /**
+   * @brief
+   * Returns number of child widgets.
+   *
+   * @return
+   * Number of child widgets.
+   */
   RECore::int32 getNumOfChildren() const override;
 
 };

@@ -46,13 +46,35 @@ namespace REGui {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * BasicSlot
+ *
+ * @brief
+ * Basic slot, containing one child.
+ */
 class BasicSlot : public AddOneChildSupport<BasicSlot> {
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   BasicSlot();
 
+  /**
+   * @brief
+   * Copy constructor.
+   *
+   * @param[in] rhs
+   * Object to copy.
+   */
   BasicSlot(const BasicSlot& rhs);
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~BasicSlot() override;
 };
 
