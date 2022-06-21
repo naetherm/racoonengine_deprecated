@@ -46,6 +46,13 @@ class Gui;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * GuiImpl
+ *
+ * @brief
+ * Platform dependent implementation of the gui system.
+ */
 class GuiImpl {
 public:
 
@@ -66,8 +73,19 @@ public:
 
 public:
 
+  /**
+   * @brief
+   * Determines whether there are any messages to be handled.
+   *
+   * @return
+   * True if there are messages left, false otherwise.
+   */
   virtual bool hasPendingMessages() = 0;
 
+  /**
+   * @brief
+   * Process all outstanding messages.
+   */
   virtual void processMessage() = 0;
 
 protected:

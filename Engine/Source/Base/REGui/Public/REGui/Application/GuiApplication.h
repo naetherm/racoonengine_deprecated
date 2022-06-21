@@ -136,6 +136,10 @@ protected:
 
 private:
 
+  /**
+   * @brief
+   * Creates the gui context.
+   */
   void createGuiContext();
 
 protected:

@@ -62,12 +62,28 @@ public:
 
 public:
 
+  /**
+   * @brief
+   * Convert Vec2i to ImGui ImVec2.
+   */
   static ImVec2 ToImVec2(const RECore::Vec2i& v);
 
+  /**
+   * @brief
+   * Convert ImGui ImVec2 to Vec2i.
+   */
   static RECore::Vec2i ToVec2i(const ImVec2& v);
 
+  /**
+   * @brief
+   * Convert Color4 to ImGui ImVec4.
+   */
   static ImVec4 ToImVec4(const RECore::Color4& c);
 
+  /**
+   * @brief
+   * Convert ImGui ImVec4 to Color4.
+   */
   static RECore::Color4 ToColor4(const ImVec4& c);
 };
 

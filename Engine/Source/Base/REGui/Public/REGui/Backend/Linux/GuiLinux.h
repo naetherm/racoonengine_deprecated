@@ -48,24 +48,67 @@ class Gui;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * GuiImpl
+ *
+ * @brief
+ * Linux specific implementation of the gui system.
+ */
 class GuiLinux : public GuiImpl {
 public:
 
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] gui
+   * Pointer to platform independent gui implementation.
+   */
   GuiLinux(Gui* gui);
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~GuiLinux() override;
 
 
+  /**
+   * @brief
+   * Returns pointer to X display.
+   *
+   * @return
+   * Pointer to X display.
+   */
   [[nodiscard]] ::Display* getDisplay() const;
 
 public:
 
+  /**
+   * @brief
+   * Determines whether there are any messages to be handled.
+   *
+   * @return
+   * True if there are messages left, false otherwise.
+   */
   bool hasPendingMessages() override;
 
+  /**
+   * @brief
+   * Process all outstanding messages.
+   */
   void processMessage() override;
 
 private:
 
+  /**
+   * @brief
+   * Processes the provided X event.
+   *
+   * @param[in] event
+   * Pointer to X event to process.
+   */
   void processXEvent(XEvent* event);
 
 private:

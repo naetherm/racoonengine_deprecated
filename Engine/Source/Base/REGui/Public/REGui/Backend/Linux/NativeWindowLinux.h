@@ -47,32 +47,108 @@ class NativeWindow;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * NativeWindowLinux
+ *
+ * @brief
+ * Linux implementation of a native window implementation.
+ */
 class NativeWindowLinux : public NativeWindowImpl {
 public:
 
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] nativeWindow
+   * Pointer to the platform independent native window implementation.
+   */
   NativeWindowLinux(NativeWindow* nativeWindow);
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~NativeWindowLinux() override;
 
 
+  /**
+   * @brief
+   * REturns Window instance.
+   *
+   * @return
+   * Window instance.
+   */
   [[nodiscard]] ::Window getWindow() const;
 
+  /**
+   * @brief
+   * Handles the provided event.
+   *
+   * @param[in] event
+   * X event to handle.
+   */
   void handleEvent(XEvent& event);
 
 public:
 
+  /**
+   * @brief
+   * Returns the window handle to this window.
+   *
+   * @return
+   * The window handle to the window.
+   */
   RECore::handle getWindowHandle() const override;
 
+  /**
+   * @brief
+   * Responsible for redrawing the window.
+   */
   void redraw() override;
 
+  /// TODO(naetherm): Deprecated?
   void ping() override;
 
+  /**
+   * @brief
+   * Sets the title of the window.
+   *
+   * @param[in] title
+   * The window title.
+   */
   void setTitle(const RECore::String& title) override;
 
+  /**
+   * @brief
+   * Get the window and height of the window itself.
+   *
+   * @param[out] width
+   * The width of the window.
+   * @param[out] height
+   * The height of the window.
+   */
   void getWindowSize(RECore::int32& width, RECore::int32& height) override;
 
+  /**
+   * @brief
+   * Resizes the window.
+   *
+   * @param[in] width
+   * The new width of the window.
+   * @param[in] height
+   * The new height of the window.
+   */
   void setWindowSize(RECore::int32 width, RECore::int32 height) override;
 
+  /**
+   * @brief
+   * Returns whether the windows was destroyed.
+   *
+   * @return
+   * True if window was destroyed, false otherwise.
+   */
   [[nodiscard]] bool isDestroyed() const override;
 
 protected:

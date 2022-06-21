@@ -48,30 +48,106 @@ class NativeWindowImpl;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * NativeWindow
+ *
+ * @brief
+ * Platform independent native window implementation.
+ */
 class NativeWindow {
 public:
 
-  NativeWindow(Gui* gui);
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] gui
+   * Pointer to gui system
+   */
+  NativeWindow([[maybe_unused]] Gui* gui);
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~NativeWindow();
 
 
+  /**
+   * @brief
+   * Returns pointer to the gui system.
+   *
+   * @return
+   * Pointer to the gui system.
+   */
   [[nodiscard]] Gui* getGui() const;
 
+  /**
+   * @brief
+   * Returns pointer to the internally used native window implementation.
+   *
+   * @return
+   * Pointer to the internally used native window implementation.
+   */
   [[nodiscard]] NativeWindowImpl* getImpl() const;
 
+  /**
+   * @brief
+   * Returns the window handle.
+   *
+   * @return
+   * The window handle.
+   */
   [[nodiscard]] RECore::handle getWindowHandle() const;
 
+  /**
+   * @brief
+   * Responsible for redrawing the window.
+   */
   void redraw();
 
+  /// TODO(naetherm): Deprecated?
   void ping();
 
+  /**
+   * @brief
+   * Sets the title of the window.
+   *
+   * @param[in] title
+   * The window title.
+   */
   void setTitle(const RECore::String& title);
 
+  /**
+   * @brief
+   * Get the window and height of the window itself.
+   *
+   * @param[out] width
+   * The width of the window.
+   * @param[out] height
+   * The height of the window.
+   */
   void getWindowSize(RECore::int32& width, RECore::int32& height);
 
+  /**
+   * @brief
+   * Resizes the window.
+   *
+   * @param[in] width
+   * The new width of the window.
+   * @param[in] height
+   * The new height of the window.
+   */
   void setWindowSize(RECore::int32 width, RECore::int32 height);
 
+  /**
+   * @brief
+   * Returns whether the windows was destroyed.
+   *
+   * @return
+   * True if window was destroyed, false otherwise.
+   */
   [[nodiscard]] bool isDestroyed() const;
 
 protected:
