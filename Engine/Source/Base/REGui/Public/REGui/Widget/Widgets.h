@@ -58,6 +58,7 @@
 #include "REGui/Widget/Layout/HorizontalBoxLayout.h"
 #include "REGui/Widget/Layout/Layout.h"
 #include "REGui/Widget/Layout/SameLine.h"
+#include "REGui/Widget/Layout/StackLayout.h"
 #include "REGui/Widget/Layout/TreeNode.h"
 #include "REGui/Widget/Layout/VerticalBoxLayout.h"
 // Menu
@@ -82,6 +83,9 @@
 #include "REGui/Widget/Slider/FloatSlider.h"
 // Table
 #include "REGui/Widget/Table/Table.h"
+// TabBar
+#include "REGui/Widget/Tab/TabBar.h"
+#include "REGui/Widget/Tab/TabItem.h"
 // Text
 #include "REGui/Widget/Text/ClickableText.h"
 #include "REGui/Widget/Text/ColoredText.h"

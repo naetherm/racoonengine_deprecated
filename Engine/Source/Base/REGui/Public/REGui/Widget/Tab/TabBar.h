@@ -28,48 +28,98 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <REGui/Widget/Window/DockableMainWindow.h>
-#include <REGui/Widget/Text/Text.h>
-#include <REGui/Widget/Text/ColoredText.h>
-#include <REGui/Widget/Text/DisabledText.h>
-#include <REGui/Widget/Button/Button.h>
-#include <REGui/Widget/Menu/MainMenuBar.h>
-#include <REGui/Widget/Menu/Menu.h>
-#include <REGui/Widget/Menu/MenuItem.h>
-#include <REGui/Widget/Container/Compound.h>
-#include <REGui/Widget/Layout/VerticalBoxLayout.h>
-#include <REGui/Widget/Layout/HorizontalBoxLayout.h>
-#include <REGui/Widget/Layout/Form.h>
-#include <REGui/Widget/Widgets.h>
+#include "REGui/REGui.h"
+#include "REGui/Widget/Widget.h"
+#include "REGui/Widget/Layout/StackLayout.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Gui;
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class ExampleWindow : public REGui::DockableMainWindow {
+
+
+/**
+ * @class
+ * TabBar
+ *
+ * @brief
+ * Widget that adds a newline.
+ */
+class TabBar : public Widget {
+
+  //[-------------------------------------------------------]
+  //[ RTTI interface                                        ]
+  //[-------------------------------------------------------]
+  re_class_def(REGUI_API)
+  re_class_def_end
+
 public:
 
-  ExampleWindow(REGui::Gui* gui);
-
-  ~ExampleWindow() override;
+  regui_begin_construction_args(TabBar)
+    {}
+    regui_widget(StackLayout, Tabs)
+  regui_end_construction_args()
 
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
+  TabBar();
+
+  /**
+   * @brief
+   * Destructor.
+   */
+  ~TabBar() override;
+
+
+  /**
+   * @brief
+   * Construct this widget.
+   *
+   * @param[in] args
+   * The declaration data for this widget.
+   */
+  void construct(ConstructionArguments args);
+
+public:
+
+  /**
+   * @brief
+   * Called when the widget is updated.
+   *
+   * @param[in] deltaTime
+   * The time between the this and the last update in seconds.
+   */
+  void onUpdate(float deltaTime) override;
+
+  /**
+   * @brief
+   * Called in the drawing process.
+   */
   void onDraw() override;
 
-public:
-
 protected:
 
-  void calledOnButtonClicked();
-
-protected:
-
-  REGui::MainMenuBar* mMainMenuBar;
-  REGui::Layout* mLayout;
-  REGui::Layout* mHLayout;
-  REGui::Layout* mCLayout;
-  REGui::Compound * mCompound;
-  REGui::Form* mForm;
-  REGui::TabBar* mTabBar;
+  StackLayout* mTabs;
 };
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // REGui

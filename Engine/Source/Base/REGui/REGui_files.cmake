@@ -30,6 +30,10 @@ set(FILES
   Private/Layout/Slot.cpp
   Private/Layout/MultiSlot.cpp
 
+  # Style
+  Private/Style/Style.cpp
+  Private/Style/ButtonStyle.cpp
+
   # Theme
   Private/Theme/Theme.cpp
   Private/Theme/ThemeDark.cpp
@@ -66,6 +70,7 @@ set(FILES
   Private/Widget/Layout/Layout.cpp
   Private/Widget/Layout/NewLine.cpp
   Private/Widget/Layout/SameLine.cpp
+  Private/Widget/Layout/StackLayout.cpp
   Private/Widget/Layout/TreeNode.cpp
   Private/Widget/Layout/VerticalBoxLayout.cpp
   # Widget/Menu
@@ -88,6 +93,9 @@ set(FILES
   Private/Widget/Slider/DoubleSlider.cpp
   Private/Widget/Slider/FloatSlider.cpp
   Private/Widget/Slider/IntSlider.cpp
+  # Widget/Tab
+  Private/Widget/Tab/TabBar.cpp
+  Private/Widget/Tab/TabItem.cpp
   # Widget/Table
   Private/Widget/Table/Table.cpp
   # Widget/Text

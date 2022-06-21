@@ -20,56 +20,64 @@
 
 
 //[-------------------------------------------------------]
-//[ Header guard                                          ]
-//[-------------------------------------------------------]
-#pragma once
-
-
-//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <REGui/Widget/Window/DockableMainWindow.h>
-#include <REGui/Widget/Text/Text.h>
-#include <REGui/Widget/Text/ColoredText.h>
-#include <REGui/Widget/Text/DisabledText.h>
-#include <REGui/Widget/Button/Button.h>
-#include <REGui/Widget/Menu/MainMenuBar.h>
-#include <REGui/Widget/Menu/Menu.h>
-#include <REGui/Widget/Menu/MenuItem.h>
-#include <REGui/Widget/Container/Compound.h>
-#include <REGui/Widget/Layout/VerticalBoxLayout.h>
-#include <REGui/Widget/Layout/HorizontalBoxLayout.h>
-#include <REGui/Widget/Layout/Form.h>
-#include <REGui/Widget/Widgets.h>
+#include "REGui/Widget/Tab/TabBar.h"
+#include "REGui/Widget/Tab/TabItem.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+re_class_metadata(TabBar, "REGui", REGui::Widget, "Application class")
+  // Constructors
+re_class_metadata_end(TabBar)
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class ExampleWindow : public REGui::DockableMainWindow {
-public:
+TabBar::TabBar()
+: mTabs(nullptr) {
 
-  ExampleWindow(REGui::Gui* gui);
+}
 
-  ~ExampleWindow() override;
+TabBar::~TabBar() {
+  delete mTabs;
+}
 
-public:
 
-  void onDraw() override;
+void TabBar::construct(ConstructionArguments args) {
+  mTabs = args.getTabs();
+}
 
-public:
+void TabBar::onUpdate(float deltaTime) {
+  // Nothing to do here
+}
 
-protected:
+void TabBar::onDraw() {
+  if (ImGui::BeginTabBar("MyTabBar")) {
+    for (RECore::sizeT i = 0; i < mTabs->getChildren().getNumOfChildren(); ++i) {
+      // Get content as raw widget pointer
+      TabItem *item = reinterpret_cast<TabItem *>(mTabs->getChildren().getChildAtIndex(i));
 
-  void calledOnButtonClicked();
+      if (ImGui::BeginTabItem(item->getTitle())) {
+        item->onDraw();
+        ImGui::EndTabItem();
+      }
+    }
+    ImGui::EndTabBar();
+  }
+}
 
-protected:
 
-  REGui::MainMenuBar* mMainMenuBar;
-  REGui::Layout* mLayout;
-  REGui::Layout* mHLayout;
-  REGui::Layout* mCLayout;
-  REGui::Compound * mCompound;
-  REGui::Form* mForm;
-  REGui::TabBar* mTabBar;
-};
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // REGui

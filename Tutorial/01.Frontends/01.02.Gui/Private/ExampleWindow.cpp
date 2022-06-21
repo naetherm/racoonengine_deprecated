@@ -114,7 +114,8 @@ ExampleWindow::ExampleWindow(REGui::Gui* gui)
 , mHLayout(nullptr)
 , mCLayout(nullptr)
 , mCompound(nullptr)
-, mForm(nullptr) {
+, mForm(nullptr)
+, mTabBar(nullptr) {
   //mButton.SlotOnClicked(&ExampleWindow::calledOnButtonClicked, this);
   //mMainMenuBar.createWidget<REGui::Menu>("File")
   //  .createWidget<REGui::MenuItem>("New");
@@ -348,9 +349,47 @@ ExampleWindow::ExampleWindow(REGui::Gui* gui)
        .right(
         gui_new(REGui::Text)
          .setText("Right 2"));
+  mTabBar = gui_new(REGui::TabBar)
+    .setTabs(gui_new(REGui::StackLayout)
+      +REGui::StackLayout::StackLayoutSlot()
+      [
+        gui_new(REGui::TabItem)
+          .setTitle("Tab 1")
+          .setContent(
+            gui_new(REGui::HorizontalBoxLayout)
+              +REGui::HorizontalBoxLayout::Slot()
+              [
+                  gui_new(REGui::IntSlider)
+                    .setOrientation(REGui::ESliderOrientation::HORIZONTAL)
+                    .setMin(0)
+                    .setMax(100)
+                    .setValue(10)
+                    .setLabelText("Slider")
+                    .setFormat("%d")
+              ])
+      ]
+     +REGui::StackLayout::StackLayoutSlot()
+     [
+         gui_new(REGui::TabItem)
+           .setTitle("Tab 2")
+           .setContent(
+             gui_new(REGui::HorizontalBoxLayout)
+               +REGui::HorizontalBoxLayout::Slot()
+               [
+                   gui_new(REGui::IntSlider)
+                     .setOrientation(REGui::ESliderOrientation::HORIZONTAL)
+                     .setMin(0)
+                     .setMax(100)
+                     .setValue(10)
+                     .setLabelText("Slider")
+                     .setFormat("%d")
+               ])
+     ]
+    );
 }
 
 ExampleWindow::~ExampleWindow() {
+  delete mTabBar;
   delete mLayout;
   delete mHLayout;
   delete mCLayout;
@@ -369,6 +408,7 @@ void ExampleWindow::onDraw() {
     mCLayout->onDraw();
     mCompound->onDraw();
     mForm->onDraw();
+    mTabBar->onDraw();
     ImGui::End();
   }
 }

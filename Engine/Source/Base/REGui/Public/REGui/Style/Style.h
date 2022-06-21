@@ -28,48 +28,49 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <REGui/Widget/Window/DockableMainWindow.h>
-#include <REGui/Widget/Text/Text.h>
-#include <REGui/Widget/Text/ColoredText.h>
-#include <REGui/Widget/Text/DisabledText.h>
-#include <REGui/Widget/Button/Button.h>
-#include <REGui/Widget/Menu/MainMenuBar.h>
-#include <REGui/Widget/Menu/Menu.h>
-#include <REGui/Widget/Menu/MenuItem.h>
-#include <REGui/Widget/Container/Compound.h>
-#include <REGui/Widget/Layout/VerticalBoxLayout.h>
-#include <REGui/Widget/Layout/HorizontalBoxLayout.h>
-#include <REGui/Widget/Layout/Form.h>
-#include <REGui/Widget/Widgets.h>
+#include "REGui/REGui.h"
+#include <RECore/Reflect/Object.h>
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class ExampleWindow : public REGui::DockableMainWindow {
-public:
+class Style : public RECore::Object {
 
-  ExampleWindow(REGui::Gui* gui);
-
-  ~ExampleWindow() override;
-
-public:
-
-  void onDraw() override;
+  //[-------------------------------------------------------]
+  //[ RTTI interface                                        ]
+  //[-------------------------------------------------------]
+  re_class_def(REGUI_API)
+  re_class_def_end
 
 public:
 
-protected:
+  /**
+   * @brief
+   * Default constructor.
+   */
+  Style();
 
-  void calledOnButtonClicked();
-
-protected:
-
-  REGui::MainMenuBar* mMainMenuBar;
-  REGui::Layout* mLayout;
-  REGui::Layout* mHLayout;
-  REGui::Layout* mCLayout;
-  REGui::Compound * mCompound;
-  REGui::Form* mForm;
-  REGui::TabBar* mTabBar;
+  /**
+   * @brief
+   * Destructor.
+   */
+  ~Style() override;
 };
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // REGui

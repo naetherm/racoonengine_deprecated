@@ -20,56 +20,54 @@
 
 
 //[-------------------------------------------------------]
-//[ Header guard                                          ]
-//[-------------------------------------------------------]
-#pragma once
-
-
-//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <REGui/Widget/Window/DockableMainWindow.h>
-#include <REGui/Widget/Text/Text.h>
-#include <REGui/Widget/Text/ColoredText.h>
-#include <REGui/Widget/Text/DisabledText.h>
-#include <REGui/Widget/Button/Button.h>
-#include <REGui/Widget/Menu/MainMenuBar.h>
-#include <REGui/Widget/Menu/Menu.h>
-#include <REGui/Widget/Menu/MenuItem.h>
-#include <REGui/Widget/Container/Compound.h>
-#include <REGui/Widget/Layout/VerticalBoxLayout.h>
-#include <REGui/Widget/Layout/HorizontalBoxLayout.h>
-#include <REGui/Widget/Layout/Form.h>
-#include <REGui/Widget/Widgets.h>
+#include "REGui/Widget/Layout/StackLayout.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+re_class_metadata(StackLayout, "REGui", REGui::Layout, "Application class")
+  // Constructors
+re_class_metadata_end(StackLayout)
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class ExampleWindow : public REGui::DockableMainWindow {
-public:
+StackLayout::StackLayoutSlot::StackLayoutSlot() {
 
-  ExampleWindow(REGui::Gui* gui);
+}
 
-  ~ExampleWindow() override;
+StackLayout::StackLayoutSlot::~StackLayoutSlot() {
 
-public:
+}
 
-  void onDraw() override;
 
-public:
+StackLayout::StackLayout() {
 
-protected:
+}
 
-  void calledOnButtonClicked();
+StackLayout::~StackLayout() {
 
-protected:
+}
 
-  REGui::MainMenuBar* mMainMenuBar;
-  REGui::Layout* mLayout;
-  REGui::Layout* mHLayout;
-  REGui::Layout* mCLayout;
-  REGui::Compound * mCompound;
-  REGui::Form* mForm;
-  REGui::TabBar* mTabBar;
-};
+
+void StackLayout::construct(ConstructionArguments args) {
+  for (RECore::uint32 i = 0; i < args.getSlots().size(); ++i) {
+    mChildren.add(args.getSlotByIndex(i));
+  }
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // REGui

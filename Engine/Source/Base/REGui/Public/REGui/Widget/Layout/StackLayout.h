@@ -29,7 +29,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
-#include "REGui/Widget/Widget.h"
+#include "REGui/Widget/Layout/Layout.h"
+#include "REGui/Layout/Slot.h"
+#include "REGui/Layout/PanelChildren.h"
 
 
 //[-------------------------------------------------------]
@@ -41,7 +43,7 @@ namespace REGui {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class Layout;
+class Gui;
 
 
 //[-------------------------------------------------------]
@@ -49,47 +51,83 @@ class Layout;
 //[-------------------------------------------------------]
 /**
  * @class
- * Compound
+ * StackLayout
  *
  * @brief
  */
-class Compound : public Widget {
+class StackLayout : public Layout {
 
   //[-------------------------------------------------------]
   //[ RTTI interface                                        ]
   //[-------------------------------------------------------]
-  re_class_def(REGUI_API)
-  re_class_def_end
+re_class_def(REGUI_API)
+re_class_def_end
+
+public:
+
+  /**
+   * @class
+   * StackLayoutSlot
+   *
+   * @brief
+   * Generic box layout slot definition.
+   */
+  class StackLayoutSlot : public TSlot<StackLayoutSlot> {
+  public:
+
+    /**
+     * @brief
+     * Default constructor.
+     */
+    StackLayoutSlot();
+
+    /**
+     * @brief
+     * Destructor.
+     */
+    ~StackLayoutSlot() override;
+  };
+
+public:
+
+  regui_begin_construction_args(StackLayout)
+    {}
+  regui_slots(StackLayoutSlot)
+  regui_end_construction_args()
 
 public:
 
   /**
    * @brief
    * Constructor.
-   *
-   * @param[in] label
-   * The label of the collapsable.
    */
-  Compound();
+  StackLayout();
 
   /**
    * @brief
    * Destructor.
    */
-  ~Compound() override;
+  ~StackLayout() override;
 
-public:
 
   /**
    * @brief
-   * Called in the drawing process.
+   * Construct this widget.
+   *
+   * @param[in] args
+   * The declaration data for this widget.
    */
-  void onDraw() override;
+  void construct(ConstructionArguments args);
+
+
+  inline const PanelChildren<StackLayoutSlot>& getChildren() const { return mChildren; }
+
+  inline PanelChildren<StackLayoutSlot>& getChildren() { return mChildren; }
 
 protected:
 
-  /** Pointer to layout */
-  Layout* mLayout;
+  /** List of all children of this box layout */
+  PanelChildren<StackLayoutSlot> mChildren;
 };
 
 

@@ -20,56 +20,56 @@
 
 
 //[-------------------------------------------------------]
-//[ Header guard                                          ]
-//[-------------------------------------------------------]
-#pragma once
-
-
-//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <REGui/Widget/Window/DockableMainWindow.h>
-#include <REGui/Widget/Text/Text.h>
-#include <REGui/Widget/Text/ColoredText.h>
-#include <REGui/Widget/Text/DisabledText.h>
-#include <REGui/Widget/Button/Button.h>
-#include <REGui/Widget/Menu/MainMenuBar.h>
-#include <REGui/Widget/Menu/Menu.h>
-#include <REGui/Widget/Menu/MenuItem.h>
-#include <REGui/Widget/Container/Compound.h>
-#include <REGui/Widget/Layout/VerticalBoxLayout.h>
-#include <REGui/Widget/Layout/HorizontalBoxLayout.h>
-#include <REGui/Widget/Layout/Form.h>
-#include <REGui/Widget/Widgets.h>
+#include "REGui/Widget/Tab/TabItem.h"
+#include "REGui/Widget/Layout/Layout.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace REGui {
+
+
+//[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+re_class_metadata(TabItem, "REGui", REGui::Compound, "Application class")
+  // Constructors
+re_class_metadata_end(TabItem)
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class ExampleWindow : public REGui::DockableMainWindow {
-public:
+TabItem::TabItem() {
 
-  ExampleWindow(REGui::Gui* gui);
+}
 
-  ~ExampleWindow() override;
+TabItem::~TabItem() {
 
-public:
+}
 
-  void onDraw() override;
 
-public:
+void TabItem::construct(ConstructionArguments args) {
+  mTitle = args.getTitle();
+  mLayout = args.getContent();
+}
 
-protected:
+void TabItem::onUpdate(float deltaTime) {
+  // Nothing to do here
+}
 
-  void calledOnButtonClicked();
+void TabItem::onDraw() {
+  // Nothing to do here
+  if (mLayout) {
+    mLayout->onDraw();
+  }
+}
 
-protected:
 
-  REGui::MainMenuBar* mMainMenuBar;
-  REGui::Layout* mLayout;
-  REGui::Layout* mHLayout;
-  REGui::Layout* mCLayout;
-  REGui::Compound * mCompound;
-  REGui::Form* mForm;
-  REGui::TabBar* mTabBar;
-};
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // REGui

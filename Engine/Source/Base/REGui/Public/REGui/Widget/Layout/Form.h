@@ -87,7 +87,7 @@ public:
 
 public:
 
-regui_begin_construction_args(Form)
+  regui_begin_construction_args(Form)
     {}
   regui_slots(FormSlot)
   regui_end_construction_args()
