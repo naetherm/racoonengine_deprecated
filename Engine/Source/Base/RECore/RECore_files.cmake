@@ -126,4 +126,6 @@ set(FILES
 
   # System
   Private/System/DynLib.cpp
+  Private/System/Pipe.cpp
+  Private/System/Process.cpp
 )
