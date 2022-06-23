@@ -58,6 +58,11 @@ set(FILES
   Private/Frontend/WindowDescription.cpp
   Private/Frontend/WindowOS.cpp
 
+  # Localization
+  Private/Localization/Localization.cpp
+  Private/Localization/LocalizationGroup.cpp
+  Private/Localization/LocalizationText.cpp
+
   # Log
   Private/Log/Log.cpp
   Private/Log/LogFormatter.cpp
