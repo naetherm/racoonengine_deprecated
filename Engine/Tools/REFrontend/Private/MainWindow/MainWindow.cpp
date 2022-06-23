@@ -23,14 +23,15 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "REFrontend/MainWindow/MainWindow.h"
+#include "REFrontend/Projects/ProjectsPanel.h"
 #include <REGui/Widget/Widgets.h>
 #include <imgui.h>
 #include <imgui_internal.h>
 
 
 MainWindow::MainWindow(REGui::Gui* gui)
-  : REGui::MainWindow(gui){
-
+: REGui::MainWindow(gui) {
+  mProjectsPanel = new ProjectsPanel();
 }
 
 MainWindow::~MainWindow() {
@@ -38,10 +39,5 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::onDraw() {
-  ImGui::SetNextWindowPos(ImVec2(0, 0));
-  ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
-  if (ImGui::Begin("Dummy")) {
-
-    ImGui::End();
-  }
+  mProjectsPanel->onDraw();
 }

@@ -20,68 +20,32 @@
 
 
 //[-------------------------------------------------------]
-//[ Header guard                                          ]
-//[-------------------------------------------------------]
-#pragma once
-
-
-//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/REGui.h"
-#include "REGui/Widget/Panel/Panel.h"
-#include "REGui/Widget/Tab/TabBar.h"
+#include "REFrontend/Projects/ProjectListItem.h"
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
+//[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-namespace REGui {
-class Layout;
-class Modal;
-}
+re_class_metadata(ProjectListItem, "", REGui::Compound, "Application class")
+  // Constructors
+re_class_metadata_end(ProjectListItem)
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class ProjectsPanel : public REGui::Panel {
+ProjectListItem::ProjectListItem()
+: REGui::Compound() {
 
-  //[-------------------------------------------------------]
-  //[ RTTI interface                                        ]
-  //[-------------------------------------------------------]
-  re_class_def()
-  re_class_def_end
+}
 
-public:
+ProjectListItem::~ProjectListItem() {
 
-  /**
-   * @brief
-   * Constructor.
-   *
-   * @param[in] label
-   * The label of the collapsable.
-   */
-  ProjectsPanel();
+}
 
-  /**
-   * @brief
-   * Destructor.
-   */
-  ~ProjectsPanel() override;
 
-public:
+void ProjectListItem::onDraw() {
 
-  void onDraw() override;
-
-protected:
-
-  void onCreateNewProject();
-
-private:
-
-  bool mShowCreateNewProject;
-
-  REGui::Modal* mNewProjectModal;
-  REGui::TabBar* mTabBar;
-};
+}

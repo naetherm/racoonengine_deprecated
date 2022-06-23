@@ -30,7 +30,6 @@
 //[-------------------------------------------------------]
 #include "REGui/REGui.h"
 #include "REGui/Widget/Panel/Panel.h"
-#include "REGui/Widget/Tab/TabBar.h"
 
 
 //[-------------------------------------------------------]
@@ -45,7 +44,7 @@ class Modal;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class ProjectsPanel : public REGui::Panel {
+class ProjectListItem : public REGui::Compound {
 
   //[-------------------------------------------------------]
   //[ RTTI interface                                        ]
@@ -62,26 +61,15 @@ public:
    * @param[in] label
    * The label of the collapsable.
    */
-  ProjectsPanel();
+  ProjectListItem();
 
   /**
    * @brief
    * Destructor.
    */
-  ~ProjectsPanel() override;
+  ~ProjectListItem() override;
 
 public:
 
   void onDraw() override;
-
-protected:
-
-  void onCreateNewProject();
-
-private:
-
-  bool mShowCreateNewProject;
-
-  REGui::Modal* mNewProjectModal;
-  REGui::TabBar* mTabBar;
 };

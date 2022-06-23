@@ -31,6 +31,9 @@
 #include <REGui/Widget/Window/MainWindow.h>
 
 
+class ProjectsPanel;
+
+
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
@@ -46,4 +49,6 @@ public:
   void onDraw() override;
 
 protected:
+
+  ProjectsPanel* mProjectsPanel;
 };
