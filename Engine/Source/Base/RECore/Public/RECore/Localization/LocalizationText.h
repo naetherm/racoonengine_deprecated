@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "RECore/RECore.h"
+#include "RECore/String/String.h"
 
 
 //[-------------------------------------------------------]
@@ -38,8 +39,39 @@ namespace RECore {
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class LocalizationGroup;
+
+
+//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+class LocalizationText {
+public:
+
+  LocalizationText(LocalizationGroup& group, const String& key, const String& value);
+
+  LocalizationText(const LocalizationText& rhs);
+
+  ~LocalizationText();
+
+
+  LocalizationText& operator=(const LocalizationText& rhs);
+
+
+  const LocalizationGroup& getGroup() const;
+
+  const String& getKey() const;
+
+  const String& getValue() const;
+
+private:
+
+  LocalizationGroup* mGroup;
+  String mKey;
+  String mValue;
+};
 
 
 

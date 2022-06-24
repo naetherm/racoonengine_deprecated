@@ -23,6 +23,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "RECore/Localization/LocalizationText.h"
+#include "RECore/Localization/LocalizationGroup.h"
 
 
 //[-------------------------------------------------------]
@@ -34,7 +35,45 @@ namespace RECore {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+LocalizationText::LocalizationText(LocalizationGroup &group, const String &key, const String &value)
+: mGroup(&group)
+, mKey(key)
+, mValue(value) {
 
+}
+
+LocalizationText::LocalizationText(const LocalizationText& rhs)
+: mGroup(rhs.mGroup)
+, mKey(rhs.mKey)
+, mValue(rhs.mValue) {
+
+}
+
+LocalizationText::~LocalizationText() {
+  mGroup = nullptr;
+}
+
+
+LocalizationText& LocalizationText::operator=(const LocalizationText &rhs) {
+  mGroup = rhs.mGroup;
+  mKey = rhs.mKey;
+  mValue = rhs.mValue;
+
+  return *this;
+}
+
+
+const LocalizationGroup& LocalizationText::getGroup() const {
+  return *mGroup;
+}
+
+const String& LocalizationText::getKey() const {
+  return mKey;
+}
+
+const String& LocalizationText::getValue() const {
+  return mValue;
+}
 
 
 //[-------------------------------------------------------]
