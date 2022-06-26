@@ -23,6 +23,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "RECore/Localization/LocalizationGroup.h"
+#include "RECore/Localization/LocalizationText.h"
 
 
 //[-------------------------------------------------------]
@@ -34,7 +35,87 @@ namespace RECore {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+LocalizationGroup::LocalizationGroup(const String &name)
+: mName(name) {
 
+}
+
+LocalizationGroup::~LocalizationGroup() {
+  // clear all
+  removeAllTexts();
+}
+
+String LocalizationGroup::getName() const {
+  return mName;
+}
+
+uint32 LocalizationGroup::getNumOfTexts() const {
+  return mlstTexts.size();
+}
+
+LocalizationText *LocalizationGroup::getText(uint32 index) const {
+  return mlstTexts[index];
+}
+
+LocalizationText *LocalizationGroup::getTExt(const String &key) const {
+  auto iter = mKeyToTranslation.find(key);
+
+  if (iter != mKeyToTranslation.end()) {
+    return iter->second;
+  }
+
+  return nullptr;
+}
+
+LocalizationText *LocalizationGroup::addText(const String &key, const String &translation) {
+  auto iter = mKeyToTranslation.find(key);
+
+  if (iter == mKeyToTranslation.end()) {
+    LocalizationText* text = new LocalizationText(*this, key, translation);
+
+    mlstTexts.push_back(text);
+    mKeyToTranslation.emplace(key, text);
+
+    return text;
+  } else {
+    return iter->second;
+  }
+}
+
+bool LocalizationGroup::removeText(uint32 index) {
+  auto iter = mlstTexts.begin();
+
+  if (iter != mlstTexts.end()) {
+    mKeyToTranslation.erase((*iter)->getKey());
+    std::advance(iter, index);
+    mlstTexts.erase(iter);
+    return true;
+  }
+  return false;
+}
+
+bool LocalizationGroup::removeText(const String &name) {
+  auto iter = mKeyToTranslation.find(name);
+
+  if (iter != mKeyToTranslation.end()) {
+    mKeyToTranslation.erase(name);
+
+    auto liter = std::find(mlstTexts.begin(), mlstTexts.end(), iter->second);
+    mlstTexts.erase(liter);
+
+    return true;
+  }
+
+  return false;
+}
+
+void LocalizationGroup::removeAllTexts() {
+  for (auto iter = mlstTexts.begin(); iter != mlstTexts.end(); ++iter) {
+    delete *iter;
+  }
+  mlstTexts.clear();
+  mKeyToTranslation.clear();
+}
 
 
 //[-------------------------------------------------------]

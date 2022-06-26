@@ -29,6 +29,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "RECore/RECore.h"
+#include "RECore/String/String.h"
+#include <map>
+#include <vector>
 
 
 //[-------------------------------------------------------]
@@ -47,6 +50,43 @@ class LocalizationText;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+class Localization {
+public:
+
+  static Localization& instance();
+
+public:
+
+  Localization();
+
+  virtual ~Localization();
+
+
+  String getLanguage() const;
+
+  void setLanguage(const String& language);
+
+  String get(const String& text) const;
+
+  uint32 getNumOfGroups() const;
+
+  LocalizationGroup* getGroup(uint32 index) const;
+
+  LocalizationGroup* addGroup(const String& name);
+
+  bool removeGroup(uint32 index);
+
+  bool removeGroup(const String& name);
+
+  void removeAllGroups();
+
+private:
+
+  String mLanguage;
+
+  std::vector<LocalizationGroup*> mlstGroups;
+  std::map<String, LocalizationGroup*> mLanguageToGroup;
+};
 
 
 
