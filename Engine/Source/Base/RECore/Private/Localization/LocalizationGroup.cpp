@@ -57,7 +57,7 @@ LocalizationText *LocalizationGroup::getText(uint32 index) const {
   return mlstTexts[index];
 }
 
-LocalizationText *LocalizationGroup::getTExt(const String &key) const {
+LocalizationText *LocalizationGroup::getText(const String &key) const {
   auto iter = mKeyToTranslation.find(key);
 
   if (iter != mKeyToTranslation.end()) {

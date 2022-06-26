@@ -63,7 +63,7 @@ public:
 
   LocalizationText* getText(uint32 index) const;
 
-  LocalizationText* getTExt(const String& key) const;
+  LocalizationText* getText(const String& key) const;
 
   LocalizationText* addText(const String& key, const String& translation);
 

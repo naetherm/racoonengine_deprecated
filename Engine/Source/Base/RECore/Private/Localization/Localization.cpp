@@ -23,6 +23,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "RECore/Localization/Localization.h"
+#include "RECore/Localization/LocalizationGroup.h"
+#include "RECore/Localization/LocalizationText.h"
 
 
 //[-------------------------------------------------------]
@@ -34,7 +36,89 @@ namespace RECore {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+Localization &Localization::instance() {
+  static Localization SSingleton;
+  return SSingleton;
+}
 
+Localization::Localization() {
+
+}
+
+Localization::~Localization() {
+  // clear all
+  removeAllGroups();
+}
+
+String Localization::getLanguage() const {
+  return mLanguage;
+}
+
+void Localization::setLanguage(const String &language) {
+  mLanguage = language;
+}
+
+String Localization::get(const String &text) const {
+  return mLanguageToGroup.find(mLanguage)->second->getText(text)->getValue();
+}
+
+uint32 Localization::getNumOfGroups() const {
+  return mlstGroups.size();
+}
+
+LocalizationGroup *Localization::getGroup(uint32 index) const {
+  return mlstGroups[index];
+}
+
+LocalizationGroup *Localization::addGroup(const String &name) {
+  auto iter = mLanguageToGroup.find(name);
+
+  if (iter == mLanguageToGroup.end()) {
+    LocalizationGroup* group = new LocalizationGroup(name);
+
+    mlstGroups.push_back(group);
+    mLanguageToGroup.emplace(name, group);
+
+    return group;
+  }
+
+  return iter->second;
+}
+
+bool Localization::removeGroup(uint32 index) {
+  auto iter = mlstGroups.begin();
+
+  if (iter != mlstGroups.end()) {
+    mLanguageToGroup.erase((*iter)->getName());
+    std::advance(iter, index);
+    mlstGroups.erase(iter);
+    return true;
+  }
+  return false;
+}
+
+bool Localization::removeGroup(const String &name) {
+  auto iter = mLanguageToGroup.find(name);
+
+  if (iter != mLanguageToGroup.end()) {
+    mLanguageToGroup.erase(name);
+
+    auto liter = std::find(mlstGroups.begin(), mlstGroups.end(), iter->second);
+    mlstGroups.erase(liter);
+
+    return true;
+  }
+
+  return false;
+}
+
+void Localization::removeAllGroups() {
+  for (auto iter = mlstGroups.begin(); iter != mlstGroups.end(); ++iter) {
+    delete *iter;
+  }
+  mlstGroups.clear();
+  mLanguageToGroup.clear();
+}
 
 
 //[-------------------------------------------------------]
