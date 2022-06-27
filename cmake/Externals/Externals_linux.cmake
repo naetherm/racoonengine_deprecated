@@ -116,6 +116,11 @@ re_associate_package(
   PACKAGE_HASH 6d85010645e00ec3b3aed2b1faa575db8063d2847ba4a5eab12f5dfa267ef24c
 )
 re_associate_package(
+  PACKAGE_NAME imgui_filedialog-0.6.4-rev1-linux
+  TARGETS imgui_filedialog
+  PACKAGE_HASH 77ef90755de0bf603d66e7bcbbd892d2c0ce1146413fbb3c5b19a07665011b6b
+)
+re_associate_package(
   PACKAGE_NAME acl-2.0.1-rev1-linux
   TARGETS acl
   PACKAGE_HASH 1523a687056e6c749912802c8c76bf1461c73b881b0125389d3f72ec453d4324

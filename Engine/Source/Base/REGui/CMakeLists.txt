@@ -40,11 +40,15 @@ re_add_target(
       RECore
       RERHI
       RERenderer
+      External::imgui
+      External::imgui_filedialog
   RUNTIME_DEPENDENCIES
     PUBLIC
       RECore
       RERHI
       RERenderer
+      External::imgui
+      External::imgui_filedialog
   COMPILE_DEFINITIONS
     PUBLIC
       REGUI_EXPORTS
