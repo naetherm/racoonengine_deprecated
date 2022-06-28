@@ -22,5 +22,5 @@
 # Current package
 ################################################################################
 re_add_subdirectory(RERendererToolkit)
+re_add_subdirectory(REAssetImporter)
 re_add_subdirectory(REEd)
-
