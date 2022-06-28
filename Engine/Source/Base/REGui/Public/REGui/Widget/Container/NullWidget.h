@@ -69,6 +69,10 @@ class NullWidget : public Widget {
 
 public:
 
+  static NullWidget* instance();
+
+public:
+
   /**
    * @brief
    * Default constructor.

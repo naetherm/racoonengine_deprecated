@@ -43,6 +43,12 @@ re_class_metadata_end(NullWidget)
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+NullWidget* NullWidget::instance() {
+  static NullWidget SInstance;
+  return &SInstance;
+}
+
+
 NullWidget::NullWidget() {
 
 }
