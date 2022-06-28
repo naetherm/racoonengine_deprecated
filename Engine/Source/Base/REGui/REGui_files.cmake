@@ -58,6 +58,7 @@ set(FILES
   # Widget/Control
   Private/Widget/Control/CheckBox.cpp
   Private/Widget/Control/ComboBox.cpp
+  Private/Widget/Control/RadioButton.cpp
   # Private/Input
   Private/Widget/Input/IntInput.cpp
   Private/Widget/Input/PasswordInput.cpp
