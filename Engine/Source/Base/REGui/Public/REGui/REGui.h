@@ -39,6 +39,10 @@
 #include <cstring>
 #include <cassert>
 
+#ifdef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+#undef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+#endif
+
 #if defined(LINUX)
 #include <RECore/Linux/X11Includes.h>
 

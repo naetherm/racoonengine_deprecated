@@ -61,6 +61,7 @@ set(FILES
   Private/Widget/Control/RadioButton.cpp
   Private/Widget/Control/RadioButtonGroup.cpp
   # Widget/Dialog
+  Private/Widget/Dialog/FileDialog.cpp
   Private/Widget/Dialog/Dialog.cpp
   Private/Widget/Dialog/ModalDialog.cpp
   # Private/Input
