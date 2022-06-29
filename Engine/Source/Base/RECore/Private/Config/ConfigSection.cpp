@@ -70,7 +70,15 @@ const String& ConfigSection::getName() const {
   return mName;
 }
 
-void ConfigSection::addKeyValue(const String& key, const String& value) {
+const std::map<String, String>& ConfigSection::getAllKeyValues() const {
+  return mKeyToValue;
+}
+
+std::map<String, String>& ConfigSection::getAllKeyValues() {
+  return mKeyToValue;
+}
+
+void ConfigSection::addKeyValue(String key, String value) {
   auto iter = mKeyToValue.find(key);
 
   if (iter == mKeyToValue.end()) {

@@ -49,29 +49,132 @@ class Config;
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * ConfigSection
+ *
+ * @brief
+ * A configuration section.
+ */
 class ConfigSection {
 public:
 
+  /**
+   * @brief
+   * Constructor.
+   *
+   * @param[in] name
+   * The name of the section.
+   */
   ConfigSection(const String& name);
 
+  /**
+   * @brief
+   * Copy constructor.
+   *
+   * @param[in] rhs
+   * The object to copy.
+   */
   ConfigSection(const ConfigSection& rhs);
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~ConfigSection();
 
 
+  /**
+   * @brief
+   * Copy operator.
+   *
+   * @param[in] rhs
+   * The object to copy.
+   *
+   * @return
+   * Reference to this.
+   */
   ConfigSection& operator=(const ConfigSection& rhs);
 
+  /**
+   * @brief
+   * Equality operator.
+   *
+   * @param[in] rhs
+   * The object to compare to.
+   *
+   * @return
+   * True if both are equal, false otherwise.
+   */
   bool operator==(const ConfigSection& rhs) const;
 
+  /**
+   * @brief
+   * Equality operator.
+   *
+   * @param[in] rhs
+   * The object to compare to.
+   *
+   * @return
+   * True if both are not equal, false otherwise.
+   */
   bool operator!=(const ConfigSection& rhs) const;
 
 
+  /**
+   * @brief
+   * Returns the name of the section.
+   *
+   * @return
+   * The name of the section.
+   */
   const String& getName() const;
 
-  void addKeyValue(const String& key, const String& value);
+  /**
+   * @brief
+   * Returns all key-value pairs of this configuration section.
+   *
+   * @return
+   * Reference to key value storage.
+   */
+  const std::map<String, String>& getAllKeyValues() const;
 
+  /**
+   * @brief
+   * Returns all key-value pairs of this configuration section.
+   *
+   * @return
+   * Reference to key value storage.
+   */
+  std::map<String, String>& getAllKeyValues();
+
+  /**
+   * @brief
+   * Adds a new key value pair to the section.
+   *
+   * @param[in] key
+   * The key value.
+   * @param[in] value
+   * The value.
+   */
+  void addKeyValue(String key, String value);
+
+  /**
+   * @brief
+   * Returns the value associated with the @p key.
+   *
+   * @param[in] key
+   * The key to search from.
+   *
+   * @return
+   * Value associated with key.
+   */
   String getValue(const String& key) const;
 
+  /**
+   * @brief
+   * Clears all values.
+   */
   void clear();
 
 private:

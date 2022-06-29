@@ -44,39 +44,113 @@ namespace RECore {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class ConfigSection;
+class IFileManager;
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
+/**
+ * @class
+ * Config
+ *
+ * @brief
+ * Config class.
+ */
 class Config {
 public:
 
+  /**
+   * @brief
+   * Default constructor.
+   */
   Config();
 
+  /**
+   * @brief
+   * Destructor.
+   */
   ~Config();
 
 
-  void load(const String& filename);
+  /**
+   * @brief
+   * Loads the content of the file @p filename.
+   *
+   * @þaram[in] fileManager
+   * Reference to the used file manager.
+   * @param[in] filename
+   * The filename to load.
+   */
+  void load(const IFileManager& fileManager, const String& filename);
 
-  void save(const String& filename);
+  /**
+   * @brief
+   * Saves the content of the configuration within this file.
+   *
+   * @þaram[in] fileManager
+   * Reference to the used file manager.
+   * @param[in] filename
+   * The filename to save to.
+   */
+  void save(const IFileManager& fileManager, const String& filename);
 
 
+  /**
+   * @brief
+   * Returns all configuration sections.
+   *
+   * @return
+   * All configuration sections.
+   */
   const std::vector<ConfigSection*>& getAllSections() const;
 
+  /**
+   * @brief
+   * REturns pointer to configuration section by name.
+   *
+   * @þaram[in] sectionName
+   * The name of the section to return.
+   *
+   * @return
+   * Pointer to configuration section, nullptr if not available.
+   */
   const ConfigSection* getSectionByName(const String& sectionName) const;
 
+  /**
+   * @brief
+   * REturns pointer to configuration section by name.
+   *
+   * @þaram[in] sectionName
+   * The name of the section to return.
+   *
+   * @return
+   * Pointer to configuration section, nullptr if not available.
+   */
   ConfigSection* getSectionByName(const String& sectionName);
 
+  /**
+   * @brief
+   * Adds a new configuration section with the section name @p sectionName.
+   * If there is already a configuration section with the same name, the pointer to
+   * this instance will be returned instead.
+   *
+   * @param[in] sectionName
+   * The name of the section to add.
+   *
+   * @return
+   * Pointer to configuration section.
+   */
   ConfigSection* addSectionByName(const String& sectionName);
 
   void clear();
 
 private:
-
+  /** The filename of the file to load */
   String mFilename;
-
+  /** Vector of all configuration sections */
   std::vector<ConfigSection*> mlstSections;
+  /** Associative map from section name to configuration section */
   std::map<String, ConfigSection*> mSectionNameToSection;
 };
 

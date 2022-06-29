@@ -24,6 +24,12 @@
 //[-------------------------------------------------------]
 #include "RECore/Config/Config.h"
 #include "RECore/Config/ConfigSection.h"
+#include "RECore/File/IFileManager.h"
+#include "RECore/File/IFile.h"
+#include <rapidjson/document.h>
+#include <rapidjson/error/en.h>
+#include <rapidjson/prettywriter.h>
+#include <rapidjson/ostreamwrapper.h>
 
 
 //[-------------------------------------------------------]
@@ -40,16 +46,63 @@ Config::Config() {
 }
 
 Config::~Config() {
-
+  // Cleanup
+  clear();
 }
 
 
-void Config::load(const String& filename) {
+void Config::load(const IFileManager& fileManager, const String& filename) {
+  mFilename = filename;
 
+  if (fileManager.doesFileExist(filename)) {
+    IFile* file = fileManager.openFile(IFileManager::FileMode::READ, filename);
+
+    String contentAsString;
+
+    if (nullptr != file) {
+      // Load the whole file content as string
+      const size_t numberOfBytes = file->getNumberOfBytes();
+      contentAsString.resize(numberOfBytes);
+      // Read
+      file->read(const_cast<void*>(static_cast<const void*>(contentAsString.data())), numberOfBytes);
+
+      // Close the file
+      fileManager.closeFile(*file);
+    }
+
+    // Load the JSON document
+    rapidjson::Document rapidJsonDocument;
+    const rapidjson::ParseResult rapidJsonParseResult = rapidJsonDocument.Parse(contentAsString.cstr());
+    if (rapidJsonParseResult.Code() != rapidjson::kParseErrorNone) {
+      // Error
+    }
+
+    // Finally, we can read the file
+    {
+      // Loop through all members -> these are normally the section names
+      for (rapidjson::Value::MemberIterator iter = rapidJsonDocument.MemberBegin(); rapidJsonDocument.MemberEnd() != iter; ++iter) {
+        // Get name
+        String sectionName = iter->name.GetString();
+        ConfigSection* section = addSectionByName(sectionName);
+
+        for (rapidjson::Value::MemberIterator vk_iter = iter->value.MemberBegin(); iter->value.MemberEnd() != vk_iter; ++vk_iter) {
+          section->addKeyValue(
+            vk_iter->name.GetString(),
+            vk_iter->value.GetString());
+        }
+      }
+    }
+  } else {
+    // Error
+  }
 }
 
-void Config::save(const String& filename) {
+void Config::save(const IFileManager& fileManager, const String& filename) {
+  std::vector<ConfigSection*> configSections = getAllSections();
 
+  for (auto iter = configSections.begin(); iter != configSections.end(); ++iter) {
+    ConfigSection* section = *iter;
+  }
 }
 
 

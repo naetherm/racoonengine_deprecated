@@ -51,6 +51,7 @@ re_add_target(
       External::pcre
       External::zlib
       External::mimalloc
+      External::rapidjson
   COMPILE_DEFINITIONS
     PUBLIC
       RECORE_EXPORTS
