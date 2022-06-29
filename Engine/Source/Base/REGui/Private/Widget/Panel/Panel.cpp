@@ -35,7 +35,7 @@ namespace REGui {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-re_class_metadata(Panel, "REGui", REGui::Widget, "Application class")
+re_class_metadata(Panel, "REGui", REGui::Compound, "Application class")
   // Constructors
 re_class_metadata_end(Panel)
 
