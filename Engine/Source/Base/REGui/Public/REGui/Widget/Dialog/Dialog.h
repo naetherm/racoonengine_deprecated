@@ -64,7 +64,7 @@ class Dialog : public Compound {
 
 
   regui_begin_construction_args(Dialog)
-    : {}
+    {}
     regui_value(RECore::String, Title)
     regui_widget(REGui::Layout, Layout)
   regui_end_construction_args()
