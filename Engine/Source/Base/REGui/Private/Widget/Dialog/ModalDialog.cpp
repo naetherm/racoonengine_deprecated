@@ -20,16 +20,10 @@
 
 
 //[-------------------------------------------------------]
-//[ Header guard                                          ]
-//[-------------------------------------------------------]
-#pragma once
-
-
-//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "REGui/REGui.h"
-#include "REGui/Widget/Container/Compound.h"
+#include "REGui/Widget/Dialog/ModalDialog.h"
+#include "REGui/Widget/Layout/Layout.h"
 
 
 //[-------------------------------------------------------]
@@ -39,81 +33,37 @@ namespace REGui {
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
+//[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-class Gui;
-class Layout;
+re_class_metadata(ModalDialog, "REGui", REGui::Compound, "Application class")
+// Constructors
+re_class_metadata_end(ModalDialog)
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-/**
- * @class
- * Dialog
- *
- * @brief
- */
-class Dialog : public Compound {
+ModalDialog::ModalDialog() {
 
-  //[-------------------------------------------------------]
-  //[ RTTI interface                                        ]
-  //[-------------------------------------------------------]
-  re_class_def(REGUI_API)
-  re_class_def_end
+}
 
+ModalDialog::~ModalDialog() {
 
-  regui_begin_construction_args(Dialog)
-    {}
-    regui_value(RECore::String, Title)
-    regui_widget(REGui::Layout, Layout)
-  regui_end_construction_args()
+}
 
-public:
+void ModalDialog::construct(ConstructionArguments args) {
+  mTitle = args.getTitle();
+  mLayout = args.getLayout();
+}
 
-  /**
-   * @brief
-   * Default constructor.
-   */
-  Dialog();
+void ModalDialog::onUpdate(float deltaTime) {
 
-  /**
-   * @brief
-   * Destructor.
-   */
-  ~Dialog() override;
+}
 
-
-  /**
-   * @brief
-   * Construct this widget.
-   *
-   * @param[in] args
-   * The declaration data for this widget.
-   */
-  void construct(ConstructionArguments args);
-
-public:
-
-  /**
-   * @brief
-   * Called when the widget is updated.
-   *
-   * @param[in] deltaTime
-   * The time between the this and the last update in seconds.
-   */
-  void onUpdate(float deltaTime) override;
-
-  /**
-   * @brief
-   * Called in the drawing process.
-   */
-  void onDraw() override;
-
-protected:
-  /** The title of the dialog */
-  RECore::String mTitle;
-};
+void ModalDialog::onDraw() {
+  // Nothing to do here, just drawn Compound
+  Compound::onDraw();
+}
 
 
 //[-------------------------------------------------------]

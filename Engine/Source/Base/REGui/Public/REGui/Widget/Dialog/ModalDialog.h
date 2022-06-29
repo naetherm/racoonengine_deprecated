@@ -50,11 +50,11 @@ class Layout;
 //[-------------------------------------------------------]
 /**
  * @class
- * Dialog
+ * ModalDialog
  *
  * @brief
  */
-class Dialog : public Compound {
+class ModalDialog : public Compound {
 
   //[-------------------------------------------------------]
   //[ RTTI interface                                        ]
@@ -63,7 +63,7 @@ class Dialog : public Compound {
   re_class_def_end
 
 
-  regui_begin_construction_args(Dialog)
+  regui_begin_construction_args(ModalDialog)
     {}
     regui_value(RECore::String, Title)
     regui_widget(REGui::Layout, Layout)
@@ -75,13 +75,13 @@ public:
    * @brief
    * Default constructor.
    */
-  Dialog();
+  ModalDialog();
 
   /**
    * @brief
    * Destructor.
    */
-  ~Dialog() override;
+  ~ModalDialog() override;
 
 
   /**
