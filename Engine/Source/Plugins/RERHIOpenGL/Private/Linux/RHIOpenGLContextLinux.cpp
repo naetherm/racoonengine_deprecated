@@ -164,10 +164,10 @@ mOwnsRenderContext(true)
             GLint profile = 0;
             glGetIntegerv(GL_CONTEXT_PROFILE_MASK, &profile);
 
-            RE_LOG(Debug, "OpenGL context version: %d.%d %s" + RECore::String(major) + RECore::String(minor) + ((profile & GL_CONTEXT_CORE_PROFILE_BIT) ? "core" : "noncore"))
+            RE_LOG(Debug, "OpenGL context version: %d.%d %s" + RECore::to_string(major) + RECore::to_string(minor) + ((profile & GL_CONTEXT_CORE_PROFILE_BIT) ? "core" : "noncore"))
             int numberOfExtensions = 0;
             glGetIntegerv(GL_NUM_EXTENSIONS, &numberOfExtensions);
-            RE_LOG(Debug, "Number of supported OpenGL extensions: " + RECore::String(numberOfExtensions))
+            RE_LOG(Debug, "Number of supported OpenGL extensions: " + RECore::to_string(numberOfExtensions))
             for (GLuint extensionIndex = 0; extensionIndex < static_cast<GLuint>(numberOfExtensions); ++extensionIndex)
             {
               RE_LOG(Debug, RECore::String(">> ") + reinterpret_cast<char*>(glGetStringi(GL_EXTENSIONS, extensionIndex)))
@@ -256,7 +256,7 @@ GLXContext OpenGLContextLinux::createOpenGLContext(RERHI::TextureFormat::Enum de
         0};  // = "None"
       */
       GLXFBConfig* fbc = glXChooseFBConfig(mDisplay, DefaultScreen(mDisplay), visualAttributes, &numberOfElements);
-      RE_LOG(Debug, "Got %d of OpenGL GLXFBConfig" + RECore::String(numberOfElements))
+      RE_LOG(Debug, "Got %d of OpenGL GLXFBConfig" + RECore::to_string(numberOfElements))
       GLXContext glxContext = glXCreateContextAttribsARB(mDisplay, *fbc, 0, true, ATTRIBUTES);
 
       XSync(mDisplay, False);
