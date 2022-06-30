@@ -37,6 +37,7 @@ re_add_target(
       RECore
       RERHI
       RERenderer
+      RERendererToolkit
       External::imgui
       External::acl
       External::rtm
@@ -50,6 +51,7 @@ re_add_target(
       RECore
       RERHI
       RERenderer
+      RERendererToolkit
       External::imgui
       #External::glm
       External::acl
