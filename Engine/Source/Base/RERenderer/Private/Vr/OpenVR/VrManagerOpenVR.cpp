@@ -413,7 +413,7 @@ namespace RERenderer
 			if (vr::VRInitError_None != vrInitError)
 			{
 				// Error!
-        RE_LOG(Critical, std::string("The renderer was unable to initialize OpenVR runtime: ") + vr::VR_GetVRInitErrorAsEnglishDescription(vrInitError))
+        RE_LOG(Critical, RECore::String("The renderer was unable to initialize OpenVR runtime: ") + vr::VR_GetVRInitErrorAsEnglishDescription(vrInitError))
 				return false;
 			}
 			if (vr::TextureType_Vulkan == mVrTextureType)
@@ -446,7 +446,7 @@ namespace RERenderer
 				mVrSystem = nullptr;
 
 				// Error!
-        RE_LOG(Critical, std::string("The renderer was unable to retrieve the OpenVR render models interface: ") + vr::VR_GetVRInitErrorAsEnglishDescription(vrInitError))
+        RE_LOG(Critical, RECore::String("The renderer was unable to retrieve the OpenVR render models interface: ") + vr::VR_GetVRInitErrorAsEnglishDescription(vrInitError))
 				return false;
 			}
 

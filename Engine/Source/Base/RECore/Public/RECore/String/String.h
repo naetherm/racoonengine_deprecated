@@ -74,6 +74,13 @@ public:
    */
   static constexpr SizeType NPOS = (SizeType) -1;
 
+  /**
+   * @brief
+   * CtorSprintf exists so that we can create a constructor that accepts printf-style
+	 * arguments but also doesn't collide with any other constructor declaration.
+   */
+  struct CtorSprintf{};
+
 #ifdef RE_SYSTEM_BIG_ENDIAN
   // Big Endian use LSB, unless we want to reorder struct layouts on endianness, Bit is set when we are in Heap
   static constexpr SizeType kHeapMask = 0x1;
@@ -275,6 +282,8 @@ public:
    * The object to move.
    */
   BasicString(ThisType &&cSource, const AllocatorType &alloc);
+
+  BasicString(CtorSprintf, const ValueType * pFormat, ...);
 
   /**
    * @brief
@@ -1033,6 +1042,27 @@ struct Hash<RECore::U32String> {
     return (size_t) Hash<char32_t *>()(p.cstr());
   }
 };
+
+
+
+inline String to_string(int value)
+{ return String().appendFormat("%d", value); }
+inline String to_string(long value)
+{ return String().appendFormat("%ld", value); }
+inline String to_string(long long value)
+{ return String().appendFormat("%lld", value); }
+inline String to_string(unsigned value)
+{ return String().appendFormat("%u", value); }
+inline String to_string(unsigned long value)
+{ return String().appendFormat("%lu", value); }
+inline String to_string(unsigned long long value)
+{ return String().appendFormat("%llu", value); }
+inline String to_string(float value)
+{ return String().appendFormat("%f", value); }
+inline String to_string(double value)
+{ return String().appendFormat("%f", value); }
+inline String to_string(long double value)
+{ return String().appendFormat("%Lf", value); }
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

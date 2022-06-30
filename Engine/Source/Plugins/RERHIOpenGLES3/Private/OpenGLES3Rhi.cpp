@@ -1739,7 +1739,7 @@ namespace OpenGLES3Rhi
 					}																																				\
 					else																																			\
 					{																																				\
-						RE_LOG(Critical, std::string("Failed to locate the entry point _ within the OpenGL ES 3 shared library ") + #funcName)	\
+						RE_LOG(Critical, RECore::String("Failed to locate the entry point _ within the OpenGL ES 3 shared library ") + #funcName)	\
 						result = false;																																\
 					}																																				\
 				}
@@ -2388,7 +2388,7 @@ namespace OpenGLES3Rhi
 								libraryName = linkMap->l_name;																																	\
 							}																																									\
 							libraryName = libraryName; /* To avoid -Wunused-but-set-variable warning when RHI_LOG is defined empty */															\
-							RE_LOG(Critical, std::string("Failed to locate the OpenGL ES 3 entry point _ within the EGL shared library _ ") + #funcName)	\
+							RE_LOG(Critical, RECore::String("Failed to locate the OpenGL ES 3 entry point _ within the EGL shared library _ ") + #funcName)	\
 							result = false;																																						\
 						}																																										\
 					}
@@ -2480,7 +2480,7 @@ namespace OpenGLES3Rhi
 						}																																					\
 						else																																				\
 						{																																					\
-							RE_LOG(Critical, std::string("Failed to locate the OpenGL ES 3 entry point _ within the GLES shared library ") + #funcName)	\
+							RE_LOG(Critical, RECore::String("Failed to locate the OpenGL ES 3 entry point _ within the GLES shared library ") + #funcName)	\
 							result = false;																																	\
 						}																																					\
 					}

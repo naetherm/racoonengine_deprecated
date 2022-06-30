@@ -54,11 +54,11 @@ bool GuiContext::initialize(const RECore::String &rhiName) {
   mRhiLibrary = new RECore::DynLib();
   // Load shared dynamic library
   if (mRhiLibrary->load(mRhiLibraryName)) {
-    RE_LOG(Info, std::string("Successfully loaded library") + mRhiLibraryName.cstr())
+    RE_LOG(Info, "Successfully loaded library" + mRhiLibraryName)
     return true;
   }
 
-  RE_LOG(Critical, std::string("Unable to load library") + mRhiLibraryName.cstr())
+  RE_LOG(Critical, "Unable to load library" + mRhiLibraryName)
 
   // Clean library
   if (mRhiLibrary) {

@@ -65,7 +65,7 @@ bool LinuxDynLib::load(const String &cUrl) {
     return true;
   } else {
     // Error: Failed to load dll!
-    RE_LOG(Error, std::string("Unable to load library due to ") + dlerror())
+    RE_LOG(Error, String("Unable to load library due to ") + dlerror())
 
     return false;
   }

@@ -211,7 +211,7 @@ void Helper::printOpenGLShaderInformationIntoLog(const RERHI::RHIContext &contex
     glGetShaderInfoLog(openGLShader, informationLength, nullptr, informationLog);
 
     // Output the debug string
-    RE_LOG(Critical, std::string(sourceCode))
+    RE_LOG(Critical, RECore::String(sourceCode))
     //if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), informationLog))
     {
       //	DEBUG_BREAK;
@@ -256,7 +256,7 @@ void Helper::printOpenGLProgramInformationIntoLog(const RERHI::RHIContext &conte
     glGetProgramInfoLog(openGLProgram, informationLength, nullptr, informationLog);
 
     // Output the debug string
-    RE_LOG(Critical, std::string(sourceCode))
+    RE_LOG(Critical, RECore::String(sourceCode))
     //if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), informationLog))
     {
       //	DEBUG_BREAK;
@@ -485,7 +485,7 @@ GLuint Helper::loadShaderFromSourcecode(const RERHI::RHIContext &context, GLenum
         glGetShaderInfoLog(openGLShader, informationLength, nullptr, informationLog);
 
         // Output the debug string
-        RE_LOG(Critical, std::string(sourceCode))
+        RE_LOG(Critical, RECore::String(sourceCode))
         //if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), informationLog))
         {
           //	DEBUG_BREAK;
@@ -592,7 +592,7 @@ Helper::shaderSourceCodeToShaderBytecode(const RERHI::RHIContext &context, GLenu
 					else
 					{
 						// Failed to link the program
-            RE_LOG(Critical, std::string(sourceCode))
+            RE_LOG(Critical, RECore::String(sourceCode))
 						//if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), "Failed to link the GLSL program: %s", program.getInfoLog()))
 						{
 						//	DEBUG_BREAK;
@@ -602,7 +602,7 @@ Helper::shaderSourceCodeToShaderBytecode(const RERHI::RHIContext &context, GLenu
 				else
 				{
 					// Failed to parse the shader source code
-          RE_LOG(Critical, std::string(sourceCode))
+          RE_LOG(Critical, RECore::String(sourceCode))
 					//if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), "Failed to parse the GLSL shader source code: %s", shader.getInfoLog()))
 					{
 					//	DEBUG_BREAK;

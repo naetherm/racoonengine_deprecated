@@ -28,5 +28,5 @@
 #endif
 {
 	// Error! (unsupported RHI)
-RE_LOG(Critical, std::string("The RHI implementation \"") + rhi.getName() + std::string("\" isn't supported by the renderer debug GUI"))
+  RE_LOG(Critical, RECore::String("The RHI implementation \"") + rhi.getName() + RECore::String("\" isn't supported by the renderer debug GUI"))
 }

@@ -30,8 +30,8 @@
 //[-------------------------------------------------------]
 #include "RECore/RECore.h"
 #include "RECore/Reflect/Event/Event.h"
+#include "RECore/String/String.h"
 #include <queue>
-#include <string>
 
 
 //[-------------------------------------------------------]
@@ -50,8 +50,8 @@
   if (RECore::Log::instance().getLogLevel() >= RECore::Log::Level) { \
     RECore::Log::LogLevel nLogLevel = RECore::Log::Level; /* Avoid 'expression is constant' warning */ \
     if (nLogLevel >= RECore::Log::Debug) { \
-      std::string sLogString = Text; \
-      RECore::Log::instance().output(RECore::Log::Level, sLogString + __FILE__ + std::to_string(__LINE__) + __FUNCTION__); \
+      RECore::String sLogString = Text; \
+      RECore::Log::instance().output(RECore::Log::Level, sLogString + __FILE__ + RECore::to_string(__LINE__) + __FUNCTION__); \
     } else RECore::Log::instance().output(RECore::Log::Level, Text); \
   } \
 }
@@ -60,8 +60,8 @@
   if (!(COND) && RECore::Log::instance().getLogLevel() >= RECore::Log::Level) { \
     RECore::Log::LogLevel nLogLevel = RECore::Log::Level; /* Avoid 'expression is constant' warning */ \
     if (nLogLevel >= RECore::Log::Debug) { \
-      std::string sLogString = Text; \
-      RECore::Log::instance().output(RECore::Log::Level, sLogString + __FILE__ + std::to_string(__LINE__) + __FUNCTION__); \
+      RECore::String sLogString = Text; \
+      RECore::Log::instance().output(RECore::Log::Level, sLogString + __FILE__ + RECore::to_string(__LINE__) + __FUNCTION__); \
     } else RECore::Log::instance().output(RECore::Log::Level, Text); \
   } \
 }
@@ -189,7 +189,7 @@ public:
   *    The text is written to the log only if the current
   *    log level is greater or equal to the specified value.
   */
-  inline bool output(uint8 nLogLevel, const std::string &sText);
+  inline bool output(uint8 nLogLevel, const String &sText);
 
   /**
   *  @brief
@@ -267,7 +267,7 @@ public:
   *  @return
   *    Queue of n-last log messages
   */
-  inline const std::queue<std::string> &getLastMessages() const;
+  inline const std::queue<String> &getLastMessages() const;
 
   /**
   *  @brief
@@ -279,7 +279,7 @@ public:
   *  @return
   *    The string representation of the given log level
   */
-  RECORE_API std::string logLevelToString(uint8 nLogLevel) const;
+  RECORE_API String logLevelToString(uint8 nLogLevel) const;
 
   /**
   *  @brief
@@ -340,7 +340,7 @@ private:
   *  @return
   *    'true' if all went fine, else 'false'
   */
-  RECORE_API bool write(uint8 nLogLevel, const std::string &sText);
+  RECORE_API bool write(uint8 nLogLevel, const String &sText);
 
 
   //[-------------------------------------------------------]
@@ -352,7 +352,7 @@ private:
   uint8 m_nLogLevel;          /**< Current log level mode (see LogLevel) */
   uint8 m_nFlushLogLevel;      /**< If this log level is used the the flush is explicitly done */
   uint32 m_nFlushMessages;      /**< Holds the number of messages since the last flush */
-  std::queue<std::string> m_qLastMessages;        /**< Holds the last log messages */
+  std::queue<String> m_qLastMessages;        /**< Holds the last log messages */
   uint32 m_nBufferedMessages;      /**< How much messages should be buffered */
   LogFormatter *m_pLogFormatter;        /**< Holds an instance of a log formatter class, can be a null pointer */
 };

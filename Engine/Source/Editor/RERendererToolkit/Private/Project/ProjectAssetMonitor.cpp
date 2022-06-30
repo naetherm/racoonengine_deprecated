@@ -89,7 +89,7 @@ namespace RERendererToolkit
 		}
 		catch (const std::exception& e)
 		{
-			RE_LOG(Critical, std::string("Project compilation failed: ") + e.what())
+			RE_LOG(Critical, RECore::String("Project compilation failed: ") + e.what())
 			mProjectImpl.onCompilationRunFinished();
 		}
 

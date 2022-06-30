@@ -75,7 +75,7 @@ LogFormatterText &LogFormatterText::operator=(const LogFormatterText &cSource) {
 //[ Private virtual LogFormatter functions                ]
 //[-------------------------------------------------------]
 
-bool LogFormatterText::output(uint8 nLogLevel, const std::string &sText) {
+bool LogFormatterText::output(uint8 nLogLevel, const String &sText) {
   // Error!
   return true;
 }

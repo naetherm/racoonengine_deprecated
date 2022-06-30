@@ -129,7 +129,7 @@ bool VulkanRuntimeLinking::loadDeviceLevelVulkanEntryPoints(VkDevice vkDevice, b
 					funcName = reinterpret_cast<PFN_##funcName>(vkGetDeviceProcAddr(vkDevice, #funcName));										\
 					if (nullptr == funcName)																									\
 					{																															\
-						RE_LOG(Critical, std::string("Failed to load instance based Vulkan function pointer ") + #funcName)	\
+						RE_LOG(Critical, RECore::String("Failed to load instance based Vulkan function pointer ") + #funcName)	\
 						result = false;																											\
 					}																															\
 				}
@@ -299,7 +299,7 @@ bool VulkanRuntimeLinking::loadGlobalLevelVulkanEntryPoints() const
 							{																																						\
 								libraryName = linkMap->l_name;																														\
 							}																																						\
-							RE_LOG(Critical, std::string("Failed to locate the entry point _ within the shared Vulkan library _") + #funcName)	\
+							RE_LOG(Critical, RECore::String("Failed to locate the entry point _ within the shared Vulkan library _") + #funcName)	\
 							result = false;																																			\
 						}																																							\
 					}
@@ -365,7 +365,7 @@ VkResult VulkanRuntimeLinking::createVulkanInstance(bool enableValidation)
     {
       if (!::detail::isExtensionAvailable(enabledExtension, vkExtensionPropertiesVector))
       {
-        RE_LOG(Critical, std::string("Couldn't find Vulkan instance extension named ") + enabledExtension)
+        RE_LOG(Critical, RECore::String("Couldn't find Vulkan instance extension named ") + enabledExtension)
         return VK_ERROR_EXTENSION_NOT_PRESENT;
       }
     }
@@ -420,7 +420,7 @@ bool VulkanRuntimeLinking::loadInstanceLevelVulkanEntryPoints() const
 					funcName = reinterpret_cast<PFN_##funcName>(vkGetInstanceProcAddr(mVkInstance, #funcName));									\
 					if (nullptr == funcName)																									\
 					{																															\
-						RE_LOG(Critical, std::string("Failed to load instance based Vulkan function pointer ") + #funcName)	\
+						RE_LOG(Critical, RECore::String("Failed to load instance based Vulkan function pointer ") + #funcName)	\
 						result = false;																											\
 					}																															\
 				}

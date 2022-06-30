@@ -245,13 +245,13 @@ namespace RERHI
 						else
 						{
 							// Error!
-							RE_LOG(Critical, std::string("Failed to locate the entry point _ within the shared RHI library ") + rhiFilename)
+							RE_LOG(Critical, RECore::String("Failed to locate the entry point _ within the shared RHI library ") + rhiFilename)
 						}
 					}
 					else
 					{
-						RE_LOG(Critical, std::string("Failed to load in the shared RHI library ") + rhiFilename)
-            RE_LOG(Critical, std::string("[!] Cannot load due to: ") + dlerror())
+						RE_LOG(Critical, RECore::String("Failed to load in the shared RHI library ") + rhiFilename)
+            RE_LOG(Critical, RECore::String("[!] Cannot load due to: ") + dlerror())
 					}
 				#else
 					#error "Unsupported platform"

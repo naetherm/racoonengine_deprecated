@@ -153,7 +153,7 @@ mOwnsRenderContext(true)
         {
           // Make the OpenGL context to the current one, native window handle can be zero -> thus only offscreen rendering is supported/wanted
           const int result = glXMakeCurrent(mDisplay, mNativeWindowHandle, mWindowRenderContext);
-          RE_LOG(Debug, "Make new OpenGL context current: " + std::to_string(result))
+          RE_LOG(Debug, "Make new OpenGL context current: " + RECore::String(result))
           {
             int major = 0;
             glGetIntegerv(GL_MAJOR_VERSION, &major);
@@ -164,13 +164,13 @@ mOwnsRenderContext(true)
             GLint profile = 0;
             glGetIntegerv(GL_CONTEXT_PROFILE_MASK, &profile);
 
-            RE_LOG(Debug, "OpenGL context version: %d.%d %s" + std::to_string(major) + std::to_string(minor) + ((profile & GL_CONTEXT_CORE_PROFILE_BIT) ? "core" : "noncore"))
+            RE_LOG(Debug, "OpenGL context version: %d.%d %s" + RECore::String(major) + RECore::String(minor) + ((profile & GL_CONTEXT_CORE_PROFILE_BIT) ? "core" : "noncore"))
             int numberOfExtensions = 0;
             glGetIntegerv(GL_NUM_EXTENSIONS, &numberOfExtensions);
-            RE_LOG(Debug, "Number of supported OpenGL extensions: " + std::to_string(numberOfExtensions))
+            RE_LOG(Debug, "Number of supported OpenGL extensions: " + RECore::String(numberOfExtensions))
             for (GLuint extensionIndex = 0; extensionIndex < static_cast<GLuint>(numberOfExtensions); ++extensionIndex)
             {
-              RE_LOG(Debug, std::string(">> ") + reinterpret_cast<char*>(glGetStringi(GL_EXTENSIONS, extensionIndex)))
+              RE_LOG(Debug, RECore::String(">> ") + reinterpret_cast<char*>(glGetStringi(GL_EXTENSIONS, extensionIndex)))
             }
           }
         }
@@ -256,7 +256,7 @@ GLXContext OpenGLContextLinux::createOpenGLContext(RERHI::TextureFormat::Enum de
         0};  // = "None"
       */
       GLXFBConfig* fbc = glXChooseFBConfig(mDisplay, DefaultScreen(mDisplay), visualAttributes, &numberOfElements);
-      RE_LOG(Debug, "Got %d of OpenGL GLXFBConfig" + std::to_string(numberOfElements))
+      RE_LOG(Debug, "Got %d of OpenGL GLXFBConfig" + RECore::String(numberOfElements))
       GLXContext glxContext = glXCreateContextAttribsARB(mDisplay, *fbc, 0, true, ATTRIBUTES);
 
       XSync(mDisplay, False);

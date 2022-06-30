@@ -31,6 +31,7 @@
 #include "REGui/Gui/Resource/GuiTextureManager.h"
 #include "REGui/Widget/Window/MainWindow.h"
 #include <RECore/Asset/Asset.h>
+#include <RECore/Log/Log.h>
 #include <RECore/Memory/Memory.h>
 #include <RERenderer/Resource/Texture/TextureResourceManager.h>
 #if defined(LINUX)
@@ -170,7 +171,7 @@ void GuiRenderer::startup(RECore::handle windowHandle) {
 
     if (this->mRhi) {
       this->mRhi->AddReference();
-      RE_LOG(Info, std::string("Successfully created the RHI backend of ") + mGui->getGuiContext().getRhiLibraryName().cstr())
+      RE_LOG(Info, "Successfully created the RHI backend of " + mGui->getGuiContext().getRhiLibraryName())
     } else {
       // Error
       RE_LOG(Error, "Creation of dynamic RHI failed.")

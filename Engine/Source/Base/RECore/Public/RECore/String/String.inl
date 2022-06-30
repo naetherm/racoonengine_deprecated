@@ -358,6 +358,19 @@ BasicString<T, TAllocator>::BasicString(ThisType &&cSource, const AllocatorType 
     this->rangeInitialize(cSource.InternalLayout().BeginPtr(), cSource.InternalLayout().EndPtr());
   }
 }
+template <typename T, typename Allocator>
+BasicString<T, Allocator>::BasicString(CtorSprintf /*unused*/, const ValueType* pFormat, ...)
+  : mPair()
+{
+  const SizeType n = (SizeType)CharStrlen(pFormat);
+  allocateSelf(n);
+  InternalLayout().SetSize(0);
+
+  va_list arguments;
+  va_start(arguments, pFormat);
+  appendFormatVAList(pFormat, arguments);
+  va_end(arguments);
+}
 
 template<typename T, typename TAllocator>
 BasicString<T, TAllocator>::~BasicString() {
@@ -974,6 +987,21 @@ typename BasicString<T, TAllocator>::ThisType &BasicString<T, TAllocator>::appen
 
 template<typename T, typename TAllocator>
 typename BasicString<T, TAllocator>::ThisType &BasicString<T, TAllocator>::appendFormatVAList(const ValueType *pFormat, va_list cArguments) {
+  SizeType len_ = vsnprintf(nullptr, 0, pFormat, cArguments);
+
+  if (len_ > 0) {
+    char * pNewString = reinterpret_cast<char*>(this->getAllocator().allocate(sizeof(T)*(len_ + 1)));
+
+    //va_start(cArguments, pFormat);
+    vsprintf(pNewString, pFormat, cArguments);
+    //va_end(cArguments);
+
+    pNewString[len_] = 0;
+
+    this->append(pNewString);
+
+    this->getAllocator().deallocate(pNewString, 1);
+  }
 
   return *this;
 }
@@ -986,9 +1014,7 @@ typename BasicString<T, TAllocator>::ThisType &BasicString<T, TAllocator>::appen
   va_end(lstArgs);
 
   if (len_ > 0) {
-    //char * pNewString = PLNewArray<char>(len_);
     char * pNewString = reinterpret_cast<char*>(this->getAllocator().allocate(sizeof(T)*(len_ + 1)));
-    //char * pNewString = new char[len_ + 1];
 
     va_start(lstArgs, pFormat);
     vsprintf(pNewString, pFormat, lstArgs);
@@ -998,8 +1024,6 @@ typename BasicString<T, TAllocator>::ThisType &BasicString<T, TAllocator>::appen
 
     this->append(pNewString);
 
-    //PLDelete(pNewString);
-    //delete[] pNewString;
     this->getAllocator().deallocate(pNewString, 1);
   }
 

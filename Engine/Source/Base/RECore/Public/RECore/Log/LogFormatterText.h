@@ -101,7 +101,7 @@ private:
   //[ Private virtual LogFormatter functions                ]
   //[-------------------------------------------------------]
 private:
-  virtual bool output(uint8 nLogLevel, const std::string &sText) override;
+  virtual bool output(uint8 nLogLevel, const String &sText) override;
 
   virtual bool flush() override;
 };

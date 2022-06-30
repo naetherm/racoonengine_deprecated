@@ -148,13 +148,13 @@ namespace RERendererToolkit
 						else
 						{
 							// Error!
-							RE_LOG(Critical, std::string("Failed to locate the entry point \"createRendererToolkitInstance\" within the shared renderer toolkit library ") + RENDERER_TOOLKIT_FILENAME)
+							RE_LOG(Critical, RECore::String("Failed to locate the entry point \"createRendererToolkitInstance\" within the shared renderer toolkit library ") + RENDERER_TOOLKIT_FILENAME)
 						}
 					}
 					else
 					{
 						// Error!
-						RE_LOG(Critical, std::string("Failed to load in the shared renderer toolkit library ") + RENDERER_TOOLKIT_FILENAME)
+						RE_LOG(Critical, RECore::String("Failed to load in the shared renderer toolkit library ") + RENDERER_TOOLKIT_FILENAME)
 					}
 				#elif defined LINUX
 					// Load in the shared library
@@ -175,13 +175,13 @@ namespace RERendererToolkit
 						else
 						{
 							// Error!
-							RE_LOG(Critical, std::string("Failed to locate the entry point \"createRendererToolkitInstance\" within the renderer toolkit shared renderer toolkit library ") + RENDERER_TOOLKIT_FILENAME)
+							RE_LOG(Critical, RECore::String("Failed to locate the entry point \"createRendererToolkitInstance\" within the renderer toolkit shared renderer toolkit library ") + RENDERER_TOOLKIT_FILENAME)
 						}
 					}
 					else
 					{
 						// Error!
-						RE_LOG(Critical, std::string("Failed to load in the shared renderer toolkit library ") + RENDERER_TOOLKIT_FILENAME)
+						RE_LOG(Critical, RECore::String("Failed to load in the shared renderer toolkit library ") + RENDERER_TOOLKIT_FILENAME)
 					}
 				#else
 					#error "Unsupported platform"

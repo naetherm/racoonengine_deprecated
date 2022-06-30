@@ -89,7 +89,7 @@ namespace
 			getRendererToolkitCacheFilename(fileManager, projectName, virtualDirectoryName, virtualFilename);
 			if (fileManager.createDirectories(virtualDirectoryName.c_str()) && !memoryFile.writeLz4CompressedDataByVirtualFilename(RERendererToolkitCache::FORMAT_TYPE, RERendererToolkitCache::FORMAT_VERSION, fileManager, virtualFilename.c_str()))
 			{
-				RE_LOG(Critical, std::string("The renderer toolkit failed to save the cache to ") + virtualFilename.c_str())
+				RE_LOG(Critical, RECore::String("The renderer toolkit failed to save the cache to ") + virtualFilename.c_str())
 			}
 		}
 

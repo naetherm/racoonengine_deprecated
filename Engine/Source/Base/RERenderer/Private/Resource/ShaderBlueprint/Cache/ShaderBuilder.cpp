@@ -445,7 +445,7 @@ namespace
 							if (!allowedElses.test(static_cast<size_t>(nesting)))
 							{
 								syntaxError = true;
-                RE_LOG(Critical, std::string("Unexpected @else while looking for @end\nNear: ") + &(*subString.begin()))
+                RE_LOG(Critical, RECore::String("Unexpected @else while looking for @end\nNear: ") + &(*subString.begin()))
 							}
 							if (0 == nesting)
 							{
@@ -475,7 +475,7 @@ namespace
 										if (!allowedElses.test(static_cast<size_t>(nesting)))
 										{
 											syntaxError = true;
-                      RE_LOG(Critical, std::string("Unexpected @else while looking for @end\nNear: ") + &(*subString.begin()))
+                      RE_LOG(Critical, RECore::String("Unexpected @else while looking for @end\nNear: ") + &(*subString.begin()))
 										}
 									}
 									else
@@ -505,7 +505,7 @@ namespace
 				syntaxError = true;
 				char tmpData[64] = {};
 				strncpy(tmpData, &(*outSubString.begin()), std::min<size_t>(63u, outSubString.getSize()));
-        RE_LOG(Critical, std::string("Syntax error at line ") + std::to_string(calculateLineCount(outSubString)) + std::string(": Start block (e.g. @foreach; @property) without matching @end\nNear: ") + tmpData)
+        RE_LOG(Critical, RECore::String("Syntax error at line ") + RECore::String(calculateLineCount(outSubString)) + RECore::String(": Start block (e.g. @foreach; @property) without matching @end\nNear: ") + tmpData)
 			}
 
 			return isElse;
@@ -540,7 +540,7 @@ namespace
 			}
 			else
 			{
-        RE_LOG(Critical, std::string("Renderer shader builder: Syntax error at line ") + std::to_string(static_cast<unsigned long>(calculateLineCount(outSubString))) + ": Opening parenthesis without matching closure\n")
+        RE_LOG(Critical, RECore::String("Renderer shader builder: Syntax error at line ") + RECore::String(static_cast<unsigned long>(calculateLineCount(outSubString))) + ": Opening parenthesis without matching closure\n")
 			}
 
 			return returnValue;
@@ -584,7 +584,7 @@ namespace
 				if (((EXPR_OPERATOR_OR == exp.type || EXPR_OPERATOR_AND == exp.type) && lastExpWasOperator) || ((EXPR_VAR == exp.type || EXPR_OBJECT == exp.type) && !lastExpWasOperator))
 				{
 					syntaxError = true;
-          RE_LOG(Critical, "Renderer shader builder: Unrecognized token " + exp.value)
+          RE_LOG(Critical, RECore::String("Renderer shader builder: Unrecognized token ") + exp.value.c_str())
 				}
 				else if (EXPR_OPERATOR_OR == exp.type || EXPR_OPERATOR_AND == exp.type)
 				{
@@ -748,7 +748,7 @@ namespace
 			}
 			if (syntaxError)
 			{
-        RE_LOG(Critical, std::string("Renderer shader builder: Syntax error at line") + std::to_string(static_cast<unsigned long>(calculateLineCount(subString))))
+        RE_LOG(Critical, RECore::String("Renderer shader builder: Syntax error at line") + RECore::String(static_cast<unsigned long>(calculateLineCount(subString))))
 			}
 			outSyntaxError = syntaxError;
 			return retVal;
@@ -800,7 +800,7 @@ namespace
 				{
 					if (2 == expressionState)
 					{
-            RE_LOG(Critical, std::string("Renderer shader builder: Syntax Error at line ") + std::to_string(
+            RE_LOG(Critical, RECore::String("Renderer shader builder: Syntax Error at line ") + RECore::String(
               calculateLineCount(subString)) + ": ',' or ')' expected\n")
 						syntaxError = true;
 					}
@@ -816,7 +816,7 @@ namespace
 
 			if (syntaxError)
 			{
-        RE_LOG(Critical, std::string("Renderer shader builder: Syntax error at line") + std::to_string(static_cast<unsigned long>(calculateLineCount(subString))))
+        RE_LOG(Critical, RECore::String("Renderer shader builder: Syntax error at line") + RECore::String(static_cast<unsigned long>(calculateLineCount(subString))))
 			}
 
 			outSyntaxError = syntaxError;
@@ -999,11 +999,11 @@ namespace RERenderer
 				const unsigned long lineCount = static_cast<unsigned long>(calculateLineCount(subString));
 				if (keyword <= 1)
 				{
-          RE_LOG(Critical, std::string("Renderer shader builder: Syntax error at line ") + std::to_string(lineCount) + ": " + std::string(::detail::c_operations[keyword].opName) + " expects one parameter")
+          RE_LOG(Critical, RECore::String("Renderer shader builder: Syntax error at line ") + RECore::String(lineCount) + ": " + RECore::String(::detail::c_operations[keyword].opName) + " expects one parameter")
 				}
 				else
 				{
-          RE_LOG(Critical, std::string("Renderer shader builder: Syntax error at line ") + std::to_string(lineCount) + ": " + std::string(::detail::c_operations[keyword].opName) + " expects two or three parameters")
+          RE_LOG(Critical, RECore::String("Renderer shader builder: Syntax error at line ") + RECore::String(lineCount) + ": " + RECore::String(::detail::c_operations[keyword].opName) + " expects two or three parameters")
 				}
 			}
 			else
@@ -1105,7 +1105,7 @@ namespace RERenderer
 						// This isn't a number. Let's try if it's a property.
 						if (!mShaderProperties.getPropertyValue(RECore::StringId(argValues[2].c_str()), start, -1))
 						{
-              RE_LOG(Critical, std::string("Renderer shader builder: Invalid parameter at line ") + std::to_string(static_cast<unsigned long>(calculateLineCount(blockSubString))) + " (@foreach). " + argValues[2] + " is not a number nor a variable\n")
+              RE_LOG(Critical, RECore::String("Renderer shader builder: Invalid parameter at line ") + RECore::String(static_cast<unsigned long>(calculateLineCount(blockSubString))) + " (@foreach). " + argValues[2].c_str() + " is not a number nor a variable\n")
 							syntaxError = true;
 							start = 0;
 							count = 0;
@@ -1207,7 +1207,7 @@ namespace RERenderer
 
 			if (syntaxError)
 			{
-        RE_LOG(Critical, std::string("Renderer shader builder: Syntax error at line ") + std::to_string(static_cast<unsigned long>(detail::calculateLineCount(subString))) + ": @piece expects one parameter")
+        RE_LOG(Critical, RECore::String("Renderer shader builder: Syntax error at line ") + RECore::String(static_cast<unsigned long>(detail::calculateLineCount(subString))) + ": @piece expects one parameter")
 			}
 			else
 			{
@@ -1216,7 +1216,7 @@ namespace RERenderer
 				if (it != mDynamicShaderPieces.end())
 				{
 					syntaxError = true;
-          RE_LOG(Critical, std::string("Renderer shader builder: Error at line ") + std::to_string(static_cast<unsigned long>(calculateLineCount(subString))) + ": @piece " +argValues[0] +" already defined")
+          RE_LOG(Critical, RECore::String("Renderer shader builder: Error at line ") + RECore::String(static_cast<unsigned long>(calculateLineCount(subString))) + ": @piece " + argValues[0].c_str() +" already defined")
 				}
 				else
 				{
@@ -1262,7 +1262,7 @@ namespace RERenderer
 
 			if (syntaxError)
 			{
-        RE_LOG(Critical, std::string("Renderer shader builder: Syntax error at line ") + std::to_string(static_cast<unsigned long>(calculateLineCount(subString))) + ": @insertpiece expects one parameter")
+        RE_LOG(Critical, RECore::String("Renderer shader builder: Syntax error at line ") + RECore::String(static_cast<unsigned long>(calculateLineCount(subString))) + ": @insertpiece expects one parameter")
 			}
 			else
 			{
@@ -1274,7 +1274,7 @@ namespace RERenderer
 				}
 				else
 				{
-          RE_LOG(Critical, std::string("Renderer shader builder: Error at line ") + std::to_string(static_cast<unsigned long>(calculateLineCount(subString))) + ": @insertpiece is referencing unknown piece " + argValues[0])
+          RE_LOG(Critical, RECore::String("Renderer shader builder: Error at line ") + RECore::String(static_cast<unsigned long>(calculateLineCount(subString))) + ": @insertpiece is referencing unknown piece " + argValues[0].c_str())
 				}
 			}
 
@@ -1341,11 +1341,11 @@ namespace RERenderer
 				const unsigned long lineCount = static_cast<unsigned long>(calculateLineCount(subString));
 				if (keyword <= 1)
 				{
-          RE_LOG(Critical, std::string("Renderer shader builder: Syntax error at line ") + std::to_string(lineCount) + ": " + std::string(::detail::c_counterOperations[keyword].opName) + " expects one parameter")
+          RE_LOG(Critical, RECore::String("Renderer shader builder: Syntax error at line ") + RECore::String(lineCount) + ": " + RECore::String(::detail::c_counterOperations[keyword].opName) + " expects one parameter")
 				}
 				else
 				{
-          RE_LOG(Critical, std::string("Renderer shader builder: Syntax error at line ") + std::to_string(lineCount) + ": " + std::string(::detail::c_counterOperations[keyword].opName) + " expects two or three parameters")
+          RE_LOG(Critical, RECore::String("Renderer shader builder: Syntax error at line ") + RECore::String(lineCount) + ": " + RECore::String(::detail::c_counterOperations[keyword].opName) + " expects two or three parameters")
 				}
 			}
 			else

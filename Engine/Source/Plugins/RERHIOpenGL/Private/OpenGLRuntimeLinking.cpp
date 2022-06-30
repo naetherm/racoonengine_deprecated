@@ -69,7 +69,7 @@ namespace RERHIOpenGL {
       }                                                                              \
       else                                                                            \
       { \
-        RE_LOG(Critical, std::string("Failed to locate the entry point \"") + #funcName)  \
+        RE_LOG(Critical, RECore::String("Failed to locate the entry point \"") + #funcName)  \
         result = false;                                                                      \
       }                                                                              \
     }

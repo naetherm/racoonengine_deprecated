@@ -116,7 +116,7 @@ public:
 					}																																				\
 					else																																			\
 					{																																				\
-						RE_LOG(Critical, std::string("Failed to locate the entry point _ within the OpenGL ES 3 shared library ") + #funcName)	\
+						RE_LOG(Critical, RECore::String("Failed to locate the entry point _ within the OpenGL ES 3 shared library ") + #funcName)	\
 						result = false;																																\
 					}																																				\
 				}

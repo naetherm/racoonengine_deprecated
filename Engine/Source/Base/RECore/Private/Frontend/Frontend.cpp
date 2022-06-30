@@ -175,7 +175,7 @@ FrontendImpl *Frontend::createFrontendImplementation(const FrontendContext &cFro
 		Object *pObject = cFrontendContext.getFrontendImplementationConstructor().length() ? pClass->create(cFrontendContext.getFrontendImplementationConstructor(), cFrontendContext.getFrontendImplementationConstructorParameters()) : pClass->create();
 		if (pObject) {
 			// Write down a log message
-			RE_LOG(Info, ("Using frontend implementation '" + pClass->getClassName() + "': " + pClass->getDescription()).cstr())
+			RE_LOG(Info, "Using frontend implementation '" + pClass->getClassName() + "': " + pClass->getDescription())
 
 			// Set parameters for the instanced frontend implementation RTTI class
 			if (cFrontendContext.getFrontendImplementationParameters().length())
@@ -185,11 +185,11 @@ FrontendImpl *Frontend::createFrontendImplementation(const FrontendContext &cFro
 			return static_cast<FrontendImpl*>(pObject);
 		} else {
 			// Error!
-			RE_LOG(Error, ("Failed instancing frontend implementation '" + pClass->getClassName() + "': " + pClass->getDescription()).cstr())
+			RE_LOG(Error, "Failed instancing frontend implementation '" + pClass->getClassName() + "': " + pClass->getDescription())
 		}
 	} else {
 		// Error!
-		RE_LOG(Error, ("Frontend '" + cFrontendContext.getFrontendImplementation() + "' is no valid frontend implementation RTTI class").cstr())
+		RE_LOG(Error, "Frontend '" + cFrontendContext.getFrontendImplementation() + "' is no valid frontend implementation RTTI class")
 	}
 
 	// Error!

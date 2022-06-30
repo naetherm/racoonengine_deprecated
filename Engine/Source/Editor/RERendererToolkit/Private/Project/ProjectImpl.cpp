@@ -241,7 +241,7 @@ namespace RERendererToolkit
 		catch (const std::exception& e)
 		{
 			// In case of an "RendererToolkit::IAssetCompiler::checkIfChanged()"-exception, consider the asset as changed and write at least an informative log message
-			RE_LOG(Info, std::string("Failed to check asset with filename _ for change: _. Considered the asset as changed.") + asset.virtualFilename + e.what())
+			RE_LOG(Info, RECore::String("Failed to check asset with filename _ for change: _. Considered the asset as changed.") + asset.virtualFilename + e.what())
 			return true;
 		}
 
@@ -371,7 +371,7 @@ namespace RERendererToolkit
 		const rapidjson::Value& rapidJsonValueProject = rapidJsonDocument["Project"];
 
 		{ // Read project data
-      RE_LOG(Info, std::string("Gather asset from _...") + mAbsoluteProjectDirectory.c_str())
+      RE_LOG(Info, RECore::String("Gather asset from _...") + mAbsoluteProjectDirectory.c_str())
 			{ // Asset packages
 				const rapidjson::Value& rapidJsonValueAssetPackages = rapidJsonValueProject["AssetPackages"];
 				if (rapidJsonValueAssetPackages.Size() > 1)
@@ -385,7 +385,7 @@ namespace RERendererToolkit
 			}
 			readTargetsByFilename(rapidJsonValueProject["TargetsFilename"].GetString());
 			::detail::optionalQualityStrategy(rapidJsonValueProject, "QualityStrategy", mQualityStrategy);
-			RE_LOG(Info, std::string("Found") + std::to_string(mAssetPackage.getSortedAssetVector().size()) + "assets")
+			RE_LOG(Info, RECore::String("Found") + RECore::String(mAssetPackage.getSortedAssetVector().size()) + "assets")
 		}
 
 		// Setup project folder for cache manager, it will store there its data
@@ -407,10 +407,10 @@ namespace RERendererToolkit
 		// Import all assets
 		const size_t numberOfSourceAssets = absoluteSourceFilenames.size();
 		size_t currentSourceAsset = 0;
-    RE_LOG(Info, std::string("Starting import of ") + std::to_string(numberOfSourceAssets) + " assets")
+    RE_LOG(Info, RECore::String("Starting import of ") + RECore::String(numberOfSourceAssets) + " assets")
 		for (const std::string& absoluteSourceFilename : absoluteSourceFilenames)
 		{
-      RE_LOG(Info, std::string("Importing asset ") + std::to_string(currentSourceAsset + 1) + " of " + std::to_string(absoluteSourceFilenames.size()) + ": " + absoluteSourceFilename)
+      RE_LOG(Info, RECore::String("Importing asset ") + RECore::String(currentSourceAsset + 1) + " of " + RECore::String(absoluteSourceFilenames.size()) + ": " + absoluteSourceFilename.c_str())
 			IAssetImporter::Input input(mContext, mProjectName, absoluteSourceFilename, mProjectName + '/' + targetDirectoryName + '/' + std_filesystem::path(absoluteSourceFilename).stem().generic_string());
 
 			// TODO(naetherm) Implement automatic asset importer selection
@@ -418,7 +418,7 @@ namespace RERendererToolkit
 
 			++currentSourceAsset;
 		}
-    RE_LOG(Info, std::string("Finished import of ") + std::to_string(numberOfSourceAssets) + " assets")
+    RE_LOG(Info, RECore::String("Finished import of ") + RECore::String(numberOfSourceAssets) + " assets")
 	}
 
 	void ProjectImpl::compileAllAssets(const char* rhiTarget)
@@ -429,7 +429,7 @@ namespace RERendererToolkit
 		// Discover changed assets
 		std::vector<RECore::AssetId> changedAssetIds;
 		changedAssetIds.reserve(numberOfAssets);
-    RE_LOG(Info, std::string("Checking ") + std::to_string(numberOfAssets) + " assets for changes")
+    RE_LOG(Info, RECore::String("Checking ") + RECore::String(numberOfAssets) + " assets for changes")
 		for (size_t i = 0; i < numberOfAssets; ++i)
 		{
 			const RECore::Asset& asset = sortedAssetVector[i];
@@ -438,7 +438,7 @@ namespace RERendererToolkit
 				changedAssetIds.push_back(asset.assetId);
 			}
 		}
-    RE_LOG(Info, std::string("Found ") + std::to_string(changedAssetIds.size()) + " changed assets")
+    RE_LOG(Info, RECore::String("Found ") + RECore::String(changedAssetIds.size()) + " changed assets")
 
 		// Do we need to mount a directory now? (e.g. "DataPc", "DataMobile" etc.)
 		const std::string virtualAssetPackageFilename = getRenderTargetDataRootDirectory(rhiTarget) + '/' + mProjectName + '/' + mAssetPackageDirectoryName + '/' + mAssetPackageDirectoryName + ".assets";
@@ -485,7 +485,7 @@ namespace RERendererToolkit
 				for (size_t i = 0; i < numberOfAssets; ++i)
 				{
 					// Reminder: Assets might not be fully compiled but just collect needed information
-          RE_LOG(Info, std::string("Compiling asset ") + std::to_string(i+1) + " of " + std::to_string(numberOfAssets))
+          RE_LOG(Info, RECore::String("Compiling asset ") + RECore::String(i+1) + " of " + RECore::String(numberOfAssets))
 					const RECore::Asset& asset = sortedAssetVector[i];
 					compileAsset(asset, rhiTarget, outputAssetPackage);
 					if (nullptr != mProjectAssetMonitor)
@@ -522,7 +522,7 @@ namespace RERendererToolkit
 					{
 						throw std::runtime_error(std::string("Source asset ID ") + std::to_string(sourceAssetId) + " is unknown");
 					}
-          RE_LOG(Info, std::string("Compiling asset ") + std::to_string(i+1) + " of " + std::to_string(numberOfChangedAssets))
+          RE_LOG(Info, RECore::String("Compiling asset ") + RECore::String(i+1) + " of " + RECore::String(numberOfChangedAssets))
 					compileAsset(*asset, rhiTarget, outputAssetPackage);
 					if (nullptr != mProjectAssetMonitor)
 					{

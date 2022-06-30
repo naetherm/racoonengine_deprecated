@@ -109,7 +109,7 @@ void ThemeManager::registerClasses() {
       if (thisClass->isDerivedFrom(BaseClassName) && thisClass->hasConstructor()) {
         // Create instance of class
         Theme* theme = reinterpret_cast<REGui::Theme*>(thisClass->create());
-        RE_LOG(Info, ("Registered Theme with name " + theme->getName()).cstr())
+        RE_LOG(Info, "Registered Theme with name " + theme->getName())
 
         mlstThemes.push_back(theme);
         mmapThemes.emplace(theme->getName(), theme);

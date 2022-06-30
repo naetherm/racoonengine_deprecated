@@ -204,7 +204,7 @@ void RendererApplication::onCreateRendererContext() {
 
       if (this->mRhi) {
         this->mRhi->AddReference();
-        RE_LOG(Info, std::string("Successfully created the RHI backend of ") + this->mSharedLibraryName.cstr())
+        RE_LOG(Info, "Successfully created the RHI backend of " + this->mSharedLibraryName)
       } else {
         // Error
         RE_LOG(Error, "Creation of dynamic RHI failed.")
@@ -215,7 +215,7 @@ void RendererApplication::onCreateRendererContext() {
     }
   } else {
     // Error
-    RE_LOG(Error, std::string("Unable to load the library ") + this->mSharedLibraryName.cstr())
+    RE_LOG(Error, "Unable to load the library " + this->mSharedLibraryName)
   }
 
   // Create renderer instance

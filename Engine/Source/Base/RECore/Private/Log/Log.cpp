@@ -43,8 +43,8 @@ namespace RECore {
 //[-------------------------------------------------------]
 //[ Global variables                                      ]
 //[-------------------------------------------------------]
-// For fast Log::LogLevelTostd::string()
-const std::string g_sLogLevelToString[] = {
+// For fast Log::LogLevelToString()
+const String g_sLogLevelToString[] = {
   "Quiet",
   "All",
   "Critical",
@@ -93,11 +93,11 @@ void Log::setBufferCount(uint32 nBufferCount) {
 *  @brief
 *    Get a string representation of the given log level
 */
-std::string Log::logLevelToString(uint8 nLogLevel) const {
+String Log::logLevelToString(uint8 nLogLevel) const {
   if (!nLogLevel)
     return "";
   else if (nLogLevel > Debug)
-    return std::string("Debug") + std::to_string(nLogLevel - Debug);
+    return String("Debug") + String(nLogLevel - Debug);
   else
     return g_sLogLevelToString[nLogLevel - 1];
 }
@@ -156,13 +156,13 @@ Log &Log::operator=(const Log &cSource) {
 *  @brief
 *    Writes a string into the log
 */
-bool Log::write(uint8 nLogLevel, const std::string &sText) {
+bool Log::write(uint8 nLogLevel, const String &sText) {
   // Is there any text to write down?
   if (sText.length()) {
     // Write into the standard OS console?
     if (m_bVerbose) {
       // Prepare log message
-      std::string sLogMessage;
+      String sLogMessage;
       if (nLogLevel >= Quiet && m_bVerboseLogLevelPrefix) {
         sLogMessage = '[';
         sLogMessage += logLevelToString(nLogLevel);
@@ -174,7 +174,7 @@ bool Log::write(uint8 nLogLevel, const std::string &sText) {
       // Write the text into the OS console - it would be nice if this could be done using 'File::StandardOutput.Print()',
       // but this may cause problems when de-initializing the static variables :/
 #ifdef WIN32
-      (sLogMessage.GetFormat() == std::string::ASCII) ? fputs(sLogMessage.cstr(), stdout) : fputws(sLogMessage.GetUnicode(), stdout);
+      (sLogMessage.GetFormat() == String::ASCII) ? fputs(sLogMessage.cstr(), stdout) : fputws(sLogMessage.GetUnicode(), stdout);
 #elif ANDROID
       // Lookout! "__android_log_write" doesn't check for null pointer!
       const char *pszLogMessage = sLogMessage.cstr();
@@ -219,7 +219,7 @@ bool Log::write(uint8 nLogLevel, const std::string &sText) {
         __android_log_write(nAndroidLogPriority, "RacoonEngine", sLogMessage);
       }
 #else
-      fputs(sLogMessage.c_str(), stdout);
+      fputs(sLogMessage.cstr(), stdout);
 #endif
     }
 

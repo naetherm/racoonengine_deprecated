@@ -204,7 +204,7 @@ Frontend *FrontendImpl::createFrontend(const FrontendContext &cFrontendContext, 
 			Frontend *pFrontend = static_cast<Frontend*>(pObject);
 
 			// Write down a log message
-			RE_LOG(Info, ("Using frontend '" + pClass->getClassName() + "': " + pClass->getDescription()).cstr())
+			RE_LOG(Info, "Using frontend '" + pClass->getClassName() + "': " + pClass->getDescription())
 
 			// Set parameters for the instanced frontend RTTI class
 			if (cFrontendContext.getFrontendParameters().length())
@@ -214,11 +214,11 @@ Frontend *FrontendImpl::createFrontend(const FrontendContext &cFrontendContext, 
 			return pFrontend;
 		} else {
 			// Error!
-			RE_LOG(Error, ("Failed instancing frontend '" + pClass->getClassName() + "': " + pClass->getDescription()).cstr())
+			RE_LOG(Error, "Failed instancing frontend '" + pClass->getClassName() + "': " + pClass->getDescription())
 		}
 	} else {
 		// Error!
-		RE_LOG(Error, ("Frontend '" + cFrontendContext.getFrontend() + "' is no valid frontend RTTI class").cstr())
+		RE_LOG(Error, "Frontend '" + cFrontendContext.getFrontend() + "' is no valid frontend RTTI class")
 	}
 
 	// Error!

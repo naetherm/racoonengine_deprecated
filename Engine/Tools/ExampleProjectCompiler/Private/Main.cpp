@@ -83,7 +83,7 @@
 				for (const std::string_view& renderTarget : commandLineArguments.getArguments())
 				{
 					const std::string renderTargetString(renderTarget);
-					RE_LOG(Info, "Compiling for target: " + renderTargetString)
+					RE_LOG(Info, RECore::String("Compiling for target: ") + renderTargetString.c_str())
 					project->compileAllAssets(renderTargetString.c_str());
 					RE_LOG(Info, "Compilation done")
 				}
@@ -91,7 +91,7 @@
 		}
 		catch (const std::exception& e)
 		{
-			RE_LOG(Critical, std::string("Project compilation failed: ") + e.what())
+			RE_LOG(Critical, RECore::String("Project compilation failed: ") + e.what())
 			RE_LOG(Info, "Press any key to continue")
 			getchar();
 		}

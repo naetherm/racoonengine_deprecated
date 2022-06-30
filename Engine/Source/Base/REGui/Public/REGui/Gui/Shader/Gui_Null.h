@@ -21,5 +21,5 @@
 
 {
 	// Error! (unsupported RHI)
-RE_LOG(Info, std::string("The RHI implementation \"") + rhi->getName() + std::string("\" isn't supported by the renderer debug GUI"))
+RE_LOG(Info, RECore::String("The RHI implementation \"") + rhi->getName() + "\" isn't supported by the renderer debug GUI")
 }

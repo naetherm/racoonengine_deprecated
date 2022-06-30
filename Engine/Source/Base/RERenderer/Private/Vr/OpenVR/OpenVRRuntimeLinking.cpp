@@ -91,7 +91,7 @@ namespace RERenderer
 					{																																									\
 						libraryName = linkMap->l_name;																																	\
 					}																																									\
-					RE_LOG(Critical, std::string("The renderer failed to locate the entry point \"") + #funcName + std::string("\" within the OpenVR shared library ") + libraryName)	\
+					RE_LOG(Critical, RECore::String("The renderer failed to locate the entry point \"") + #funcName + RECore::String("\" within the OpenVR shared library ") + libraryName)	\
 					result = false;																																						\
 				}																																										\
 			}

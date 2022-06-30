@@ -65,7 +65,7 @@ namespace RERenderer
 		}
 		if (vr::VRRenderModelError_None != vrRenderModelError)
 		{
-      RE_LOG(Critical, std::string("The renderer was unable to load OpenVR albedo texture ") + std::to_string(albedoTextureId) + std::string(": ") + vrRenderModels->GetRenderModelErrorNameFromEnum(vrRenderModelError))
+      RE_LOG(Critical, RECore::String("The renderer was unable to load OpenVR albedo texture ") + RECore::String(albedoTextureId) + ": " + vrRenderModels->GetRenderModelErrorNameFromEnum(vrRenderModelError))
 			return;
 		}
 

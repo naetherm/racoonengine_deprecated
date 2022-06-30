@@ -102,7 +102,7 @@ private:
     dbus_connection_flush(&cConnection);
     if (dbus_error_is_set(&sError)) {
       // TODO(naetherm) Log
-      // RE_LOG(Error, "BTLinux: DBUS match error (" + std::string(sError.message) + ')')
+      // RE_LOG(Error, "BTLinux: DBUS match error (" + RECore::String(sError.message) + ')')
     } else {
       // Listen for signals
       bool bAbort = false;

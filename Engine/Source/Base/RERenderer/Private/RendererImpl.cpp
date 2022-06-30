@@ -130,7 +130,7 @@ namespace
 			RECore::IFileManager& fileManager = renderer.getFileManager();
 			if (fileManager.createDirectories(virtualDirectoryName.c_str()) && !memoryFile.writeLz4CompressedDataByVirtualFilename(PipelineStateCache::FORMAT_TYPE, PipelineStateCache::FORMAT_VERSION, fileManager, virtualFilename.c_str()))
 			{
-        RE_LOG(Critical, std::string("The renderer failed to save the pipeline state object cache to ") + virtualFilename)
+        RE_LOG(Critical, RECore::String("The renderer failed to save the pipeline state object cache to ") + virtualFilename.c_str())
 			}
 		}
 

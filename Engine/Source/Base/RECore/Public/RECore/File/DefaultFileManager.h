@@ -520,7 +520,7 @@ public:
         file = new ::detail::DefaultWriteFile(absoluteFilename);
       }
       if (file->isInvalid()) {
-        RE_LOG(Critical, std::string("Failed to open file ") + virtualFilename)
+        RE_LOG(Critical, RECore::String("Failed to open file ") + virtualFilename)
         //if (mLog.print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32>(__LINE__), "Failed to open file %s", virtualFilename))
         {
           //	DEBUG_BREAK;

@@ -58,7 +58,7 @@ void LuaContext::addContextReference()
 {
 	// Check context
 	if (!m_nContexCounter)
-		RE_LOG(Info, std::string("Initialize ") + LUA_RELEASE)
+		RE_LOG(Info, RECore::String("Initialize ") + LUA_RELEASE)
 	m_nContexCounter++;
 }
 
@@ -71,7 +71,7 @@ void LuaContext::releaseContextReference()
 	// Check context
 	m_nContexCounter--;
 	if (!m_nContexCounter)
-  RE_LOG(Info, std::string("De-initialize" ) + LUA_RELEASE)
+  RE_LOG(Info, RECore::String("De-initialize" ) + LUA_RELEASE)
 }
 
 

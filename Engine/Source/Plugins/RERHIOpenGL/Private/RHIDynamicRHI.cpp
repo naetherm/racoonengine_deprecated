@@ -2628,7 +2628,7 @@ void RHIDynamicRHI::debugMessageCallback(RECore::uint32 source, RECore::uint32 t
 			}
 
 			// Print into log
-      RE_LOG(Critical, std::string(message))
+      RE_LOG(Critical, RECore::String(message))
 			//if (static_cast<const OpenGLRhi*>(userParam)->getContext().getLog().print(logType, nullptr, __FILE__, static_cast<RECore::uint32>(__LINE__), "OpenGL debug message\tSource:\"%s\"\tType:\"%s\"\tID:\"%u\"\tSeverity:\"%s\"\tMessage:\"%s\"", debugSource, debugType, id, debugSeverity, message))
 			{
 			//	DEBUG_BREAK;

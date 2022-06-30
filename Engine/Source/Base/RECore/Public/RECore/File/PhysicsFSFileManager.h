@@ -85,7 +85,7 @@ static constexpr const char *PHYSICSFS_LOCAL_DATA_MOUNT_POINT = "LocalData";
 void writePhysicsFSErrorToLog() {
   const char *errorAsString = PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode());
   if (nullptr != errorAsString) {
-    RE_LOG(Critical, "PhysFS error: " + std::string(errorAsString))
+    RE_LOG(Critical, "PhysFS error: " + RECore::String(errorAsString))
     //if (log.print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32>(__LINE__), "PhysicsFS error: %s", errorAsString))
     {
       //	DEBUG_BREAK;
@@ -582,7 +582,7 @@ public:
       file = new ::detail::PhysicsFSWriteFile(virtualFilename);
     }
     if (file->isInvalid()) {
-      RE_LOG(Critical, "Failed to open file " + std::string(virtualFilename))
+      RE_LOG(Critical, "Failed to open file " + RECore::String(virtualFilename))
       //if (mLog.print(RECore::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32>(__LINE__), "Failed to open file %s", virtualFilename))
       {
         //	DEBUG_BREAK;

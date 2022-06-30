@@ -469,7 +469,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
 					funcName = reinterpret_cast<PFN_##funcName>(vkGetDeviceProcAddr(vkDevice, #funcName));						\
 					if (nullptr == funcName)																					\
 					{																											\
-						RE_LOG(Critical, std::string("Failed to load instance based Vulkan function pointer ") + #funcName)	\
+						RE_LOG(Critical, RECore::String("Failed to load instance based Vulkan function pointer ") + #funcName)	\
 					}																											\
 
     // "VK_EXT_debug_marker"-extension
@@ -1258,7 +1258,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
 					else
 					{
 						// Failed to link the program
-            RE_LOG(Critical, std::string("Failed to link the GLSL program: ") + program.getInfoLog())
+            RE_LOG(Critical, RECore::String("Failed to link the GLSL program: ") + program.getInfoLog())
 						//if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), "Failed to link the GLSL program: %s", program.getInfoLog()))
 						{
 						//	DEBUG_BREAK;
@@ -1268,7 +1268,7 @@ void enumeratePhysicalDevices(const RERHI::RHIContext& context, VkInstance vkIns
 				else
 				{
 					// Failed to parse the shader source code
-            RE_LOG(Critical, std::string("Failed to parse the GLSL shader source code: ") + shader.getInfoLog()
+            RE_LOG(Critical, RECore::String("Failed to parse the GLSL shader source code: ") + shader.getInfoLog()
 					//if (context.getLog().print(RECore::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<RECore::uint32>(__LINE__), "Failed to parse the GLSL shader source code: %s", shader.getInfoLog()))
 					{
 					//	DEBUG_BREAK;

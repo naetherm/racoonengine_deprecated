@@ -56,7 +56,7 @@ inline void Log::setVerbose(bool bVerbose, bool bVerboseLogLevelPrefix) {
 *  @brief
 *    Write a string into the log
 */
-inline bool Log::output(uint8 nLogLevel, const std::string &sText) {
+inline bool Log::output(uint8 nLogLevel, const String &sText) {
   // Check log level
   return (nLogLevel > Quiet && nLogLevel <= m_nLogLevel && write(nLogLevel, sText));
 }
@@ -136,7 +136,7 @@ inline uint32 Log::getBufferCount() const {
 *  @brief
 *    Get a copy of the queue which holds the last log messages
 */
-inline const std::queue<std::string> &Log::getLastMessages() const {
+inline const std::queue<String> &Log::getLastMessages() const {
   return m_qLastMessages;
 }
 

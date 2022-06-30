@@ -70,13 +70,13 @@ namespace RERenderer
 		{
 			for (int i = 0; i < preprocessData->error_count; ++i)
 			{
-        RE_LOG(Critical, std::string("Renderer shader preprocessor ") + (preprocessData->errors[i].filename ? preprocessData->errors[i].filename : "???") + ":"+std::to_string(preprocessData->errors[i].error_position)+": Error: " + std::string(preprocessData->errors[i].error))
+        RE_LOG(Critical, RECore::String("Renderer shader preprocessor ") + (preprocessData->errors[i].filename ? preprocessData->errors[i].filename : "???") + ":" + RECore::String(preprocessData->errors[i].error_position)+": Error: " + preprocessData->errors[i].error)
 			}
 		}
 		else
 		{
 			result.assign(preprocessData->output, static_cast<size_t>(preprocessData->output_len));
-			replace_all(result, "# version 460 core", "#version 460 core\n");
+			replace_all(result, "# version 430 core", "#version 430 core\n");
 		}
 		MOJOSHADER_freePreprocessData(preprocessData);
 	}

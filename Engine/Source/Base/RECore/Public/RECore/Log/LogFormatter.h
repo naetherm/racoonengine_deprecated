@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "RECore/RECore.h"
-#include <string>
+#include "RECore/String/String.h"
 
 
 //[-------------------------------------------------------]
@@ -114,7 +114,7 @@ protected:
   *  @return
   *    'true' if all went fine, else 'false'
   */
-  virtual bool output(uint8 nLogLevel, const std::string &sText) = 0;
+  virtual bool output(uint8 nLogLevel, const String &sText) = 0;
 
   /**
   *  @brief

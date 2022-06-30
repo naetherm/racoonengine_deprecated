@@ -285,7 +285,7 @@ namespace
 			}
 			else
 			{
-				RE_LOG(Warning, std::string("The Sketchfab ZIP-archive _ contains multiple texture files named _, ignoring duplicates") + input.absoluteSourceFilename + textureFilename)
+				RE_LOG(Warning, RECore::String("The Sketchfab ZIP-archive _ contains multiple texture files named _, ignoring duplicates") + input.absoluteSourceFilename.c_str() + textureFilename.c_str())
 			}
 		}
 
@@ -586,7 +586,7 @@ namespace
 
 				// Add an empty entry so the user knowns which materials need to be assigned manually
 				materialNameToAssetId.emplace(assimpMaterialName, "");
-				RE_LOG(Warning, std::string("The Sketchfab asset importer failed to automatically find a material name to asset ID mapping of mesh material _ from the Sketchfab ZIP-archive _") + assimpMaterialName + input.absoluteSourceFilename)
+				RE_LOG(Warning, RECore::String("The Sketchfab asset importer failed to automatically find a material name to asset ID mapping of mesh material _ from the Sketchfab ZIP-archive _") + assimpMaterialName.c_str() + input.absoluteSourceFilename.c_str())
 			}
 		}
 
