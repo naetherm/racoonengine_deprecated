@@ -27,7 +27,6 @@
 #include "RERendererToolkit/Helper/JsonHelper.h"
 #include "RERendererToolkit/Helper/StringHelper.h"
 #include "RERendererToolkit/Helper/CacheManager.h"
-#include "RERendererToolkit/AssetImporter/SketchfabAssetImporter.h"
 #include "RERendererToolkit/AssetCompiler/MeshAssetCompiler.h"
 #include "RERendererToolkit/AssetCompiler/SceneAssetCompiler.h"
 #include "RERendererToolkit/AssetCompiler/TextureAssetCompiler.h"
@@ -411,7 +410,7 @@ namespace RERendererToolkit
 		for (const std::string& absoluteSourceFilename : absoluteSourceFilenames)
 		{
       RE_LOG(Info, RECore::String("Importing asset ") + RECore::to_string(currentSourceAsset + 1) + " of " + RECore::to_string(absoluteSourceFilenames.size()) + ": " + absoluteSourceFilename.c_str())
-			IAssetImporter::Input input(mContext, mProjectName, absoluteSourceFilename, mProjectName + '/' + targetDirectoryName + '/' + std_filesystem::path(absoluteSourceFilename).stem().generic_string());
+			//IAssetImporter::Input input(mContext, mProjectName, absoluteSourceFilename, mProjectName + '/' + targetDirectoryName + '/' + std_filesystem::path(absoluteSourceFilename).stem().generic_string());
 
 			// TODO(naetherm) Implement automatic asset importer selection
 			//SketchfabAssetImporter().import(input);

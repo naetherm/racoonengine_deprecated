@@ -27,7 +27,4 @@ set(FILES
   # Project
   Private/Project/ProjectAssetMonitor.cpp
   Private/Project/ProjectImpl.cpp
-  # Importer
-  Private/AssetImporter/MeshAssetImporter.cpp
-  Private/AssetImporter/SketchfabAssetImporter.cpp
 )
