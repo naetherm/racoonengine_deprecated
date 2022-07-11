@@ -76,7 +76,6 @@
 #include <link.h>
 	#include <dlfcn.h>
 #elif defined LINUX
-// TODO(naetherm) Review which of the following headers can be removed
 #include <X11/Xlib.h>
 
 #include <GL/glx.h>

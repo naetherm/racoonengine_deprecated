@@ -55,7 +55,7 @@ public:
   *    - 'memcpy'-wrapper
   *    -  The memory areas should not overlap
   */
-  static inline void Copy(void *pDestination, const void *pSource, uint32 nNumOfBytes);
+  static inline void copy(void *pDestination, const void *pSource, uint32 nNumOfBytes);
 
   /**
   *  @brief
@@ -72,7 +72,7 @@ public:
   *    - 'memmove'-wrapper
   *    -  The memory areas may overlap
   */
-  static inline void Move(void *pDestination, const void *pSource, uint32 nNumOfBytes);
+  static inline void move(void *pDestination, const void *pSource, uint32 nNumOfBytes);
 
   /**
   *  @brief
@@ -88,7 +88,7 @@ public:
   *  @note
   *    - 'memset'-wrapper
   */
-  static inline void Set(void *pDestination, int nCharacter, uint32 nNumOfBytes);
+  static inline void set(void *pDestination, int nCharacter, uint32 nNumOfBytes);
 
   /**
   *  @brief

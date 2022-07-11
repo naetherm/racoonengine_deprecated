@@ -38,7 +38,7 @@ namespace RECore {
 *  @brief
 *    Copies memory
 */
-inline void Memory::Copy(void *pDestination, const void *pSource, uint32 nNumOfBytes)
+inline void Memory::copy(void *pDestination, const void *pSource, uint32 nNumOfBytes)
 {
   memcpy(pDestination, pSource, nNumOfBytes);
 }
@@ -47,7 +47,7 @@ inline void Memory::Copy(void *pDestination, const void *pSource, uint32 nNumOfB
 *  @brief
 *    Moves memory
 */
-inline void Memory::Move(void *pDestination, const void *pSource, uint32 nNumOfBytes)
+inline void Memory::move(void *pDestination, const void *pSource, uint32 nNumOfBytes)
 {
   memmove(pDestination, pSource, nNumOfBytes);
 }
@@ -56,7 +56,7 @@ inline void Memory::Move(void *pDestination, const void *pSource, uint32 nNumOfB
 *  @brief
 *    Sets memory to a specified character
 */
-inline void Memory::Set(void *pDestination, int nCharacter, uint32 nNumOfBytes)
+inline void Memory::set(void *pDestination, int nCharacter, uint32 nNumOfBytes)
 {
   memset(pDestination, nCharacter, nNumOfBytes);
 }
