@@ -48,3 +48,10 @@ This will compile all examples and libraries first and then compile the resource
 ```
 ./Setup.sh
 ```
+
+
+## Remarks
+
+The initial rendering code is from:
+
+* https://github.com/cofenberg/unrimp
